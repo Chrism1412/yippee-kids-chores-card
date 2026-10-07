@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="images/icon.svg" width="120" alt="Yippee! - Kids Chores logo">
+  <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/icon-512.png" width="120" alt="Yippee! - Kids Chores logo">
 </p>
 
 <h1 align="center">Yippee! - Kids Chores</h1>
@@ -14,10 +14,10 @@
   <a href="https://github.com/Chrism1412/yippee-kids-chores-card/releases"><img src="https://img.shields.io/github/v/release/Chrism1412/yippee-kids-chores-card" alt="Version"></a>
   <img src="https://img.shields.io/badge/Home%20Assistant-2024.10%2B-03a9f4" alt="Home Assistant 2024.10+">
   <img src="https://img.shields.io/badge/languages-25-ffc93c" alt="25 languages">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="MIT"></a>
+  <a href="https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="MIT"></a>
 </p>
 
-<p align="center"><a href="README.md">🇩🇪 Deutsche Version</a></p>
+<p align="center"><a href="https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/README.md">🇩🇪 Deutsche Version</a></p>
 
 ---
 
@@ -40,7 +40,7 @@ Parents create chores and rewards, approve finished chores (also right from the 
 
 | Kids view | Parents view | Rewards | Settings |
 |:---:|:---:|:---:|:---:|
-| <img src="images/kinder-ansicht.png" width="200"> | <img src="images/eltern-heute.png" width="200"> | <img src="images/belohnungen.png" width="200"> | <img src="images/einstellungen.png" width="200"> |
+| <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/kinder-ansicht.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/eltern-heute.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/belohnungen.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/einstellungen.png" width="200"> |
 
 *(Screenshots in German – the card shows your Home Assistant language automatically.)*
 
@@ -94,7 +94,7 @@ HACS adds the resource automatically.
 
 ### Manual
 
-1. Download [`dist/yippee-kids-chores-card.js`](dist/yippee-kids-chores-card.js) from the [latest release](https://github.com/Chrism1412/yippee-kids-chores-card/releases/latest).
+1. Download [`dist/yippee-kids-chores-card.js`](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/dist/yippee-kids-chores-card.js) from the [latest release](https://github.com/Chrism1412/yippee-kids-chores-card/releases/latest).
 2. Create the folder **`/config/www/community/yippee-kids-chores-card/`** and copy the file into it. This is the same folder HACS uses, so you can switch to HACS later without changes.
 3. **Settings → Dashboards → ⋮ → Resources → Add resource**
    - URL: `/hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.0.0`
@@ -130,7 +130,7 @@ child: Mia
 
 3. In the parents view: add **kids**, **chores**, **rewards**, then go through **⚙️ Settings**. All settings apply to every kids card and device automatically.
 
-A complete example dashboard is in [`examples/dashboard.yaml`](examples/dashboard.yaml).
+A complete example dashboard is in [`examples/dashboard.yaml`](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/examples/dashboard.yaml).
 
 ## Card options
 
@@ -178,9 +178,9 @@ All integrations are **optional** and can be switched on and off individually.
 ## Updates
 
 - **Update available:** when HACS knows a newer version, the parents area shows a notice.
-- **Resource raised automatically:** when the file on the server is newer than the one running in the browser, the card writes the new version into the resource itself (`?v=1.0.1` …) as soon as an administrator opens the parents area, then offers a reload button. With HACS, HACS updates the resource; the card just offers the reload. Can be switched off under ⬆️ Updates.
+- **Resource raised automatically:** when the file on the server is newer than the one running in the browser, the card writes the new version into the resource itself (`?v=1.0.0` …) as soon as an administrator opens the parents area, then offers a reload button. With HACS, HACS updates the resource; the card just offers the reload. Can be switched off under ⬆️ Updates.
 
-See the [CHANGELOG](CHANGELOG.md).
+See the [CHANGELOG](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/CHANGELOG.md).
 
 ## Privacy
 
@@ -194,4 +194,4 @@ All data stays in your Home Assistant. No account, no cloud, no tracking. The on
 
 ## License
 
-[MIT](LICENSE) © 2026 Chrism1412 · Holiday data: [OpenHolidays API](https://www.openholidaysapi.org)
+[MIT](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/LICENSE) © 2026 Chrism1412 · Holiday data: [OpenHolidays API](https://www.openholidaysapi.org)
