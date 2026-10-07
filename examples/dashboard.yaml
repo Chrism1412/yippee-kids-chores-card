@@ -1,0 +1,29 @@
+# Beispiel-Dashboard für Yippee! - Kids Chores
+# Einstellungen → Dashboards → Dashboard hinzufügen → ⋮ → Raw-Konfigurationseditor
+title: Yippee!
+views:
+  # Kinder: Familienziel oben, alle Kinder darunter (auf dem Handy untereinander)
+  - title: Kinder
+    path: kinder
+    icon: mdi:star-face
+    type: panel
+    cards:
+      - type: custom:yippee-kids-chores-card
+        storage: todo.yippee_kids_chores
+        mode: kids
+
+  # Eltern: Freigaben, Aufgaben, Belohnungen, Einstellungen
+  - title: Eltern
+    path: eltern
+    icon: mdi:account-supervisor
+    cards:
+      - type: custom:yippee-kids-chores-card
+        storage: todo.yippee_kids_chores
+        mode: admin
+
+# Einzelnes Kind, z. B. für das Tablet im Kinderzimmer:
+#
+#   - type: custom:yippee-kids-chores-card
+#     storage: todo.yippee_kids_chores
+#     mode: kid
+#     child: Mia
