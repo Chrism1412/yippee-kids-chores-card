@@ -60,10 +60,10 @@ Eltern legen Aufgaben und Belohnungen an, geben Erledigtes frei (auch direkt aus
 - **Eine Datei, keine Abhängigkeiten:** Keine weiteren HACS-Karten nötig, ressourcenschonend auch auf älteren Tablets.
 - **Für das Handy gemacht:** Funktioniert in der Home-Assistant-App im Hochformat genauso wie auf dem Wand-Tablet.
 
-> ### 💡 Sofort startklar: 81 Aufgaben und 21 Belohnungen eingebaut
-> Du musst nicht bei null anfangen. Die Karte bringt eine **Aufgaben-Datenbank mit 81 Vorlagen in 9 Bereichen** mit – von „Zähne putzen“ über „Ranzen packen“ und „Spülmaschine ausräumen“ bis „Rasenmähen“ – jeweils mit passendem Emoji, Punkten und Tageszeit. Dazu **21 Belohnungs-Vorlagen** wie Eisgutschein, Filmabend, Kino oder Freizeitpark.
+> ### 💡 Sofort startklar: 93 Aufgaben und 21 Belohnungen eingebaut
+> Du musst nicht bei null anfangen. Die Karte bringt eine **Aufgaben-Datenbank mit 93 Vorlagen in 9 Bereichen** mit – von „Zähne putzen“ über „Ranzen packen“ und „Spülmaschine ausräumen“ bis „Rasenmähen“ – jeweils mit passendem Emoji, Punkten und Tageszeit. Dazu **21 Belohnungs-Vorlagen** wie Eisgutschein, Filmabend, Kino oder Freizeitpark.
 >
-> **Altersgerecht dank Geburtstag:** Trägst du beim Kind den Geburtstag ein, zeigt die Auswahlliste nur Aufgaben, die zum Alter passen (5 bis 17 Jahre). Für ein 5-jähriges Kind sind es 18 Vorschläge, mit 8 Jahren 51, ab 12 Jahren über 60. Mit dem 💡-Knopf beim Kind schlägt die Karte alle passenden, noch nicht zugewiesenen Aufgaben auf einmal vor – anhaken, fertig.
+> **Altersgerecht dank Geburtstag:** Trägst du beim Kind den Geburtstag ein, zeigt die Auswahlliste nur Aufgaben, die zum Alter passen (5 bis 17 Jahre). Für ein 5-jähriges Kind sind es 30 Vorschläge, mit 8 Jahren 63, ab 12 Jahren über 75. Mit dem 💡-Knopf beim Kind schlägt die Karte alle passenden, noch nicht zugewiesenen Aufgaben auf einmal vor – anhaken, fertig.
 
 ## Screenshots
 
@@ -92,13 +92,13 @@ Eltern legen Aufgaben und Belohnungen an, geben Erledigtes frei (auch direkt aus
 - **Zweimal am Tag** (z. B. Zähne putzen morgens und abends) mit eigenem Zeitfenster
 - **Saison** (z. B. Rasenmähen nur April–Oktober) und **„nur an Schultagen“**
 - **Foto-Nachweis** 📷 pro Aufgabe: das Kind fotografiert beim Abhaken, die Eltern sehen das Foto bei der Freigabe
-- **Aufgaben-Datenbank mit 81 Vorlagen** in 9 Bereichen – nach Geburtstag automatisch altersgerecht gefiltert (siehe unten)
+- **Aufgaben-Datenbank mit 93 Vorlagen** in 9 Bereichen – nach Geburtstag automatisch altersgerecht gefiltert (siehe unten)
 
-### Aufgaben-Datenbank: 81 Vorlagen, altersgerecht
+### Aufgaben-Datenbank: 93 Vorlagen, altersgerecht
 
 | Bereich | Vorlagen | Beispiele |
 |---|:---:|---|
-| 🌅 Morgens | 8 | Bett machen, Zähne putzen, Selbst anziehen, Vesperdose einpacken |
+| 🌅 Morgens | 14 | Aufstehen, Bett machen, Zähne putzen, Selbst anziehen, Vesperdose einpacken |
 | 🎒 Schule | 10 | Hausaufgaben, Lesen üben, Vokabeln lernen, Ranzen für morgen packen |
 | 🍽️ Küche & Essen | 9 | Tisch decken, Spülmaschine ausräumen, Beim Kochen helfen |
 | 🧑‍🍳 Kochen & Einkaufen | 6 | Brötchen einkaufen, Nudeln kochen, Wocheneinkauf erledigen |
@@ -106,7 +106,7 @@ Eltern legen Aufgaben und Belohnungen an, geben Erledigtes frei (auch direkt aus
 | 🧺 Wäsche | 10 | Socken sortieren, Wäsche zusammenlegen, Waschmaschine starten |
 | 🏡 Haus, Garten & Tiere | 15 | Müll rausbringen, Haustier füttern, Hund ausführen, Rasenmähen |
 | 🧑 Verantwortung | 6 | Handy pünktlich abgeben, Taschengeld-Budget führen, Auf Geschwister aufpassen |
-| 🌙 Abends | 3 | Hände waschen, Duschen, Zähne putzen abends |
+| 🌙 Abends | 9 | Hände waschen, Duschen, Zähne putzen abends, Pyjama anziehen, Geschichte vorlesen, Ins Bett gehen |
 
 **So funktioniert die Altersauswahl:**
 
@@ -116,7 +116,7 @@ Eltern legen Aufgaben und Belohnungen an, geben Erledigtes frei (auch direkt aus
 
 | Alter | 5 | 6 | 8 | 10 | 12+ |
 |---|:---:|:---:|:---:|:---:|:---:|
-| Passende Vorlagen | 18 | 35 | 51 | 60 | 66–67 |
+| Passende Vorlagen | 30 | 47 | 63 | 72 | 78–79 |
 
 **Schul-Vorlagen** richten sich nach dem üblichen **Einschulungsalter des eingestellten Landes** (z. B. Irland und Malta 5, Deutschland 6, Polen und Schweden 7 Jahre). Ist ein Kind früher oder später eingeschult worden, beim Kind **„🎒 Eingeschult im (Monat/Jahr)“** eintragen – dann zählen die Schuljahre, und die Karte zeigt die Klasse an (z. B. „8 Jahre · 2. Klasse“).
 
@@ -207,7 +207,7 @@ child: Mia
 
 ### 3. In der Eltern-Ansicht loslegen
 
-1. **👧 Kinder** – Kinder anlegen (Name, Emoji, Farbe, **Geburtstag**). Mit 💡 schlägt die Karte aus der Datenbank mit 81 Vorlagen alle altersgerechten Aufgaben vor.
+1. **👧 Kinder** – Kinder anlegen (Name, Emoji, Farbe, **Geburtstag**). Mit 💡 schlägt die Karte aus der Datenbank mit 93 Vorlagen alle altersgerechten Aufgaben vor.
 2. **✅ Aufgaben** – Aufgaben anlegen oder aus den Vorlagen wählen.
 3. **🎁 Belohnungen** – Belohnungen mit ihrem Preis in Sternen anlegen.
 4. **⚙️ Einstellungen** – Sprache, Benachrichtigungen, Freigabe, Zusatzfunktionen usw. Alle Einstellungen gelten automatisch für alle Kinder-Karten und Geräte.

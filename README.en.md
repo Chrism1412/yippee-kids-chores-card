@@ -31,10 +31,10 @@ Parents create chores and rewards, approve finished chores (also right from the 
 - **One file, no dependencies:** no other HACS cards needed, light enough for older tablets.
 - **Made for phones:** works in the Home Assistant app in portrait mode just as well as on a wall tablet.
 
-> ### 💡 Ready to go: 81 chores and 21 rewards built in
-> No need to start from scratch. The card ships with a **chore database of 81 templates in 9 categories** – from "brush teeth" and "pack school bag" to "empty the dishwasher", "walk the dog" and "mow the lawn" – each with emoji, points and time of day, plus **21 reward templates** (ice cream voucher, movie night, cinema, zoo, theme park …).
+> ### 💡 Ready to go: 93 chores and 21 rewards built in
+> No need to start from scratch. The card ships with a **chore database of 93 templates in 9 categories** – from "brush teeth" and "pack school bag" to "empty the dishwasher", "walk the dog" and "mow the lawn" – each with emoji, points and time of day, plus **21 reward templates** (ice cream voucher, movie night, cinema, zoo, theme park …).
 >
-> **Age-appropriate by birthday:** enter a child's birthday and the template list only shows chores that fit their age (5–17): 18 suggestions at age 5, 51 at age 8, more than 60 from age 12. The 💡 button on a child suggests all fitting chores they don't have yet – tick and done.
+> **Age-appropriate by birthday:** enter a child's birthday and the template list only shows chores that fit their age (5–17): 30 suggestions at age 5, 63 at age 8, more than 75 from age 12. The 💡 button on a child suggests all fitting chores they don't have yet – tick and done.
 
 ## Screenshots
 
@@ -59,7 +59,7 @@ Parents create chores and rewards, approve finished chores (also right from the 
 - **Rotation** 🔄 between kids (skips kids on holiday), **"One is enough"** 🤝, **extra chores** 🙋
 - **Twice a day** with separate time windows, **seasons** (e.g. mowing April–October), **school days only**
 - **Photo proof** 📷 per chore
-- **Chore database with 81 templates** in 9 categories (morning, school, kitchen, cooking & shopping, tidying & cleaning, laundry, house/garden/pets, responsibility, evening), filtered by the child's age from their birthday; school chores follow the usual school starting age of the selected country (or an optional "started school in" month per child, which also shows the school year); seasonal chores get their season, school chores "school days only" automatically
+- **Chore database with 93 templates** in 9 categories (morning, school, kitchen, cooking & shopping, tidying & cleaning, laundry, house/garden/pets, responsibility, evening), filtered by the child's age from their birthday; school chores follow the usual school starting age of the selected country (or an optional "started school in" month per child, which also shows the school year); seasonal chores get their season, school chores "school days only" automatically
 - **21 reward templates** (ice cream voucher, movie night, cinema, zoo, theme park …)
 
 ### For parents

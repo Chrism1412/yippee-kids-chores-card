@@ -3,6 +3,11 @@
 Alle wichtigen Änderungen an **Yippee! - Kids Chores**.
 Versionsnummern: `MAJOR.MINOR.PATCH` – Fehlerbehebungen erhöhen PATCH, neue Funktionen MINOR, grundlegende Änderungen (z. B. am Speicherformat) MAJOR.
 
+## [Unreleased]
+
+### Neu
+- **Aufgaben-Datenbank erweitert:** 12 neue Alltags-Vorlagen für die Morgen- und Abendroutine – 🌅 Morgens (Aufstehen, Aufs Klo gehen, Hände waschen, Frühstücken, Schuhe anziehen, Jacke anziehen) und 🌙 Abends (Pyjama anziehen, Abendessen, Aufs Klo gehen, Hände waschen, Geschichte vorlesen, Ins Bett gehen). Damit jetzt **93 Vorlagen**, in allen 25 Sprachen übersetzt.
+
 ## [1.1.0] – 2026-10-08
 
 ### Neu
