@@ -59,7 +59,7 @@ Parents create chores and rewards, approve finished chores (also right from the 
 - **Rotation** 🔄 between kids (skips kids on holiday), **"One is enough"** 🤝, **extra chores** 🙋
 - **Twice a day** with separate time windows, **seasons** (e.g. mowing April–October), **school days only**
 - **Photo proof** 📷 per chore
-- **Chore database with 81 templates** in 9 categories (morning, school, kitchen, cooking & shopping, tidying & cleaning, laundry, house/garden/pets, responsibility, evening), filtered by the child's age from their birthday; seasonal chores get their season, school chores "school days only" automatically
+- **Chore database with 81 templates** in 9 categories (morning, school, kitchen, cooking & shopping, tidying & cleaning, laundry, house/garden/pets, responsibility, evening), filtered by the child's age from their birthday; school chores follow the usual school starting age of the selected country (or an optional "started school in" month per child, which also shows the school year); seasonal chores get their season, school chores "school days only" automatically
 - **21 reward templates** (ice cream voucher, movie night, cinema, zoo, theme park …)
 
 ### For parents
@@ -97,7 +97,7 @@ HACS adds the resource automatically.
 1. Download [`dist/yippee-kids-chores-card.js`](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/dist/yippee-kids-chores-card.js) from the [latest release](https://github.com/Chrism1412/yippee-kids-chores-card/releases/latest).
 2. Create the folder **`/config/www/community/yippee-kids-chores-card/`** and copy the file into it. This is the same folder HACS uses, so you can switch to HACS later without changes.
 3. **Settings → Dashboards → ⋮ → Resources → Add resource**
-   - URL: `/hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.0.0`
+   - URL: `/hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.1.0`
    - Type: **JavaScript module**
 4. Reload the page.
 
@@ -178,7 +178,7 @@ All integrations are **optional** and can be switched on and off individually.
 ## Updates
 
 - **Update available:** when HACS knows a newer version, the parents area shows a notice.
-- **Resource raised automatically:** when the file on the server is newer than the one running in the browser, the card writes the new version into the resource itself (`?v=1.0.0` …) as soon as an administrator opens the parents area, then offers a reload button. With HACS, HACS updates the resource; the card just offers the reload. Can be switched off under ⬆️ Updates.
+- **Resource raised automatically:** when the file on the server is newer than the one running in the browser, the card writes the new version into the resource itself (`?v=1.1.0` …) as soon as an administrator opens the parents area, then offers a reload button. With HACS, HACS updates the resource; the card just offers the reload. Can be switched off under ⬆️ Updates.
 
 See the [CHANGELOG](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/CHANGELOG.md).
 
