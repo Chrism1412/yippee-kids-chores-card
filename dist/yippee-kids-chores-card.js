@@ -2786,7 +2786,7 @@ actions:
         };
         const groups = this._groupBlocks(tasks);
         const body = groups.length ? groups.map(([label, list]) => `<div class="sect"><span>${label}</span><span class="hint">${list.filter((x) => this._status(x, k.id).s === 'd').length}/${list.length}</span></div>${list.map(rowOf).join('')}`).join('') : `<div class="hint">${T('Heute keine Aufgaben.')}</div>`;
-        return `<div class="box" style="${cv(k.color)}"><div class="colh">${this._avc(k)}<span>${esc(k.name)}</span><span class="pts">⭐ ${k.points || 0}</span></div>${body}</div>`;
+        return `<div class="box" style="${cv(k.color)}"><div class="colh">${this._avc(k)}<span>${esc(k.name)}</span><span style="display:flex;align-items:center;gap:6px;margin-left:auto"><button class="icon" data-a="pts" data-k="${k.id}" data-n="-1" title="${esc(T('Von Hand (Eltern)'))}" aria-label="${esc(T('Von Hand (Eltern)'))}">−</button><span class="pts" style="margin-left:0">⭐ ${k.points || 0}</span><button class="icon" data-a="pts" data-k="${k.id}" data-n="1" title="${esc(T('Von Hand (Eltern)'))}" aria-label="${esc(T('Von Hand (Eltern)'))}">＋</button></span></div>${body}</div>`;
       }).join('')}</div><div class="hint">${T('Antippen hakt eine Aufgabe direkt ab (gibt Punkte) oder nimmt sie zurück.')}</div>`;
     }
 
