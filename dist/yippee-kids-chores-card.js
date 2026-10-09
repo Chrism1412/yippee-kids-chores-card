@@ -559,7 +559,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
       this._pv = 0;
       this._q = Promise.resolve();
       this._loaded = false;
-      this._tab = 'heute';
+      this._tab = (() => { try { const s = localStorage.getItem('kpTab'); return ['heute', 'aufgaben', 'belohnungen', 'kinder', 'einst'].includes(s) ? s : 'heute'; } catch (e) { return 'heute'; } })();
       this._day = dk(new Date());
       this._until = 0;
       this._pinBuf = '';
@@ -2205,7 +2205,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
       const reqs = Object.values(this._db.req).filter((q) => q.kid === k.id);
       const fold = this._config.collapsed !== undefined ? !!this._config.collapsed : this._config.mode === 'kids';
       this._opens = this._opens || {};
-      const open = !fold || !!this._opens[k.id];
+      const open = !fold || this._opens[k.id] !== false;
       const cfg = this._cfg, rate = Number(cfg.moneyRate) || 10;
       const money = cfg.moneyOn ? ` <span class="eur">≈ ${euro(pts, rate)}</span>` : '';
       const tot = k.total !== undefined ? k.total : pts;
@@ -2697,7 +2697,7 @@ actions:
 
     _todayAdmin(kids) {
       if (!kids.length) return `<div class="empty">${T('Lege zuerst unter 👧 Kinder ein Kind an.')}</div>`;
-      return `<div class="cols">${kids.map((k) => {
+      return `<div style="margin:0 0 10px"><button class="btn primary" data-a="etask" ${kids.length ? '' : 'disabled'}>${T('＋ Aufgabe')}</button></div><div class="cols">${kids.map((k) => {
         const tasks = this._todayTasks(k.id);
         return `<div class="box" style="${cv(k.color)}"><div class="colh">${this._avc(k)}<span>${esc(k.name)}</span><span class="pts">⭐ ${k.points || 0}</span></div>
           ${tasks.map((t) => {
@@ -3965,10 +3965,10 @@ actions:
       if (PARENT_ACTS.includes(a) && !this._isParent()) { this._toast(T('🔒 Nur für Eltern')); return; }
       switch (a) {
         case 'lock': this._until = 0; this._wasOpen = false; this._closeModal(); this._render(); break;
-        case 'tab': this._tab = ds.id; this._render(); break;
+        case 'tab': this._tab = ds.id; try { localStorage.setItem('kpTab', ds.id); } catch (e) {} this._render(); break;
         case 'ktap': this._kidTap(ds.t, ds.k, e); break;
         case 'kfold': {
-          this._opens = this._opens || {}; this._opens[ds.k] = !this._opens[ds.k]; this._animK = ds.k; this._render(); this._animK = null;
+          this._opens = this._opens || {}; this._opens[ds.k] = !(this._opens[ds.k] !== false); this._animK = ds.k; this._render(); this._animK = null;
           const kk = this._db.kid[ds.k];
           if (kk && this._cfg.bdOn && this._isBday(kk, dk(new Date()))) this._bdParty(kk);
           break;
