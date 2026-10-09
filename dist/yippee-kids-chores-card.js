@@ -2123,6 +2123,36 @@ textarea{width:100%;min-height:90px;resize:vertical}
     // ---------- Rendering ----------
     _render() {
       if (!this._built || !this._hass || !this._config) return;
+      const sp = this._scrollParent();
+      const sy = sp ? sp.scrollTop : (window.scrollY || window.pageYOffset || 0);
+      this._renderInner();
+      const back = () => { try { if (sp) sp.scrollTop = sy; else window.scrollTo(0, sy); } catch (e) {} };
+      back(); if (typeof requestAnimationFrame === 'function') requestAnimationFrame(back);
+    }
+
+    _scrollParent() {
+      let n = this;
+      while (n) {
+        const rn = n.getRootNode && n.getRootNode();
+        const el = n.parentElement || (rn && rn.host) || null;
+        if (!el || el === document.body || el === document.documentElement) break;
+        try { const st = getComputedStyle(el); if (/(auto|scroll)/.test(st.overflowY) && el.scrollHeight > el.clientHeight + 4) return el; } catch (e) {}
+        n = el;
+      }
+      return null;
+    }
+
+    _blk(t) { const f = String(t.from || ''); return !f ? 'day' : f < '11:30' ? 'm' : f < '16:00' ? 'mi' : f < '18:00' ? 'na' : 'a'; }
+
+    _blockDefs() { return [['m', T('🌅 Morgens')], ['mi', T('☀️ Mittags')], ['na', T('🌇 Nachmittags')], ['a', T('🌙 Abends')], ['day', T('📌 Ohne Zeit')]]; }
+
+    _groupBlocks(list) {
+      if (this._cfg.dayBlocks === false) return [[T('Heute'), list]];
+      return this._blockDefs().map(([id, label]) => [label, list.filter((t) => this._blk(t) === id)]).filter(([, l]) => l.length);
+    }
+
+    _renderInner() {
+      if (!this._built || !this._hass || !this._config) return;
       // Nicht neu zeichnen, solange in der Karte gerade etwas eingetippt wird (sonst geht die Eingabe verloren)
       const ae = this.shadowRoot.activeElement;
       if (ae && ae.closest && ae.closest('#app') && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName) && !/^(checkbox|radio|button)$/.test(ae.type || '')) {
@@ -2246,9 +2276,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
       const doneOf = (list) => reqOf(list).filter((t) => stat[t.id].s === 'd').length;
       const sect = (label, list) => `<div class="sect"><span>${label}</span><span class="hint">${T('{done}/{total} erledigt', { done: doneOf(list), total: reqOf(list).length })}</span></div>${this._tilesHtml(list, stat, k)}`;
       if (this._cfg.dayBlocks === false) return `<div class="sect"><span>${T('Heute')}</span><span class="hint">${T('{done}/{total} erledigt', { done: doneOf(tasks), total: reqOf(tasks).length })}</span></div>${this._tilesHtml(tasks, stat, k)}`;
-      const blk = (t) => { const f = String(t.from || ''); return !f ? 'day' : f < '11:30' ? 'm' : f < '16:00' ? 'mi' : f < '18:00' ? 'na' : 'a'; };
-      const defs = [['m', T('🌅 Morgens')], ['mi', T('☀️ Mittags')], ['na', T('🌇 Nachmittags')], ['a', T('🌙 Abends')], ['day', T('📌 Ohne Zeit')]];
-      return defs.map(([id, label]) => { const list = tasks.filter((t) => blk(t) === id); return list.length ? sect(label, list) : ''; }).join('');
+      return this._blockDefs().map(([id, label]) => { const list = tasks.filter((t) => this._blk(t) === id); return list.length ? sect(label, list) : ''; }).join('');
     }
 
     _kidHtml(k) {
@@ -2731,8 +2759,7 @@ actions:
       if (!kids.length) return `<div class="empty">${T('Lege zuerst unter 👧 Kinder ein Kind an.')}</div>`;
       return `<div style="margin:0 0 10px"><button class="btn primary" data-a="etask" ${kids.length ? '' : 'disabled'}>${T('＋ Aufgabe')}</button></div><div class="cols">${kids.map((k) => {
         const tasks = this._todayTasks(k.id);
-        return `<div class="box" style="${cv(k.color)}"><div class="colh">${this._avc(k)}<span>${esc(k.name)}</span><span class="pts">⭐ ${k.points || 0}</span></div>
-          ${tasks.map((t) => {
+        const rowOf = (t) => {
             const { s } = this._status(t, k.id);
             const streak = t.sched === 'once' ? 0 : this._curStreak(t, k.id);
             const sub = [this._winText(t) ? `⏰ ${this._winText(t)}` : '', t.sched === 'once' ? T('⚡ Sonderaufgabe') : '', this._calLabel(t, dk(new Date())) ? `🗑️ ${esc(this._calLabel(t, dk(new Date())))}` : '', this._isExtra(t) ? T('🙋 Zusatzaufgabe') : '', streak >= 2 ? T('🔥 {n} Tage', { n: streak }) : '', s === 'x' ? T('−{n} ⭐ abgezogen', { n: t.penalty || 0 }) : '', s === 'taken' ? T('anderes Kind ist dran') : ''].filter(Boolean).join(' · ');
@@ -2740,7 +2767,10 @@ actions:
             const ico = s === 'd' ? '✓' : s === 'p' ? '⏳' : s === 'e' ? '🙂' : s === 'm' ? '?' : s === 'taken' ? '🔒' : s === 'x' || this._win(t) === 'after' ? '✕' : '';
             return `<button class="trow" data-a="atap" data-t="${t.id}" data-k="${k.id}">
             <span class="st ${cls}">${ico}</span><span class="grow">${esc(t.emoji || '')} ${esc(t.title)}${sub ? `<small>${sub}</small>` : ''}</span><span class="pts">+${t.points || 0}</span></button>`;
-          }).join('') || `<div class="hint">${T('Heute keine Aufgaben.')}</div>`}</div>`;
+        };
+        const groups = this._groupBlocks(tasks);
+        const body = groups.length ? groups.map(([label, list]) => `<div class="sect"><span>${label}</span><span class="hint">${list.filter((x) => this._status(x, k.id).s === 'd').length}/${list.length}</span></div>${list.map(rowOf).join('')}`).join('') : `<div class="hint">${T('Heute keine Aufgaben.')}</div>`;
+        return `<div class="box" style="${cv(k.color)}"><div class="colh">${this._avc(k)}<span>${esc(k.name)}</span><span class="pts">⭐ ${k.points || 0}</span></div>${body}</div>`;
       }).join('')}</div><div class="hint">${T('Antippen hakt eine Aufgabe direkt ab (gibt Punkte) oder nimmt sie zurück.')}</div>`;
     }
 
