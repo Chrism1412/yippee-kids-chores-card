@@ -31,16 +31,16 @@ Parents create chores and rewards, approve finished chores (also right from the 
 - **One file, no dependencies:** no other HACS cards needed, light enough for older tablets.
 - **Made for phones:** works in the Home Assistant app in portrait mode just as well as on a wall tablet.
 
-> ### 💡 Ready to go: 81 chores and 21 rewards built in
-> No need to start from scratch. The card ships with a **chore database of 81 templates in 9 categories** – from "brush teeth" and "pack school bag" to "empty the dishwasher", "walk the dog" and "mow the lawn" – each with emoji, points and time of day, plus **21 reward templates** (ice cream voucher, movie night, cinema, zoo, theme park …).
+> ### 💡 Ready to go: 163 chores and 29 rewards built in
+> No need to start from scratch. The card ships with a **chore database of 163 templates in 12 categories** – from "brush teeth" and "pack school bag" to "empty the dishwasher", "walk the dog" and "mow the lawn" – each with emoji, points and time of day, plus **29 reward templates** (ice cream voucher, movie night, cinema, zoo, theme park …).
 >
-> **Age-appropriate by birthday:** enter a child's birthday and the template list only shows chores that fit their age (5–17): 18 suggestions at age 5, 51 at age 8, more than 60 from age 12. The 💡 button on a child suggests all fitting chores they don't have yet – tick and done.
+> **Age-appropriate by birthday:** enter a child's birthday and the template list only shows chores that fit their age (4–17): 27 suggestions at age 4, 79 at age 6, 103 at age 8, more than 110 from age 10. The 💡 button on a child suggests all fitting chores they don't have yet – tick and done.
 
 ## Screenshots
 
-| Kids view | Parents view | Rewards | Settings |
-|:---:|:---:|:---:|:---:|
-| <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/kinder-ansicht.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/eltern-heute.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/belohnungen.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/einstellungen.png" width="200"> |
+| Kids view | Parents view | Rewards | Settings | Presence |
+|:---:|:---:|:---:|:---:|:---:|
+| <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/kinder-ansicht.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/eltern-heute.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/belohnungen.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/einstellungen.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/anwesenheit.png" width="200"> |
 
 *(Screenshots in German – the card shows your Home Assistant language automatically.)*
 
@@ -50,6 +50,7 @@ Parents create chores and rewards, approve finished chores (also right from the 
 - Big chore tiles with emoji, points and time window
 - Star balance, **10 levels** and **9 badges**
 - **Savings goal** 🎯, **wishes** 💡, a shared **family goal** 👨‍👩‍👧
+- **Joker** 🃏 (optional): redeem it as a reward and skip one required chore without minus stars
 - **Streaks** 🔥 with bonus stars, **"Coming up"** 📅 preview
 - **Birthday** 🎂: confetti, bonus, point multiplier, optional day off
 - **School grades** 🎓 (optional): stars for good grades – kids can report a grade themselves, optionally with a photo of the test
@@ -58,10 +59,20 @@ Parents create chores and rewards, approve finished chores (also right from the 
 ### Chores
 - **Weekdays**, **fixed dates**, **one-off special chores** (first come, first served) or **from a waste collection calendar**
 - **Rotation** 🔄 between kids (skips kids on holiday), **"One is enough"** 🤝, **extra chores** 🙋
-- **Twice a day** with separate time windows, **seasons** (e.g. mowing April–October), **school days only**
+- **Several times a day** (up to 5 time windows, e.g. wash hands morning, noon and evening), optional **own order** ↕️ with ▲▼, **"the evening before"** 🌙 for packing the school or gym bag (shows when the next day is a school day; asks for the PE days), optional **day blocks** ⏰ (morning / noon / afternoon / evening, collapsible, past blocks fold automatically, also in the parents view), **seasons** (e.g. mowing April–October), **school days only**
 - **Photo proof** 📷 per chore
-- **Chore database with 81 templates** in 9 categories (morning, school, kitchen, cooking & shopping, tidying & cleaning, laundry, house/garden/pets, responsibility, evening), filtered by the child's age from their birthday; school chores follow the usual school starting age of the selected country (or an optional "started school in" month per child, which also shows the school year); seasonal chores get their season, school chores "school days only" automatically
-- **21 reward templates** (ice cream voucher, movie night, cinema, zoo, theme park …)
+- **Chore database with 163 templates** in 12 categories (morning, noon, school, kitchen & cooking, shopping, tidying & cleaning, laundry, house/garden/pets, responsibility, health & exercise, family & togetherness, evening), filtered by the child's age from their birthday; school chores follow the usual school starting age of the selected country (or an optional "started school in" month per child, which also shows the school year); seasonal chores get their season, school chores "school days only" automatically
+- **29 reward templates** (ice cream voucher, movie night, one-on-one time with mum or dad, 🃏 joker, cinema, zoo, theme park …)
+
+### Presence 🏠 – for separated parents and patchwork families (optional)
+
+If a child doesn't always live in your household, set it **per kid** under **👧 Kids → ✎ → 🏠 Presence**: **normally** "mostly with us" or "mostly elsewhere", plus any number of **rules** – *here* or *away*, **every week or every 2, 3, 4 weeks**, from day + time to day + time (e.g. away every week **Wed 14:00 – Thu 08:00** and every 2nd weekend **Fri 15:00 – Sun 18:00**). Add a **holiday arrangement** per holiday type (summer, autumn, Christmas, winter, Easter, Whitsun: rules continue, all with us, all with the other parent, first/second half, **first/last … weeks with us**), optionally **alternating every year**, and **exceptions** (date ranges "here"/"away"). A preview of the next 8 weeks is shown in the editor.
+
+While the child is away there are **no chores, reminders or "missed"**, the streak 🔥 is kept, rotations skip the child and the morning announcement leaves them out. On days with arrivals or departures only chores whose time window falls into the time the child is here appear. The holiday arrangement uses the school holidays of your region (⚙️ Settings → 🏖️ Holidays).
+
+### Joker 🃏 (optional)
+
+Turn on under **⚙️ Settings → 🧩 Extra features → 🃏 Joker** and add the reward template "🃏 Joker: skip one task" (default 30 ⭐). After redeeming it, the kid gets a **🃏 Joker** button and picks one of today's required chores to skip – no stars, but no minus stars either, and the streak 🔥 is kept. You get a notification and the audit log records it. Any reward can become a joker with the "🃏 Is a joker" checkbox.
 
 ### School grades 🎓 (optional)
 
@@ -76,6 +87,7 @@ Turn on under **⚙️ Settings → 🧩 Extra features → 🎓 School grades**
 - Grade stars count towards **levels** and the **family goal** like all earned stars
 
 ### For parents
+- **Behaviour** 😊 (optional): reward "well-behaved" with one tap in the Today tab (stars adjustable), optionally 😠 "not well-behaved" with a deduction – logged in the points history
 - **Approval** of chores and rewards – in the card, via app button or Telegram button
 - **Penalties only after your decision**: missed = excused, minus stars or done after all
 - Manual adjustments, **points history**, **monthly statistics**, **pocket money** conversion, **double-points days**
@@ -110,7 +122,7 @@ HACS adds the resource automatically.
 1. Download [`dist/yippee-kids-chores-card.js`](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/dist/yippee-kids-chores-card.js) from the [latest release](https://github.com/Chrism1412/yippee-kids-chores-card/releases/latest).
 2. Create the folder **`/config/www/community/yippee-kids-chores-card/`** and copy the file into it. This is the same folder HACS uses, so you can switch to HACS later without changes.
 3. **Settings → Dashboards → ⋮ → Resources → Add resource**
-   - URL: `/hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.2.0`
+   - URL: `/hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.3.0`
    - Type: **JavaScript module**
 4. Reload the page.
 
@@ -152,7 +164,7 @@ A complete example dashboard is in [`examples/dashboard.yaml`](https://github.co
 | `storage` | `todo.…` | – | **Required.** The Local To-do list used as storage |
 | `mode` | `admin`, `kids`, `kid` | `admin` | Parents view, all kids or one kid |
 | `child` | name | – | Only with `mode: kid` |
-| `collapsed` | `true` / `false` | `true` for `kids` | Show kids collapsed |
+| `collapsed` | `true` / `false` | `false` | Show kids collapsed |
 | `family` | `true` / `false` | automatic | Show the family goal on this card (automatically only once per page) |
 | `language` | e.g. `en`, `fr` | setting / HA language | Language for this device only |
 | `pin` | digits | – | Legacy PIN. Better: set it in Settings → 🔒 Access |
@@ -167,7 +179,7 @@ All integrations are **optional** and can be switched on and off individually.
 - **Text-to-speech / Alexa:** any TTS integration with media players, or *Alexa Media Player* (HACS) – for the **morning announcement** ("Good morning Mia! Today: brush teeth, make bed and take out the trash (paper).") and **reminders** shortly before a time window ends.
 - **Waste collection calendar:** chores like "Take out the trash" take their dates from any Home Assistant calendar – e.g. **[Waste Collection Schedule](https://github.com/mampfes/hacs_waste_collection_schedule)** (HACS, hundreds of providers), a **Remote calendar** with your provider's ICS link, or a **Local calendar**. Per chore: keywords (e.g. `paper, residual`), and **"the evening before"** so the bin goes out in time. The tile shows what is collected.
 - **School holidays and public holidays:** choose country and region – the card fetches the data itself from the **[OpenHolidays API](https://www.openholidaysapi.org)** (free, **no API key**, 36 countries). Fallback: the built-in **Holiday** integration and a school-holiday calendar.
-- **Sensors:** `sensor.yippee_<name>` per kid (state = points) with the attributes `heute_erledigt`, `heute_gesamt`, `alles_erledigt`, `offen`, `wartet_auf_freigabe`, `level`, `level_name`, `gesamt_verdient`, `abzeichen`, `ziel`, `urlaub`, `feiertag`, `ferien` (and `euro`) – e.g. "TV only after all chores are done". Updated while the card is open for an administrator.
+- **Sensors:** `sensor.yippee_<name>` per kid (state = points) with the attributes `heute_erledigt`, `heute_gesamt`, `alles_erledigt`, `offen`, `wartet_auf_freigabe`, `level`, `level_name`, `gesamt_verdient`, `abzeichen`, `ziel`, `urlaub`, `anwesend`, `feiertag`, `ferien` (and `euro`) – e.g. "TV only after all chores are done". Updated while the card is open for an administrator.
 - **Background automation:** morning announcement, reminders, missed-chore messages, daily summary and Telegram commands run inside Home Assistant – **even when no card is open**. The card writes a 14-day plan and creates the automation with one tap.
 
 ## Data safety
@@ -191,7 +203,7 @@ All integrations are **optional** and can be switched on and off individually.
 ## Updates
 
 - **Update available:** when HACS knows a newer version, the parents area shows a notice.
-- **Resource raised automatically:** when the file on the server is newer than the one running in the browser, the card writes the new version into the resource itself (`?v=1.2.0` …) as soon as an administrator opens the parents area, then offers a reload button. With HACS, HACS updates the resource; the card just offers the reload. Can be switched off under ⬆️ Updates.
+- **Resource raised automatically:** when the file on the server is newer than the one running in the browser, the card writes the new version into the resource itself (`?v=1.3.0` …) as soon as an administrator opens the parents area, then offers a reload button. With HACS, HACS updates the resource; the card just offers the reload. Can be switched off under ⬆️ Updates.
 
 See the [CHANGELOG](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/CHANGELOG.md).
 
