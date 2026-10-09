@@ -60,16 +60,16 @@ Eltern legen Aufgaben und Belohnungen an, geben Erledigtes frei (auch direkt aus
 - **Eine Datei, keine Abhängigkeiten:** Keine weiteren HACS-Karten nötig, ressourcenschonend auch auf älteren Tablets.
 - **Für das Handy gemacht:** Funktioniert in der Home-Assistant-App im Hochformat genauso wie auf dem Wand-Tablet.
 
-> ### 💡 Sofort startklar: 81 Aufgaben und 21 Belohnungen eingebaut
-> Du musst nicht bei null anfangen. Die Karte bringt eine **Aufgaben-Datenbank mit 81 Vorlagen in 9 Bereichen** mit – von „Zähne putzen“ über „Ranzen packen“ und „Spülmaschine ausräumen“ bis „Rasenmähen“ – jeweils mit passendem Emoji, Punkten und Tageszeit. Dazu **21 Belohnungs-Vorlagen** wie Eisgutschein, Filmabend, Kino oder Freizeitpark.
+> ### 💡 Sofort startklar: 163 Aufgaben und 29 Belohnungen eingebaut
+> Du musst nicht bei null anfangen. Die Karte bringt eine **Aufgaben-Datenbank mit 163 Vorlagen in 12 Bereichen** mit – von „Zähne putzen“ über „Ranzen packen“ und „Spülmaschine ausräumen“ bis „Rasenmähen“ – jeweils mit passendem Emoji, Punkten und Tageszeit. Dazu **29 Belohnungs-Vorlagen** wie Eisgutschein, Filmabend, Kino oder Freizeitpark.
 >
-> **Altersgerecht dank Geburtstag:** Trägst du beim Kind den Geburtstag ein, zeigt die Auswahlliste nur Aufgaben, die zum Alter passen (5 bis 17 Jahre). Für ein 5-jähriges Kind sind es 18 Vorschläge, mit 8 Jahren 51, ab 12 Jahren über 60. Mit dem 💡-Knopf beim Kind schlägt die Karte alle passenden, noch nicht zugewiesenen Aufgaben auf einmal vor – anhaken, fertig.
+> **Altersgerecht dank Geburtstag:** Trägst du beim Kind den Geburtstag ein, zeigt die Auswahlliste nur Aufgaben, die zum Alter passen (4 bis 17 Jahre). Für ein 4-jähriges Kind sind es 27 Vorschläge, mit 6 Jahren 79, mit 8 Jahren 103, ab 10 Jahren über 110. Mit dem 💡-Knopf beim Kind schlägt die Karte alle passenden, noch nicht zugewiesenen Aufgaben auf einmal vor – anhaken, fertig.
 
 ## Screenshots
 
-| Kinder-Ansicht | Eltern-Ansicht | Belohnungen | Einstellungen |
-|:---:|:---:|:---:|:---:|
-| <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/kinder-ansicht.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/eltern-heute.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/belohnungen.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/einstellungen.png" width="200"> |
+| Kinder-Ansicht | Eltern-Ansicht | Belohnungen | Einstellungen | Anwesenheit |
+|:---:|:---:|:---:|:---:|:---:|
+| <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/kinder-ansicht.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/eltern-heute.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/belohnungen.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/einstellungen.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/anwesenheit.png" width="200"> |
 
 ## Funktionen im Überblick
 
@@ -78,36 +78,43 @@ Eltern legen Aufgaben und Belohnungen an, geben Erledigtes frei (auch direkt aus
 - Sterne-Konto, **10 Level** (vom 🌱 Anfänger bis zum 💎 Haushalts-König) und **9 Abzeichen**
 - **Sparziel** 🎯: eine Belohnung auswählen und den Fortschritt dorthin sehen
 - **Wünsche** 💡: eigene Belohnungsideen an die Eltern schicken
+- **Joker** 🃏 (optional): als Belohnung einlösen und damit eine Pflicht-Aufgabe ohne Minuspunkte auslassen
 - **Familienziel** 👨‍👩‍👧: alle Kinder sammeln gemeinsam, z. B. für einen Ausflug
 - **Serien** 🔥: Bonus, wenn eine Aufgabe mehrere Tage am Stück erledigt wird
 - **„Demnächst“** 📅: Vorschau auf besondere Aufgaben der nächsten Tage
 - **Geburtstag** 🎂: Konfetti, Bonus, Punktefaktor und auf Wunsch aufgabenfrei
 - **Schulnoten** 🎓 (optional): Sterne für gute Noten – Note selbst melden, auf Wunsch mit Foto der Arbeit
-- Eingeklappte Ansicht: nur Name und Punkte, Aufgaben erst nach Antippen
+- **Tagesblöcke** ⏰ (optional): Aufgaben nach Morgens, Mittags, Nachmittags und Abends gruppiert, jeder Block mit eigenem Fortschritt – zum Auf- und Zuklappen; vorbei ist vorbei: abgelaufene Blöcke klappen automatisch zu (abschaltbar). Auch in der Eltern-Ansicht
+- Auf Wunsch eingeklappte Ansicht (`collapsed: true`): nur Name und Punkte, Aufgaben erst nach Antippen
 
 ### Aufgaben
 - **Wochentage**, **feste Termine**, **einmalige Sonderaufgaben** (wer zuerst kommt) oder **aus dem Müllkalender**
 - **Im Wechsel** 🔄: die Kinder sind abwechselnd dran – ist eines im Urlaub, übernimmt das nächste
 - **„Einer reicht“** 🤝: Pflicht für alle, erledigt sobald es eines macht
 - **Zusatzaufgaben** 🙋: freiwillig, mit Extrapunkten
-- **Zweimal am Tag** (z. B. Zähne putzen morgens und abends) mit eigenem Zeitfenster
+- **Mehrmals am Tag** (bis zu 5 Zeitfenster, z. B. Hände waschen morgens, mittags und abends)
+- **Eigene Reihenfolge** ↕️ (optional): Aufgaben mit ▲▼ sortieren – so sehen sie auch die Kinder
+- **„Am Abend vorher“** 🌙 für Aufgaben wie Ranzen oder Turnbeutel packen: kommt, wenn am nächsten Tag Schule ist; beim Turnbeutel fragt die Karte nach den Sporttagen
 - **Saison** (z. B. Rasenmähen nur April–Oktober) und **„nur an Schultagen“**
 - **Foto-Nachweis** 📷 pro Aufgabe: das Kind fotografiert beim Abhaken, die Eltern sehen das Foto bei der Freigabe
-- **Aufgaben-Datenbank mit 81 Vorlagen** in 9 Bereichen – nach Geburtstag automatisch altersgerecht gefiltert (siehe unten)
+- **Aufgaben-Datenbank mit 163 Vorlagen** in 12 Bereichen – nach Geburtstag automatisch altersgerecht gefiltert (siehe unten)
 
-### Aufgaben-Datenbank: 81 Vorlagen, altersgerecht
+### Aufgaben-Datenbank: 163 Vorlagen, altersgerecht
 
 | Bereich | Vorlagen | Beispiele |
 |---|:---:|---|
-| 🌅 Morgens | 8 | Bett machen, Zähne putzen, Selbst anziehen, Vesperdose einpacken |
-| 🎒 Schule | 10 | Hausaufgaben, Lesen üben, Vokabeln lernen, Ranzen für morgen packen |
-| 🍽️ Küche & Essen | 9 | Tisch decken, Spülmaschine ausräumen, Beim Kochen helfen |
-| 🧑‍🍳 Kochen & Einkaufen | 6 | Brötchen einkaufen, Nudeln kochen, Wocheneinkauf erledigen |
-| 🧹 Ordnung & Putzen | 14 | Zimmer aufräumen, Staubsaugen, Fenster putzen, Bad komplett putzen |
-| 🧺 Wäsche | 10 | Socken sortieren, Wäsche zusammenlegen, Waschmaschine starten |
-| 🏡 Haus, Garten & Tiere | 15 | Müll rausbringen, Haustier füttern, Hund ausführen, Rasenmähen |
-| 🧑 Verantwortung | 6 | Handy pünktlich abgeben, Taschengeld-Budget führen, Auf Geschwister aufpassen |
-| 🌙 Abends | 3 | Hände waschen, Duschen, Zähne putzen abends |
+| 🌅 Morgens | 15 | Aufstehen, Bett machen, Zähne putzen, Schuhe anziehen, Selbst mit Wecker aufstehen |
+| ☀️ Mittags | 3 | Mittagessen, Sachen wegräumen, Vesper essen (nach der Schule) |
+| 🎒 Schule | 23 | Hausaufgaben, Lesen üben, Turnbeutel packen, Für die Klassenarbeit lernen, Referat vorbereiten |
+| 🍽️ Küche & Essen | 20 | Tisch decken, Spülmaschine ausräumen, Nudeln kochen, Komplette Mahlzeit kochen, Pizza selbst belegen |
+| 🛒 Einkaufen | 4 | Brötchen einkaufen, Einkaufsliste schreiben, Einkauf mit Einkaufsliste, Wocheneinkauf erledigen |
+| 🧹 Ordnung & Putzen | 18 | Zimmer aufräumen, Staubsaugen, Schreibtisch aufräumen, Bad komplett putzen |
+| 🧺 Wäsche | 12 | Socken sortieren, Wäsche zusammenlegen, Eigene Wäsche komplett waschen |
+| 🏡 Haus, Garten & Tiere | 24 | Müll rausbringen, Hund ausführen, Fische füttern, Rasenmähen, Autoscheiben freikratzen |
+| 🧑 Verantwortung | 9 | Handy pünktlich abgeben, Taschengeld-Budget führen, Arzttermin selbst ausmachen |
+| ❤️ Gesundheit & Bewegung | 14 | Hände waschen (morgens, mittags, abends), Genug Wasser trinken, 30 Min. draußen spielen, Sonnencreme auftragen, Zahnseide benutzen |
+| 👨‍👩‍👧 Familie & Miteinander | 7 | Oma oder Opa anrufen, Dankeskarte schreiben, Handyfreie Stunde, Nachbarn helfen |
+| 🌙 Abends | 14 | Abendessen, Zähne putzen abends, Pyjama anziehen, Vorlesen, Ins Bett gehen |
 
 **So funktioniert die Altersauswahl:**
 
@@ -115,15 +122,36 @@ Eltern legen Aufgaben und Belohnungen an, geben Erledigtes frei (auch direkt aus
 2. Beim Anlegen einer Aufgabe zeigt **📋 Vorlage wählen** nur die Vorlagen, die zum Alter der ausgewählten Kinder passen. Mit „Alle Vorlagen“ lässt sich die ganze Liste einblenden.
 3. Oder der **💡-Knopf** beim Kind: Er listet alle passenden Aufgaben, die das Kind noch nicht hat – anhaken und mit einem Tipp übernehmen.
 
-| Alter | 5 | 6 | 8 | 10 | 12+ |
-|---|:---:|:---:|:---:|:---:|:---:|
-| Passende Vorlagen | 18 | 35 | 51 | 60 | 66–67 |
+| Alter | 4 | 5 | 6 | 8 | 10–12 | 14+ |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|
+| Passende Vorlagen | 27 | 49 | 79 | 103 | 117–118 | 111 |
 
 **Schul-Vorlagen** richten sich nach dem üblichen **Einschulungsalter des eingestellten Landes** (z. B. Irland und Malta 5, Deutschland 6, Polen und Schweden 7 Jahre). Ist ein Kind früher oder später eingeschult worden, beim Kind **„🎒 Eingeschult im (Monat/Jahr)“** eintragen – dann zählen die Schuljahre, und die Karte zeigt die Klasse an (z. B. „8 Jahre · 2. Klasse“).
 
-Vorlagen mit Jahreszeit bekommen automatisch ihre Saison (Rasenmähen April–Oktober, Unkraut und Blumen gießen April–September, Laub Oktober–November, Schnee Dezember–März), Schul-Aufgaben automatisch „nur an Schultagen“. Alle Vorlagen sind in allen 25 Sprachen übersetzt und lassen sich nach dem Übernehmen frei anpassen.
+Vorlagen mit Jahreszeit bekommen automatisch ihre Saison (Rasenmähen April–Oktober, Unkraut und Blumen gießen April–September, Sonnencreme Mai–September, Obst ernten Juni–September, Laub Oktober–November, Plätzchen backen Dezember, Schnee und Autoscheiben freikratzen Dezember–März), Schul-Aufgaben automatisch „nur an Schultagen“. Alle Vorlagen sind in allen 25 Sprachen übersetzt und lassen sich nach dem Übernehmen frei anpassen.
 
-Dazu gibt es **21 Belohnungs-Vorlagen** von klein bis groß: Eisgutschein, Süßigkeit aussuchen, 30 Min. extra Spielzeit, Lieblingsessen aussuchen, Filmabend mit Popcorn, Freund/in einladen, Kino, Zoo bis Freizeitpark – mit Vorschlagspreis in Sternen, frei änderbar.
+Dazu gibt es **29 Belohnungs-Vorlagen** von klein bis groß: Eisgutschein, Süßigkeit aussuchen, 30 Min. extra Spielzeit, Musik im Auto aussuchen, Exklusivzeit mit Mama oder Papa, 🃏 Joker, Filmabend mit Popcorn, Freund/in einladen, Länger ausgehen dürfen, Kino, Zoo bis Freizeitpark – mit Vorschlagspreis in Sternen, frei änderbar.
+
+### Anwesenheit 🏠 – für getrennte Eltern und Patchwork-Familien (optional)
+
+Ist ein Kind nicht immer im Haushalt (Umgang, Wechselmodell, Patchwork), stellst du das **pro Kind** unter **👧 Kinder → ✎ → 🏠 Anwesenheit** ein – jedes Kind mit eigenem Plan:
+
+- **Normalerweise:** „meistens bei uns“ oder „meistens woanders“.
+- **Regeln** (beliebig viele): *da* oder *nicht da*, **jede Woche oder alle 2, 3, 4 Wochen**, von Tag + Uhrzeit bis Tag + Uhrzeit. Zum Beispiel:
+  - nicht da – jede Woche – ab **Mi 14:00 bis Do 08:00** (ein Tag unter der Woche beim anderen Elternteil)
+  - nicht da – alle 2 Wochen – ab **Fr 15:00 bis So 18:00** (jedes zweite Wochenende)
+  - oder umgekehrt: meistens woanders, da – alle 2 Wochen – ab **Fr 12:00 bis Mi 12:00**
+- **Ferienregelung** je Ferienart (Sommer, Herbst, Weihnachten, Winter, Ostern, Pfingsten): Regeln gelten weiter, ganz bei uns, ganz beim anderen Elternteil, erste oder zweite Hälfte, **erste oder letzte … Wochen bei uns** (z. B. die ersten 3 von 6,5 Wochen Sommerferien). Auf Wunsch **jährlich wechselnd** und mit eigenen Übergabezeiten.
+- **Ausnahmen:** einzelne Zeiträume „da“ oder „nicht da“, z. B. ein getauschtes Wochenende – sie gelten vor allem anderen.
+- **Vorschau** der nächsten 8 Wochen direkt im Editor (🔄 Vorschau).
+
+Ist das Kind nicht da, gibt es **keine Aufgaben, keine Erinnerungen und kein „verpasst“**, die 🔥-Serie bleibt erhalten, „Im Wechsel“ überspringt das Kind, und die Morgen-Ansage lässt es aus. An Tagen mit Kommen und Gehen erscheinen nur Aufgaben, deren Zeitfenster in die Zeit fällt, in der das Kind da ist. Die Kinder-Ansicht zeigt „👋 Bis bald! Wieder da: Fr 23.10. ab 12:00 Uhr“. Die Ferienregelung nutzt die Schulferien – dafür unter ⚙️ Einstellungen → 🏖️ Urlaub & Ferien Land und Region wählen.
+
+<img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/anwesenheit.png" width="300" alt="Anwesenheit">
+
+### Joker 🃏 (optional)
+
+Unter **⚙️ Einstellungen → 🧩 Zusatzfunktionen → 🃏 Joker** einschalten und unter **🎁 Belohnungen** die Vorlage „🃏 Joker: eine Aufgabe auslassen“ anlegen (Standard 30 ⭐). Löst ein Kind den Joker ein, erscheint bei ihm der Knopf **🃏 Joker ×1**. Damit wählt es eine heutige Pflicht-Aufgabe aus, die es auslassen möchte: keine Sterne, aber auch keine Minuspunkte, und die Serie 🔥 bleibt erhalten. Du bekommst eine Nachricht, und der Einsatz steht im Änderungsprotokoll. Jede eigene Belohnung lässt sich mit dem Haken „🃏 Ist ein Joker“ ebenfalls zum Joker machen.
 
 ### Schulnoten 🎓 (optional)
 
@@ -152,6 +180,7 @@ Unter **⚙️ Einstellungen → 🧩 Zusatzfunktionen → 🎓 Schulnoten** ein
 - Noten-Sterne zählen wie alle verdienten Sterne für **Level** und **Familienziel**
 
 ### Für Eltern
+- **Benehmen** 😊 (optional): im Heute-Tab mit einem Tipp „Artig“ belohnen (Sterne einstellbar), auf Wunsch auch 😠 „Unartig“ mit Abzug – alles im Punkte-Verlauf
 - **Freigabe** von Aufgaben und Einlösungen – in der Karte, per Push-Knopf oder Telegram-Knopf
 - **Minuspunkte nur nach Entscheidung**: verpasst = „entschuldigt“, „Minuspunkte“ oder „doch erledigt“
 - Punkte von Hand anpassen, **Punkte-Verlauf** pro Kind, **Monatsstatistik**
@@ -190,7 +219,7 @@ HACS legt die Ressource automatisch an.
 2. In Home Assistant den Ordner **`/config/www/community/yippee-kids-chores-card/`** anlegen und die Datei dort hineinkopieren (z. B. mit dem Add-on *File editor* oder *Samba share*).
    Das ist derselbe Ordner, den auch HACS verwendet – ein späterer Wechsel zu HACS klappt dadurch ohne Umbau.
 3. **Einstellungen → Dashboards → ⋮ (oben rechts) → Ressourcen → Ressource hinzufügen**
-   - URL: `/hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.2.0`
+   - URL: `/hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.3.0`
    - Typ: **JavaScript-Modul**
 4. Seite neu laden.
 
@@ -234,7 +263,7 @@ child: Mia
 
 ### 3. In der Eltern-Ansicht loslegen
 
-1. **👧 Kinder** – Kinder anlegen (Name, Emoji, Farbe, **Geburtstag**). Mit 💡 schlägt die Karte aus der Datenbank mit 81 Vorlagen alle altersgerechten Aufgaben vor.
+1. **👧 Kinder** – Kinder anlegen (Name, Emoji, Farbe, **Geburtstag**). Mit 💡 schlägt die Karte aus der Datenbank mit 163 Vorlagen alle altersgerechten Aufgaben vor.
 2. **✅ Aufgaben** – Aufgaben anlegen oder aus den Vorlagen wählen.
 3. **🎁 Belohnungen** – Belohnungen mit ihrem Preis in Sternen anlegen.
 4. **⚙️ Einstellungen** – Sprache, Benachrichtigungen, Freigabe, Zusatzfunktionen usw. Alle Einstellungen gelten automatisch für alle Kinder-Karten und Geräte.
@@ -246,7 +275,7 @@ child: Mia
 | `storage` | `todo.…` | – | **Pflicht.** Die Lokale To-do-Liste als Speicher |
 | `mode` | `admin`, `kids`, `kid` | `admin` | Eltern-Ansicht, alle Kinder oder ein Kind |
 | `child` | Name | – | Nur bei `mode: kid`: welches Kind |
-| `collapsed` | `true` / `false` | bei `kids`: `true` | Kinder eingeklappt (nur Name und Punkte) anzeigen |
+| `collapsed` | `true` / `false` | `false` | Kinder eingeklappt (nur Name und Punkte) anzeigen |
 | `family` | `true` / `false` | automatisch | Familienziel auf dieser Karte zeigen. Automatisch erscheint es nur einmal pro Seite |
 | `language` | z. B. `en`, `fr` | Einstellung bzw. Sprache von Home Assistant | Eigene Sprache nur für dieses Gerät |
 | `pin` | Ziffern | – | Ältere Variante der PIN. Besser in den Einstellungen unter 🔒 Zugriffsschutz festlegen |
@@ -324,7 +353,7 @@ Unter **🏖️ Urlaub & Ferien** Land und Region (z. B. Bundesland oder Départ
 
 Für jedes Kind entsteht ein Sensor `sensor.yippee_<name>` (Zustand = Punktestand) mit den Attributen
 
-`heute_erledigt`, `heute_gesamt`, `alles_erledigt`, `offen`, `wartet_auf_freigabe`, `level`, `level_name`, `gesamt_verdient`, `abzeichen`, `ziel`, `urlaub`, `feiertag`, `ferien` und – mit Taschengeld – `euro`.
+`heute_erledigt`, `heute_gesamt`, `alles_erledigt`, `offen`, `wartet_auf_freigabe`, `level`, `level_name`, `gesamt_verdient`, `abzeichen`, `ziel`, `urlaub`, `anwesend`, `feiertag`, `ferien` und – mit Taschengeld – `euro`.
 
 Beispiel: Fernseher erst, wenn alles erledigt ist
 
@@ -397,7 +426,7 @@ Standard ist die Sprache deines Home-Assistant-Benutzers. Unter **🌐 Sprache**
 Unter **⬆️ Updates** und oben im Eltern-Bereich:
 
 - **Update verfügbar:** Kennt HACS eine neuere Version, erscheint ein Hinweis mit Link zu den Neuerungen.
-- **Ressource automatisch erhöhen:** Liegt nach einem Update eine neuere Datei auf dem Server als die, die gerade im Browser läuft, trägt die Karte die neue Version **selbst** in die Ressource ein (`?v=1.2.0` usw.), sobald ein Administrator den Eltern-Bereich öffnet. Danach erscheint „Neue Version ist bereit“ mit einem Knopf zum Neuladen. Bei Installation über HACS erledigt HACS das Umstellen; die Karte bietet dann nur das Neuladen an.
+- **Ressource automatisch erhöhen:** Liegt nach einem Update eine neuere Datei auf dem Server als die, die gerade im Browser läuft, trägt die Karte die neue Version **selbst** in die Ressource ein (`?v=1.3.0` usw.), sobald ein Administrator den Eltern-Bereich öffnet. Danach erscheint „Neue Version ist bereit“ mit einem Knopf zum Neuladen. Bei Installation über HACS erledigt HACS das Umstellen; die Karte bietet dann nur das Neuladen an.
 - Wer das nicht möchte, schaltet unter ⬆️ Updates „Ressource nach einem Update automatisch erhöhen“ aus – dann erinnert die Karte nur und stellt auf Knopfdruck um.
 
 Die Änderungen jeder Version stehen im [CHANGELOG](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/CHANGELOG.md).
