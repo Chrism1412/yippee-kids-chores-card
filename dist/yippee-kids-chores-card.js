@@ -81,7 +81,7 @@
   // Vorlagen: [Kategorie, Emoji, Titel, Punkte, Zeitfenster, Tage, ab Alter, bis Alter]
   // Zeitfenster: 'm' Morgens, 'mi' Mittags, 'a' Abends, '' ganzer Tag oder ['von','bis']
   // Tage: null = täglich, [1,2,3,4,5] = Mo–Fr (0 = So), 'dates' = bestimmte Termine, 'once' = einmalig
-  const WINDOWS = { m: ['06:45', '10:00'], mi: ['12:00', '18:00'], a: ['19:00', '23:59'] };
+  const WINDOWS = { m: ['06:30', '07:30'], mi: ['12:00', '18:00'], a: ['19:00', '23:59'] };
   const SCHOOL = [1, 2, 3, 4, 5];
   const SA = [6];
   const TEMPLATES = [
@@ -99,21 +99,21 @@
     ['🌅 Morgens', '🥣', 'Frühstücken', 1, 'm', null, 4],
     ['🌅 Morgens', '👟', 'Schuhe anziehen', 1, 'm', null, 4],
     ['🌅 Morgens', '🧥', 'Jacke anziehen', 1, 'm', null, 4],
-    ['☀️ Mittags', '👟', 'Schuhe ausziehen', 1, 'mi', null, 4],
-    ['☀️ Mittags', '🧥', 'Jacke ausziehen', 1, 'mi', null, 4],
-    ['☀️ Mittags', '🎒', 'Sachen wegräumen', 1, 'mi', null, 4],
-    ['☀️ Mittags', '🚽', 'Aufs Klo gehen', 1, 'mi', null, 4],
-    ['☀️ Mittags', '🧼', 'Hände waschen', 1, 'mi', null, 4],
-    ['☀️ Mittags', '🍽️', 'Mittagessen', 1, 'mi', null, 4],
-    ['☀️ Mittags', '👟', 'Schuhe anziehen', 1, 'mi', null, 4],
-    ['☀️ Mittags', '🧥', 'Jacke anziehen', 1, 'mi', null, 4],
-    ['🎒 Nach der Schule', '👟', 'Schuhe ausziehen', 1, ['16:00', '18:00'], null, 4],
-    ['🎒 Nach der Schule', '🧥', 'Jacke ausziehen', 1, ['16:00', '18:00'], null, 4],
-    ['🎒 Nach der Schule', '🎒', 'Sachen wegräumen', 1, ['16:00', '18:00'], null, 4],
-    ['🎒 Nach der Schule', '🚽', 'Aufs Klo gehen', 1, ['16:00', '18:00'], null, 4],
-    ['🎒 Nach der Schule', '🧼', 'Hände waschen', 1, ['16:00', '18:00'], null, 4],
-    ['🎒 Nach der Schule', '🚰', 'Vesperdose ausräumen', 1, ['16:00', '18:00'], null, 4],
-    ['🎒 Nach der Schule', '🥪', 'Vesper essen', 1, ['16:00', '18:00'], null, 4],
+    ['☀️ Mittags', '👟', 'Schuhe ausziehen', 1, ['11:30', '13:30'], null, 4],
+    ['☀️ Mittags', '🧥', 'Jacke ausziehen', 1, ['11:30', '13:30'], null, 4],
+    ['☀️ Mittags', '🎒', 'Sachen wegräumen', 1, ['11:30', '13:30'], null, 4],
+    ['☀️ Mittags', '🚽', 'Aufs Klo gehen', 1, ['11:30', '13:30'], null, 4],
+    ['☀️ Mittags', '🧼', 'Hände waschen', 1, ['11:30', '13:30'], null, 4],
+    ['☀️ Mittags', '🍽️', 'Mittagessen', 1, ['11:30', '13:30'], null, 4],
+    ['☀️ Mittags', '👟', 'Schuhe anziehen', 1, ['11:30', '13:30'], null, 4],
+    ['☀️ Mittags', '🧥', 'Jacke anziehen', 1, ['11:30', '13:30'], null, 4],
+    ['🎒 Nach der Schule', '👟', 'Schuhe ausziehen', 1, ['16:00', '17:30'], null, 4],
+    ['🎒 Nach der Schule', '🧥', 'Jacke ausziehen', 1, ['16:00', '17:30'], null, 4],
+    ['🎒 Nach der Schule', '🎒', 'Sachen wegräumen', 1, ['16:00', '17:30'], null, 4],
+    ['🎒 Nach der Schule', '🚽', 'Aufs Klo gehen', 1, ['16:00', '17:30'], null, 4],
+    ['🎒 Nach der Schule', '🧼', 'Hände waschen', 1, ['16:00', '17:30'], null, 4],
+    ['🎒 Nach der Schule', '🚰', 'Vesperdose ausräumen', 1, ['16:00', '17:30'], null, 4],
+    ['🎒 Nach der Schule', '🥪', 'Vesper essen', 1, ['16:00', '17:30'], null, 4],
     ['🎒 Schule', '🚰', 'Vesperdose ausräumen', 1, 'mi', SCHOOL, 6],
     ['🎒 Schule', '📝', 'Hausaufgaben machen', 3, 'mi', SCHOOL, 6],
     ['🎒 Schule', '📚', 'Lesen üben (15 Min.)', 2, '', null, 6, 12],
@@ -185,14 +185,14 @@
     ['🧑 Verantwortung', '📅', 'Eigene Termine selbst planen', 1, '', [0], 13],
     ['🧑 Verantwortung', '👶', 'Auf jüngere Geschwister aufpassen', 4, '', 'once', 14],
     ['🌙 Abends', '🧼', 'Hände waschen vor dem Essen', 1, '', null, 5, 8],
-    ['🌙 Abends', '🚿', 'Duschen / Waschen', 1, ['19:00', '21:00'], null, 5],
-    ['🌙 Abends', '🪥', 'Zähne putzen abends', 1, 'a', null, 5],
-    ['🌙 Abends', '🩳', 'Pyjama anziehen', 1, 'a', null, 4],
-    ['🌙 Abends', '🍽️', 'Abendessen', 1, 'a', null, 4],
-    ['🌙 Abends', '🚽', 'Aufs Klo gehen', 1, 'a', null, 4],
-    ['🌙 Abends', '🧼', 'Hände waschen', 1, 'a', null, 4],
-    ['🌙 Abends', '📚', 'Geschichte vorlesen', 1, 'a', null, 4],
-    ['🌙 Abends', '😴', 'Ins Bett gehen', 1, 'a', null, 4],
+    ['🌙 Abends', '🚿', 'Duschen / Waschen', 1, ['18:00', '20:30'], null, 5],
+    ['🌙 Abends', '🪥', 'Zähne putzen abends', 1, ['18:00', '20:30'], null, 5],
+    ['🌙 Abends', '🩳', 'Pyjama anziehen', 1, ['18:00', '20:30'], null, 4],
+    ['🌙 Abends', '🍽️', 'Abendessen', 1, ['18:00', '20:30'], null, 4],
+    ['🌙 Abends', '🚽', 'Aufs Klo gehen', 1, ['18:00', '20:30'], null, 4],
+    ['🌙 Abends', '🧼', 'Hände waschen', 1, ['18:00', '20:30'], null, 4],
+    ['🌙 Abends', '📚', 'Geschichte vorlesen', 1, ['18:00', '20:30'], null, 4],
+    ['🌙 Abends', '😴', 'Ins Bett gehen', 1, ['18:00', '20:30'], null, 4],
   ];
   // Level nach insgesamt verdienten Sternen: [ab Sterne, Name, Emoji]
   const LEVELS = [[0, 'Anfänger', '🌱'], [50, 'Helfer', '🙂'], [150, 'Fleißige Biene', '🐝'], [300, 'Haushaltsheld', '🦸'], [500, 'Haushaltsprofi', '🏅'],
@@ -2246,7 +2246,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
       const doneOf = (list) => reqOf(list).filter((t) => stat[t.id].s === 'd').length;
       const sect = (label, list) => `<div class="sect"><span>${label}</span><span class="hint">${T('{done}/{total} erledigt', { done: doneOf(list), total: reqOf(list).length })}</span></div>${this._tilesHtml(list, stat, k)}`;
       if (this._cfg.dayBlocks === false) return `<div class="sect"><span>${T('Heute')}</span><span class="hint">${T('{done}/{total} erledigt', { done: doneOf(tasks), total: reqOf(tasks).length })}</span></div>${this._tilesHtml(tasks, stat, k)}`;
-      const blk = (t) => { const f = String(t.from || ''); return !f ? 'day' : f < '12:00' ? 'm' : f < '14:00' ? 'mi' : f < '19:00' ? 'na' : 'a'; };
+      const blk = (t) => { const f = String(t.from || ''); return !f ? 'day' : f < '11:30' ? 'm' : f < '16:00' ? 'mi' : f < '18:00' ? 'na' : 'a'; };
       const defs = [['m', T('🌅 Morgens')], ['mi', T('☀️ Mittags')], ['na', T('🌇 Nachmittags')], ['a', T('🌙 Abends')], ['day', T('📌 Ohne Zeit')]];
       return defs.map(([id, label]) => { const list = tasks.filter((t) => blk(t) === id); return list.length ? sect(label, list) : ''; }).join('');
     }
