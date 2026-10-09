@@ -3,6 +3,16 @@
 Alle wichtigen Änderungen an **Yippee! - Kids Chores**.
 Versionsnummern: `MAJOR.MINOR.PATCH` – Fehlerbehebungen erhöhen PATCH, neue Funktionen MINOR, grundlegende Änderungen (z. B. am Speicherformat) MAJOR.
 
+## [1.2.0] – 2026-10-09
+
+### Neu
+- **🎓 Schulnoten** (optional, unter Einstellungen → Zusatzfunktionen): Sterne für gute Noten ([#2](https://github.com/Chrism1412/yippee-kids-chores-card/issues/2))
+  - Note je Kind eintragen: Fach aus Schnellauswahl oder frei, dazu die Note
+  - Sterne automatisch nach Notentabelle – Notenskala passend zum Land (z. B. DE 1–6, CH 6–1, FR 0–20, IT/ES/NL 1–10, PL 1–6, Prozent), Sterne je Note frei änderbar, nie Abzug
+  - Bonus fürs Verbessern (besser als die letzte Note im selben Fach) und Zeugnis-Bonus
+  - Kinder melden Noten selbst, auf Wunsch mit Foto der Arbeit; Freigabe in der Karte oder per Push-/Telegram-Knopf
+  - Notenübersicht je Fach mit Schnitt, Anzahl und Trend; Noten-Sterne zählen für Level und Familienziel
+
 ## [1.1.0] – 2026-10-08
 
 ### Neu
