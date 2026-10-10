@@ -96,7 +96,7 @@ Eltern legen Aufgaben und Belohnungen an, geben Erledigtes frei (auch direkt aus
 - **Eigene Reihenfolge** ↕️ (optional): Aufgaben mit ▲▼ sortieren – so sehen sie auch die Kinder
 - **„Am Abend vorher“** 🌙 für Aufgaben wie Ranzen oder Turnbeutel packen: kommt, wenn am nächsten Tag Schule ist; beim Turnbeutel fragt die Karte nach den Sporttagen
 - **Saison** (z. B. Rasenmähen nur April–Oktober) und **„nur an Schultagen“**
-- **Foto-Nachweis** 📷 pro Aufgabe: das Kind fotografiert beim Abhaken, die Eltern sehen das Foto bei der Freigabe
+- **Foto-Nachweis** 📷 pro Aufgabe: das Kind fotografiert beim Abhaken, die Eltern sehen das Foto bei der Freigabe – klappt auch mit Kinder-Konten ohne Admin-Rechte: dann speichert die Karte ein verkleinertes Foto in einer To-do-Liste (am besten einer eigenen, z. B. „Yippee Fotos“)
 - **Aufgaben-Datenbank mit 163 Vorlagen** in 12 Bereichen – nach Geburtstag automatisch altersgerecht gefiltert (siehe unten)
 
 ### Aufgaben-Datenbank: 163 Vorlagen, altersgerecht
@@ -219,7 +219,7 @@ HACS legt die Ressource automatisch an.
 2. In Home Assistant den Ordner **`/config/www/community/yippee-kids-chores-card/`** anlegen und die Datei dort hineinkopieren (z. B. mit dem Add-on *File editor* oder *Samba share*).
    Das ist derselbe Ordner, den auch HACS verwendet – ein späterer Wechsel zu HACS klappt dadurch ohne Umbau.
 3. **Einstellungen → Dashboards → ⋮ (oben rechts) → Ressourcen → Ressource hinzufügen**
-   - URL: `/hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.3.0`
+   - URL: `/hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.3.1`
    - Typ: **JavaScript-Modul**
 4. Seite neu laden.
 
@@ -309,7 +309,7 @@ Voraussetzung: die Integration **Telegram bot** mit mindestens einem Chat.
   - `/punkte` – Punktestand aller Kinder (mit Sparziel)
   - `/offen` – was heute noch fehlt
   - `/hilfe` – Übersicht der Befehle
-- Foto-Nachweise werden als Bild mitgeschickt.
+- Foto-Nachweise werden als Bild mitgeschickt (bei Fotos von Konten ohne Admin-Rechte steht stattdessen „Foto in der Karte ansehen“).
 
 ### Sprachausgabe: TTS und Alexa
 
@@ -426,7 +426,7 @@ Standard ist die Sprache deines Home-Assistant-Benutzers. Unter **🌐 Sprache**
 Unter **⬆️ Updates** und oben im Eltern-Bereich:
 
 - **Update verfügbar:** Kennt HACS eine neuere Version, erscheint ein Hinweis mit Link zu den Neuerungen.
-- **Ressource automatisch erhöhen:** Liegt nach einem Update eine neuere Datei auf dem Server als die, die gerade im Browser läuft, trägt die Karte die neue Version **selbst** in die Ressource ein (`?v=1.3.0` usw.), sobald ein Administrator den Eltern-Bereich öffnet. Danach erscheint „Neue Version ist bereit“ mit einem Knopf zum Neuladen. Bei Installation über HACS erledigt HACS das Umstellen; die Karte bietet dann nur das Neuladen an.
+- **Ressource automatisch erhöhen:** Liegt nach einem Update eine neuere Datei auf dem Server als die, die gerade im Browser läuft, trägt die Karte die neue Version **selbst** in die Ressource ein (`?v=1.3.1` usw.), sobald ein Administrator den Eltern-Bereich öffnet. Danach erscheint „Neue Version ist bereit“ mit einem Knopf zum Neuladen. Bei Installation über HACS erledigt HACS das Umstellen; die Karte bietet dann nur das Neuladen an.
 - Wer das nicht möchte, schaltet unter ⬆️ Updates „Ressource nach einem Update automatisch erhöhen“ aus – dann erinnert die Karte nur und stellt auf Knopfdruck um.
 
 Die Änderungen jeder Version stehen im [CHANGELOG](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/CHANGELOG.md).
@@ -435,7 +435,7 @@ Die Änderungen jeder Version stehen im [CHANGELOG](https://github.com/Chrism141
 
 - Alle Daten bleiben in deinem Home Assistant. Es gibt kein Konto, keine Cloud und keine Statistik-Übertragung.
 - Die einzige Verbindung ins Internet ist der optionale Abruf von Schulferien und Feiertagen bei der OpenHolidays API – nur wenn du ein Land auswählst. Dabei wird nur Land und Zeitraum abgefragt.
-- Fotos für den Foto-Nachweis landen im Medien-Ordner von Home Assistant und werden nach der Entscheidung der Eltern gelöscht.
+- Fotos für den Foto-Nachweis landen im Medien-Ordner von Home Assistant (Admin-Konto) bzw. verkleinert in einer To-do-Liste (Konto ohne Admin-Rechte) und werden nach der Entscheidung der Eltern gelöscht.
 
 ## Wie werden die Daten gespeichert?
 

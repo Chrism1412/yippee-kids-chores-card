@@ -60,7 +60,7 @@ Parents create chores and rewards, approve finished chores (also right from the 
 - **Weekdays**, **fixed dates**, **one-off special chores** (first come, first served) or **from a waste collection calendar**
 - **Rotation** 🔄 between kids (skips kids on holiday), **"One is enough"** 🤝, **extra chores** 🙋
 - **Several times a day** (up to 5 time windows, e.g. wash hands morning, noon and evening), optional **own order** ↕️ with ▲▼, **"the evening before"** 🌙 for packing the school or gym bag (shows when the next day is a school day; asks for the PE days), optional **day blocks** ⏰ (morning / noon / afternoon / evening, collapsible, past blocks fold automatically, also in the parents view), **seasons** (e.g. mowing April–October), **school days only**
-- **Photo proof** 📷 per chore
+- **Photo proof** 📷 per chore – also works with non-admin kid accounts: the card then stores a smaller photo in a to-do list (ideally a separate one, e.g. “Yippee Photos”)
 - **Chore database with 163 templates** in 12 categories (morning, noon, school, kitchen & cooking, shopping, tidying & cleaning, laundry, house/garden/pets, responsibility, health & exercise, family & togetherness, evening), filtered by the child's age from their birthday; school chores follow the usual school starting age of the selected country (or an optional "started school in" month per child, which also shows the school year); seasonal chores get their season, school chores "school days only" automatically
 - **29 reward templates** (ice cream voucher, movie night, one-on-one time with mum or dad, 🃏 joker, cinema, zoo, theme park …)
 
@@ -122,7 +122,7 @@ HACS adds the resource automatically.
 1. Download [`dist/yippee-kids-chores-card.js`](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/dist/yippee-kids-chores-card.js) from the [latest release](https://github.com/Chrism1412/yippee-kids-chores-card/releases/latest).
 2. Create the folder **`/config/www/community/yippee-kids-chores-card/`** and copy the file into it. This is the same folder HACS uses, so you can switch to HACS later without changes.
 3. **Settings → Dashboards → ⋮ → Resources → Add resource**
-   - URL: `/hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.3.0`
+   - URL: `/hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.3.1`
    - Type: **JavaScript module**
 4. Reload the page.
 
@@ -203,13 +203,13 @@ All integrations are **optional** and can be switched on and off individually.
 ## Updates
 
 - **Update available:** when HACS knows a newer version, the parents area shows a notice.
-- **Resource raised automatically:** when the file on the server is newer than the one running in the browser, the card writes the new version into the resource itself (`?v=1.3.0` …) as soon as an administrator opens the parents area, then offers a reload button. With HACS, HACS updates the resource; the card just offers the reload. Can be switched off under ⬆️ Updates.
+- **Resource raised automatically:** when the file on the server is newer than the one running in the browser, the card writes the new version into the resource itself (`?v=1.3.1` …) as soon as an administrator opens the parents area, then offers a reload button. With HACS, HACS updates the resource; the card just offers the reload. Can be switched off under ⬆️ Updates.
 
 See the [CHANGELOG](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/CHANGELOG.md).
 
 ## Privacy
 
-All data stays in your Home Assistant. No account, no cloud, no tracking. The only internet request is the optional holiday lookup at the OpenHolidays API (country and date range only). Photo-proof pictures are stored in Home Assistant's media folder and deleted after the parents' decision.
+All data stays in your Home Assistant. No account, no cloud, no tracking. The only internet request is the optional holiday lookup at the OpenHolidays API (country and date range only). Photo-proof pictures are stored in Home Assistant's media folder (admin account) or, reduced in size, in a to-do list (non-admin account), and deleted after the parents' decision.
 
 ## Limitations
 

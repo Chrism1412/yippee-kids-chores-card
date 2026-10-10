@@ -3,6 +3,14 @@
 Alle wichtigen Änderungen an **Yippee! - Kids Chores**.
 Versionsnummern: `MAJOR.MINOR.PATCH` – Fehlerbehebungen erhöhen PATCH, neue Funktionen MINOR, grundlegende Änderungen (z. B. am Speicherformat) MAJOR.
 
+## [1.3.1] – 2026-10-10
+
+### Behoben
+- **IP-Sperre bei Kinder-Konten ohne Admin-Rechte** ([#3](https://github.com/Chrism1412/yippee-kids-chores-card/issues/3)): Die Karte hat auch bei Benutzern ohne Administrator-Rechte versucht, die Sensoren `sensor.yippee_…` zu schreiben und den Status der Automationen abzufragen. Home Assistant lehnt das ab und wertet es als Fehlanmeldung – mit `ip_ban_enabled` wurde das Gerät nach kurzer Zeit gesperrt. Diese Aufrufe macht die Karte jetzt nur noch bei Administratoren.
+- **Foto-Nachweis mit Konten ohne Admin-Rechte:** kein Upload in den Medien-Ordner mehr (den erlaubt Home Assistant nur Administratoren). Stattdessen speichert die Karte ein verkleinertes Foto in einer To-do-Liste – wahlweise in der Hauptliste oder in einer eigenen Liste (⚙️ Einstellungen → Zusatzfunktionen → 📷 Foto-Nachweis). Die Eltern sehen es bei der Freigabe in der Karte; nach der Entscheidung wird es gelöscht. Gilt auch für Fotos zu Schulnoten.
+
+**Hinweis:** Wurde ein Gerät schon gesperrt, in `/config/ip_bans.yaml` die Zeile mit seiner IP löschen und Home Assistant neu starten.
+
 ## [1.3.0] – 2026-10-09
 
 ### Neu
