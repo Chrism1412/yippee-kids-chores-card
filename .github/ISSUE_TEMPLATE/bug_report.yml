@@ -1,0 +1,85 @@
+name: 🐞 Fehler melden / Bug report
+description: Etwas funktioniert nicht wie erwartet. / Something doesn't work as expected.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Danke fürs Melden! Bitte vorher kurz ins 📖 Handbuch der Karte (Eltern-Bereich → 📖) und unter „🛟 Wenn etwas nicht klappt“ schauen.
+        Thanks for reporting! Please check the card's 📖 manual first (parents area → 📖), topic "🛟 If something doesn't work".
+        **Bitte keine echten Namen, Fotos oder Telefonnummern deiner Kinder posten. / Please don't post real names, photos or phone numbers of your kids.**
+  - type: input
+    id: version
+    attributes:
+      label: Version der Karte / Card version
+      description: "⚙️ Einstellungen → ⬆️ Updates („Läuft gerade: Version …“)"
+      placeholder: "1.4.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: install
+    attributes:
+      label: Installation
+      options:
+        - HACS
+        - Manuell (Dateien aus dist/ kopiert) / manual (copied files from dist/)
+    validations:
+      required: true
+  - type: input
+    id: ha
+    attributes:
+      label: Home-Assistant-Version
+      placeholder: "2026.10.1"
+    validations:
+      required: true
+  - type: input
+    id: lang
+    attributes:
+      label: Sprache der Karte / Card language
+      placeholder: "Deutsch / English / …"
+  - type: dropdown
+    id: device
+    attributes:
+      label: Gerät / Device
+      multiple: true
+      options:
+        - Handy – Home-Assistant-App (Android)
+        - Handy – Home-Assistant-App (iPhone)
+        - Tablet
+        - Browser am PC / desktop browser
+        - Wandtablet / Kiosk (z. B. Fully Kiosk)
+  - type: dropdown
+    id: view
+    attributes:
+      label: Ansicht / View
+      multiple: true
+      options:
+        - "Eltern-Ansicht / parents view (mode: admin)"
+        - "Alle Kinder / all kids (mode: kids)"
+        - "Ein Kind / one kid (mode: kid)"
+  - type: textarea
+    id: what
+    attributes:
+      label: Was ist passiert? / What happened?
+      description: Was hast du gemacht, was hast du erwartet, was ist stattdessen passiert? / What did you do, what did you expect, what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Schritte zum Nachstellen / Steps to reproduce
+      placeholder: |
+        1. …
+        2. …
+        3. …
+  - type: textarea
+    id: log
+    attributes:
+      label: Fehlermeldung / error message (optional)
+      description: Browser-Konsole (F12) oder Home Assistant → Einstellungen → System → Protokolle. / Browser console (F12) or HA logs.
+      render: text
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshot / weitere Infos (optional)
+      description: Screenshot hier hineinziehen – Namen gern vorher unkenntlich machen. / Drag a screenshot here – feel free to blur names.

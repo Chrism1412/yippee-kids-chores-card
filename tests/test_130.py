@@ -1,0 +1,42 @@
+from playwright.sync_api import sync_playwright
+import datetime
+R=[]
+def ok(n,c,x=''): R.append(('OK ' if c else 'FAIL ')+n+' '+str(x)[:250])
+with sync_playwright() as p:
+    b=p.chromium.launch(); pg=b.new_page(viewport={'width':420,'height':900}); errs=[]
+    pg.on('pageerror', lambda e: errs.append(str(e)))
+    pg.clock.install(time=datetime.datetime.fromisoformat('2026-10-08T12:00:00'))
+    pg.goto('http://localhost:8765/kp_test.html'); pg.clock.run_for(600)
+    t=lambda ms=400: pg.clock.run_for(ms); ev=pg.evaluate; html=lambda: ev("A.shadowRoot.innerHTML")
+    ev("A._save('kid','K',{name:'Kai',emoji:'🐻',by:2020,bm:3,bd:1,points:100})"); t(800)
+    # Vorschläge 6 Jahre
+    ev("A._suggest('K')"); t(300)
+    n=ev("A.shadowRoot.querySelectorAll('#modal [name=sg]').length"); txt=ev("A.shadowRoot.querySelector('#modal').innerText")
+    ok('suggest many', n>60, n); ok('new cats', 'Gesundheit' in txt and 'Familie & Miteinander' in txt)
+    ok('dinner window', '17:30–19:30' in txt); ok('no Geschichte vorlesen', 'Geschichte vorlesen' not in txt)
+    ev("A._closeModal()"); t()
+    # Joker aus: keine Vorlage
+    ev("A._editReward(null)"); t()
+    ok('joker hidden when off', 'Joker' not in ev("A.shadowRoot.querySelector('#modal').innerText")); ev("A._closeModal()")
+    ev("A._setCfg({jokerOn:true, approval:false})"); t(500)
+    ok('15 features', '27 aktiv' in (ev("A.shadowRoot.querySelector('[data-a=\"tab\"][data-id=\"einst\"]').click()") or html()))
+    ev("A._editReward(null)"); t()
+    i=ev("[...A.shadowRoot.querySelectorAll('#modal [data-a=rpick]')].findIndex(x=>x.innerText.includes('Joker'))")
+    ev(f"A.shadowRoot.querySelectorAll('#modal [data-a=rpick]')[{i}].click()"); t()
+    ok('joker checkbox set', ev("A.shadowRoot.querySelector('#modal [name=joker]').checked"))
+    ev("A.shadowRoot.querySelector('#modal [data-a=msave]').click()"); t(600)
+    r=ev("Object.values(A._db.reward)[0]"); ok('joker reward saved', r and r.get('joker') and r['cost']==30, r)
+    ev("A._save('task','T1',{title:'Zimmer aufräumen',emoji:'🧸',points:3,kids:['K'],sched:'week',days:[0,1,2,3,4,5,6]})"); t(600)
+    ev(f"A._redeem('K','{r['id']}')"); t(800)
+    ok('got joker', ev("A._db.kid.K.jokers")==1 and ev("A._db.kid.K.points")==70, [ev("A._db.kid.K.jokers"),ev("A._db.kid.K.points")])
+    ev("B._opens={K:true}; B._render()"); t()
+    ok('kid joker button', 'data-a="joker"' in ev("B.shadowRoot.innerHTML"))
+    ev("B.shadowRoot.querySelector('[data-a=joker]').click()"); t()
+    ok('dialog lists task', 'Zimmer aufräumen' in ev("B.shadowRoot.querySelector('#modal').innerText"))
+    ev("B.shadowRoot.querySelector('#modal [data-a=msave]').click()"); t(800)
+    ok('excused + joker used', ev("A._st('2026-10-08','T1','K')")=='e' and ev("A._db.kid.K.jokers")==0, [ev("A._st('2026-10-08','T1','K')"), ev("A._db.kid.K.jokers")])
+    ok('button gone', 'data-a="joker"' not in ev("B.shadowRoot.innerHTML"))
+    ok('tile shows excused', 'entschuldigt' in ev("B.shadowRoot.querySelector('#app').innerText"))
+    ok('no errors', not errs, errs)
+    b.close()
+print('\n'.join(R))

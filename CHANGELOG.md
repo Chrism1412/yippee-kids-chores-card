@@ -3,11 +3,54 @@
 Alle wichtigen Änderungen an **Yippee! - Kids Chores**.
 Versionsnummern: `MAJOR.MINOR.PATCH` – Fehlerbehebungen erhöhen PATCH, neue Funktionen MINOR, grundlegende Änderungen (z. B. am Speicherformat) MAJOR.
 
+## [1.4.0] – 2026-10-21
+
+### Neu
+- **📖 Handbuch** im Eltern-Bereich (📖 oben rechts oder ⚙️ Einstellungen): alle Funktionen kurz erklärt, mit Suche und Schlagwörtern (z. B. NFC, Anwesenheit, PIN), in allen 27 Sprachen – 47 Themen, auch zu Einrichtungs-Assistent, gemeinsamen Belohnungen, Speicher sowie allen Level-Stufen und Abzeichen. Liegt als eigene Datei `yippee-kids-chores-manual.js` neben der Karte – HACS installiert sie automatisch mit.
+- **🌐 Zwei neue Sprachen: Türkçe (Türkisch) und Русский (Russisch)** – inklusive Handbuch. Damit sind es 27 Sprachen.
+- **Mehr Vorlagen:** 39 neue Aufgaben-Vorlagen (jetzt 208, z. B. Salat zubereiten, Gemüsebeet gießen, Wäsche abnehmen, Streit friedlich lösen), 22 neue Belohnungen (jetzt 51, z. B. Karaoke-Abend, Frühstück im Bett, Kletterhalle, Zirkus) und 4 neue Routinen (Nach-der-Schule, Hausaufgaben, Zimmer, Wochenende).
+- **Mehr Emojis:** rund 250 Emojis für Aufgaben und 120 für Belohnungen, nach Themen gruppiert (z. B. Körperpflege, Küche, Haushalt, Schule, Tiere & Garten), dazu 67 Kinder-Avatare.
+- **🧭 Einrichtungs-Assistent** beim ersten Start: Kinder mit Geburtsdatum → passende Aufgaben anhaken → Belohnungen wählen → fertig. Jederzeit wieder startbar unter ⚙️ Einstellungen. Bestehende Installationen sehen ihn nicht.
+- **⚙️ Einstellungen „Einfach“ / „Alle Einstellungen“:** auf Wunsch nur das Wichtigste. Nach dem Assistenten startet die Karte in „Einfach“, bestehende Installationen sehen weiterhin alles.
+- **💽 Speicher-Anzeige** unter 🔒 Sicherheit & Daten: wie viel die Karte in der To-do-Liste belegt, mit „🧹 Alte Einträge aufräumen“.
+
+### Neu (alles optional unter ⚙️ Einstellungen → 🧩 Zusatzfunktionen)
+- **📋 Routinen:** eigener Knopf „📋 ＋ Routine“ unter ✅ Aufgaben. Schritte über ein Suchfeld hinzufügen – schon ab dem ersten Buchstaben erscheinen passende eigene Aufgaben und Vorlagen –, mit ▲▼ sortieren. Aufgaben, die in einer Routine stecken, erscheinen nicht mehr einzeln, sondern nur noch als Schritt. Das Kind hakt jeden Schritt ab, die Sterne gibt es beim letzten Haken. 6 Vorlagen: Morgen-, Abend-, Nach-der-Schule-, Hausaufgaben-, Zimmer- und Wochenend-Routine.
+- **🔮 Spar-Prognose:** Sparziel und Familienziel zeigen, wann sie beim aktuellen Tempo ungefähr erreicht sind.
+- **🧮 Preis-Assistent:** „≈ Tage sparen“ je Kind bei jeder Belohnung (übersichtlich: Preis und Spardauer pro Kind in einer Zeile, bei unterschiedlichen Preisen rechts der Bereich, z. B. „50–100 ⭐“) und „Preise vorschlagen“ passend zu den Wochensternen (inkl. Familienziel).
+- **🏷️ NFC-Tags:** Aufgaben per NFC-Tag mit dem Handy abhaken; die Automation legt die Karte selbst an. Ist beim Scannen keine Karte geöffnet, wird die Aufgabe beim nächsten Öffnen abgehakt (es zählt die Uhrzeit des Scans); in den Einstellungen steht der letzte Scan mit Ergebnis.
+- **👫 Gemeinsame Belohnungen:** Der Preis einer Belohnung wird auf mehrere Kinder aufgeteilt, jedes zahlt seinen Anteil selbst – oder ein Kind lädt die anderen ein und zahlt alles („💝 Einladen“ / „💝 Rest übernehmen“). Eingeladene Kinder zahlen nichts und verbrauchen ihr Wochenlimit nicht. Ablehnen, Zurücknehmen oder Verfallen nach 7 Tagen erstattet alle Sterne. Das andere Kind sieht oben in seinem Dashboard „💝 Mia lädt dich ein …“ bzw. „👫 Mia möchte … mit dir teilen – machst du mit?“ mit Mitmach-Knopf.
+- **🎟️ Gutscheine:** eingelöste Belohnungen werden erst abgehakt, wenn das Kind sie bekommen hat – im 📋 Heute-Tab der Eltern stehen sie als „Eingelöst – noch nicht bekommen“ (ein- und ausklappbar), außerdem beim Kind.
+- **🏅 Wochen-Bonus** und **👫 Teambonus** für vollständig geschaffte Tage.
+- **🏠 Begrüßung bei Ankunft** für Kinder mit Anwesenheit, auf Wunsch mit Morgen-Nachricht an die Eltern.
+- **🎙️ Sprachbefehle** für den Home-Assistant-Sprachassistenten („Was muss Mia heute noch machen?“, „Wie viele Sterne hat Mia?“).
+- **🟦 LaMetric:** erledigte Aufgaben, „Alles geschafft!“ und Belohnungen auf einer LaMetric TIME.
+- **🩺 Plausibilitäts-Check** (standardmäßig an): Hinweise auf unstimmige Einstellungen im Heute-Tab.
+
+### Verbessert
+- **🏅 Abzeichen antippen:** In der Kinder-Ansicht zeigt ein Tipp auf ein Abzeichen, wofür es steht und ob es schon geschafft ist – praktisch auf dem Handy, wo es keinen Mauszeiger gibt.
+- **😊 Benehmen besser sichtbar:** Im 📋 Heute-Tab jetzt deutliche Knöpfe – grün „😊 +1“ und rot „😠 −1“ mit der eingestellten Sternezahl – statt kleiner Symbole. Die Einstellung steht jetzt unter 🧩 Zusatzfunktionen → 🎁 Belohnungen & Boni.
+- **Klarere Anzeige bei „Wer zuerst kommt“-Aufgaben:** Hat ein anderes Kind eine gemeinsame oder Zusatzaufgabe schon gemacht, steht jetzt „✓ Schon erledigt von Ben“ bzw. „⏳ Ben hat es gemacht – wartet auf Freigabe“ statt des missverständlichen „Ben ist dran“.
+- **Panel-Ansicht / breite Dashboards:** Im Heute-Tab rutschen die Benehmen-Knöpfe in schmalen Kinder-Spalten in eine eigene Zeile, statt sich mit Name und Sternen zu überlagern.
+- **🗑️ Müllkalender:** Ist noch kein Kalender vorhanden, verlinkt der Hinweis direkt auf die Integration „Waste Collection Schedule“.
+- **🌐 Sprache pro Karte:** Der Hinweis erklärt jetzt richtig, dass eine eigene Sprache im Karten-Editor für eine einzelne Karte gilt (z. B. auf dem Kinder-Tablet) – bei „Automatisch“ zeigt jedes Gerät die Sprache des angemeldeten Benutzers.
+- **📊 Wochenrückblick:** Tag und Uhrzeit sind jetzt einstellbar (⚙️ Einstellungen → 🔔 Benachrichtigen bei …).
+- **Punkte-Buchungen als eigene Einträge:** Tippen zwei Geräte gleichzeitig etwas an, geht keine Buchung mehr verloren.
+- **Kein veraltetes Handbuch mehr:** Handbuch und Sprachdateien werden neu geladen, sobald die Ressourcen-Version der Karte erhöht wird (bzw. HACS aktualisiert) – auch bei gleicher Kartenversion.
+- **Schneller:** Die Sprachen liegen jetzt als kleine eigene Dateien neben der Karte, geladen wird nur die gewählte – die Karte schrumpft von 1,9 MB auf ≈ 0,45 MB und startet schneller. HACS installiert alle Dateien automatisch mit. Außerdem werden Anwesenheit und Serien zwischengespeichert – flüssiger auf älteren Tablets.
+- **README:** neue Screenshots und ein Dankeschön-Abschnitt an die Projekte, auf denen Yippee! aufbaut.
+- **GitHub:** Vorlagen für Fehlermeldungen und Ideen (fragen Version, Installation, Gerät usw. gleich mit ab), Demo-Animation in der README.
+- **Automatische Tests:** Bei jedem Hochladen auf GitHub laufen über 300 Prüfungen, auch dass Konten ohne Admin-Rechte nie Admin-Schnittstellen aufrufen.
+
 ## [1.3.1] – 2026-10-10
+
+### Neu
+- **👧 Preise je Kind** (optional, ⚙️ Einstellungen → Zusatzfunktionen): Jede Belohnung kann für jedes Kind einen eigenen Preis haben – z. B. weil ältere Kinder am Tag mehr Sterne sammeln können. Im Belohnungs-Editor steht bei jedem Kind, wie viele Sterne es an einem normalen Tag verdienen kann; „⚖️ Fair verteilen“ rechnet die Preise so um, dass jedes Kind etwa gleich lange sparen muss. Kinder sehen, sparen und lösen jeweils zu ihrem eigenen Preis ein.
 
 ### Behoben
 - **IP-Sperre bei Kinder-Konten ohne Admin-Rechte** ([#3](https://github.com/Chrism1412/yippee-kids-chores-card/issues/3)): Die Karte hat auch bei Benutzern ohne Administrator-Rechte versucht, die Sensoren `sensor.yippee_…` zu schreiben und den Status der Automationen abzufragen. Home Assistant lehnt das ab und wertet es als Fehlanmeldung – mit `ip_ban_enabled` wurde das Gerät nach kurzer Zeit gesperrt. Diese Aufrufe macht die Karte jetzt nur noch bei Administratoren.
 - **Foto-Nachweis mit Konten ohne Admin-Rechte:** kein Upload in den Medien-Ordner mehr (den erlaubt Home Assistant nur Administratoren). Stattdessen speichert die Karte ein verkleinertes Foto in einer To-do-Liste – wahlweise in der Hauptliste oder in einer eigenen Liste (⚙️ Einstellungen → Zusatzfunktionen → 📷 Foto-Nachweis). Die Eltern sehen es bei der Freigabe in der Karte; nach der Entscheidung wird es gelöscht. Gilt auch für Fotos zu Schulnoten.
+- **Fehlende Symbole:** Einige Emojis der Vorlagen (z. B. bei „Spülmaschine ausräumen“, „Staub wischen“, „Zähne putzen“) erschienen auf älteren Handys und Tablets nur als leeres Feld. Sie sind durch Emojis ersetzt, die jedes Gerät kennt; bestehende Aufgaben und Belohnungen zeigen automatisch das neue Symbol.
 
 **Hinweis:** Wurde ein Gerät schon gesperrt, in `/config/ip_bans.yaml` die Zeile mit seiner IP löschen und Home Assistant neu starten.
 

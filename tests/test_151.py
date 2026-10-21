@@ -1,0 +1,65 @@
+from playwright.sync_api import sync_playwright
+import sys, datetime
+R=[]
+def ok(n,c,x=''): R.append(('OK ' if c else 'FAIL ')+n+' '+str(x)[:220])
+SHOT=len(sys.argv)>1 and sys.argv[1]
+with sync_playwright() as p:
+    b=p.chromium.launch(); pg=b.new_page(viewport={'width':400,'height':860}); errs=[]
+    pg.on('pageerror', lambda e: errs.append(str(e)))
+    pg.clock.install(time=datetime.datetime.fromisoformat('2026-10-14T09:00:00'))
+    pg.goto('http://localhost:8765/kp_test.html'); pg.clock.run_for(800); ev=pg.evaluate; t=lambda ms=300: pg.clock.run_for(ms)
+    ev("A._setCfg({routOn:true,approval:false}); A._save('kid','K',{name:'Mia',emoji:'🦊',points:0}); A._save('task','KO',{title:'Kompost rausbringen',emoji:'🍂',points:3,kids:['K'],sched:'week',days:[]}); A._save('task','Z',{title:'Zähne putzen',emoji:'🦷',points:1,kids:['K'],sched:'week',days:[]}); A._save('task','A',{title:'Anziehen',emoji:'👕',points:2,kids:['K'],sched:'week',days:[]})"); t(1500)
+    ev("A._tab='aufgaben'; A._render()"); t()
+    ok('routine button in tasks tab', ev("!!A.shadowRoot.querySelector('[data-a=erout]')"))
+    ev("A._editTask(null)"); t()
+    M="A.shadowRoot.querySelector('#modal')"
+    ok('normal editor has no steps', ev(f"!{M}.querySelector('.rsbox')"))
+    ok('normal editor: no routine templates', 'Morgen-Routine' not in ev(f"{M}.querySelector('details.tpl').textContent"))
+    ev("A._closeModal(); A.shadowRoot.querySelector('[data-a=erout]').click()"); t()
+    ok('routine editor title', 'Neue Routine' in ev(f"{M}.querySelector('h3').textContent"))
+    def typ(v):
+        ev(f"(()=>{{const q={M}.querySelector('.rsq'); q.focus(); q.value={v!r}; q.dispatchEvent(new Event('input'));}})()"); t(100)
+        return ev(f"[...{M}.querySelectorAll('.rssg')].map(x=>x.textContent)")
+    s1=typ('K'); ok('K suggests Kompost first', s1 and 'Kompost' in s1[0], s1[:4])
+    s2=typ('ko'); ok('ko suggests Kompost', any('Kompost' in x for x in s2), s2[:4])
+    ev(f"[...{M}.querySelectorAll('.rssg')].find(x=>x.textContent.includes('Kompost')).click()"); t(100)
+    typ('Zäh'); ev(f"(()=>{{const q={M}.querySelector('.rsq'); q.dispatchEvent(new KeyboardEvent('keydown',{{key:'Enter'}}));}})()"); t(100)
+    s3=typ('Haare'); ok('templates searchable', any('Vorlage' in x for x in s3), s3[:3])
+    typ('Ranzen holen'); ev(f"[...{M}.querySelectorAll('.rssg')].find(x=>x.classList.contains('free')).click()"); t(100)
+    rows=lambda: ev(f"[...{M}.querySelectorAll('.rsrow .grow')].map(x=>x.textContent.trim())")
+    r=rows(); ok('3 steps', len(r)==3 and 'Kompost' in r[0] and 'Zähne' in r[1] and r[2]=='Ranzen holen', r)
+    ok('points auto-summed', ev(f"{M}.querySelector('[name=points]').value")=='4', ev(f"{M}.querySelector('[name=points]').value"))
+    s4=typ('Kompost'); ok('used task not suggested again', not any('Kompost' in x and 'Aufgabe' in x for x in s4), s4)
+    ev(f"{M}.querySelector('[data-rs=up][data-i=\"2\"]').click()"); t(100)
+    ok('reorder', 'Ranzen' in rows()[1], rows())
+    if SHOT: pg.screenshot(path=SHOT)
+    ev(f"{M}.querySelector('[name=title]').value='Morgens'"); ev(f"{M}.querySelector('[data-a=msave]').click()"); t(1500)
+    rt=ev("Object.values(A._db.task).find(x=>x.title==='Morgens')")
+    ok('saved with links', rt and [s.get('tid') for s in rt['steps']]==['KO',None,'Z'], rt and rt['steps'])
+    tt=ev("A._todayTasks('K').map(x=>x.title)")
+    ok('linked tasks hidden today', 'Kompost rausbringen' not in tt and 'Zähne putzen' not in tt and 'Anziehen' in tt and 'Morgens' in tt, tt)
+    ev("A._tab='aufgaben'; A._render()"); t()
+    ok('tasks list marks part of routine', 'Teil von „Morgens“' in ev("A.shadowRoot.innerHTML"))
+    ev("A._tab='heute'; A._render()"); t()
+    ok('admin today hides linked', 'Kompost' not in ev("A.shadowRoot.querySelector('.card').textContent"))
+    ev("B._render()"); t()
+    ok('kid view hides linked', 'Kompost' not in ev("B.shadowRoot.textContent") and 'Morgens' in ev("B.shadowRoot.textContent"))
+    # Routine bearbeiten: Kompost entfernen -> wieder normale Aufgabe
+    rid=rt['id']; ev(f"A._editTask('{rid}')"); t()
+    ok('edit opens routine editor', 'Routine bearbeiten' in ev(f"{M}.querySelector('h3').textContent"))
+    ev(f"{M}.querySelector('[data-rs=del][data-i=\"0\"]').click()"); t(100)
+    ev(f"{M}.querySelector('[data-a=msave]').click()"); t(1500)
+    ok('removed step -> task back', 'Kompost rausbringen' in ev("A._todayTasks('K').map(x=>x.title)"))
+    # Routine ohne Schritte nicht speicherbar
+    ev("A._editTask(null,true)"); t(); ev(f"{M}.querySelector('[name=title]').value='Leer'; {M}.querySelector('[data-a=msave]').click()"); t(600)
+    ok('empty routine refused', not ev("Object.values(A._db.task).some(x=>x.title==='Leer')"))
+    # Vorlage Morgen-Routine
+    ev("A._closeModal(); A._editTask(null,true)"); t()
+    ev(f"[...{M}.querySelectorAll('[data-a=qpick]')].find(b=>b.textContent.includes('Morgen-Routine')).click()"); t(300)
+    ok('template fills steps', len(rows())>=5, rows())
+    # Routine-Funktion aus -> Aufgaben wieder sichtbar
+    ev("A._closeModal(); A._setCfg({routOn:false})"); t(1200)
+    ok('feature off -> tasks visible', 'Zähne putzen' in ev("A._todayTasks('K').map(x=>x.title)"))
+    ok('no page errors', not errs, errs)
+    b.close()
+print('\n'.join(R))
