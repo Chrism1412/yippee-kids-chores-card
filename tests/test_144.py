@@ -20,7 +20,7 @@ with sync_playwright() as p:
     ev("""(()=>{ for (const C of [A,B]) { const h=C._hass; h.user={id:'kid1',name:'Kind',is_admin:false};
       h.callApi=async(m,path,data)=>{ window.__api.push(m+' '+path); if(/^(states|config)/.test(path)) throw new Error('401'); return []; };
       h.fetchWithAuth=async(u,o)=>{ window.__api.push('FETCH '+u); return {ok:false,status:401}; };
-      const ow=h.callWS; h.callWS=async(m)=>{ if(m.type==='media_source/local_source/remove') window.__api.push('WS '+m.type+' '+m.media_content_id); return ow(m); };
+      const ow=h.callWS; h.callWS=async(m)=>{ if(m.type==='media_source/local_source/remove') window.__api.push('WS '+m.type+' '+m.media_content_id); if(/^lovelace\/resources\/(update|delete|create)/.test(m.type)) window.__api.push('WS '+m.type); return ow(m); };
       C._autoChecked=false; C._sensorFail=false; C._sensSig={}; C._autoOk={nfc:true,voice:true,bg:true}; }
       A._hass.services.lametric={message:{}}; window.__kpOnce=new Set(); })()"""); t(300)
     # alles anstoßen, was die Karte von selbst tut
@@ -35,9 +35,15 @@ with sync_playwright() as p:
     ev("A._redeem('K','R')"); t(1500)
     ev("A._save('act','n1',{a:'KP|nfc|tag1',u:'kid1'})"); t(5000)
     ev("A._photoDel('kp_2026-10-14_mia_T.jpg'); A._photoDone('2026-10-14','T','K')"); t(500)
-    bad=[x for x in ev("window.__api") if x.startswith('POST states') or 'config/automation' in x or 'upload' in x or x.startswith('DELETE') or x.startswith('WS media_source/local_source/remove')]
+    # 1.5.0: Listen anlegen, Ressourcen umstellen, Admin-Knöpfe
+    ev("A._mkList('Yippee Test').catch(()=>{}); A._updRes(); A._resClean(); A._upd={dups:[{id:'x'}],res:{id:'r',url:'/x.js'}}; A._updRes(true); A._resClean()"); t(800)
+    ev("A._until=Date.now()+9e6; A._tab='einst'; A._setCfg({setView:'all',photoOn:true,abOn:true,cmdOn:true}); A._accAll=true; A._render()"); t(600)
+    ok('no admin buttons for non-admin', ev("A.shadowRoot.querySelectorAll('[data-a=autonew], [data-a=mklist], [data-a=updres], [data-a=resclean]').length")==0 and '🔒' in ev("A.shadowRoot.innerHTML"))
+    bad=[x for x in ev("window.__api") if x.startswith('POST states') or 'config/' in x or 'upload' in x or x.startswith('DELETE') or x.startswith('WS media_source/local_source/remove') or x.startswith('WS lovelace/resources/')]
     ok('no admin-only calls as non-admin', not bad, bad)
     ok('features still work (redeem, voucher)', ev("A._db.kid.K.points")==42 and len(ev("A._db.kid.K.vouch||[]"))==1, (ev("A._db.kid.K.points"), ev("A._db.kid.K.vouch")))
+    ev("A.setConfig({storage:'todo.fehlt',mode:'admin'}); A.hass={...A._hass}"); t(600)
+    ok('setup screen: no create button for non-admin', not ev("!!A.shadowRoot.querySelector('[data-a=mklist]')") and 'Administrator' in ev("A.shadowRoot.querySelector('#app').innerText"))
     ok('no errors', not errs, errs)
     b.close()
 print('\n'.join(R))

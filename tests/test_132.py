@@ -38,7 +38,7 @@ with sync_playwright() as p:
     o1=order(); idx=o1.index('Zimmer aufräumen')
     ev("A.shadowRoot.querySelector('[data-a=\"tab\"][data-id=\"aufgaben\"]').click()"); t()
     ev("A.shadowRoot.querySelector('[data-a=tup][data-id=T1]').click()"); t(600)
-    o2=order(); ok('moved up', o2.index('Zimmer aufräumen')==idx-1, [o1,o2])
+    o2=order(); ok('moved up', o2.index('Zimmer aufräumen')<o2.index('Bett machen') and o1.index('Zimmer aufräumen')>o1.index('Bett machen'), [o1,o2])  # 1.5.0: ▲▼ tauscht mit dem sichtbaren Nachbarn (gleiches Kind, gleiche Gruppe)
     ok('kid view follows order', [x['title'] for x in ev("A._todayTasks('K')") if not x.get('virtual')][:3]!=None)
     ok('tab remembered', ev("localStorage.getItem('kpTab')")=='aufgaben')
     # Tagesblöcke aus/an

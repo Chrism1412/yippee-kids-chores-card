@@ -44,7 +44,7 @@ with sync_playwright() as p:
     add(aid('2026-10-14T17:00:00'),'KP|nfc|tag-muell'); t(6000)
     ok('approval -> pending', ev("A._st('2026-10-14','ZC','F')")=='p' and 'Freigabe' in ev("A._cfg.nfcLast.msg"), ev("A._cfg.nfcLast"))
     # 8) Einstellungen zeigen letzten Scan + Tag-Zahl
-    ev("A._tab='einst'; A._open=Object.assign(A._open||{}, {feat:true}); A._render()"); t(500)
+    ev("A._tab='einst'; A._accAll=false; A._accOpen='f_nfcOn'; A._render()"); t(500)
     html=ev("A.shadowRoot.innerHTML")
     ok('settings show last scan', 'Letzter Scan' in html and 'NFC-Tag(s) in Aufgaben' in html, '')
     ok('no page errors', not errs, errs)

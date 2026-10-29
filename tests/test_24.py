@@ -14,7 +14,7 @@ with sync_playwright() as p:
     # Einstellungen
     A.locator('[data-a="tab"][data-id="einst"]').click(); t()
     A.locator('[data-k="target"][data-v="notify.telegram_bot_familie"]').check(); t()
-    for k in ['extraOn','photoOn','statOn','dOn','mOn','cmdOn']:
+    for k in ['extraOn','photoOn','dOn','mOn','cmdOn']:
         A.locator(f'[data-a="cfg"][data-k="{k}"]').check(); t()
     A.locator('[data-a="cfg"][data-k="goalOn"]').uncheck(); t()
     A.locator('[data-cfgs="rTts"]').select_option('tts.google_de'); t()
@@ -73,17 +73,18 @@ with sync_playwright() as p:
     ok('cmd replies', any('Punktestand' in x[0] for x in pl) and any('Heute noch offen' in x[0] for x in pl), [x[0] for x in pl[-2:]])
     # Statistik
     A.locator('[data-a="tab"][data-id="kinder"]').click(); t()
-    ok('stats', A.locator('.sbars').count()==2, A.locator('.stk').first.inner_text().replace('\n',' | '))
+    pg.evaluate("A._repOpen=true; A._repMode='c'; A._render()"); t()
+    ok('stats', A.locator('.repbox .sbars').count()==2, A.locator('.stk').first.inner_text().replace('\n',' | '))
     # automatische Abend-/Morgenmeldung
     n1=len(pg.evaluate('window.plain||[]'))
     pg.clock.run_for(3*3600*1000+10*60000)  # -> 20:10
-    pl=pg.evaluate('window.plain||[]'); ok('auto daily 20:00', any('erledigt' in x[0] for x in pl[n1:]), len(pl)-n1)
+    pl=pg.evaluate('window.plain||[]'); ok('auto daily 20:00', any('heute +' in x[0] for x in pl[n1:]), len(pl)-n1)
     tt=len(pg.evaluate('window.tts||[]'))
     pg.clock.run_for(11*3600*1000)  # -> 07:10 next day
     ok('auto morning 07:00', len(pg.evaluate('window.tts||[]'))>tt, pg.evaluate('window.tts')[-1])
     ok('no page errors', not errs, errs)
     pg.set_viewport_size({'width':400,'height':900}); A.locator('[data-a="tab"][data-id="einst"]').click(); t()
-    A.locator('.acch[data-id="feat"]').scroll_into_view_if_needed(); pg.screenshot(path='kp24a.png')
-    A.locator('[data-a="tab"][data-id="kinder"]').click(); t(); A.locator('h3', has_text='Statistik').scroll_into_view_if_needed(); pg.screenshot(path='kp24b.png')
+    A.locator('.acch[data-id="f_dayBlocks"]').scroll_into_view_if_needed(); pg.screenshot(path='kp24a.png')
+    A.locator('[data-a="tab"][data-id="kinder"]').click(); t(); pg.evaluate("A._repOpen=true; A._repMode='c'; A._render()"); t(); A.locator('.repbox').first.scroll_into_view_if_needed(); pg.screenshot(path='kp24b.png')
     b.close()
 print('\n'.join(R))

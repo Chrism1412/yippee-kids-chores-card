@@ -19,7 +19,7 @@ with sync_playwright() as p:
     ev("A._setCfg({hc:'DE'})"); t(300)
     # Einstellungen
     A.locator('[data-a="tab"][data-id="einst"]').click(); t()
-    h=html(); ok('settings shown', 'data-gst="0"' in h and 'gImp' in h and '27 aktiv' in h)
+    h=html(); ok('settings shown', 'data-gst="0"' in h and 'gImp' in h and 'data-id="f_gradesOn"' in h)
     ev("(()=>{const i=A.shadowRoot.querySelector('[data-gst=\"0\"]'); i.value='12'; i.dispatchEvent(new Event('change',{bubbles:true,composed:true}));})()"); t(500)
     ok('own star table', ev("A._gStars(1)")==12 and ev("A._gStars(2)")==6, ev("A._cfg.gStars"))
     # Eltern: Note eintragen

@@ -26,7 +26,7 @@ with sync_playwright() as p:
     ev("A._editTask(null,true)"); t(400)
     rt=ev("[...A.shadowRoot.querySelectorAll('#modal [data-a=qpick]')].map(x=>x.textContent)")
     rr=[x for x in rt if x.endswith('Routine')]
-    ok('6 routine templates', len(rr)==6 and any('Hausaufgaben-Routine' in x for x in rr), rr)
+    ok('11 routine templates', len(rr)==11 and any('Mittagsschlaf-Routine' in x for x in rr) and any('Hausaufgaben-Routine' in x for x in rr), rr)
     ev("[...A.shadowRoot.querySelectorAll('#modal [data-a=qpick]')].find(x=>x.textContent.includes('Zimmer-Routine')).click()"); t(300)
     st=ev("JSON.parse(A.shadowRoot.querySelector('#modal input[name=steps]').value||'[]').map(x=>x.t)")
     ok('routine steps filled', len(st)==6 and st[0].startswith('🧸'), st)

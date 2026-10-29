@@ -16,8 +16,9 @@ with sync_playwright() as p:
     ok('remembered', ev("localStorage.getItem('kpVchShut')")=='1')
     ev("A.shadowRoot.querySelector('.vchbox .acch').click()"); t(200)
     ok('expands again', ev("!!A.shadowRoot.querySelector('.vchbox.open [data-a=vuse]')"))
-    ev("A.shadowRoot.querySelector('.card [data-a=vuse]').click()"); t(200)
-    ok('asks to confirm', 'Nochmal' in ev("A.shadowRoot.querySelector('.card [data-a=vuse]').textContent"))
+    ev("A.shadowRoot.querySelector('.card [data-a=vuse]').click()"); t(700)
+    ev("A._render()"); t(200)  # Neuzeichnen zwischen den beiden Tipps darf die Rückfrage nicht verlieren
+    ok('asks to confirm', 'Nochmal' in ev("A.shadowRoot.querySelector('.card [data-a=vuse]').textContent"), ev("[...A.shadowRoot.querySelectorAll('[data-a=vuse]')].map(x=>x.outerHTML.slice(0,160))"))
     ev("A.shadowRoot.querySelector('.card [data-a=vuse]').click()"); t(1500)
     ok('voucher used', len(ev("A._db.kid.K.vouch||[]"))==0 and 'noch nicht bekommen' not in ev("A.shadowRoot.innerHTML"))
     ev("A._setCfg({walletOn:false})"); t(800)

@@ -39,7 +39,7 @@
   - [Benachrichtigungen: Home-Assistant-App](#benachrichtigungen-home-assistant-app)
   - [Telegram](#telegram)
   - [Sprachausgabe: TTS und Alexa](#sprachausgabe-tts-und-alexa)
-  - [Müllkalender: Waste Collection Schedule & Co.](#müllkalender-waste-collection-schedule--co)
+  - [Müllkalender & Termine als Aufgaben (Hausaufgaben)](#müllkalender--termine-als-aufgaben-hausaufgaben)
   - [Schulferien und Feiertage](#schulferien-und-feiertage)
   - [Sensoren für eigene Automationen](#sensoren-für-eigene-automationen)
   - [Hintergrund-Automation](#hintergrund-automation)
@@ -66,10 +66,10 @@ Eltern legen Aufgaben und Belohnungen an, geben Erledigtes frei (auch direkt aus
 - **Eine Datei, keine Abhängigkeiten:** Keine weiteren HACS-Karten nötig, ressourcenschonend auch auf älteren Tablets.
 - **Für das Handy gemacht:** Funktioniert in der Home-Assistant-App im Hochformat genauso wie auf dem Wand-Tablet.
 
-> ### 💡 Sofort startklar: 208 Aufgaben und 51 Belohnungen eingebaut
-> Du musst nicht bei null anfangen. Die Karte bringt eine **Aufgaben-Datenbank mit 208 Vorlagen in 12 Bereichen** (davon 6 fertige Routinen) mit – von „Zähne putzen“ über „Ranzen packen“ und „Spülmaschine ausräumen“ bis „Rasenmähen“ – jeweils mit passendem Emoji, Punkten und Tageszeit. Dazu **51 Belohnungs-Vorlagen** wie Eisgutschein, Filmabend, Kletterhalle, Kino oder Freizeitpark – und rund 250 Emojis zur Auswahl, nach Themen sortiert.
+> ### 💡 Sofort startklar: 221 Aufgaben und 51 Belohnungen eingebaut
+> Du musst nicht bei null anfangen. Die Karte bringt eine **Aufgaben-Datenbank mit 221 Vorlagen in 12 Bereichen** (davon 11 fertige Routinen) mit – von „Zähne putzen“ über „Ranzen packen“ und „Spülmaschine ausräumen“ bis „Rasenmähen“ – jeweils mit passendem Emoji, Punkten und Tageszeit. Dazu **51 Belohnungs-Vorlagen** wie Eisgutschein, Filmabend, Kletterhalle, Kino oder Freizeitpark – und rund 250 Emojis zur Auswahl, nach Themen sortiert.
 >
-> **Altersgerecht dank Geburtstag:** Trägst du beim Kind den Geburtstag ein, zeigt die Auswahlliste nur Aufgaben, die zum Alter passen (4 bis 17 Jahre). Für ein 4-jähriges Kind sind es 33 Vorschläge, mit 6 Jahren 104, mit 8 Jahren 138, ab 10 Jahren über 140. Mit dem 💡-Knopf beim Kind schlägt die Karte alle passenden, noch nicht zugewiesenen Aufgaben auf einmal vor – anhaken, fertig.
+> **Altersgerecht dank Geburtstag:** Trägst du beim Kind den Geburtstag ein, zeigt die Auswahlliste nur Aufgaben, die zum Alter passen (2 bis 17 Jahre). Für ein 2-jähriges Kind sind es schon 28 Vorschläge, mit 4 Jahren 67, mit 6 Jahren 119, mit 8 Jahren 150, ab 10 Jahren um die 150–160. Mit dem 💡-Knopf beim Kind schlägt die Karte alle passenden, noch nicht zugewiesenen Aufgaben auf einmal vor – anhaken, fertig.
 
 ## Screenshots
 
@@ -87,17 +87,19 @@ Eltern legen Aufgaben und Belohnungen an, geben Erledigtes frei (auch direkt aus
 - **Sparziel** 🎯: eine Belohnung auswählen und den Fortschritt dorthin sehen
 - **Wünsche** 💡: eigene Belohnungsideen an die Eltern schicken
 - **Joker** 🃏 (optional): als Belohnung einlösen und damit eine Pflicht-Aufgabe ohne Minuspunkte auslassen
+- **Belohnungen nur für bestimmte Kinder** 🎁: im Editor unter „Für welche Kinder?“ – z. B. das Lego-Set nur für Ben. Andere Kinder sehen sie nicht
 - **Preise je Kind** 👧 (optional): jede Belohnung kann pro Kind einen eigenen Preis haben – mit „⚖️ Fair verteilen“ passend zu den Sternen, die jedes Kind am Tag sammeln kann
 - **Familienziel** 👨‍👩‍👧: alle Kinder sammeln gemeinsam, z. B. für einen Ausflug
 - **Serien** 🔥: Bonus, wenn eine Aufgabe mehrere Tage am Stück erledigt wird
 - **„Demnächst“** 📅: Vorschau auf besondere Aufgaben der nächsten Tage
 - **Geburtstag** 🎂: Konfetti, Bonus, Punktefaktor und auf Wunsch aufgabenfrei
 - **Schulnoten** 🎓 (optional): Sterne für gute Noten – Note selbst melden, auf Wunsch mit Foto der Arbeit
-- **Tagesblöcke** ⏰ (optional): Aufgaben nach Morgens, Mittags, Nachmittags und Abends gruppiert, jeder Block mit eigenem Fortschritt – zum Auf- und Zuklappen; vorbei ist vorbei: abgelaufene Blöcke klappen automatisch zu (abschaltbar). Auch in der Eltern-Ansicht
+- **Tagesblöcke** ⏰ (optional): Aufgaben nach Morgens, Mittags, Nachmittags und Abends gruppiert, jeder Block mit eigenem Fortschritt – zum Auf- und Zuklappen; vorbei ist vorbei: abgelaufene Blöcke klappen automatisch zu (abschaltbar). Auch in der Eltern-Ansicht. **Die Zeiten der Blöcke stellst du selbst ein** (Standard: Mittags ab 11:30, Nachmittags ab 16:00, Abends ab 18:00) – jeder Block endet, wo der nächste beginnt, Überschneidungen gibt es nicht. Unter ✅ Aufgaben stehen die Aufgaben **je Kind** und darunter wahlweise nach Tageszeit, nach Art (Routinen / Pflicht / Zusatz / Sonder) oder ohne Unterteilung – jede Gruppe ein- und ausklappbar
+- **🕒 Lockerere Zeiten an schulfreien Tagen** (optional): Am Wochenende, in den Ferien und an Feiertagen läuft ein Zeitfenster länger – wie viel, stellst du selbst ein: bis Ende des Tagesblocks („Zähne putzen bis 9:00“ dann bis zum Ende von 🌅 Morgens), 30 Minuten, 1 oder 2 Stunden länger oder ganz ohne Zeitlimit. Aufgaben, die immer pünktlich sein müssen (z. B. Medikament), bekommen das Häkchen **⏰ Feste Zeit auch an schulfreien Tagen**. Ausschlafen zählt nicht als verpasst
 - Auf Wunsch eingeklappte Ansicht (`collapsed: true`): nur Name und Punkte, Aufgaben erst nach Antippen
 
 ### Aufgaben
-- **Wochentage**, **feste Termine**, **einmalige Sonderaufgaben** (wer zuerst kommt) oder **aus dem Müllkalender**
+- **Wochentage**, **feste Termine**, **einmalige Sonderaufgaben** (wer zuerst kommt) oder **aus einem Kalender** (Müllabfuhr, Training …) – und auf Wunsch wird **jeder Kalendereintrag zur eigenen Aufgabe** (z. B. Hausaufgaben)
 - **Im Wechsel** 🔄: die Kinder sind abwechselnd dran – ist eines im Urlaub, übernimmt das nächste
 - **„Einer reicht“** 🤝: Pflicht für alle, erledigt sobald es eines macht
 - **Zusatzaufgaben** 🙋: freiwillig, mit Extrapunkten
@@ -106,24 +108,24 @@ Eltern legen Aufgaben und Belohnungen an, geben Erledigtes frei (auch direkt aus
 - **„Am Abend vorher“** 🌙 für Aufgaben wie Ranzen oder Turnbeutel packen: kommt, wenn am nächsten Tag Schule ist; beim Turnbeutel fragt die Karte nach den Sporttagen
 - **Saison** (z. B. Rasenmähen nur April–Oktober) und **„nur an Schultagen“**
 - **Foto-Nachweis** 📷 pro Aufgabe: das Kind fotografiert beim Abhaken, die Eltern sehen das Foto bei der Freigabe – klappt auch mit Kinder-Konten ohne Admin-Rechte: dann speichert die Karte ein verkleinertes Foto in einer To-do-Liste (am besten einer eigenen, z. B. „Yippee Fotos“)
-- **Aufgaben-Datenbank mit 208 Vorlagen** in 12 Bereichen – nach Geburtstag automatisch altersgerecht gefiltert (siehe unten)
+- **Aufgaben-Datenbank mit 221 Vorlagen** in 12 Bereichen – nach Geburtstag automatisch altersgerecht gefiltert (siehe unten)
 
-### Aufgaben-Datenbank: 208 Vorlagen, altersgerecht
+### Aufgaben-Datenbank: 221 Vorlagen, altersgerecht
 
 | Bereich | Vorlagen | Beispiele |
 |---|:---:|---|
-| 🌅 Morgens | 18 | Aufstehen, Bett machen, Zähne putzen, Schuhe anziehen, Selbst mit Wecker aufstehen |
-| ☀️ Mittags | 3 | Mittagessen, Sachen wegräumen, Vesper essen (nach der Schule) |
-| 🎒 Schule | 26 | Hausaufgaben, Lesen üben, Turnbeutel packen, Für die Klassenarbeit lernen, Referat vorbereiten |
-| 🍽️ Küche & Essen | 25 | Tisch decken, Spülmaschine ausräumen, Nudeln kochen, Komplette Mahlzeit kochen, Pizza selbst belegen |
+| 🌅 Morgens | 20 | Aufstehen, Bett machen, Zähne putzen, Schuhe anziehen, Selbst mit Wecker aufstehen |
+| ☀️ Mittags | 7 | Mittagessen, Sachen wegräumen, Vesper essen (nach der Schule), Mittagsschlaf, Mittagsruhe, Mittagsschlaf-Routine |
+| 🎒 Schule | 27 | Hausaufgaben, Lesen üben, Turnbeutel packen, Für die Klassenarbeit lernen, Referat vorbereiten |
+| 🍽️ Küche & Essen | 27 | Tisch decken, Spülmaschine ausräumen, Nudeln kochen, Komplette Mahlzeit kochen, Pizza selbst belegen |
 | 🛒 Einkaufen | 6 | Brötchen einkaufen, Einkaufsliste schreiben, Einkauf mit Einkaufsliste, Wocheneinkauf erledigen |
-| 🧹 Ordnung & Putzen | 23 | Zimmer aufräumen, Staubsaugen, Schreibtisch aufräumen, Bad komplett putzen |
-| 🧺 Wäsche | 14 | Socken sortieren, Wäsche zusammenlegen, Eigene Wäsche komplett waschen |
-| 🏡 Haus, Garten & Tiere | 30 | Müll rausbringen, Hund ausführen, Fische füttern, Rasenmähen, Autoscheiben freikratzen |
-| 🧑 Verantwortung | 12 | Handy pünktlich abgeben, Taschengeld-Budget führen, Arzttermin selbst ausmachen |
-| ❤️ Gesundheit & Bewegung | 17 | Hände waschen (morgens, mittags, abends), Genug Wasser trinken, 30 Min. draußen spielen, Sonnencreme auftragen, Zahnseide benutzen |
+| 🧹 Ordnung & Putzen | 27 | Spielzeug aufräumen helfen, Zimmer aufräumen, Staubsaugen, Schreibtisch aufräumen, Bad komplett putzen |
+| 🧺 Wäsche | 15 | Socken sortieren, Wäsche zusammenlegen, Eigene Wäsche komplett waschen |
+| 🏡 Haus, Garten & Tiere | 31 | Müll rausbringen, Hund ausführen, Fische füttern, Rasenmähen, Autoscheiben freikratzen |
+| 🧑 Verantwortung | 13 | Handy pünktlich abgeben, Taschengeld-Budget führen, Arzttermin selbst ausmachen |
+| ❤️ Gesundheit & Bewegung | 18 | Hände waschen (morgens, mittags, abends), Genug Wasser trinken, 30 Min. draußen spielen, Sonnencreme auftragen, Zahnseide benutzen |
 | 👨‍👩‍👧 Familie & Miteinander | 11 | Oma oder Opa anrufen, Dankeskarte schreiben, Handyfreie Stunde, Nachbarn helfen |
-| 🌙 Abends | 17 | Abendessen, Zähne putzen abends, Pyjama anziehen, Vorlesen, Ins Bett gehen |
+| 🌙 Abends | 19 | Abendessen, Zähne putzen abends, Pyjama anziehen, Vorlesen, Ins Bett gehen |
 
 **So funktioniert die Altersauswahl:**
 
@@ -131,13 +133,13 @@ Eltern legen Aufgaben und Belohnungen an, geben Erledigtes frei (auch direkt aus
 2. Beim Anlegen einer Aufgabe zeigt **📋 Vorlage wählen** nur die Vorlagen, die zum Alter der ausgewählten Kinder passen. Mit „Alle Vorlagen“ lässt sich die ganze Liste einblenden.
 3. Oder der **💡-Knopf** beim Kind: Er listet alle passenden Aufgaben, die das Kind noch nicht hat – anhaken und mit einem Tipp übernehmen.
 
-| Alter | 4 | 5 | 6 | 8 | 10–12 | 14+ |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|
-| Passende Vorlagen | 33 | 63 | 104 | 138 | 147–154 | 145 |
+| Alter | 2 | 3 | 4 | 5 | 6 | 8 | 10–12 | 14+ |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| Passende Vorlagen | 28 | 51 | 67 | 76 | 119 | 150 | 156–164 | 145–149 |
 
 **Schul-Vorlagen** richten sich nach dem üblichen **Einschulungsalter des eingestellten Landes** (z. B. Irland und Malta 5, Deutschland 6, Polen und Schweden 7 Jahre). Ist ein Kind früher oder später eingeschult worden, beim Kind **„🎒 Eingeschult im (Monat/Jahr)“** eintragen – dann zählen die Schuljahre, und die Karte zeigt die Klasse an (z. B. „8 Jahre · 2. Klasse“).
 
-Vorlagen mit Jahreszeit bekommen automatisch ihre Saison (Rasenmähen April–Oktober, Unkraut und Blumen gießen April–September, Sonnencreme Mai–September, Obst ernten Juni–September, Laub Oktober–November, Plätzchen backen Dezember, Schnee und Autoscheiben freikratzen Dezember–März), Schul-Aufgaben automatisch „nur an Schultagen“. Alle Vorlagen sind in allen 27 Sprachen übersetzt und lassen sich nach dem Übernehmen frei anpassen.
+Vorlagen mit Jahreszeit bekommen automatisch ihre Saison (Rasenmähen April–Oktober, Unkraut und Blumen gießen April–September, Sonnencreme Mai–September, Obst ernten Juni–September, Laub Oktober–November, Plätzchen backen Dezember, Schnee und Autoscheiben freikratzen Dezember–März), Schul-Aufgaben automatisch „nur an Schultagen“ (regulär Montag bis Freitag; hat ein Kind auch samstags Unterricht, beim Kind „🎒 Samstagsschule“ anhaken). Alle Vorlagen sind in allen 27 Sprachen übersetzt und lassen sich nach dem Übernehmen frei anpassen.
 
 Dazu gibt es **51 Belohnungs-Vorlagen** von klein bis groß: Eisgutschein, Süßigkeit aussuchen, Donut vom Bäcker, 30 Min. extra Spielzeit, Karaoke-Abend, Frühstück im Bett, Zelten im Garten, Musik im Auto aussuchen, Exklusivzeit mit Mama oder Papa, 🃏 Joker, Filmabend mit Popcorn, Freund/in einladen, Länger ausgehen dürfen, Kino, Kletterhalle, Zoo, Zirkus bis Freizeitpark – mit Vorschlagspreis in Sternen, frei änderbar.
 
@@ -160,11 +162,11 @@ Ist das Kind nicht da, gibt es **keine Aufgaben, keine Erinnerungen und kein „
 
 ### Joker 🃏 (optional)
 
-Unter **⚙️ Einstellungen → 🧩 Zusatzfunktionen → 🃏 Joker** einschalten und unter **🎁 Belohnungen** die Vorlage „🃏 Joker: eine Aufgabe auslassen“ anlegen (Standard 30 ⭐). Löst ein Kind den Joker ein, erscheint bei ihm der Knopf **🃏 Joker ×1**. Damit wählt es eine heutige Pflicht-Aufgabe aus, die es auslassen möchte: keine Sterne, aber auch keine Minuspunkte, und die Serie 🔥 bleibt erhalten. Du bekommst eine Nachricht, und der Einsatz steht im Änderungsprotokoll. Jede eigene Belohnung lässt sich mit dem Haken „🃏 Ist ein Joker“ ebenfalls zum Joker machen.
+Unter **⚙️ Einstellungen → 🎁 Belohnungen & Geld → 🃏 Joker** einschalten und unter **🎁 Belohnungen** die Vorlage „🃏 Joker: eine Aufgabe auslassen“ anlegen (Standard 30 ⭐). Löst ein Kind den Joker ein, erscheint bei ihm der Knopf **🃏 Joker ×1**. Damit wählt es eine heutige Pflicht-Aufgabe aus, die es auslassen möchte: keine Sterne, aber auch keine Minuspunkte, und die Serie 🔥 bleibt erhalten. Du bekommst eine Nachricht, und der Einsatz steht im Änderungsprotokoll. Jede eigene Belohnung lässt sich mit dem Haken „🃏 Ist ein Joker“ ebenfalls zum Joker machen.
 
 ### Schulnoten 🎓 (optional)
 
-Unter **⚙️ Einstellungen → 🧩 Zusatzfunktionen → 🎓 Schulnoten** einschalten.
+Unter **⚙️ Einstellungen → ⭐ Punkte & Boni → 🎓 Schulnoten** einschalten.
 
 - **Note eintragen:** unter **👧 Kinder** mit 🎓 – Fach aus der Schnellauswahl (Mathe, Deutsch, Englisch, Sachunterricht …) oder frei eintippen, dazu die Note
 - **Sterne automatisch nach Notentabelle** – passend zum Land eingestellt, frei änderbar:
@@ -190,14 +192,14 @@ Unter **⚙️ Einstellungen → 🧩 Zusatzfunktionen → 🎓 Schulnoten** ein
 
 ### Weitere Zusatzfunktionen (alle optional)
 
-Alles unter **⚙️ Einstellungen → 🧩 Zusatzfunktionen** einzeln ein- und ausschaltbar:
+Alles unter **⚙️ Einstellungen** einzeln ein- und ausschaltbar – jede Funktion steht dort, wo sie thematisch hingehört: **⚙️ Allgemein · ✅ Aufgaben & Tagesablauf · ⭐ Punkte & Boni · 🎁 Belohnungen & Geld · 🔔 Benachrichtigungen · 🔌 Geräte & Sprache · 📈 Auswertung · 💾 Daten**. Jede hat einen eigenen aufklappbaren Abschnitt, der „an“ oder „aus“ zeigt.
 
-- **📋 Routinen:** mehrere Schritte in einer Aufgabe, z. B. „Morgen-Routine“ (Aufstehen, Toilette, Zähne, Anziehen, Haare, Frühstück, Schuhe). Das Kind hakt jeden Schritt einzeln ab, die Sterne gibt es beim letzten Haken. Eigener Knopf „📋 ＋ Routine“; Schritte per Suche (ab dem ersten Buchstaben) aus den eigenen Aufgaben und Vorlagen oder selbst eintippen, mit ▲▼ sortieren. Aufgaben in einer Routine erscheinen nur noch als Schritt. 6 Vorlagen sind dabei: Morgen-, Abend-, Nach-der-Schule-, Hausaufgaben-, Zimmer- und Wochenend-Routine.
+- **📋 Routinen:** mehrere Schritte in einer Aufgabe, z. B. „Morgen-Routine“ (Aufstehen, Toilette, Zähne, Anziehen, Haare, Frühstück, Schuhe). Das Kind hakt jeden Schritt einzeln ab, die Sterne gibt es beim letzten Haken. Eigener Knopf „📋 ＋ Routine“; Schritte per Suche (ab dem ersten Buchstaben) aus den eigenen Aufgaben und Vorlagen oder selbst eintippen, mit ▲▼ sortieren. Aufgaben in einer Routine erscheinen nur noch als Schritt. 11 Vorlagen sind dabei: Morgen-, Abend-, Nach-der-Schule-, Hausaufgaben-, Zimmer-, Wochenend-, Mittagsschlaf-, Bade-, Essens-, Haustier- und Sport-Routine.
 - **🔮 Spar-Prognose:** beim Sparziel und beim Familienziel steht, wann es beim aktuellen Tempo ungefähr erreicht ist – berechnet aus den echten Sternen der letzten 3 Wochen.
 - **🧮 Preis-Assistent:** unter 🎁 Belohnungen steht bei jeder Belohnung, wie viele Tage jedes Kind dafür spart. „Preise vorschlagen“ rechnet die Preise passend zu den Wochensternen der Kinder um (z. B. „2 Belohnungen pro Woche“) und schlägt ein Familienziel vor.
 - **👧 Preise je Kind:** jede Belohnung kann pro Kind einen eigenen Preis haben; „⚖️ Fair verteilen“ rechnet nach den Sternen pro Tag.
 - **👫 Gemeinsame Belohnungen:** für Belohnungen, von denen mehrere Kinder etwas haben (z. B. Waffeln zum Frühstück). Der Preis wird aufgeteilt, jedes Kind zahlt seinen Anteil selbst („👫 Teilen“ – die anderen sehen ganz oben in ihrer Ansicht „… möchte mit dir teilen – machst du mit?“ mit Mitmach-Knopf). Oder ein Kind **lädt ein** und zahlt alles („💝 Einladen“ bzw. „💝 Rest übernehmen“) – das eingeladene Kind sieht oben „💝 … lädt dich ein“. Eingeladene Kinder zahlen nichts und verbrauchen ihr Wochenlimit nicht. Nach der Freigabe bekommt jedes zahlende Kind einen Gutschein; ablehnen oder zurücknehmen erstattet alle Sterne, offene Anfragen verfallen nach 7 Tagen mit Erstattung.
-- **🏷️ NFC-Tags:** Aufgabe abhaken, indem das Kind einen NFC-Tag mit seinem Handy scannt (z. B. am Zahnputzbecher). Tag-ID in der Aufgabe eintragen, beim Kind seinen Home-Assistant-Benutzer wählen; die Automation legt die Karte selbst an. Ist beim Scannen keine Karte geöffnet, wird die Aufgabe beim nächsten Öffnen abgehakt (es zählt die Uhrzeit des Scans). Unter Zusatzfunktionen → NFC-Tags steht der letzte Scan – und warum nichts abgehakt wurde, falls es nicht geklappt hat.
+- **🏷️ NFC-Tags:** Aufgabe abhaken, indem das Kind einen NFC-Tag mit seinem Handy scannt (z. B. am Zahnputzbecher). Tag-ID in der Aufgabe eintragen, beim Kind seinen Home-Assistant-Benutzer wählen; die Automation legt die Karte selbst an. Ist beim Scannen keine Karte geöffnet, wird die Aufgabe beim nächsten Öffnen abgehakt (es zählt die Uhrzeit des Scans). Unter ✅ Aufgaben & Tagesablauf → 🏷️ NFC-Tags steht der letzte Scan – und warum nichts abgehakt wurde, falls es nicht geklappt hat.
 - **🎟️ Gutscheine:** eingelöste Belohnungen landen als Gutschein beim Kind und werden erst abgehakt, wenn es sie bekommen hat.
 - **🏅 Wochen-Bonus:** Extra-Sterne am Montag für alle, die an genug Tagen alles geschafft haben – für Kinder, die nicht jeden Tag da sind, zählen nur ihre Tage mit Aufgaben.
 - **👫 Teambonus:** schaffen alle Kinder eines Tages alles, gibt es Extra-Sterne fürs Familienziel.
@@ -207,16 +209,17 @@ Alles unter **⚙️ Einstellungen → 🧩 Zusatzfunktionen** einzeln ein- und 
 - **🩺 Plausibilitäts-Check** (standardmäßig an): weist im Heute-Tab auf unstimmige Einstellungen hin, z. B. ein Kind, das laut Anwesenheit nie da ist, oder ein viel zu schnell erreichtes Familienziel.
 
 ### Für Eltern
-- **🧭 Einrichtungs-Assistent** beim ersten Start: Kinder mit Geburtsdatum anlegen → passende Aufgaben anhaken → Belohnungen wählen → fertig. Jederzeit wieder startbar unter ⚙️ Einstellungen
-- **Einstellungen „Einfach“ oder „Alle“**: auf Wunsch nur das Wichtigste (Sprache, Urlaub, Freigabe, Benachrichtigungen, Sicherung, Zugriffsschutz) – alle Zusatzfunktionen mit einem Tipp
-- **Benehmen** 😊 (optional): im Heute-Tab mit einem Tipp auf den grünen Knopf „😊 +1“ belohnen (Sterne einstellbar), auf Wunsch auch mit dem roten Knopf „😠 −1“ Sterne abziehen – alles im Punkte-Verlauf
+- **🧭 Einrichtungs-Assistent** beim ersten Start: Kinder mit Geburtsdatum, Avatar und Farbe anlegen → passende Routinen und Aufgaben anhaken (nach Tageszeit gruppiert, mit Suche) → Belohnungen mit eigenem Preis wählen → beliebte Funktionen und das Handy für Benachrichtigungen einschalten → fertig, inklusive fertigem Text für die Kinder-Karte. Jederzeit wieder startbar unter ⚙️ Einstellungen
+- **Einstellungen „Einfach“ oder „Alle“**: auf Wunsch nur das Wichtigste (Sprache, Urlaub, Freigabe, Benachrichtigungen, Sicherung, Zugriffsschutz) – alles andere mit einem Tipp, nach Themen sortiert, mit **🔎 Suchfeld** (Treffer im Titel zuerst), **Schalter direkt in der Zeile** und **📖-Knopf** zum passenden Handbuch-Thema
+- **Benehmen** 😊 (optional): im Heute-Tab mit einem Tipp auf den grünen Knopf „😊 +1“ belohnen (Sterne einstellbar), auf Wunsch auch mit dem roten Knopf „😠 −1“ Sterne abziehen – alles im Punkte-Verlauf. Unter 👧 Kinder zeigt ein **📊 Verhaltens-Diagramm** die letzten 14 Tage mit Durchschnitt und Trend
 - **Freigabe** von Aufgaben und Einlösungen – in der Karte, per Push-Knopf oder Telegram-Knopf
 - **Minuspunkte nur nach Entscheidung**: verpasst = „entschuldigt“, „Minuspunkte“ oder „doch erledigt“
-- Punkte von Hand anpassen, **Punkte-Verlauf** pro Kind, **Monatsstatistik**
+- Punkte von Hand anpassen, **Punkte-Verlauf** pro Kind, **5-Wochen-Diagramm** unter 📊 Berichte
 - **Taschengeld**: Sterne in Euro umrechnen und auszahlen
 - **Doppelte-Punkte-Tage**
 - **Urlaub** für alle oder einzelne Kinder, **Schulferien und Feiertage** automatisch
-- **Tagesabschluss** am Abend und **Wochenrückblick** (Tag und Uhrzeit einstellbar, Standard: Sonntag 19 Uhr) als Nachricht
+- **Tagesabschluss** am Abend und **Wochenrückblick** (Tag und Uhrzeit einstellbar, Standard: Sonntag 19 Uhr) als kompakte Nachricht mit **Vergleich zur Vorwoche** (z. B. „75/118 (↗ +8 %)“) – oben eine Zeile mit allen Kindern („🦊 Mia 6/6 ✅ · 🐻 Ben 4/5“), darunter je Kind eine Zeile. Wahlweise **eine Nachricht pro Kind**, offene Aufgaben auf Wunsch, und pro Bericht wählbar, **an welche Geräte** er geht
+- **📊 Berichte** im 👧 Kinder-Tab: Tabelle mit allen Kindern – **Tage** (erledigt/fällig und verdiente Sterne, Antippen zeigt Einzelheiten) und **Wochen**. Die Werte werden jeden Tag eingefroren gespeichert (60 Tage, 52 Wochen, nur wenige KB) und ändern sich später nicht mehr – auf Wunsch **⬇️ als CSV-Tabelle** für Excel
 - **Morgen-Ansage** und **Erinnerungen** über Lautsprecher
 
 ### 📖 Handbuch
@@ -227,7 +230,11 @@ Alles unter **⚙️ Einstellungen → 🧩 Zusatzfunktionen** einzeln ein- und 
 ### Sicherheit und Daten
 - Automatische **Sicherungen** (auch in eine zweite Liste), Sicherungsdatei zum Herunterladen
 - **Datenprüfung**: warnt, wenn Einträge fehlen oder außerhalb der Karte verändert wurden
-- **Papierkorb** (30 Tage) und **Änderungsprotokoll** (wer hat wann was geändert)
+- **🎁 Belohnungen nach Art sortiert** (für ein Kind · gemeinsam · Joker), nach ⭐ Sternen oder 🔤 A–Z – in der Kinder-Ansicht stehen die gerade einlösbaren oben
+- **👧 Kinder-Tab** mit einer Karte pro Kind: Sterne, heutiger Fortschritt und Verhaltens-Diagramm an einem Ort – oben 📊 Berichte mit Tagen, Wochen und 5-Wochen-Diagramm
+- **✓ Alle Aufgaben freigeben** mit einem Tipp und **⧉ Kopieren** von Aufgaben und Belohnungen
+- **🌙 Hell und dunkel:** alle farbigen Hinweise passen sich dem Home-Assistant-Theme an
+- **↩️ Rückgängig** direkt nach dem Löschen, **Papierkorb** (7, 14 oder 30 Tage, einstellbar) und **Änderungsprotokoll** (wer hat wann was geändert)
 - **💽 Speicher-Anzeige**: wie viel die Karte in der To-do-Liste belegt (Daten, Sicherungen, Fotos …), mit Knopf „🧹 Alte Einträge aufräumen“
 - **Eltern = ausgewählte Home-Assistant-Benutzer**, **PIN** mit Sperre nach Fehlversuchen
 
@@ -235,7 +242,7 @@ Alles unter **⚙️ Einstellungen → 🧩 Zusatzfunktionen** einzeln ein- und 
 
 - **Home Assistant 2024.10** oder neuer
 - Die Integration **„Lokale To-do-Liste“** (in Home Assistant enthalten)
-- Optional, je nach gewünschten Funktionen: Home-Assistant-App, Telegram-Bot, TTS-Integration, Kalender-Integration für den Müllkalender
+- Optional, je nach gewünschten Funktionen: Home-Assistant-App, Telegram-Bot, TTS-Integration, Kalender-Integration für 🗑️ Müllkalender bzw. 📚 Termine als Aufgaben
 
 ## Installation
 
@@ -254,7 +261,7 @@ HACS legt die Ressource automatisch an.
 2. In Home Assistant den Ordner **`/config/www/community/yippee-kids-chores-card/`** anlegen und alle Dateien dort hineinkopieren (z. B. mit dem Add-on *File editor* oder *Samba share*).
    Das ist derselbe Ordner, den auch HACS verwendet – ein späterer Wechsel zu HACS klappt dadurch ohne Umbau.
 3. **Einstellungen → Dashboards → ⋮ (oben rechts) → Ressourcen → Ressource hinzufügen**
-   - URL: `/hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.4.0`
+   - URL: `/hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.5.0`
    - Typ: **JavaScript-Modul**
 4. Seite neu laden.
 
@@ -264,7 +271,9 @@ HACS legt die Ressource automatisch an.
 
 ### 1. Speicher anlegen
 
-**Einstellungen → Geräte & Dienste → Integration hinzufügen → „Lokale To-do-Liste“** → Name: **`Yippee Kids Chores`**
+**Am einfachsten:** Karte einfach aufs Dashboard legen und als Administrator öffnen. Das erste Fenster bietet die 🌐 Sprachauswahl und den Knopf **„⚙️ Liste „Yippee Kids Chores“ anlegen“** – ein Tipp, fertig.
+
+**Oder von Hand:** **Einstellungen → Geräte & Dienste → Integration hinzufügen → „Lokale To-do-Liste“** → Name: **`Yippee Kids Chores`**
 
 Daraus entsteht die Entität `todo.yippee_kids_chores`. Diese Liste ist der Speicher der Karte – bitte die Einträge darin nicht von Hand bearbeiten (siehe [Wie werden die Daten gespeichert?](#wie-werden-die-daten-gespeichert)).
 
@@ -298,12 +307,12 @@ child: Mia
 
 ### 3. In der Eltern-Ansicht loslegen
 
-Beim ersten Öffnen führt dich der **🧭 Einrichtungs-Assistent** in vier Schritten durch – danach ist die Karte sofort nutzbar. Wer lieber selbst einrichtet, tippt auf „Überspringen“:
+Beim ersten Öffnen führt dich der **🧭 Einrichtungs-Assistent** in fünf Schritten durch – danach ist die Karte sofort nutzbar. Wer lieber selbst einrichtet, tippt auf „Überspringen“:
 
-1. **👧 Kinder** – Kinder anlegen (Name, Emoji, Farbe, **Geburtstag**). Mit 💡 schlägt die Karte aus der Datenbank mit 208 Vorlagen alle altersgerechten Aufgaben vor.
+1. **👧 Kinder** – Kinder anlegen (Name, Emoji, Farbe, **Geburtstag**). Mit 💡 schlägt die Karte aus der Datenbank mit 221 Vorlagen alle altersgerechten Aufgaben vor.
 2. **✅ Aufgaben** – Aufgaben anlegen oder aus den Vorlagen wählen.
 3. **🎁 Belohnungen** – Belohnungen mit ihrem Preis in Sternen anlegen.
-4. **⚙️ Einstellungen** – Sprache, Benachrichtigungen, Freigabe, Zusatzfunktionen usw. Alle Einstellungen gelten automatisch für alle Kinder-Karten und Geräte.
+4. **⚙️ Einstellungen** – Sprache, Benachrichtigungen, Freigabe und alle Zusatzfunktionen – nach Themen sortiert. Alle Einstellungen gelten automatisch für alle Kinder-Karten und Geräte.
 
 ## Karten-Optionen
 
@@ -313,11 +322,20 @@ Beim ersten Öffnen führt dich der **🧭 Einrichtungs-Assistent** in vier Schr
 | `mode` | `admin`, `kids`, `kid` | `admin` | Eltern-Ansicht, alle Kinder oder ein Kind |
 | `child` | Name | – | Nur bei `mode: kid`: welches Kind |
 | `collapsed` | `true` / `false` | `false` | Kinder eingeklappt (nur Name und Punkte) anzeigen |
+| `summary` | `true` / `false` | `false` | Nur eine kleine Übersicht pro Kind (Punkte, heute, Ziel, Level, Bilanz) – z. B. fürs Familien-Dashboard |
+| `show` | Liste | alle | Bei `summary`: welche Teile – `points`, `today`, `goal`, `level`, `net` |
+| `equal_tiles` | `true` / `false` | wie ⚙️ | Gleich hohe Aufgaben-Kacheln (Platz für drei Zeilen) und Belohnungen – mehrere Kinder-Karten liegen nebeneinander auf einer Linie |
+| `colors` | `default`, `light`, `dark`, `pastel`, `ocean`, `forest`, `sun`, `night`, `candy`, `custom` | wie ⚙️ | Farbvorlage nur für diese Karte (`default` = wie das Dashboard, `custom` = die eigenen Farben aus ⚙️) |
+| `compact` | `true` / `false` | wie ⚙️ | Weniger Abstände |
+| `transparent` | `true` / `false` | wie ⚙️ | Ohne eigenen Hintergrund – passt sich dem Dashboard an |
+| `scale` | `70`–`130` | wie ⚙️ | Größe der Karte in Prozent |
 | `family` | `true` / `false` | automatisch | Familienziel auf dieser Karte zeigen. Automatisch erscheint es nur einmal pro Seite |
 | `language` | z. B. `en`, `fr` | Einstellung bzw. Sprache von Home Assistant | Eigene Sprache nur für diese Karte (z. B. auf dem Kinder-Tablet) |
 | `wizard` | `true`, `false` | `true` | `false` = kein Einrichtungs-Assistent beim ersten Start (lässt sich trotzdem unter ⚙️ Einstellungen starten) |
 | `pin` | Ziffern | – | Ältere Variante der PIN. Besser in den Einstellungen unter 🔒 Zugriffsschutz festlegen |
 | `pin_minutes` | Zahl | `5` | Nach so vielen Minuten ohne Bedienung wird der Eltern-Bereich wieder gesperrt |
+
+„wie ⚙️“: Ohne Angabe gilt, was in der Eltern-Ansicht unter ⚙️ Einstellungen → ⚙️ Allgemein → 🎨 Darstellung für alle Karten eingestellt ist (Standard: aus bzw. 100 %). Eine Angabe in der Karte hat Vorrang – z. B. nur die Tablet-Karte größer.
 
 Alles andere stellst du in der Karte selbst unter **⚙️ Einstellungen** ein.
 
@@ -342,10 +360,13 @@ Voraussetzung: die Integration **Telegram bot** mit mindestens einem Chat.
 
 - Telegram-Chats erscheinen unter **📱 Benachrichtigungen an** in einer eigenen Gruppe.
 - **📨 Freigabe-Knöpfe mitsenden**: Freigeben und Ablehnen direkt im Chat. Die passende Automation legt die Karte auf Knopfdruck an.
+- **✅ Letzter Knopf:** zeigt, wann der letzte Knopf angekommen ist, von wem und ob gebucht wurde – fehlt die Automation, steht ein deutlicher Hinweis da.
 - **📨 Telegram-Test mit Knöpfen** prüft, ob Telegram die Knöpfe annimmt, und zeigt sonst die Fehlermeldung.
 - **💬 Telegram-Befehle** im Chat:
   - `/punkte` – Punktestand aller Kinder (mit Sparziel)
   - `/offen` – was heute noch fehlt
+  - `/heute` – Tagesabschluss sofort
+  - `/woche` – Wochenrückblick sofort
   - `/hilfe` – Übersicht der Befehle
 - Foto-Nachweise werden als Bild mitgeschickt (bei Fotos von Konten ohne Admin-Rechte steht stattdessen „Foto in der Karte ansehen“).
 
@@ -361,9 +382,13 @@ Damit gibt es
 - 🌅 **Morgen-Ansage**: „Guten Morgen Mia! Heute stehen an: Zähne putzen, Bett machen und Müll rausbringen (Gelber Sack).“ – auf Wunsch nur Montag bis Freitag, nicht im Urlaub und nicht an Feiertagen,
 - ⏰ **Erinnerungen** kurz vor Ende eines Zeitfensters: „Ben, bitte noch Zähne putzen erledigen – nur noch 15 Minuten!“
 
-### Müllkalender: Waste Collection Schedule & Co.
+### Müllkalender & Termine als Aufgaben (Hausaufgaben)
 
-Aufgaben wie „Müll rausbringen“ können ihre Termine **automatisch aus einem Home-Assistant-Kalender** holen. Einschalten unter **🧩 Zusatzfunktionen → 🗑️ Müllkalender**, dann bei der Aufgabe **Wann? → 🗑️ Müllkalender** wählen.
+Zwei getrennte Funktionen unter **⚙️ Einstellungen → ✅ Aufgaben & Tagesablauf**:
+
+**🗑️ Müllkalender** – Aufgaben wie „Müll rausbringen“ holen ihre Termine **automatisch aus einem Home-Assistant-Kalender**. Kalender wählen, dann **＋ Aufgabe „Müll rausbringen“ anlegen** – fertig. Bei jeder Aufgabe geht unter **Wann? → 🗓️ Kalender** auch ein anderer Kalender, z. B. „Sporttasche packen“ am Vorabend jedes Trainings (Vereinskalender, Stichwort `Training`).
+
+**📚 Termine als Aufgaben** – **＋ Kalender verknüpfen**: Jeder Eintrag des Kalenders wird zu einer eigenen Aufgabe, mit seinem Text als Titel. Ideal für Hausaufgaben: Steht im Schulkalender am Freitag „HA: Mathe S. 42“, erscheint am Donnerstag die Aufgabe „HA: Mathe S. 42“ beim gewählten Kind. Einstellbar: Kalender, Kinder, Emoji, Sterne, „🌙 Am Tag davor“ oder „📅 Am Termintag“, Stichwort-Filter (z. B. `HA:`) und Minuspunkte (Standard **0** – fehlt ein Eintrag oder fällt etwas aus, wird kein Kind bestraft). Unter **✅ Aufgaben → 📚 Aus Kalendern** stehen die nächsten 14 Tage; einzelne Termine lassen sich mit 🙈 ausblenden, ohne den Kalender zu ändern.
 
 Geeignete Kalender-Quellen:
 
@@ -372,10 +397,10 @@ Geeignete Kalender-Quellen:
 - **Lokaler Kalender** mit selbst eingetragenen Terminen
 - jede andere Integration, die eine `calendar.*`-Entität liefert
 
-Pro Aufgabe einstellbar:
+Pro Aufgabe (Wann? → 🗓️ Kalender) einstellbar:
 
-- **Welche Abfuhren** (Stichworte, z. B. `Restmüll, Gelber Sack` – leer = alle Termine)
-- **🌙 Schon am Vorabend** – die Aufgabe erscheint einen Tag vor der Abholung, zum Rausstellen
+- **Stichworte** (z. B. `Restmüll, Gelber Sack` oder `Training` – leer = alle Termine)
+- **🌙 Schon am Vorabend** – die Aufgabe erscheint einen Tag vor dem Termin, z. B. zum Rausstellen oder Packen
 - Auf der Kachel und in der Morgen-Ansage steht, was abgeholt wird (z. B. „Müll rausbringen (Papier)“).
 
 ### Schulferien und Feiertage
@@ -384,14 +409,20 @@ Unter **🏖️ Urlaub & Ferien** Land und Region (z. B. Bundesland oder Départ
 
 - Quelle: **[OpenHolidays API](https://www.openholidaysapi.org)** – kostenlos, **ohne API-Schlüssel**, 36 Länder (u. a. ganz Europa)
 - **Ausweichlösung**, falls der Abruf nicht klappt: die Integration **Holiday** (in Home Assistant enthalten) für Feiertage und ein Ferien-Kalender, z. B. über ICS oder HACS
-- An Feiertagen aufgabenfrei (Standard), in den Schulferien wahlweise ganz aufgabenfrei oder nur Aufgaben mit „🎒 Nur an Schultagen“ pausieren
+- An Feiertagen aufgabenfrei (Standard), in den Schulferien wahlweise ganz aufgabenfrei oder nur Aufgaben mit „🎒 Nur an Schultagen“ pausieren. Das Gegenstück **„🏖️ Nur an schulfreien Tagen“** zeigt eine Aufgabe nur am Wochenende, in den Ferien und an Feiertagen
 - Zusätzlich eigene **Urlaubszeiträume** für alle oder einzelne Kinder (z. B. Klassenfahrt)
 
 ### Sensoren für eigene Automationen
 
 Für jedes Kind entsteht ein Sensor `sensor.yippee_<name>` (Zustand = Punktestand) mit den Attributen
 
-`heute_erledigt`, `heute_gesamt`, `alles_erledigt`, `offen`, `wartet_auf_freigabe`, `level`, `level_name`, `gesamt_verdient`, `abzeichen`, `ziel`, `urlaub`, `anwesend`, `feiertag`, `ferien` und – mit Taschengeld – `euro`.
+`heute_erledigt`, `heute_gesamt`, `alles_erledigt`, `offen`, `wartet_auf_freigabe`, `level`, `level_name`, `gesamt_verdient`, `abzeichen`, `ziel`, `urlaub`, `anwesend`, `feiertag`, `ferien`, `heute_netto`, `woche_netto` und – mit Taschengeld – `euro`.
+
+**🎨 Darstellung** (⚙️ Einstellungen → ⚙️ Allgemein, gilt für alle Karten – oder je Karte im Karten-Editor): **🎨 Farben** zum Antippen (wie das Dashboard, Hell, Dunkel, Pastell, Ozean, Wald, Sonne, Nacht, Bonbon) oder ✏️ eigene Farben mit Farbwähler – Schrift und Kacheln passen sich automatisch an, bei schlecht lesbarer Schrift warnt die Karte –, 📏 Gleich hohe Kacheln (mehrere Kinder-Karten nebeneinander liegen auf einer Linie), Kompakt, Ohne Hintergrund und Größe 70–130 %.
+
+Farben lassen sich über Themes oder card_mod mit den Variablen `--yippee-bg`, `--yippee-surface`, `--yippee-accent`, `--yippee-text` und `--yippee-text-secondary` anpassen.
+
+**Sterne per Automation oder Sprachassistent:** Unter ⚙️ Einstellungen → 🔌 Geräte & Sprache → 📊 Sensoren & Automationen legt die Karte das Skript `script.yippee_sterne` an (Felder `kind`, `sterne` – negativ zum Abziehen –, `grund`). Damit lassen sich Sterne aus Automationen, Skripten und – über ein eigenes Skript je Kind – mit Google Assistant oder Alexa geben oder abziehen. Gebucht wird, sobald eine Yippee!-Karte geöffnet ist.
 
 Beispiel: Fernseher erst, wenn alles erledigt ist
 
@@ -422,7 +453,7 @@ Normalerweise rechnet die Karte im Browser. Mit **🌙 Hintergrund-Automation** 
 - Morgen-Ansage und Erinnerungen,
 - Verpasst-Meldungen mit Knöpfen,
 - Tagesabschluss,
-- Telegram-Befehle `/punkte`, `/offen`, `/hilfe`
+- Telegram-Befehle `/punkte`, `/offen`, `/heute`, `/woche`, `/hilfe`
 
 direkt in Home Assistant – **auch wenn nirgends eine Karte geöffnet ist**. Die Karte schreibt dafür einen Plan für die nächsten 14 Tage in die Liste und legt die Automation auf Knopfdruck selbst an. Ändern sich Uhrzeiten, passt sie die Automation automatisch an.
 
@@ -438,7 +469,7 @@ Unter **💾 Datensicherung**:
 | **Automatische Sicherung** | Täglich oder wöchentlich, die letzten 4 bleiben erhalten (gepackt, wenige KB) |
 | **Zweite Liste** | Empfohlen: eine zweite Lokale To-do-Liste (z. B. „Yippee Sicherung“) auswählen. Wird die Hauptliste gelöscht, bleiben die Sicherungen dort erhalten |
 | **🛡️ Datenprüfung** | Jeder Eintrag hat eine Prüfsumme. Fehlen Einträge oder wurden sie außerhalb der Karte verändert, erscheint eine Warnung mit „Aus Sicherung zurückholen“ |
-| **🗑️ Papierkorb** | Gelöschte Kinder, Aufgaben und Belohnungen 30 Tage lang einzeln zurückholen |
+| **🗑️ Papierkorb** | Gelöschte Kinder, Aufgaben und Belohnungen einzeln zurückholen – 7, 14 oder 30 Tage lang (Standard 7), danach endgültig gelöscht. Direkt nach dem Löschen geht es noch schneller mit **↩️ Rückgängig** |
 | **📜 Änderungsprotokoll** | Wer hat wann freigegeben, Punkte geändert, eingelöst, gelöscht oder wiederhergestellt |
 | **Home-Assistant-Sicherung** | Die Lokale To-do-Liste ist in jeder normalen Home-Assistant-Sicherung enthalten |
 
@@ -464,7 +495,7 @@ Standard ist die Sprache deines Home-Assistant-Benutzers. Unter **🌐 Sprache**
 Unter **⬆️ Updates** und oben im Eltern-Bereich:
 
 - **Update verfügbar:** Kennt HACS eine neuere Version, erscheint ein Hinweis mit Link zu den Neuerungen.
-- **Ressource automatisch erhöhen:** Liegt nach einem Update eine neuere Datei auf dem Server als die, die gerade im Browser läuft, trägt die Karte die neue Version **selbst** in die Ressource ein (`?v=1.4.0` usw.), sobald ein Administrator den Eltern-Bereich öffnet. Danach erscheint „Neue Version ist bereit“ mit einem Knopf zum Neuladen. Bei Installation über HACS erledigt HACS das Umstellen; die Karte bietet dann nur das Neuladen an.
+- **Ressource automatisch erhöhen:** Liegt nach einem Update eine neuere Datei auf dem Server als die, die gerade im Browser läuft, trägt die Karte die neue Version **selbst** in die Ressource ein (`?v=1.5.0` usw.), sobald ein Administrator den Eltern-Bereich öffnet. Danach erscheint „Neue Version ist bereit“ mit einem Knopf zum Neuladen. Bei Installation über HACS erledigt HACS das Umstellen; die Karte bietet dann nur das Neuladen an.
 - Wer das nicht möchte, schaltet unter ⬆️ Updates „Ressource nach einem Update automatisch erhöhen“ aus – dann erinnert die Karte nur und stellt auf Knopfdruck um.
 
 Die Änderungen jeder Version stehen im [CHANGELOG](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/CHANGELOG.md).
@@ -533,9 +564,14 @@ Ja: 💾 Datensicherung → ⬇️ Herunterladen, auf dem neuen System die Karte
 
 ## Danke
 
-Yippee! steht auf den Schultern großartiger Open-Source-Projekte. Ein herzliches Dankeschön an:
+Yippee! steht auf den Schultern großartiger Open-Source-Projekte und lebt von den Ideen seiner Nutzer. Ein herzliches Dankeschön an:
 
 - **[Waste Collection Schedule](https://github.com/mampfes/hacs_waste_collection_schedule)** von [@mampfes](https://github.com/mampfes) und allen Mitwirkenden – dank dieser Integration kommen die Mülltermine von hunderten Entsorgern direkt in die Aufgabe „Müll rausbringen“.
+- **[Locodice67](https://github.com/Locodice67)** – für Ideen und Vorarbeit in seinem Fork: Verhaltens-Diagramm, „Nur an schulfreien Tagen“, lockerere Zeiten an schulfreien Tagen und die Kleinkind-Vorlagen (seit 1.5.0), dazu die Morgen- und Abendroutine-Vorlagen und „😊 Benehmen“ ([#1](https://github.com/Chrism1412/yippee-kids-chores-card/pull/1)).
+- **[RkcCorian](https://github.com/RkcCorian)** – Übersichtskarte pro Kind, Darstellung anpassen, Reihenfolge der Kinder, gleich hohe Kacheln und der Hinweis zu den ✓ Knöpfen ([#4](https://github.com/Chrism1412/yippee-kids-chores-card/issues/4), [#5](https://github.com/Chrism1412/yippee-kids-chores-card/issues/5), [#6](https://github.com/Chrism1412/yippee-kids-chores-card/issues/6), [#9](https://github.com/Chrism1412/yippee-kids-chores-card/issues/9), [#10](https://github.com/Chrism1412/yippee-kids-chores-card/issues/10)).
+- **[gogui63](https://github.com/gogui63)** – Minus-Stand mit Bilanz und Sterne per Automation oder Sprachassistent ([#7](https://github.com/Chrism1412/yippee-kids-chores-card/issues/7), [#8](https://github.com/Chrism1412/yippee-kids-chores-card/issues/8)).
+- **[Sysman2018](https://github.com/Sysman2018)** – die Idee für 🎓 Sterne für gute Schulnoten ([#2](https://github.com/Chrism1412/yippee-kids-chores-card/issues/2)).
+- **[Daniel-PT](https://github.com/Daniel-PT)** – hat den Fehler mit der IP-Sperre bei Benutzern ohne Admin-Rechte gefunden ([#3](https://github.com/Chrism1412/yippee-kids-chores-card/issues/3)).
 - **[OpenHolidays API](https://www.openholidaysapi.org)** – liefert die Feiertage und Schulferien.
 - **[Home Assistant](https://www.home-assistant.io)** und **[HACS](https://hacs.xyz)** – ohne sie gäbe es diese Karte nicht.
 

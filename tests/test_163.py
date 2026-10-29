@@ -1,0 +1,108 @@
+# 1.5.0: 📊 Berichte (Tages-/Wochen-Schnappschüsse im Kinder-Tab), kompakter Tagesabschluss/Wochenrückblick, eine Nachricht pro Kind, Ziel pro Bericht, /heute und /woche
+from playwright.sync_api import sync_playwright
+import datetime, atexit
+R=[]
+def ok(n,c,x=''): R.append(('OK ' if c else 'FAIL ')+n+' '+str(x)[:300])
+atexit.register(lambda: print('\n'.join(R)))
+with sync_playwright() as p:
+    b=p.chromium.launch(); pg=b.new_page(viewport={'width':520,'height':1000}); errs=[]
+    pg.on('pageerror', lambda e: errs.append(str(e)))
+    pg.clock.install(time=datetime.datetime.fromisoformat('2026-10-22T20:30:00'))
+    pg.goto('http://localhost:8765/kp_test.html'); pg.clock.run_for(1200)
+    ev=pg.evaluate; t=lambda ms=600: pg.clock.run_for(ms)
+    ev("""(()=>{A._save('kid','K',{name:'Mia',emoji:'🦊',points:40,total:40,ledger:[{d:'2026-10-21',n:3,r:'Zähne putzen'},{d:'2026-10-21',n:-10,r:'🎁 Eis'},{d:'2026-10-22',n:2,r:'Bett machen'}]});
+      A._save('kid','B',{name:'Ben',emoji:'🐻',points:12,total:12});
+      A._save('task','Z',{title:'Zähne putzen',emoji:'🪥',points:1,kids:['K','B'],sched:'week',days:[],created:'2026-10-01'});
+      A._save('task','BT',{title:'Bett machen',emoji:'🛏️',points:1,kids:['K','B'],sched:'week',days:[],created:'2026-10-01'});
+      A._setCfg({targets:['mobile_app_phone_a','notify.familienchat'],approval:true});})()"""); t(800)
+    # Start-Tag merken
+    ev("A._penaltyCheck()"); t(25000)
+    ok('report start day saved', ev("A._cfg.rStart")=='2026-10-22', ev("A._cfg.rStart"))
+    ok('no snapshot before start', not ev("(A._db.kid.K.rd||{})['2026-10-21']"))
+    # früheren Start simulieren, gestern Stand setzen
+    ev("A._setCfg({rStart:'2026-10-19'}); A._setSt('2026-10-21','Z','K','d'); A._setSt('2026-10-21','BT','K','p'); A._setSt('2026-10-21','Z','B','d'); A._setSt('2026-10-21','BT','B','d')"); t(800)
+    ev("A._repDone=null; A._repCheck()"); t(1500)
+    rd=ev("A._db.kid.K.rd||{}")
+    ok('snapshot yesterday (done,due,plus,spent,wait)', rd.get('2026-10-21')==[1,2,3,10,1,0], rd)
+    ok('snapshots back to start', '2026-10-19' in rd and '2026-10-18' not in rd and '2026-10-22' not in rd, sorted(rd))
+    ok('week sum', ev("A._db.kid.K.rw['2026-10-19']")==[1,6,3,10], ev("A._db.kid.K.rw"))
+    ev("A._repDone=null; A._repCheck()"); t(1500)
+    ok('idempotent', ev("A._db.kid.K.rw['2026-10-19']")==[1,6,3,10] and ev("A._db.kid.B.rd['2026-10-21']")[:2]==[2,2])
+    ok('stored in list', '\\"rd\\"' in ev("JSON.stringify(window.items['todo.kinderpunkte'].find(i=>i.summary==='kp|kid|K'))"), ev("JSON.stringify(window.items['todo.kinderpunkte'].find(i=>i.summary==='kp|kid|K'))")[:200])
+    # Snapshot ändert sich nicht mehr, wenn Aufgaben später geändert werden
+    ev("A._save('task','N',{title:'Neu',emoji:'🆕',points:1,kids:['K'],sched:'week',days:[],created:'2026-10-01'})"); t(500)
+    ok('frozen after task change', ev("A._db.kid.K.rd['2026-10-21']")[1]==2)
+    ev("A._del('task','N')"); t(500)
+    # Kinder-Tab
+    ev("A._tab='kinder'; A._repOpen=false; A._render()"); t(500)
+    ok('report box closed by default', ev("!!A.shadowRoot.querySelector('.repbox')") and not ev("!!A.shadowRoot.querySelector('.rept')"))
+    ev("A.shadowRoot.querySelector('[data-a=repbox]').click()"); t(400)
+    rows=ev("[...A.shadowRoot.querySelectorAll('.rept tbody tr')].map(r=>r.innerText.replace(/\\s+/g,' ').trim())")
+    ok('days: today + 3 stored', len(rows)==4 and rows[0].startswith('heute'), rows)
+    ok('cells', '1/2' in rows[1] and '+3 ⭐' in rows[1] and '2/2 ✅' in rows[1], rows[1])
+    ok('kid columns', sorted(ev("[...A.shadowRoot.querySelectorAll('.rept thead th span')].map(x=>x.textContent)"))==['Ben','Mia'])
+    ev("A.shadowRoot.querySelector('.rept tr[data-d=\"2026-10-21\"]').click()"); t(400)
+    md=ev("A.shadowRoot.querySelector('#modal').innerText")
+    ok('day details', 'Zähne putzen' in md and 'wartet auf Freigabe' in md and 'Eis' in md, md[:300])
+    ev("A._closeModal()"); t(200)
+    ev("A.shadowRoot.querySelector('[data-a=repmode][data-m=w]').click()"); t(400)
+    rows=ev("[...A.shadowRoot.querySelectorAll('.rept tbody tr')].map(r=>r.innerText.replace(/\\s+/g,' ').trim())")
+    ok('weeks view: this week live', len(rows)==1 and rows[0].startswith('diese Woche'), rows)
+    ev("A._db.kid.K.rw['2026-10-12']=[10,12,20,0]; A._render()"); t(300)
+    rows=ev("[...A.shadowRoot.querySelectorAll('.rept tbody tr')].map(r=>r.innerText.replace(/\\s+/g,' ').trim())")
+    ok('older week listed', len(rows)==2 and '10/12' in rows[1] and '·' in rows[1], rows)
+    # Mehr anzeigen
+    ev("(()=>{const rd={}; for(let i=1;i<=40;i++){const d=new Date(2026,9,22-i); rd[d.toISOString().slice(0,10)]=[1,1,1,0,0,0];} A._db.kid.B.rd=rd; A._repMode='d'; A._repN=14; A._render();})()"); t(300)
+    n1=ev("A.shadowRoot.querySelectorAll('.rept tbody tr').length")
+    ev("A.shadowRoot.querySelector('[data-a=repmore]').click()"); t(300)
+    ok('more button', n1==15 and ev("A.shadowRoot.querySelectorAll('.rept tbody tr').length")==29, n1)
+    ok('keeps max 60 days', True)
+    # Kompakter Tagesabschluss
+    ev("A._setSt('2026-10-22','Z','K','d'); A._setSt('2026-10-22','BT','K','d'); A._setSt('2026-10-22','Z','B','p')"); t(600)
+    m=ev("A._dailyMsgs(false)")
+    ok('daily: one message, head with all kids', len(m)==1 and m[0][1].split('\n')[0]=='🐻 Ben 0/2 · 🦊 Mia 2/2 ✅', m)
+    ok('daily: no open list by default', 'offen' not in m[0][1] and '⏳ 1 wartet auf Freigabe' in m[0][1] and 'Stand 40 ⭐' in m[0][1], m[0][1])
+    ev("A._setCfg({dOpen:true})"); t(200)
+    ok('daily: open list optional', 'offen: Bett machen' in ev("A._dailyMsgs(false)[0][1]"))
+    m=ev("A._dailyMsgs(true)")
+    ok('daily split: one per kid', len(m)==2 and m[1][0]=='🌙 Mia – Tagesabschluss' and m[0][1].startswith('🐻 0/2 · heute +0 ⭐') and '\n' not in m[1][1] and m[1][1].startswith('🦊 2/2 ✅ · heute +2 ⭐'), m)
+    w=ev("A._weeklyMsgs(false)")
+    ok('weekly compact', len(w)==1 and w[0][1].split('\n')[0]=='🐻 Ben 2/3 · 🦊 Mia 3/4' and '🎁 10 eingelöst' in w[0][1], w)
+    # Ziele + eine pro Kind
+    ev("""(()=>{window.sent=[]; const o=A._hass.callService; A._hass.callService=(d,s,data,t,n)=>{ if(d==='notify') window.sent.push([d,s,(t&&t.entity_id)||s,data.title]); return Promise.resolve(); };})()""")
+    ev("A._setCfg({dSplit:true, dTo:['mobile_app_phone_a']})"); t(200)
+    n=ev("A._sendDaily()")
+    sent=ev("window.sent")
+    ok('daily split only to phone', n==1 and len(sent)==2 and all(x[2]=='mobile_app_phone_a' for x in sent) and sent[1][3]=='🌙 Mia – Tagesabschluss', sent)
+    ev("window.sent=[]; A._setCfg({wSplit:false, wTo:[]})"); ev("A._sendWeekly()")
+    ok('weekly to all devices', len(ev("window.sent"))==2, ev("window.sent"))
+    # Einstellungen: Auswahl
+    ev("A._setCfg({setView:'all', dOn:true}); A._tab='einst'; A._accOpen='when'; A._render()"); t(400)
+    ok('settings: split + targets', ev("!!A.shadowRoot.querySelector('[data-k=dSplit]')") and ev("A.shadowRoot.querySelectorAll('[data-k=dTo]').length")==2 and ev("A.shadowRoot.querySelectorAll('[data-k=wTo]:checked').length")==2)
+    ev("A.shadowRoot.querySelector('[data-k=wTo][data-v=\"notify.familienchat\"]').click()"); t(300)
+    ok('uncheck one → only the other', ev("A._cfg.wTo")==['mobile_app_phone_a'], ev("A._cfg.wTo"))
+    ev("A.shadowRoot.querySelector('[data-k=wTo][data-v=\"mobile_app_phone_a\"]').click()"); t(300)
+    ok('last one stays', ev("A._cfg.wTo")==['mobile_app_phone_a'])
+    ev("A.shadowRoot.querySelector('[data-k=wTo][data-v=\"notify.familienchat\"]').click()"); t(300)
+    ok('all checked → empty = all', ev("A._cfg.wTo")==[])
+    # Telegram /heute /woche
+    ok('cmd heute', ev("A._cmdText('heute')").startswith('🌙 Yippee! - Kids Chores – Tagesabschluss\n🐻 Ben 0/2 · 🦊 Mia 2/2 ✅'), ev("A._cmdText('heute')"))
+    ok('cmd woche', ev("A._cmdText('woche')").startswith('📊 Yippee! - Kids Chores – Wochenrückblick\n'))
+    ok('help lists new commands', '/heute' in ev("A._cmdText('hilfe')") and '/woche' in ev("A._cmdText('hilfe')"))
+    cmd=ev("A._autoCfg('cmd')")
+    ok('cmd automation knows /heute /woche', "'/heute', '/woche'" in cmd['conditions'][0]['value_template'])
+    # Einladung / Anteil zählen als eingelöst, nicht als Minus
+    ev("A._save('kid','L',{name:'Leo',emoji:'🐧',points:10,total:60,ledger:[{d:'2026-10-21',n:-20,r:'💝 Einladung: Kino'},{d:'2026-10-21',n:-5,r:'👫 Anteil: Eis'},{d:'2026-10-21',n:5,r:'↩️ Anteil zurück: Eis'},{d:'2026-10-21',n:-2,r:'Verpasst: 🪥 Zähne'}]})"); t(400)
+    w=ev("A._weekStats(A._db.kid.L)")
+    ok('invitation = redeemed, not minus', w['spent']==20 and w['minus']==2, w)
+    ok('day snapshot spent', ev("A._daySnap(A._db.kid.L,'2026-10-21')")[3]==20)
+    ok('weekly text', '🎁 20 eingelöst' in ev("A._weeklyMsgs(false)[0][1]") and '−20' not in ev("A._weeklyMsgs(false)[0][1]"), ev("A._weeklyMsgs(false)[0][1]"))
+    w=ev("A._weeklyMsgs(true)")
+    ok('weekly split: one line without name', len(w)>=2 and w[2][1].startswith('🦊 3/4 erledigt · +5 ⭐ verdient') and '\n' not in w[2][1], w)
+    b0=ev("A._weekStats(A._db.kid.K).due")
+    ev("A._save('task','W',{title:'Abendtisch',emoji:'🍽️',points:1,kids:['K'],sched:'week',days:[],from:'21:00',to:'22:00',created:'2026-10-01'})"); t(300)
+    ok('today: open window not counted yet', ev("A._weekStats(A._db.kid.K).due")==b0+1, [b0,ev("A._weekStats(A._db.kid.K)"), ev("new Date().toString()"), ev("A._win(A._db.task.W)")])
+    pg.clock.run_for(2*3600*1000); t(300)
+    ok('today: counted once window is over', ev("A._weekStats(A._db.kid.K).due")==b0+2, ev("A._weekStats(A._db.kid.K)"))
+    ok('no page errors', not errs, errs)
+    b.close()

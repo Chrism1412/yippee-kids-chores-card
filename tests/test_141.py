@@ -37,7 +37,7 @@ with sync_playwright() as p:
     ok('costs kept when editing with feature off', ev("A._db.reward.R.costs")=={'S':20})
     # bösartige Werte
     ok('clean costs', ev("A._clean('reward',{cost:5,costs:{S:'<b>',__proto__x:3,'a b':4,G:7}}).costs")=={'G':7} or True)
-    ok('feature count text', '27' in ev("A._settingsFeatures()[2]"), ev("A._settingsFeatures()[2]"))
+    ok('one section per feature', len(ev("Object.keys(A._settingsFeatures())"))==28 and ev("A._settingsFeatures().costKidOn[4].k")=='costKidOn', ev("Object.keys(A._settingsFeatures())"))
     ev("A._save('kid','S',{...A._db.kid.S,pres:{on:true,base:'out',rules:[{st:'in',every:2,start:'2026-11-06',fT:'14:00',toDay:3,tT:'12:00'}],hol:{},ex:[]}})"); t(1000)
     ok('daily pts ignore presence', ev("A._dailyPts('S')")==5, ev("A._dailyPts('S')"))
     ev("A._save('task','T3',{title:'Wechsel',emoji:'⭐',points:4,kids:['S','G'],sched:'week',days:[],rotate:true})"); t(800)
