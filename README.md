@@ -261,7 +261,7 @@ HACS legt die Ressource automatisch an.
 2. In Home Assistant den Ordner **`/config/www/community/yippee-kids-chores-card/`** anlegen und alle Dateien dort hineinkopieren (z. B. mit dem Add-on *File editor* oder *Samba share*).
    Das ist derselbe Ordner, den auch HACS verwendet – ein späterer Wechsel zu HACS klappt dadurch ohne Umbau.
 3. **Einstellungen → Dashboards → ⋮ (oben rechts) → Ressourcen → Ressource hinzufügen**
-   - URL: `/hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.5.0`
+   - URL: `/hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.6.0`
    - Typ: **JavaScript-Modul**
 4. Seite neu laden.
 
@@ -326,6 +326,7 @@ Beim ersten Öffnen führt dich der **🧭 Einrichtungs-Assistent** in fünf Sch
 | `show` | Liste | alle | Bei `summary`: welche Teile – `points`, `today`, `goal`, `level`, `net` |
 | `equal_tiles` | `true` / `false` | wie ⚙️ | Gleich hohe Aufgaben-Kacheln (Platz für drei Zeilen) und Belohnungen – mehrere Kinder-Karten liegen nebeneinander auf einer Linie |
 | `colors` | `default`, `light`, `dark`, `pastel`, `ocean`, `forest`, `sun`, `night`, `candy`, `custom` | wie ⚙️ | Farbvorlage nur für diese Karte (`default` = wie das Dashboard, `custom` = die eigenen Farben aus ⚙️) |
+| `tap_action` / `double_tap_action` / `hold_action` | Home-Assistant-Aktion | – | Nur bei `summary`: was beim Antippen, doppelt Tippen bzw. langen Drücken der Übersicht passiert, z. B. `action: navigate` mit `navigation_path: /dashboard-haus/{kind}` oder `action: more-info` (Sensor des Kindes). `{kind}` wird durch den Namen des Kindes ersetzt |
 | `compact` | `true` / `false` | wie ⚙️ | Weniger Abstände |
 | `transparent` | `true` / `false` | wie ⚙️ | Ohne eigenen Hintergrund – passt sich dem Dashboard an |
 | `scale` | `70`–`130` | wie ⚙️ | Größe der Karte in Prozent |

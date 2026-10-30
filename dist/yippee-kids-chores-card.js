@@ -1,5 +1,5 @@
 /*
- * Yippee! - Kids Chores – Karte für Home Assistant – Version 1.5.0
+ * Yippee! - Kids Chores – Karte für Home Assistant – Version 1.6.0
  * Aufgaben abhaken · Punkte sammeln · Belohnungen einlösen · Freigabe durch Eltern
  *
  * https://github.com/Chrism1412/yippee-kids-chores-card  ·  Lizenz: MIT
@@ -40,7 +40,7 @@
  *   CSS-Variablen für Themes/card_mod: --yippee-bg, --yippee-surface, --yippee-accent, --yippee-text, --yippee-text-secondary
  */
 (() => {
-  const VERSION = '1.5.0';
+  const VERSION = '1.6.0';
 
   // ---------- Sprache ----------
   // Alle Texte stehen auf Deutsch im Code. T() übersetzt sie über die Sprachdatei der gewählten Sprache (yippee-kids-chores-lang-xx.js).
@@ -732,7 +732,7 @@ a.btn{display:inline-block;text-decoration:none;color:inherit}
 .addd .btn{white-space:nowrap}
 .dchips{display:flex;flex-wrap:wrap;gap:6px}
 .dchip{padding:7px 12px;border-radius:999px;background:var(--cs,var(--soft));border:2px solid var(--ac);font-weight:700;font-size:14px}
-.g2.g2e{grid-template-columns:1fr 1fr}
+.g2.g2e{grid-template-columns:repeat(2,minmax(0,1fr))}.g2e>label,.g2e input{min-width:0}.g2e input{width:100%;box-sizing:border-box}
 .tile.d .badge{background:var(--c);color:#fff}
 .tile.p .badge{background:var(--gold);color:#fff}
 .trophy{text-align:center;font-weight:900;font-size:18px;padding:12px;border-radius:16px;background:#fff3bf;color:#7a5b00;animation:wig 1.2s}
@@ -769,7 +769,7 @@ a.btn{display:inline-block;text-decoration:none;color:inherit}
 .kadm .krow>.grow:empty{display:none}
 .knet.neg{color:#c92a2a;font-weight:700}
 .kmove{display:flex;gap:4px;align-self:flex-start}.kmove .icon{width:34px;height:34px;font-size:13px}
-.ksum{gap:8px}.ksh{display:flex;align-items:center;gap:10px}.ksh .grow{flex:1;min-width:0}.ksh .kn{font-weight:800;font-size:17px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ksh .kp{font-weight:700;color:var(--gold)}.ksd{font-weight:800;font-size:18px}
+.ksum{gap:8px}.ksum.act{cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;transition:transform .12s}.ksum.act:active{transform:scale(.98)}.ksum.act:focus-visible{outline:2px solid var(--ac);outline-offset:2px}.ksh{display:flex;align-items:center;gap:10px}.ksh .grow{flex:1;min-width:0}.ksh .kn{font-weight:800;font-size:17px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ksh .kp{font-weight:700;color:var(--gold)}.ksd{font-weight:800;font-size:18px}
 .kadm .kbtns{display:flex;flex-wrap:nowrap;align-items:center;gap:6px;width:100%;margin:0}
 .kadm .kbtns .kbr{display:none}
 .kadm .kbtns .pts{min-width:40px;text-align:center}
@@ -809,7 +809,7 @@ label,.lbl{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight
 .g2{display:grid;grid-template-columns:90px 1fr;gap:10px}
 .pick{display:flex;flex-wrap:wrap;gap:6px}
 .thm{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:8px;margin:4px 0 8px}.thb{display:flex;flex-direction:column;align-items:center;gap:5px;border:2px solid transparent;border-radius:14px;background:var(--soft);padding:8px 4px;font:inherit;font-size:12px;font-weight:700;color:var(--tx);cursor:pointer;text-align:center}.thb.on{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac)}.thsw{width:46px;height:32px;border-radius:9px;display:flex;align-items:flex-end;justify-content:flex-end;gap:3px;padding:4px;box-sizing:border-box;box-shadow:inset 0 0 0 1px rgba(127,127,127,.35)}.thsw i{width:10px;height:10px;border-radius:50%}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:8px}.cols label{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:700}.cols input[type=color]{width:100%;height:42px;border:1px solid var(--ln);border-radius:10px;padding:2px;background:var(--bg);cursor:pointer}
+.colpk{display:grid;grid-template-columns:1fr 1fr;gap:8px}.colpk label{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:700}.colpk input[type=color]{width:100%;height:42px;border:1px solid var(--ln);border-radius:10px;padding:2px;background:var(--bg);cursor:pointer}
 .pick label{display:block}
 .pick input{display:none}
 .pick span{display:grid;place-items:center;min-width:42px;height:42px;padding:0 10px;border-radius:12px;background:var(--soft);font-size:21px;color:var(--tx);border:3px solid transparent}
@@ -1142,6 +1142,8 @@ textarea{width:100%;min-height:90px;resize:vertical}
       this.shadowRoot.innerHTML = `<style>${CSS}</style><style id="look"></style><div id="app" lang="de"></div><div id="modal"></div><div id="fx"></div>`;
       this._look();
       this.shadowRoot.addEventListener('click', (e) => this._click(e));
+      ['pointerdown', 'pointerup', 'pointermove', 'pointercancel'].forEach((ev) => this.shadowRoot.addEventListener(ev, (e) => this._sumPointer(e)));
+      this.shadowRoot.addEventListener('keydown', (e) => { const el = e.target && e.target.closest && e.target.closest('.ksum.act'); if (el && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); this._sumFire(el.dataset.kid, 'tap'); } });
       // aufgeklappte Bereiche der Datensicherung überleben das Neuzeichnen
       this.shadowRoot.addEventListener('toggle', (e) => { const d = e.target; if (!d || !d.classList) return; if (d.classList.contains('bklist')) this._bkListOpen = d.open; if (d.classList.contains('bk2')) this._bk2Open = d.open; }, true);
       this.shadowRoot.addEventListener('input', (e) => {
@@ -4033,6 +4035,49 @@ textarea{width:100%;min-height:90px;resize:vertical}
 
     _avc(k, big) { return `<span class="avc ${big ? 'big' : ''}" style="${cv(k.color)}">${esc(k.emoji || '🙂')}</span>`; }
 
+    // 👆 Übersichtskarte antippen (tap_action / double_tap_action / hold_action wie bei Home-Assistant-Karten)
+    _sumActs() {
+      if (!this._config || !this._config.summary) return null;
+      const ok = (a) => a && typeof a === 'object' && a.action && a.action !== 'none';
+      const r = {};
+      ['tap', 'double_tap', 'hold'].forEach((x) => { if (ok(this._config[`${x}_action`])) r[x] = this._config[`${x}_action`]; });
+      return Object.keys(r).length ? r : null;
+    }
+
+    _sumFire(kid, kind) {
+      const k = this._db.kid[kid], acts = this._sumActs();
+      if (!k || !acts || !acts[kind]) return;
+      const sl = slug(k.name);
+      const sub = (v) => (typeof v === 'string' ? v.replace(/\{kind\}/g, sl) : Array.isArray(v) ? v.map(sub) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([a, b]) => [a, sub(b)])) : v);
+      const conf = { entity: `sensor.yippee_${sl}` };
+      ['tap', 'double_tap', 'hold'].forEach((x) => { if (acts[x]) conf[`${x}_action`] = sub(acts[x]); });
+      this.dispatchEvent(new CustomEvent('hass-action', { detail: { config: conf, action: kind }, bubbles: true, composed: true }));
+    }
+
+    // Gesten: lange drücken (500 ms) · doppelt tippen (innerhalb 250 ms) · einmal tippen – nur wenn die jeweilige Aktion eingestellt ist
+    _sumPointer(e) {
+      const el = e.target && e.target.closest && e.target.closest('.ksum.act');
+      if (!el) return;
+      const kid = el.dataset.kid, acts = this._sumActs() || {}, g = this._sumG || (this._sumG = {});
+      if (e.type === 'pointerdown') {
+        g.held = false; g.x = e.clientX; g.y = e.clientY;
+        clearTimeout(g.hT);
+        if (acts.hold) g.hT = setTimeout(() => { g.held = true; this._sumFire(kid, 'hold'); }, 500);
+      } else if (e.type === 'pointermove') {
+        if (Math.abs(e.clientX - g.x) > 10 || Math.abs(e.clientY - g.y) > 10) clearTimeout(g.hT); // Scrollen ist kein langes Drücken
+      } else if (e.type === 'pointercancel') {
+        clearTimeout(g.hT);
+      } else if (e.type === 'pointerup') {
+        clearTimeout(g.hT);
+        if (g.held) { g.held = false; return; }
+        if (Math.abs(e.clientX - g.x) > 10 || Math.abs(e.clientY - g.y) > 10) return;
+        if (acts.double_tap) {
+          if (g.tT && g.tKid === kid) { clearTimeout(g.tT); g.tT = null; this._sumFire(kid, 'double_tap'); return; }
+          g.tKid = kid; g.tT = setTimeout(() => { g.tT = null; this._sumFire(kid, 'tap'); }, 250);
+        } else this._sumFire(kid, 'tap');
+      }
+    }
+
     // 🧒 Kompakte Übersicht pro Kind (summary: true) – Punkte, heute, Ziel, Level, Bilanz; Teile über show: […] wählbar
     _kidSum(k) {
       const sh = Array.isArray(this._config.show) && this._config.show.length ? this._config.show : ['points', 'today', 'goal', 'level', 'net'];
@@ -4042,7 +4087,8 @@ textarea{width:100%;min-height:90px;resize:vertical}
       const tot = k.total !== undefined ? k.total : pts, lv = levelOf(tot), L = LEVELS[lv];
       const pct = (a, b) => Math.max(0, Math.min(100, Math.round((a / Math.max(1, b)) * 100)));
       const net = this._dayNet(k, dk(new Date()));
-      return `<div class="card ksum" style="${cv(k.color)}"><div class="ksh">${this._avc(k)}<div class="grow"><div class="kn">${esc(k.name)}</div>${sh.includes('points') ? `<div class="kp">${T('⭐ {n} Punkte', { n: pts })}</div>` : ''}</div>
+      const act = this._sumActs();
+      return `<div class="card ksum ${act ? 'act' : ''}" data-kid="${esc(k.id)}" ${act ? `role="button" tabindex="0" aria-label="${esc(k.name)}"` : ''} style="${cv(k.color)}"><div class="ksh">${this._avc(k)}<div class="grow"><div class="kn">${esc(k.name)}</div>${sh.includes('points') ? `<div class="kp">${T('⭐ {n} Punkte', { n: pts })}</div>` : ''}</div>
         ${sh.includes('today') && tasks.length ? `<div class="ksd">${done}/${tasks.length}${done === tasks.length ? ' ✅' : ''}</div>` : ''}</div>
         ${sh.includes('today') ? (tasks.length ? `<div class="bar"><i style="width:${pct(done, tasks.length)}%"></i></div>${wait ? `<div class="hint">${T('⏳ {n} wartet auf Freigabe', { n: wait })}</div>` : ''}` : `<div class="hint">${T('heute nichts zu tun')}</div>`) : ''}
         ${sh.includes('goal') && goal ? `<div class="hint">🎯 ${esc(goal.title)} · ${Math.max(0, Math.min(pts, this._cost(goal, k.id)))}/${this._cost(goal, k.id)}</div><div class="bar"><i style="width:${pct(pts, this._cost(goal, k.id))}%"></i></div>` : ''}
@@ -4436,7 +4482,7 @@ sequence:
           ${THEMES.map((t) => `<button type="button" class="thb ${th === t[0] ? 'on' : ''}" data-a="vtheme" data-v="${t[0]}">${sw(t[2], t[3], t[6])}<span>${T(t[1])}</span></button>`).join('')}
           <button type="button" class="thb ${th === 'custom' ? 'on' : ''}" data-a="vtheme" data-v="custom">${sw(fc.bg, fc.surface, fc.accent)}<span>${T('✏️ Eigene Farben')}</span></button>
         </div>
-        ${th === 'custom' ? `<div class="cols">${colRow('bg', T('Hintergrund'))}${colRow('surface', T('Kacheln'))}${colRow('text', T('Schrift'))}${colRow('accent', T('Akzentfarbe'))}</div>
+        ${th === 'custom' ? `<div class="colpk">${colRow('bg', T('Hintergrund'))}${colRow('surface', T('Kacheln'))}${colRow('text', T('Schrift'))}${colRow('accent', T('Akzentfarbe'))}</div>
           <div class="hint">${T('Tipp: Wähle zuerst den Hintergrund – Schrift und Kacheln passen sich dann automatisch an.')}</div>
           ${bad ? `<div class="hint warn">${T('⚠️ Die Schrift ist auf diesem Hintergrund schwer lesbar.')}</div>` : ''}
           <div class="btnrow"><button type="button" class="btn sm" data-a="vcolreset">${T('↺ Farben zurücksetzen')}</button></div>` : ''}`;
@@ -7687,7 +7733,16 @@ actions:
         ${single ? `<label>${T('Kind')}<input type="text" data-k="child" list="kids" value="${esc(c.child || '')}" placeholder="${esc(T('z. B. Mia'))}"><datalist id="kids">${(this._kidNames || []).map((n) => `<option value="${esc(n)}"></option>`).join('')}</datalist>
           <small>${(this._kidNames || []).length ? T('Angelegt: {names}', { names: esc(this._kidNames.join(', ')) }) : T('Kinder legst du in der Eltern-Ansicht an.')}</small></label>` : ''}
         ${kid ? `<label class="row"><input type="checkbox" data-k="summary" ${c.summary ? 'checked' : ''}> ${T('🧒 Nur kleine Übersicht (z. B. fürs Familien-Dashboard)')}</label>
-          ${c.summary ? `<div class="sub">${[['points', T('⭐ Punkte')], ['today', T('✅ Heute')], ['goal', T('🎯 Ziel')], ['level', T('🌱 Level')], ['net', T('➖ Bilanz (bei Minus-Stand)')]].map(([v, l]) => `<label class="row"><input type="checkbox" data-k="show" data-v="${v}" ${!Array.isArray(c.show) || !c.show.length || c.show.includes(v) ? 'checked' : ''}> ${l}</label>`).join('')}</div>` : ''}
+          ${c.summary ? `<div class="sub">${[['points', T('⭐ Punkte')], ['today', T('✅ Heute')], ['goal', T('🎯 Ziel')], ['level', T('🌱 Level')], ['net', T('➖ Bilanz (bei Minus-Stand)')]].map(([v, l]) => `<label class="row"><input type="checkbox" data-k="show" data-v="${v}" ${!Array.isArray(c.show) || !c.show.length || c.show.includes(v) ? 'checked' : ''}> ${l}</label>`).join('')}</div>
+            <div class="sub"><div class="lbl2">${T('👆 Beim Antippen der Übersicht')}</div>
+            ${[['tap_action', T('👆 Antippen')], ['double_tap_action', T('👆👆 Doppelt tippen')], ['hold_action', T('✋ Lange drücken')]].map(([k, l]) => {
+              const a = c[k] && typeof c[k] === 'object' ? c[k] : null, t = a ? a.action : '';
+              const known = ['', 'none', 'navigate', 'more-info', 'url'].includes(t || '');
+              return `<label>${l}<select data-k="act" data-x="${k}">${opt('', T('nichts'), !t || t === 'none')}${opt('navigate', T('Seite öffnen'), t === 'navigate')}${opt('more-info', T('Details öffnen (Sensor des Kindes)'), t === 'more-info')}${opt('url', T('Link öffnen'), t === 'url')}${known ? '' : opt(t, T('eigene Aktion (YAML): {a}', { a: t }), true)}</select></label>
+                ${t === 'navigate' ? `<label>${T('Seite')}<input type="text" data-k="actp" data-x="${k}" data-f="navigation_path" value="${esc(a.navigation_path || '')}" placeholder="/dashboard-haus/{kind}"></label>` : ''}
+                ${t === 'url' ? `<label>${T('Webadresse')}<input type="text" data-k="actp" data-x="${k}" data-f="url_path" value="${esc(a.url_path || '')}" placeholder="https://…"></label>` : ''}`;
+            }).join('')}
+            <small>${T('{kind} in der Seite wird durch den Namen des angetippten Kindes ersetzt, z. B. /dashboard-haus/{kind} → /dashboard-haus/mia.')}</small></div>` : ''}
           <label class="row"><input type="checkbox" data-k="collapsed" ${foldOn ? 'checked' : ''}> ${T('Eingeklappt anzeigen – nur Name und Punkte, Aufgaben erst nach Antippen')}</label>
           <label class="row"><input type="checkbox" data-k="family" ${c.family === false ? '' : 'checked'}> ${T('Familienziel anzeigen')}${single ? ` <small>${T('(bei mehreren Kinder-Karten auf einer Seite erscheint es automatisch nur einmal)')}</small>` : ''}</label>
           <small>${T('Freigabe und Benachrichtigungen stellst du in der Eltern-Ansicht unter ⚙️ Einstellungen ein – sie gelten automatisch auch hier.')}</small>` : `<small>${T('Freigabe und Benachrichtigungen (auch mehrere Handys) stellst du direkt in der Eltern-Ansicht unter ⚙️ Einstellungen ein.')}</small>
@@ -7720,9 +7775,17 @@ actions:
         if (el.checked) c.collapsed = true; else delete c.collapsed; // gilt für „Alle Kinder“ und „Ein Kind“ gleich (Standard: aufgeklappt)
       }
       else if (k === 'pin') { const v = el.value.replace(/\D/g, ''); if (v) c.pin = v; else delete c.pin; }
-      else if (k === 'summary') { if (el.checked) c[k] = true; else { delete c[k]; delete c.show; } }
+      else if (k === 'summary') { if (el.checked) c[k] = true; else { delete c[k]; delete c.show; delete c.tap_action; delete c.double_tap_action; delete c.hold_action; } }
       else if (['compact', 'transparent', 'equal_tiles'].includes(k)) { if (el.value === 'on') c[k] = true; else if (el.value === 'off') c[k] = false; else delete c[k]; }
       else if (k === 'scale') { if (el.value) c.scale = Number(el.value); else delete c.scale; }
+      else if (k === 'act') {
+        // 👆 Aktion der Übersichtskarte: nichts = Eintrag entfernen; Pfad/Adresse bleibt beim Wechsel erhalten, wo sie passt
+        const x = el.dataset.x, old = c[x] && typeof c[x] === 'object' ? c[x] : {};
+        if (!el.value || el.value === 'none') delete c[x];
+        else if (el.value === old.action) { /* unverändert (eigene Aktion) */ }
+        else { const n = { action: el.value }; if (el.value === 'navigate' && old.navigation_path) n.navigation_path = old.navigation_path; if (el.value === 'url' && old.url_path) n.url_path = old.url_path; c[x] = n; }
+      }
+      else if (k === 'actp') { const x = el.dataset.x, v = el.value.trim(); c[x] = { ...(c[x] || {}), [el.dataset.f]: v }; if (!v) delete c[x][el.dataset.f]; }
       else if (k === 'show') {
         const all = ['points', 'today', 'goal', 'level', 'net'], cur = new Set(Array.isArray(c.show) && c.show.length ? c.show : all);
         if (el.checked) cur.add(el.dataset.v); else cur.delete(el.dataset.v);
@@ -7730,7 +7793,7 @@ actions:
       }
       else if (el.value) c[k] = el.value.trim();
       else delete c[k];
-      if (k === 'mode') { if (c.mode !== 'kid') delete c.child; delete c.collapsed; if (c.mode === 'admin') { delete c.summary; delete c.show; } if (c.mode === 'kid' || c.mode === 'kids') { delete c.pin; delete c.pin_minutes; } }
+      if (k === 'mode') { if (c.mode !== 'kid') delete c.child; delete c.collapsed; if (c.mode === 'admin') { delete c.summary; delete c.show; delete c.tap_action; delete c.double_tap_action; delete c.hold_action; } if (c.mode === 'kid' || c.mode === 'kids') { delete c.pin; delete c.pin_minutes; } }
       if (k === 'storage') this._kidsFor = null;
       this._config = c;
       this._draw();

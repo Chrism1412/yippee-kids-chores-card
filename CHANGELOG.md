@@ -3,7 +3,16 @@
 Alle wichtigen Änderungen an **Yippee! - Kids Chores**.
 Versionsnummern: `MAJOR.MINOR.PATCH` – Fehlerbehebungen erhöhen PATCH, neue Funktionen MINOR, grundlegende Änderungen (z. B. am Speicherformat) MAJOR.
 
-## [1.5.0] – 2026-10-21
+## [1.6.0] – 2026-10-30
+
+### Neu
+- **👆 Übersichtskarte antippen** ([#12](https://github.com/Chrism1412/yippee-kids-chores-card/issues/12), Idee von [@RkcCorian](https://github.com/RkcCorian)): Die kleine Übersicht (`summary: true`) kennt jetzt `tap_action`, `double_tap_action` und `hold_action` wie andere Home-Assistant-Karten – z. B. Antippen öffnet die Seite mit der großen Karte des Kindes, doppelt tippen den Punkteverlauf. Bequem im Karten-Editor unter „👆 Beim Antippen der Übersicht“ (Seite öffnen, Details öffnen, Link öffnen) oder per YAML mit allen Home-Assistant-Aktionen. `{kind}` in der Seite wird durch den Namen des angetippten Kindes ersetzt (`/dashboard-haus/{kind}` → `/dashboard-haus/mia`), „Details“ zeigt automatisch `sensor.yippee_<name>` des Kindes. Ohne Einstellung bleibt alles wie bisher.
+- **📥 Download-Zähler in HACS:** Bei jedem Release hängt GitHub jetzt automatisch die Dateien der Karte an. HACS installiert daraus und zählt die Downloads wieder mit (seit 1.1.0 stand der Zähler still). Fehlen die Dateien einmal, installiert HACS wie bisher aus dem Repository.
+
+### Behoben
+- **Eltern-Ansicht auf dem Handy** ([#11](https://github.com/Chrism1412/yippee-kids-chores-card/issues/11), gemeldet von [@RkcCorian](https://github.com/RkcCorian)): Im 📋 Heute-Tab standen zwei Kinder auf schmalen Bildschirmen nebeneinander statt untereinander, die Karte ragte rechts über den Rand. Ursache war ein doppelt vergebener Name in der Gestaltung der neuen Farbwähler – jetzt wieder wie in 1.4.0.
+
+## [1.5.0] – 2026-10-29
 
 Danke an alle, die mitgedacht haben! Viele Ideen dieser Version stammen von euch:
 - [@Locodice67](https://github.com/Locodice67) – aus seinem Fork; was dort noch nicht fertig war (Mittagsschlaf), ist jetzt komplett eingebaut

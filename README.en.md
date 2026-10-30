@@ -158,7 +158,7 @@ HACS adds the resource automatically.
 1. Download all files from the [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist) folder: the card `yippee-kids-chores-card.js`, the 📖 manual `yippee-kids-chores-manual.js` and the language files `yippee-kids-chores-lang-xx.js`.
 2. Create the folder **`/config/www/community/yippee-kids-chores-card/`** and copy all files into it. This is the same folder HACS uses, so you can switch to HACS later without changes.
 3. **Settings → Dashboards → ⋮ → Resources → Add resource**
-   - URL: `/hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.5.0`
+   - URL: `/hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.6.0`
    - Type: **JavaScript module**
 4. Reload the page.
 
@@ -205,6 +205,7 @@ A complete example dashboard is in [`examples/dashboard.yaml`](https://github.co
 | `show` | list | all | With `summary`: which parts – `points`, `today`, `goal`, `level`, `net` |
 | `equal_tiles` | `true` / `false` | as ⚙️ | Equal-height task tiles (room for three lines) and rewards – several kid cards line up side by side |
 | `colors` | `default`, `light`, `dark`, `pastel`, `ocean`, `forest`, `sun`, `night`, `candy`, `custom` | as ⚙️ | Colour preset for this card only (`default` = like the dashboard, `custom` = your own colours from ⚙️) |
+| `tap_action` / `double_tap_action` / `hold_action` | Home Assistant action | – | Only with `summary`: what happens when the summary is tapped, double-tapped or held, e.g. `action: navigate` with `navigation_path: /dashboard-haus/{kind}` or `action: more-info` (the child’s sensor). `{kind}` is replaced by the child’s name |
 | `compact` | `true` / `false` | as ⚙️ | Less spacing |
 | `transparent` | `true` / `false` | as ⚙️ | No own background – blends into the dashboard |
 | `scale` | `70`–`130` | as ⚙️ | Card size in percent |

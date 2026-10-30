@@ -1,0 +1,42 @@
+name: Release-Dateien
+
+# Hängt beim Veröffentlichen eines Releases alle Dateien aus dist/ (Karte, Handbuch, Sprachen) an das Release an.
+# HACS installiert dann aus dem Release und zählt die Downloads mit.
+# Fehlen die Dateien einmal, installiert HACS wie bisher aus dist/ – es geht also nichts kaputt.
+# Von Hand nachholen: Actions → Release-Dateien → Run workflow → Tag eintragen (z. B. v1.6.0).
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag des Releases, z. B. v1.6.0'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ github.event.release.tag_name || inputs.tag }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.release.tag_name || inputs.tag }}
+      - name: Version prüfen
+        run: |
+          v=$(grep -oP "const VERSION = '\K[^']+" dist/yippee-kids-chores-card.js)
+          echo "Karte: $v · Tag: $TAG"
+          if [ "v$v" != "$TAG" ] && [ "$v" != "$TAG" ]; then echo "::warning::Version in der Karte ($v) passt nicht zum Tag ($TAG)"; fi
+      - name: Dateien anhängen
+        run: gh release upload "$TAG" dist/*.js --clobber --repo "$GITHUB_REPOSITORY"
+      - name: Prüfen
+        run: |
+          n=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets | length')
+          m=$(ls dist/*.js | wc -l)
+          echo "Angehängt: $n von $m Dateien"
+          [ "$n" -ge "$m" ]
