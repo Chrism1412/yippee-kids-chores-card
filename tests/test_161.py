@@ -36,6 +36,9 @@ with sync_playwright() as p:
         if 'Set up' in ev(f"{q('#app')}.innerText"): break
         t(500); pg.wait_for_timeout(150)
     ok('first window switches language', 'Set up' in ev(f"{q('#app')}.innerText") and 'Create list' in ev(f"{q('#app')}.innerText"), ev(f"{q('#app')}.innerText")[:80])
+    # eine zweite Karte auf der Seite (andere Einstellung) stellt die eben gewählte Sprache nicht zurück – Ursache gelegentlicher Ausreißer hier
+    ev("B._langTry=null; B._langCheck()"); t(800); pg.wait_for_timeout(300); t(300)
+    ok('other card keeps chosen language', 'Set up' in ev(f"{q('#app')}.innerText"), ev(f"{q('#app')}.innerText")[:80])
     ev(f"{q('[data-a=mklist]')}.click()"); t(2500)
     for _ in range(40):  # warten, bis die neue Liste geladen und die Sprache übernommen ist
         if ev("A._loaded===true && A._cfg.lang==='en' && !!A.shadowRoot.querySelector('.wiz .prelang')"): break

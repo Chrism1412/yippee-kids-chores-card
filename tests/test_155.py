@@ -26,6 +26,9 @@ with sync_playwright() as p:
     ok('group count', ev("A.shadowRoot.querySelector('.wizg[data-b=m] .wizn').textContent")==f"{ev('A.shadowRoot.querySelectorAll(\'.wizg[data-b=m] .wizt:checked\').length')}/{ev('A.shadowRoot.querySelectorAll(\'.wizg[data-b=m] .wizt\').length')}")
     ev("A.shadowRoot.querySelector('.wizg[data-b=a]').open=true; A.shadowRoot.querySelector('[data-s=gall][data-b=a]').click()"); t(200)
     ok('group select all', ev("[...A.shadowRoot.querySelectorAll('.wizg[data-b=a] .wizt')].every(x=>x.checked)") and ev("A.shadowRoot.querySelector('.wizg[data-b=a] .wizn').textContent.split('/')[0]==A.shadowRoot.querySelector('.wizg[data-b=a] .wizn').textContent.split('/')[1]"))
+    # Neuzeichnen zwischendurch (z. B. weil ein anderes Gerät etwas speichert) darf die Häkchen nicht zurücksetzen – Ursache gelegentlicher Ausreißer hier
+    ev("A._render()"); t(100)
+    ok('selection survives re-render', ev("[...A.shadowRoot.querySelectorAll('.wizg[data-b=a] .wizt')].every(x=>x.checked)") and ev("A.shadowRoot.querySelector('.wizg[data-b=a]').open"))
     ev(f"(()=>{{const want=new Set({init}); A.shadowRoot.querySelectorAll('.wizt').forEach(x=>{{x.checked=want.has(x.value)}}); A._wizCount();}})()"); t(100)
     ok('selection restored', ev("A.shadowRoot.querySelectorAll('.wizt:checked').length")==c)
     ok('avatar chosen in wizard', [k['emoji'] for k in ev("A._kids()") if k['name']=='Ben']==['🐼'])

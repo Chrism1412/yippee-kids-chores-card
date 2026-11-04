@@ -76,6 +76,12 @@ with sync_playwright() as p:
     # act from background button before mark
     ev("A._save('act','x1',{a:'KP|mx|2026-10-05|Z|F'})"); t(4000)
     ok('act mx works without prior m', ev("A._st('2026-10-05','Z','F')")=='x' and ev("A._db.kid.F.points")==3, ev("A._st('2026-10-05','Z','F')"))
+    # Offene Punkte-Buchungen erst zusammenführen lassen (läuft sonst je nach Tempo erst während der Datenprüfung weiter unten –
+    # dann rechnet sie den Minuspunkt auf den zurückgeholten Stand drauf: gelegentliche Ausreißer bei „fixed task + kid“)
+    for _ in range(30):
+        if ev("Object.keys(A._db.pt).length")==0: break
+        ev("A._consCheck()"); pg.wait_for_timeout(300); t(1000)
+    ok('bookings merged before data check', ev("Object.keys(A._db.pt).length")==0 and ev("A._db.kid.F.points")==3, ev("JSON.stringify(A._db.pt)"))
     # ---- Auto-Sicherung
     ev("A._penaltyCheck()"); t(3000); ev("A._penaltyCheck()"); t(3000)
     bk=ev("Object.keys(A._db.bak)")
@@ -83,6 +89,9 @@ with sync_playwright() as p:
     j=pg.evaluate("A._bkData('2026-10-05')")
     ok('backup readable', j and 'Z' in j['data']['task'] and 'bak' not in j['data'] and 'plan' not in j['data'])
     # ---- Datenprüfung: Aufgabe von außen löschen
+    # Die Karte prüft zusätzlich in zufälligen Abständen (2–20 s) im Hintergrund. Hier zählen nur die Prüfungen des Tests,
+    # sonst fällt je nach Zufall eine Hintergrundprüfung zwischen Löschen und erste Prüfung (gelegentliche Fehlschläge).
+    ev("clearTimeout(A._penT); A._schedulePenalty=()=>{}")
     ev("A._hass.callService('todo','remove_item',{item:'kp|task|M'},{entity_id:'todo.kinderpunkte'},false)"); t(500)
     ev("A._penaltyCheck()"); t(500); ok('not yet after 1 check', not ev("A._dchk"))
     ev("A._penaltyCheck()"); t(500)
@@ -98,7 +107,14 @@ with sync_playwright() as p:
     ok('no new backup while problem', ev("Object.keys(A._db.bak).length")==1)
     bkF=pg.evaluate("A._bkData('2026-10-05').then(j=>j.data.kid.F.points)")
     A.locator('[data-a="chkfix"]').first.click(); t(2000)
-    ok('fixed task + kid', ev("!!A._db.task.M && A._db.kid.F.points")==bkF and not ev("A._dchk"), [ev("!!A._db.task.M"), ev("A._db.kid.F.points")])
+    # Zurückholen läuft asynchron (Sicherung entpacken, Speichern) – unter Last etwas länger: bis zu 10 s echte Zeit warten
+    def settle(js, n=20):
+        for _ in range(n):
+            if ev(js): return True
+            pg.wait_for_timeout(500); t(500)
+        return ev(js)
+    settle(f"!!A._db.task.M && A._db.kid.F.points==={bkF} && !A._dchk")
+    ok('fixed task + kid', ev("!!A._db.task.M && A._db.kid.F.points")==bkF and not ev("A._dchk"), [ev("!!A._db.task.M"), ev("A._db.kid.F.points"), bkF, ev("JSON.stringify(A._db.pt)"), ev("JSON.stringify(A._dchk)")])
     ev("A._penaltyCheck()"); t(500); ev("A._penaltyCheck()"); t(500)
     ok('clean after fix', not ev("A._dchk") and not ev("A._badKeys.size"), ev("A._dchk"))
     # Löschen über die Karte -> kein Alarm
@@ -111,7 +127,8 @@ with sync_playwright() as p:
     ok('accepted, broken removed', not ev("A._dchk") and not pg.evaluate("A._hass.callWS({type:'todo/item/list',entity_id:'todo.kinderpunkte'}).then(r=>r.items.some(i=>i.summary==='kp|reward|Q'))"))
     # Wiederherstellen aus automatischer Sicherung (Liste)
     A.locator('details.bklist > summary').first.click(); t(300); A.locator('[data-a="abres"]').first.click(); t(500); A.locator('[data-a="msave"]').click(); t(2000)
-    ok('restore auto backup', ev("!!A._db.task.M") and ev("A._db.kid.F.points")==bkF)
+    settle(f"!!A._db.task.M && A._db.kid.F.points==={bkF}")
+    ok('restore auto backup', ev("!!A._db.task.M") and ev("A._db.kid.F.points")==bkF, [ev("!!A._db.task.M"), ev("A._db.kid.F.points"), bkF])
     ev("A._penaltyCheck()"); t(500); ev("A._penaltyCheck()"); t(500)
     ok('no alarm after restore', not ev("A._dchk"), ev("A._dchk"))
     # Telegram-Fehler

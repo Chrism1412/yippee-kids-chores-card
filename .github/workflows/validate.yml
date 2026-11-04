@@ -27,3 +27,4 @@ jobs:
         with:
           node-version: 22
       - run: node --check dist/yippee-kids-chores-card.js
+      - run: cp dist/yippee-kids-chores-advent.js /tmp/advent.mjs && node --check /tmp/advent.mjs

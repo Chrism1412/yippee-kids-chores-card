@@ -27,6 +27,13 @@ with sync_playwright() as p:
     # Scroll bleibt
     ev("document.body.style.height='4000px'; window.scrollTo(0,600)"); ev("A._render()"); t(100)
     ok('scroll kept', ev("window.scrollY")==600, ev("window.scrollY"))
+    # Verspätetes Nachstellen nach dem Neuzeichnen darf eine inzwischen geänderte Scroll-Position nicht zurücksetzen
+    # (früher gelegentlicher Ausreißer: Seite sprang nach oben)
+    ev("window.scrollTo(0,0); A._render(); B._render(); window.scrollTo(0,600)"); t(200)
+    ok('late restore keeps user scroll', ev("window.scrollY")==600, ev("window.scrollY"))
+    # Inhalt wird beim Neuzeichnen kurz kürzer -> Position wird nach dem nächsten Bild wiederhergestellt
+    ev("window.scrollTo(0,900); document.body.style.height='1000px'; A._render(); document.body.style.height='4000px'"); t(200)
+    ok('restore after content got shorter', ev("window.scrollY")==900, ev("window.scrollY"))
     ok('no errors', not errs, errs)
     b.close()
 print('\n'.join(R))

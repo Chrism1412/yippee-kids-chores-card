@@ -24,6 +24,9 @@
 
 <p align="center"><a href="https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/README.en.md">🇬🇧 English version</a></p>
 
+> ### 🎄 Neu in 1.7.0: der Adventskalender
+> Pünktlich zur Weihnachtszeit hat Yippee! einen eigenen **Adventskalender** – für jedes Kind 24 Türchen mit Text, Bild, Sternen oder einer kleinen Belohnung als Geschenk. Ein Türchen kann auch erst nach erledigten Aufgaben aufgehen. Einschalten unter **⚙️ Einstellungen → ⚙️ Allgemein → 🎄 Adventskalender** – mehr dazu unter [Adventskalender 🎄](#adventskalender--optional).
+
 ---
 
 ## Inhalt
@@ -94,6 +97,7 @@ Eltern legen Aufgaben und Belohnungen an, geben Erledigtes frei (auch direkt aus
 - **„Demnächst“** 📅: Vorschau auf besondere Aufgaben der nächsten Tage
 - **Geburtstag** 🎂: Konfetti, Bonus, Punktefaktor und auf Wunsch aufgabenfrei
 - **Schulnoten** 🎓 (optional): Sterne für gute Noten – Note selbst melden, auf Wunsch mit Foto der Arbeit
+- **Adventskalender** 🎄 (optional): im Dezember jeden Tag ein Türchen – mit Text, Bild, Sternen oder einer geschenkten Belohnung
 - **Tagesblöcke** ⏰ (optional): Aufgaben nach Morgens, Mittags, Nachmittags und Abends gruppiert, jeder Block mit eigenem Fortschritt – zum Auf- und Zuklappen; vorbei ist vorbei: abgelaufene Blöcke klappen automatisch zu (abschaltbar). Auch in der Eltern-Ansicht. **Die Zeiten der Blöcke stellst du selbst ein** (Standard: Mittags ab 11:30, Nachmittags ab 16:00, Abends ab 18:00) – jeder Block endet, wo der nächste beginnt, Überschneidungen gibt es nicht. Unter ✅ Aufgaben stehen die Aufgaben **je Kind** und darunter wahlweise nach Tageszeit, nach Art (Routinen / Pflicht / Zusatz / Sonder) oder ohne Unterteilung – jede Gruppe ein- und ausklappbar
 - **🕒 Lockerere Zeiten an schulfreien Tagen** (optional): Am Wochenende, in den Ferien und an Feiertagen läuft ein Zeitfenster länger – wie viel, stellst du selbst ein: bis Ende des Tagesblocks („Zähne putzen bis 9:00“ dann bis zum Ende von 🌅 Morgens), 30 Minuten, 1 oder 2 Stunden länger oder ganz ohne Zeitlimit. Aufgaben, die immer pünktlich sein müssen (z. B. Medikament), bekommen das Häkchen **⏰ Feste Zeit auch an schulfreien Tagen**. Ausschlafen zählt nicht als verpasst
 - Auf Wunsch eingeklappte Ansicht (`collapsed: true`): nur Name und Punkte, Aufgaben erst nach Antippen
@@ -153,7 +157,7 @@ Ist ein Kind nicht immer im Haushalt (Umgang, Wechselmodell, Patchwork), stellst
   - nicht da – alle 2 Wochen – ab **Fr 15:00 bis So 18:00** (jedes zweite Wochenende)
   - oder umgekehrt: meistens woanders, da – alle 2 Wochen – ab **Fr 12:00 bis Mi 12:00**
 - **Ferienregelung** je Ferienart (Sommer, Herbst, Weihnachten, Winter, Ostern, Pfingsten): Regeln gelten weiter, ganz bei uns, ganz beim anderen Elternteil, erste oder zweite Hälfte, **erste oder letzte … Wochen bei uns** (z. B. die ersten 3 von 6,5 Wochen Sommerferien). Auf Wunsch **jährlich wechselnd** und mit eigenen Übergabezeiten.
-- **Ausnahmen:** einzelne Zeiträume „da“ oder „nicht da“, z. B. ein getauschtes Wochenende – sie gelten vor allem anderen.
+- **Ausnahmen:** einzelne Zeiträume „da“ oder „nicht da“, z. B. ein getauschtes Wochenende – sie gelten vor allem anderen. Optional mit Uhrzeit für Ankunft bzw. Abreise (z. B. „da ab 17:00“) – vorher fällige Aufgaben zählen dann nicht als verpasst.
 - **Vorschau** der nächsten 8 Wochen direkt im Editor (🔄 Vorschau).
 
 Ist das Kind nicht da, gibt es **keine Aufgaben, keine Erinnerungen und kein „verpasst“**, die 🔥-Serie bleibt erhalten, „Im Wechsel“ überspringt das Kind, und die Morgen-Ansage lässt es aus. An Tagen mit Kommen und Gehen erscheinen nur Aufgaben, deren Zeitfenster in die Zeit fällt, in der das Kind da ist. Die Kinder-Ansicht zeigt „👋 Bis bald! Wieder da: Fr 23.10. ab 12:00 Uhr“. Die Ferienregelung nutzt die Schulferien – dafür unter ⚙️ Einstellungen → 🏖️ Urlaub & Ferien Land und Region wählen.
@@ -190,6 +194,20 @@ Unter **⚙️ Einstellungen → ⭐ Punkte & Boni → 🎓 Schulnoten** einscha
 - **📊 Notenübersicht** je Kind und Fach: Schnitt, Anzahl, letzte Note und Trend 📈/📉
 - Noten-Sterne zählen wie alle verdienten Sterne für **Level** und **Familienziel**
 
+### Adventskalender 🎄 (optional)
+
+Unter **⚙️ Einstellungen → ⚙️ Allgemein → 🎄 Adventskalender** einschalten – dann gibt es in der Eltern-Ansicht den Tab **🎄 Advent**. Der Kalender nutzt direkt die Kinder, Sterne, Belohnungen, die PIN und die Farben von Yippee! – es gibt nichts weiter einzurichten.
+
+- **🚪 Türchen** vom 1. bis 24. (oder 31.) Dezember für jedes Kind, in gemischter Reihenfolge: Text, Emoji, Bild, 💌 Nachricht, ⭐ Sterne und 🎁 eine **geschenkte Belohnung** (kostet keine Sterne, mit 🎟️ Gutscheinen kommt sie als Gutschein beim Kind an)
+- **✨ Automatisch füllen** aus Vorlagen (Backen, Basteln, Gutscheine, Rätsel …) und besonderen Tagen – Nikolaus, die vier Adventssonntage (jedes Jahr neu berechnet), Heiligabend
+- **🔗 Bedingung:** ein Türchen geht erst auf, wenn heute eine bestimmte Aufgabe oder X Aufgaben erledigt sind
+- **🎄 Nur im Adventskalender:** Haken bei einer Belohnung – die Kinder sehen sie sonst nirgends, nur ein Türchen verschenkt sie
+- **Aussehen:** Sternennacht mit Girlanden und Schneelandschaft, bunt gemusterte Türchen, ❄️ Schneefall, 🔔 Glocken oder eigener Ton, ⏳ Countdown, Fortschrittsbalken, 🎚️ Türchengröße per Schieberegler – für alle, nur für dieses Gerät (📱) oder nur für eine Karte (`advent_size`), passt sich auf dem Handy automatisch an
+- **📁 Dateien:** eigene JPG-Bilder und MP3-Töne direkt hochladen (landet unter Medien → advent; nur Administrator)
+- **📱 Morgen-Nachricht** im Dezember aufs Handy des Kindes (die Karte legt die Automation an; nur Administrator) und **🧪 Testmodus**, um den Kalender schon im November auszuprobieren
+
+Die Kinder öffnen ihre Türchen im Dezember über den **🎄-Knopf** in ihrer Ansicht – oder in einer eigenen Karte mit `mode: advent`. Der Kalender steckt in einer eigenen Datei (`yippee-kids-chores-advent.js`), die nur geladen wird, wenn er eingeschaltet ist.
+
 ### Weitere Zusatzfunktionen (alle optional)
 
 Alles unter **⚙️ Einstellungen** einzeln ein- und ausschaltbar – jede Funktion steht dort, wo sie thematisch hingehört: **⚙️ Allgemein · ✅ Aufgaben & Tagesablauf · ⭐ Punkte & Boni · 🎁 Belohnungen & Geld · 🔔 Benachrichtigungen · 🔌 Geräte & Sprache · 📈 Auswertung · 💾 Daten**. Jede hat einen eigenen aufklappbaren Abschnitt, der „an“ oder „aus“ zeigt.
@@ -212,7 +230,7 @@ Alles unter **⚙️ Einstellungen** einzeln ein- und ausschaltbar – jede Funk
 - **🧭 Einrichtungs-Assistent** beim ersten Start: Kinder mit Geburtsdatum, Avatar und Farbe anlegen → passende Routinen und Aufgaben anhaken (nach Tageszeit gruppiert, mit Suche) → Belohnungen mit eigenem Preis wählen → beliebte Funktionen und das Handy für Benachrichtigungen einschalten → fertig, inklusive fertigem Text für die Kinder-Karte. Jederzeit wieder startbar unter ⚙️ Einstellungen
 - **Einstellungen „Einfach“ oder „Alle“**: auf Wunsch nur das Wichtigste (Sprache, Urlaub, Freigabe, Benachrichtigungen, Sicherung, Zugriffsschutz) – alles andere mit einem Tipp, nach Themen sortiert, mit **🔎 Suchfeld** (Treffer im Titel zuerst), **Schalter direkt in der Zeile** und **📖-Knopf** zum passenden Handbuch-Thema
 - **Benehmen** 😊 (optional): im Heute-Tab mit einem Tipp auf den grünen Knopf „😊 +1“ belohnen (Sterne einstellbar), auf Wunsch auch mit dem roten Knopf „😠 −1“ Sterne abziehen – alles im Punkte-Verlauf. Unter 👧 Kinder zeigt ein **📊 Verhaltens-Diagramm** die letzten 14 Tage mit Durchschnitt und Trend
-- **Freigabe** von Aufgaben und Einlösungen – in der Karte, per Push-Knopf oder Telegram-Knopf
+- **Freigabe** von Aufgaben und Einlösungen – in der Karte, per Push-Knopf oder Telegram-Knopf; erledigte Freigaben verschwinden auf allen Handys
 - **Minuspunkte nur nach Entscheidung**: verpasst = „entschuldigt“, „Minuspunkte“ oder „doch erledigt“
 - Punkte von Hand anpassen, **Punkte-Verlauf** pro Kind, **5-Wochen-Diagramm** unter 📊 Berichte
 - **Taschengeld**: Sterne in Euro umrechnen und auszahlen
@@ -230,7 +248,9 @@ Alles unter **⚙️ Einstellungen** einzeln ein- und ausschaltbar – jede Funk
 ### Sicherheit und Daten
 - Automatische **Sicherungen** (auch in eine zweite Liste), Sicherungsdatei zum Herunterladen
 - **Datenprüfung**: warnt, wenn Einträge fehlen oder außerhalb der Karte verändert wurden
-- **🎁 Belohnungen nach Art sortiert** (für ein Kind · gemeinsam · Joker), nach ⭐ Sternen oder 🔤 A–Z – in der Kinder-Ansicht stehen die gerade einlösbaren oben
+- **▾ Eltern-Heute einklappbar:** jedes Kind und jeder Tagesblock (Morgens … Ohne Zeit) per Tipp ein-/ausklappen, wird auf dem Gerät gemerkt; fertige oder abgelaufene Tageszeiten klappen automatisch zu, „▸ Alle einklappen“ für alle Kinder auf einmal
+- **🎁 Eltern lösen direkt ein:** 📋 Heute → 🎁 beim Kind – sofort, ohne Freigabe; gemeinsame Belohnungen mit Anteil oder 💝 Einladung
+- **🎁 Belohnungen nach Art sortiert** (für ein Kind · gemeinsam · Joker), nach ⭐ Sternen oder 🔤 A–Z – oder **👧 nach Kind** (je Kind, für alle, gemeinsam); in der Kinder-Ansicht stehen die gerade einlösbaren oben
 - **👧 Kinder-Tab** mit einer Karte pro Kind: Sterne, heutiger Fortschritt und Verhaltens-Diagramm an einem Ort – oben 📊 Berichte mit Tagen, Wochen und 5-Wochen-Diagramm
 - **✓ Alle Aufgaben freigeben** mit einem Tipp und **⧉ Kopieren** von Aufgaben und Belohnungen
 - **🌙 Hell und dunkel:** alle farbigen Hinweise passen sich dem Home-Assistant-Theme an
@@ -257,11 +277,11 @@ HACS legt die Ressource automatisch an.
 
 ### Von Hand
 
-1. Alle Dateien aus dem Ordner [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist) herunterladen: die Karte `yippee-kids-chores-card.js`, das 📖 Handbuch `yippee-kids-chores-manual.js` und die Sprachdateien `yippee-kids-chores-lang-xx.js` (Deutsch steckt in der Karte selbst).
+1. Alle Dateien aus dem Ordner [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist) herunterladen: die Karte `yippee-kids-chores-card.js`, das 📖 Handbuch `yippee-kids-chores-manual.js`, den 🎄 Adventskalender `yippee-kids-chores-advent.js` und die Sprachdateien `yippee-kids-chores-lang-xx.js` (Deutsch steckt in der Karte selbst).
 2. In Home Assistant den Ordner **`/config/www/community/yippee-kids-chores-card/`** anlegen und alle Dateien dort hineinkopieren (z. B. mit dem Add-on *File editor* oder *Samba share*).
    Das ist derselbe Ordner, den auch HACS verwendet – ein späterer Wechsel zu HACS klappt dadurch ohne Umbau.
 3. **Einstellungen → Dashboards → ⋮ (oben rechts) → Ressourcen → Ressource hinzufügen**
-   - URL: `/hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.6.0`
+   - URL: `/hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.7.0`
    - Typ: **JavaScript-Modul**
 4. Seite neu laden.
 
@@ -303,6 +323,15 @@ mode: kid
 child: Mia
 ```
 
+**Nur der 🎄 Adventskalender** (vorher unter ⚙️ Einstellungen einschalten; `child` weglassen = alle Kinder zum Umschalten)
+```yaml
+type: custom:yippee-kids-chores-card
+storage: todo.yippee_kids_chores
+mode: advent
+child: Mia
+advent_size: 120   # optional: Türchengröße nur für diese Karte (50–220)
+```
+
 > Tipp: Die Kinder-Ansicht wirkt am besten in einer Ansicht vom Typ **Panel** (eine Karte über die ganze Breite). Ein vollständiges Beispiel-Dashboard liegt unter [`examples/dashboard.yaml`](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/examples/dashboard.yaml).
 
 ### 3. In der Eltern-Ansicht loslegen
@@ -319,8 +348,8 @@ Beim ersten Öffnen führt dich der **🧭 Einrichtungs-Assistent** in fünf Sch
 | Option | Werte | Standard | Beschreibung |
 |---|---|---|---|
 | `storage` | `todo.…` | – | **Pflicht.** Die Lokale To-do-Liste als Speicher |
-| `mode` | `admin`, `kids`, `kid` | `admin` | Eltern-Ansicht, alle Kinder oder ein Kind |
-| `child` | Name | – | Nur bei `mode: kid`: welches Kind |
+| `mode` | `admin`, `kids`, `kid`, `advent` | `admin` | Eltern-Ansicht, alle Kinder, ein Kind oder nur der 🎄 Adventskalender |
+| `child` | Name | – | Bei `mode: kid`: welches Kind. Bei `mode: advent` optional (ohne: alle Kinder zum Umschalten) |
 | `collapsed` | `true` / `false` | `false` | Kinder eingeklappt (nur Name und Punkte) anzeigen |
 | `summary` | `true` / `false` | `false` | Nur eine kleine Übersicht pro Kind (Punkte, heute, Ziel, Level, Bilanz) – z. B. fürs Familien-Dashboard |
 | `show` | Liste | alle | Bei `summary`: welche Teile – `points`, `today`, `goal`, `level`, `net` |
@@ -330,6 +359,7 @@ Beim ersten Öffnen führt dich der **🧭 Einrichtungs-Assistent** in fünf Sch
 | `compact` | `true` / `false` | wie ⚙️ | Weniger Abstände |
 | `transparent` | `true` / `false` | wie ⚙️ | Ohne eigenen Hintergrund – passt sich dem Dashboard an |
 | `scale` | `70`–`130` | wie ⚙️ | Größe der Karte in Prozent |
+| `advent_size` | `50`–`220` | wie ⚙️ | Bei `mode: kid`, `kids` und `advent`: Größe der 🎄 Adventskalender-Türchen in px nur für diese Karte (z. B. Wand-Tablet). „📱 Nur dieses Gerät“ aus der Eltern-Ansicht hat Vorrang |
 | `family` | `true` / `false` | automatisch | Familienziel auf dieser Karte zeigen. Automatisch erscheint es nur einmal pro Seite |
 | `language` | z. B. `en`, `fr` | Einstellung bzw. Sprache von Home Assistant | Eigene Sprache nur für diese Karte (z. B. auf dem Kinder-Tablet) |
 | `wizard` | `true`, `false` | `true` | `false` = kein Einrichtungs-Assistent beim ersten Start (lässt sich trotzdem unter ⚙️ Einstellungen starten) |
@@ -419,7 +449,7 @@ Für jedes Kind entsteht ein Sensor `sensor.yippee_<name>` (Zustand = Punktestan
 
 `heute_erledigt`, `heute_gesamt`, `alles_erledigt`, `offen`, `wartet_auf_freigabe`, `level`, `level_name`, `gesamt_verdient`, `abzeichen`, `ziel`, `urlaub`, `anwesend`, `feiertag`, `ferien`, `heute_netto`, `woche_netto` und – mit Taschengeld – `euro`.
 
-**🎨 Darstellung** (⚙️ Einstellungen → ⚙️ Allgemein, gilt für alle Karten – oder je Karte im Karten-Editor): **🎨 Farben** zum Antippen (wie das Dashboard, Hell, Dunkel, Pastell, Ozean, Wald, Sonne, Nacht, Bonbon) oder ✏️ eigene Farben mit Farbwähler – Schrift und Kacheln passen sich automatisch an, bei schlecht lesbarer Schrift warnt die Karte –, 📏 Gleich hohe Kacheln (mehrere Kinder-Karten nebeneinander liegen auf einer Linie), Kompakt, Ohne Hintergrund und Größe 70–130 %.
+**🎨 Darstellung** (⚙️ Einstellungen → ⚙️ Allgemein, gilt für alle Karten – oder je Karte im Karten-Editor): **🎨 Farben** zum Antippen (wie das Dashboard, Hell, Dunkel, Pastell, Ozean, Wald, Sonne, Nacht, Bonbon) oder ✏️ eigene Farben mit Farbwähler – Schrift und Kacheln passen sich automatisch an, bei schlecht lesbarer Schrift warnt die Karte; im Darkmode von Home Assistant werden helle Vorlagen auf dem jeweiligen Gerät automatisch dunkel, eigene Farben auf Wunsch auch –, 📏 Gleich hohe Kacheln (mehrere Kinder-Karten nebeneinander liegen auf einer Linie), Kompakt, Ohne Hintergrund und Größe 70–130 %.
 
 Farben lassen sich über Themes oder card_mod mit den Variablen `--yippee-bg`, `--yippee-surface`, `--yippee-accent`, `--yippee-text` und `--yippee-text-secondary` anpassen.
 
@@ -446,6 +476,8 @@ actions:
 ```
 
 > Die Sensoren werden aktualisiert, solange die Karte bei einem Administrator geöffnet ist (z. B. auf dem Wand-Tablet). Nach einem Neustart von Home Assistant erscheinen sie wieder, sobald die Karte geöffnet wird.
+>
+> **🔁 Auch nach einem Neustart sofort da** (ab 1.7.0, optional): ⚙️ → 🔌 Geräte & Sprache → 📊 Sensoren → „🔁 Auch nach einem Neustart sofort da“ einschalten, **📋 Vorlage kopieren**, als eigene Datei `packages/yippee.yaml` speichern (wenn „packages“ eingerichtet ist) oder in die `configuration.yaml` einfügen und Home Assistant neu starten. Die Karte legt den Stand jedes Kindes dann zusätzlich in der Yippee-Liste ab (auch von Kinder-Geräten), und ein Template-Sensor liest ihn jede Minute und direkt beim Start – ohne geöffnete Karte. Die Tageswerte zeigen nach einem Neustart den zuletzt bekannten Stand. Läuft die Vorlage, zeigt die Karte „✅ Dauerhafte Sensoren aktiv“; passt sie nach neuen oder umbenannten Kindern nicht mehr, erscheint „⚠️ Vorlage neu kopieren“. Hakt jemand etwas ab, sind die Sensoren nach wenigen Sekunden aktuell. Fertige Automationen per Knopf: 🎉 Durchsage und Nachricht, wenn das Familienziel erreicht ist, und 📋 eine Abend-Erinnerung, wenn ein Kind noch nicht alles erledigt hat. Mit Familienziel kommt `sensor.yippee_familienziel` dazu (Zustand = gesammelte Sterne, Attribute `ziel`, `ziel_sterne`, `fehlen`, `prozent`, `erreicht`, `prognose_tage`, `prognose_datum`). Benötigt Home Assistant 2025.10 oder neuer.
 
 ### Hintergrund-Automation
 
@@ -515,6 +547,8 @@ Jeder Datensatz ist ein Eintrag in der Lokalen To-do-Liste: der Titel ist ein Sc
 - sind die Daten in jeder Home-Assistant-Sicherung enthalten,
 - sehen alle Geräte Änderungen sofort.
 
+Der 🎄 Adventskalender speichert in derselben Liste (`kp|adc|main` für die Einstellungen, `kp|adk|…` für die Türchen, `kp|ado|…` für geöffnete Türchen).
+
 Punkte-Buchungen werden zuerst als eigene Einträge (`kp|pt|…`) gespeichert und kurz darauf ins Kind übernommen. So geht auch dann keine Buchung verloren, wenn zwei Geräte gleichzeitig etwas abhaken.
 
 **Bitte die Einträge nicht in der To-do-Liste bearbeiten, abhaken oder löschen.** Falls es doch passiert, meldet sich die Datenprüfung.
@@ -569,7 +603,7 @@ Yippee! steht auf den Schultern großartiger Open-Source-Projekte und lebt von d
 
 - **[Waste Collection Schedule](https://github.com/mampfes/hacs_waste_collection_schedule)** von [@mampfes](https://github.com/mampfes) und allen Mitwirkenden – dank dieser Integration kommen die Mülltermine von hunderten Entsorgern direkt in die Aufgabe „Müll rausbringen“.
 - **[Locodice67](https://github.com/Locodice67)** – für Ideen und Vorarbeit in seinem Fork: Verhaltens-Diagramm, „Nur an schulfreien Tagen“, lockerere Zeiten an schulfreien Tagen und die Kleinkind-Vorlagen (seit 1.5.0), dazu die Morgen- und Abendroutine-Vorlagen und „😊 Benehmen“ ([#1](https://github.com/Chrism1412/yippee-kids-chores-card/pull/1)).
-- **[RkcCorian](https://github.com/RkcCorian)** – Übersichtskarte pro Kind, Darstellung anpassen, Reihenfolge der Kinder, gleich hohe Kacheln und der Hinweis zu den ✓ Knöpfen ([#4](https://github.com/Chrism1412/yippee-kids-chores-card/issues/4), [#5](https://github.com/Chrism1412/yippee-kids-chores-card/issues/5), [#6](https://github.com/Chrism1412/yippee-kids-chores-card/issues/6), [#9](https://github.com/Chrism1412/yippee-kids-chores-card/issues/9), [#10](https://github.com/Chrism1412/yippee-kids-chores-card/issues/10)).
+- **[RkcCorian](https://github.com/RkcCorian)** – Übersichtskarte pro Kind, Darstellung anpassen, Reihenfolge der Kinder, gleich hohe Kacheln, Antippen der Übersichtskarte, dauerhafte Sensoren nach einem Neustart, erledigte Freigaben auf allen Handys entfernen sowie die Hinweise zu den ✓ Knöpfen, zur Handy-Ansicht und zu eigenen Emojis ([#4](https://github.com/Chrism1412/yippee-kids-chores-card/issues/4), [#5](https://github.com/Chrism1412/yippee-kids-chores-card/issues/5), [#6](https://github.com/Chrism1412/yippee-kids-chores-card/issues/6), [#9](https://github.com/Chrism1412/yippee-kids-chores-card/issues/9), [#10](https://github.com/Chrism1412/yippee-kids-chores-card/issues/10), [#11](https://github.com/Chrism1412/yippee-kids-chores-card/issues/11), [#12](https://github.com/Chrism1412/yippee-kids-chores-card/issues/12), [#13](https://github.com/Chrism1412/yippee-kids-chores-card/issues/13), [#14](https://github.com/Chrism1412/yippee-kids-chores-card/issues/14), [#15](https://github.com/Chrism1412/yippee-kids-chores-card/issues/15)).
 - **[gogui63](https://github.com/gogui63)** – Minus-Stand mit Bilanz und Sterne per Automation oder Sprachassistent ([#7](https://github.com/Chrism1412/yippee-kids-chores-card/issues/7), [#8](https://github.com/Chrism1412/yippee-kids-chores-card/issues/8)).
 - **[Sysman2018](https://github.com/Sysman2018)** – die Idee für 🎓 Sterne für gute Schulnoten ([#2](https://github.com/Chrism1412/yippee-kids-chores-card/issues/2)).
 - **[Daniel-PT](https://github.com/Daniel-PT)** – hat den Fehler mit der IP-Sperre bei Benutzern ohne Admin-Rechte gefunden ([#3](https://github.com/Chrism1412/yippee-kids-chores-card/issues/3)).

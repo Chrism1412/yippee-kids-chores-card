@@ -1,5 +1,5 @@
 /*
- * Yippee! - Kids Chores – Karte für Home Assistant – Version 1.6.0
+ * Yippee! - Kids Chores – Karte für Home Assistant – Version 1.7.0
  * Aufgaben abhaken · Punkte sammeln · Belohnungen einlösen · Freigabe durch Eltern
  *
  * https://github.com/Chrism1412/yippee-kids-chores-card  ·  Lizenz: MIT
@@ -40,7 +40,7 @@
  *   CSS-Variablen für Themes/card_mod: --yippee-bg, --yippee-surface, --yippee-accent, --yippee-text, --yippee-text-secondary
  */
 (() => {
-  const VERSION = '1.6.0';
+  const VERSION = '1.7.0';
 
   // ---------- Sprache ----------
   // Alle Texte stehen auf Deutsch im Code. T() übersetzt sie über die Sprachdatei der gewählten Sprache (yippee-kids-chores-lang-xx.js).
@@ -77,7 +77,7 @@
   const HB_TOPIC = { lang: 'update', look: 'views', vac: 'vacation', sec: 'security', f_dayBlocks: 'layout', f_routOn: 'routine', f_extraOn: 'extra', f_photoOn: 'photo', f_nfcOn: 'nfc', f_muellOn: 'trash_cal', f_calOn: 'trash_cal', f_orderOn: 'layout', f_prevOn: 'layout',
     appr: 'approval', streak: 'bonus', f_wbOn: 'bonus', f_teamOn: 'bonus', f_dblOn: 'bonus', f_bdOn: 'birthday', f_behavOn: 'today', f_negOn: 'missed', f_gradesOn: 'grades', f_goalOn: 'goal', f_progOn: 'goal', f_wishOn: 'goal', f_jokerOn: 'joker',
     f_shareOn: 'shared', f_costKidOn: 'cost', f_walletOn: 'wallet', f_priceOn: 'cost', money: 'money', notif: 'notify', when: 'notify', f_welcOn: 'presence', bg: 'background', btn: 'buttons', audio: 'audio', f_voiceOn: 'voice',
-    f_lmOn: 'lametric', sens: 'sensors', f_checkOn: 'stats', audit: 'trash', bk: 'backup', mem: 'storage', trash: 'trash', upd: 'update' };
+    f_lmOn: 'lametric', f_advOn: 'advent', sens: 'sensors', f_checkOn: 'stats', audit: 'trash', bk: 'backup', mem: 'storage', trash: 'trash', upd: 'update' };
   // Version der Hintergrund-Vorlage – erhöht sich, wenn sich die Automation ändert (wird dann neu geschrieben)
   const BG_V = 'v2';
   // 🔎 zusätzliche Suchwörter für Abschnitte, deren Titel das naheliegende Wort nicht enthält
@@ -103,11 +103,22 @@
     const text = HEX(v && v.text) || (dark ? '#f1f3f5' : '#1f2430');
     return { bg, text, mu: mixHex(text, bg, 0.62), surface: HEX(v && v.surface) || mixHex(text, bg, 0.08), accent: HEX(v && v.accent) || (dark ? '#7c8cff' : '#5b6cff') };
   };
-  const themeCols = (id, custom) => { if (id === 'custom') return fullCols(custom); const t = THEMES.find((x) => x[0] === id); return t ? { bg: t[2], surface: t[3], text: t[4], mu: t[5], accent: t[6] } : null; };
+  // 🌙 Darkmode: helle Vorlagen bekommen automatisch eine dunkle Variante im gleichen Farbton („Hell“ → „Dunkel“)
+  const darkOf = (t) => {
+    if (lum(t[2]) < 0.25) return null; // schon dunkel
+    if (t[0] === 'custom') { const a = t[6], bg = mixHex(a, '#121418', 0.1), text = mixHex(a, '#ffffff', 0.08); return { bg, surface: mixHex(a, '#121418', 0.2), text, mu: mixHex(text, bg, 0.62), accent: a }; }
+    if (t[0] === 'light') { const d = THEMES.find((x) => x[0] === 'dark'); return { bg: d[2], surface: d[3], text: d[4], mu: d[5], accent: d[6] }; }
+    const a = t[6], bg = mixHex(a, '#121418', 0.1), text = mixHex(a, '#ffffff', 0.08);
+    return { bg, surface: mixHex(a, '#121418', 0.2), text, mu: mixHex(text, bg, 0.62), accent: a }; // Akzent bleibt gleich: auf dunklem Grund gut sichtbar, weiße Schrift darauf wie bisher
+  };
+  const themeCols = (id, custom, dark, darkOwn) => { if (id === 'custom') { const f = fullCols(custom); return (dark && darkOwn && darkOf(['custom', '', f.bg, f.surface, f.text, f.mu, f.accent])) || f; } const t = THEMES.find((x) => x[0] === id); if (!t) return null; return (dark && darkOf(t)) || { bg: t[2], surface: t[3], text: t[4], mu: t[5], accent: t[6] }; };
   const PARENT_ACTS = ['behav', 'ruadd', 'rudel', 'prprev', 'exadd', 'exdel', 'tup', 'tdown', 'slotadd', 'slotdel', 'grade', 'gapr', 'grej', 'resclean', 'updres', 'updhide', 'apr', 'aprall', 'mcopy', 'rej', 'mdec', 'rapr', 'rrej', 'wapr', 'pts', 'payout', 'ledclr', 'famreset', 'famedit', 'chkfix', 'chkok', 'abres', 'abnow', 'bkrestore', 'trres', 'pinset', 'pindel', 'ekid', 'etask', 'erew', 'cfg', 'autonew', 'atap', 'vadd', 'vdel', 'suggest', 'holnow', 'ntest', 'wtest', 'dtest', 'mtest', 'rtest', 'tgtest', 'bkdl', 'bkcopy', 'bkshare', 'abdl', 'cfair', 'vuse', 'hhide', 'psug', 'pcalc', 'lmtest', 'hb', 'hbt', 'caled', 'calhide', 'kord', 'scriptnew', 'repday', 'mueltask', 'mklist', 'rws', 'kadm', 'erout', 'wiz', 'wizstart', 'setview', 'memclean'];
   const LOGO = '<svg class="logo" viewBox="0 0 200 200" aria-hidden="true"><rect width="200" height="200" rx="46" fill="#4a56e2"/><polygon points="100.0,30.0 122.1,76.6 173.3,83.2 135.8,118.6 145.3,169.4 100.0,144.6 54.7,169.4 64.2,118.6 26.7,83.2 77.9,76.6" fill="#ffc93c" stroke="#ffc93c" stroke-width="16" stroke-linejoin="round"/><path d="M79 100 q7 -9 14 0 M107 100 q7 -9 14 0" fill="none" stroke="#2b2d42" stroke-width="8" stroke-linecap="round"/><path d="M81 115 q19 23 38 0 z" fill="#2b2d42" stroke="#2b2d42" stroke-width="6" stroke-linejoin="round"/></svg>';
+  // 📱 Kennung einer Freigabe-Nachricht (aus dem ersten Knopf) – damit sie auf allen Handys wieder entfernt werden kann (#14)
+  const PUSH_GRP = { ok: 't', no: 't', rok: 'r', rno: 'r', gok: 'g', gno: 'g', me: 'm', mx: 'm', md: 'm' };
+  const pushTag = (action) => { const p = String(action || '').split('|'), g = PUSH_GRP[p[1]]; return g ? `yippee_${g}_${p.slice(2).join('_')}`.replace(/[^\w-]/g, '_') : ''; };
   const TRACK = ['kid', 'task', 'reward']; // Datenprüfung: fehlen diese Einträge plötzlich, warnt die Karte
-  const AUTO_IDS = { app: 'yippee_app_knoepfe', tg: 'yippee_telegram_knoepfe', cmd: 'yippee_telegram_befehle', bg: 'yippee_hintergrund', nfc: 'yippee_nfc', voice: 'yippee_sprache' };
+  const AUTO_IDS = { app: 'yippee_app_knoepfe', tg: 'yippee_telegram_knoepfe', cmd: 'yippee_telegram_befehle', bg: 'yippee_hintergrund', nfc: 'yippee_nfc', voice: 'yippee_sprache', famgoal: 'yippee_familienziel_erreicht', remind: 'yippee_abend_erinnerung' };
   const SCRIPT_ID = 'yippee_sterne';
   // frühere Automationen (vor der Umbenennung) – werden automatisch ersetzt
   const OLD_IDS = { app: 'kinder' + 'punkte_app_knoepfe', tg: 'kinder' + 'punkte_telegram_knoepfe', cmd: 'kinder' + 'punkte_telegram_befehle', bg: 'kinder' + 'punkte_hintergrund' };
@@ -118,9 +129,7 @@
   let DAYS = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
   const WEEK = [1, 2, 3, 4, 5, 6, 0];
   const COLORS = ['#ff6b6b', '#4dabf7', '#51cf66', '#fcc419', '#cc5de8', '#ff922b', '#20c997', '#f06595'];
-  // Neuere Emojis (Unicode 12+) fehlen auf älteren Geräten (leeres Kästchen) – durch ältere, überall vorhandene ersetzen
-  const EMO_OLD = { '🪥': '🦷', '🫧': '🧼', '🪶': '🧹', '🫙': '♻️', '🧊': '❄️', '🪞': '✨', '🪟': '🌬️', '🦮': '🐕', '🧃': '🥤', '🩳': '👕', '🛝': '🎠', '🛼': '⛸️', '🪁': '🎈', '🧑‍🏫': '👩‍🏫' };
-  const emoFix = (e) => (typeof e === 'string' && EMO_OLD[e.replace(/\uFE0F/g, '')]) || e;
+  // Die eingebauten Vorlagen nutzen nur ältere Emojis, die überall angezeigt werden. Selbst gewählte (auch neuere wie 🪥 🫧) bleiben, wie sie sind (#15).
   const AVATARS = ['🦊', '🐻', '🐼', '🦁', '🐯', '🐨', '🐸', '🦄', '🐙', '🐧', '🦖', '🐝', '🐶', '🐱', '🐰', '🦉', '👧', '👦', '🧒', '🐮', '🐷', '🐵', '🐔', '🐳', '🐬', '🦈', '🦋', '🐞', '🐢', '🦕', '🦒', '🦓', '🦔', '🦝', '🦙', '🦘', '🐲', '🐺', '🦌', '🐿️', '🦜', '🦚', '🐴', '🐭', '🐹', '👸', '🤴', '🧚', '🧜', '🦸', '🦹', '🧙', '🤖', '👽', '👻', '🎃', '⛄', '🌞', '🌈', '⭐', '🚀', '⚽', '🎸', '👩', '👨', '🧑', '👱'];
   // Belohnungs-Vorlagen: [Emoji, Titel, Punkte]
   const REWARD_TEMPLATES = [
@@ -386,12 +395,12 @@
     ['🌙 Abends', '🧸', 'Zimmer kurz aufräumen vor dem Schlafen', 1, 'a', null, 4],
     ['🌙 Abends', '🌟', 'Drei schöne Dinge vom Tag erzählen', 1, 'a', null, 5],
     // neu in 1.5.0 – Kleinkinder (Ideen: Locodice67)
-    ['🍽️ Küche & Essen', '🫧', 'Beim Ausräumen der Spülmaschine helfen', 1, '', null, 2, 6],
+    ['🍽️ Küche & Essen', '🧼', 'Beim Ausräumen der Spülmaschine helfen', 1, '', null, 2, 6],
     ['🧑 Verantwortung', '🧻', 'Windeln und Feuchttücher selbst wegbringen', 1, '', null, 2, 4],
     ['🧹 Ordnung & Putzen', '🧸', 'Spielzeug aufräumen helfen', 1, 'a', null, 2, 4],
     ['🧹 Ordnung & Putzen', '📚', 'Bücher aufräumen helfen', 1, '', null, 2, 5],
     ['🧺 Wäsche', '🧻', 'Taschentücher oder Geschirrtücher falten', 1, '', [6], 3, 7],
-    ['🧹 Ordnung & Putzen', '🪶', 'Mit dem Staubwedel abstauben', 1, '', [6], 3, 8],
+    ['🧹 Ordnung & Putzen', '🧹', 'Mit dem Staubwedel abstauben', 1, '', [6], 3, 8],
     ['☀️ Mittags', '😴', 'Mittagsschlaf machen', 1, ['12:30', '15:00'], null, 2, 6],
   ];
   // Level nach insgesamt verdienten Sternen: [ab Sterne, Name, Emoji]
@@ -603,6 +612,10 @@ a.btn{display:inline-block;text-decoration:none;color:inherit}
 .avc{width:40px;height:40px;border-radius:50%;display:inline-grid;place-items:center;font-size:22px;background:var(--cs);border:3px solid var(--c);flex-shrink:0}
 .avc.big{width:72px;height:72px;font-size:42px;border-width:4px}
 .tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}
+.advbtn{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;background:linear-gradient(135deg,#1f2f68,#b3261e);color:#fff;font-size:16px;padding:12px 14px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.advnew{font-size:13px;background:#ffd43b;color:#3d3200;border-radius:999px;padding:2px 10px}
+.advpg{display:flex;flex-direction:column;gap:8px}
+.advback{align-self:flex-start}
 .accgrp{font-weight:800;font-size:13px;color:var(--mu);text-transform:uppercase;letter-spacing:.04em;margin:14px 2px 2px}
 .accgrp.sub{margin:16px 0 4px}
 .tbadge{position:absolute;top:-6px;right:-12px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:#e03131;color:#fff;font-size:11px;line-height:18px;font-weight:800}
@@ -610,7 +623,8 @@ a.btn{display:inline-block;text-decoration:none;color:inherit}
 .kbtns .kbr{flex-basis:100%;height:0}
 .kbtns .icon.lab{display:flex;flex:1;flex-direction:column;align-items:center;justify-content:center;line-height:1.1;font-size:17px;width:auto;min-width:0;padding:4px 2px}
 .kbtns .icon.lab small{font-size:10px;font-weight:700;color:var(--mu)}
-.behav{display:flex;gap:4px;margin-left:auto;order:3}
+.behav{display:flex;gap:4px;margin-left:auto;order:3}.colh .ardm{order:4;padding:6px 10px}.colh .behav+.pts+.ardm,.colh .pts+.ardm{margin-left:0}
+.prd .row{gap:10px}.prd .row .grow small{display:block}.prd .btnrow{justify-content:flex-end;flex-wrap:wrap}.prd .btn[disabled]{opacity:.55}
 .bhwrap{display:flex;gap:8px;align-items:stretch;margin:8px 0 2px}
 .bhname{width:86px;flex:0 0 86px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-weight:700;font-size:13px;text-align:center;overflow:hidden}
 .bh{display:flex;gap:3px;align-items:stretch;height:110px;flex:1;min-width:0}
@@ -672,6 +686,9 @@ a.btn{display:inline-block;text-decoration:none;color:inherit}
 .pts{font-weight:800;color:var(--gold);white-space:nowrap}
 .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
 .colh{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-weight:800;font-size:17px}
+.admk{display:flex;align-items:center;gap:8px;background:none;border:0;padding:0;font:inherit;color:inherit;cursor:pointer;text-align:left;min-width:0}.admk .chev{font-size:14px;opacity:.6;width:12px}.admb{font-size:15px;margin-top:6px}
+.sensok{color:color-mix(in srgb,var(--ok) 70%,var(--tx));font-weight:700}.senswarn{color:color-mix(in srgb,#d97706 80%,var(--tx));font-weight:700}
+pre.yaml{width:0;min-width:100%;box-sizing:border-box;font:11px/1.4 ui-monospace,Menlo,Consolas,monospace;background:var(--yippee-surface,rgba(127,127,127,.12));border-radius:10px;padding:8px 10px;margin:6px 0 0;max-height:220px;overflow:auto;white-space:pre;user-select:all;-webkit-user-select:all}
 .colh .pts{margin-left:auto}
 .trow{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:var(--bg);border-radius:12px;padding:9px 10px;transition:transform .12s}
 .trow .grow{flex:1;font-weight:700}
@@ -739,7 +756,7 @@ a.btn{display:inline-block;text-decoration:none;color:inherit}
 .rws{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
 .kadm{gap:10px}
 .calbox .row.calhid{opacity:.55}
-.repbox .seg{margin:8px 0;flex-wrap:nowrap}.repbox .seg button{flex:1 1 0;padding:9px 4px}
+.repbox .seg{margin:8px 0;flex-wrap:nowrap}.repbox .seg button::first-letter{text-transform:uppercase}.repbox .seg button{flex:1 1 0;padding:9px 4px}
 .reptw{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .rept{width:100%;border-collapse:collapse;font-size:13px}
 .rept th,.rept td{padding:6px 6px;text-align:center;border-bottom:1px solid var(--soft);white-space:nowrap}
@@ -808,6 +825,7 @@ a.btn{display:inline-block;text-decoration:none;color:inherit}
 label,.lbl{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:700;color:var(--mu)}
 .g2{display:grid;grid-template-columns:90px 1fr;gap:10px}
 .pick{display:flex;flex-wrap:wrap;gap:6px}
+.exrow>label,.prule label{min-width:0}.exrow input,.exrow select,.prule input,.prule select{min-width:0;width:100%;box-sizing:border-box}.prule .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .thm{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:8px;margin:4px 0 8px}.thb{display:flex;flex-direction:column;align-items:center;gap:5px;border:2px solid transparent;border-radius:14px;background:var(--soft);padding:8px 4px;font:inherit;font-size:12px;font-weight:700;color:var(--tx);cursor:pointer;text-align:center}.thb.on{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac)}.thsw{width:46px;height:32px;border-radius:9px;display:flex;align-items:flex-end;justify-content:flex-end;gap:3px;padding:4px;box-sizing:border-box;box-shadow:inset 0 0 0 1px rgba(127,127,127,.35)}.thsw i{width:10px;height:10px;border-radius:50%}
 .colpk{display:grid;grid-template-columns:1fr 1fr;gap:8px}.colpk label{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:700}.colpk input[type=color]{width:100%;height:42px;border:1px solid var(--ln);border-radius:10px;padding:2px;background:var(--bg);cursor:pointer}
 .pick label{display:block}
@@ -999,13 +1017,13 @@ textarea{width:100%;min-height:90px;resize:vertical}
       this._pv = 0;
       this._q = Promise.resolve();
       this._loaded = false;
-      this._tab = (() => { try { const x = localStorage.getItem('kpTab'); return ['heute', 'aufgaben', 'belohnungen', 'kinder', 'einst'].includes(x) ? x : 'heute'; } catch (e) { return 'heute'; } })();
+      this._tab = (() => { try { const x = localStorage.getItem('kpTab'); return ['heute', 'aufgaben', 'belohnungen', 'kinder', 'advent', 'einst'].includes(x) ? x : 'heute'; } catch (e) { return 'heute'; } })();
       this._day = dk(new Date());
       this._until = 0;
       this._pinBuf = '';
     }
 
-    _emptyDb() { return { kid: {}, task: {}, reward: {}, log: {}, req: {}, cfg: {}, act: {}, bak: {}, plan: {}, trash: {}, audit: {}, ph: {}, pt: {} }; }
+    _emptyDb() { return { kid: {}, task: {}, reward: {}, log: {}, req: {}, cfg: {}, act: {}, bak: {}, plan: {}, trash: {}, audit: {}, ph: {}, pt: {}, adc: {}, adk: {}, ado: {} }; }
 
     static getConfigElement() { return document.createElement('yippee-kids-chores-card-editor'); }
     static getStubConfig(hass) {
@@ -1068,6 +1086,10 @@ textarea{width:100%;min-height:90px;resize:vertical}
     _langCheck() {
       const want = this._langWant();
       if (want === LANG || this._langTry === want) return;
+      // Alle Karten einer Seite teilen sich eine Sprache. Hat jemand sie gerade auf einer anderen Karte von Hand gewählt, bleibt sie –
+      // sonst würde z. B. eine zweite Karte mit anderer Einstellung sie gleich wieder umstellen
+      const own = window.__kpLangOwner;
+      if (own && own !== this && own.isConnected) return;
       this._langTry = want;
       loadLang(want).then((ok) => { if (!ok) this._langFail = want; else this._langFail = ''; this._render(); });
     }
@@ -1077,6 +1099,8 @@ textarea{width:100%;min-height:90px;resize:vertical}
       this._hass = h;
       this._langCheck();
       if (!this._built) this._build();
+      if (!first && this._dmLast !== this._darkMode()) this._look(); // Home Assistant hell ↔ dunkel umgeschaltet
+      this._dmLast = this._darkMode();
       if (first) { this._subscribe(); this._render(); }
       else if (!this._sub && !this._loaded && this.isConnected && h.states[this._config.storage] && Date.now() - (this._retry || 0) > 30000) {
         this._retry = Date.now();
@@ -1088,7 +1112,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
       window.__kpCards = window.__kpCards || [];
       if (!window.__kpCards.includes(this)) { window.__kpCards.push(this); this._famSync(); }
       if (this._hass && this._built) this._subscribe();
-      if (!this._ro && typeof ResizeObserver === 'function') { this._ro = new ResizeObserver(() => this._fitTabs()); }
+      if (!this._ro && typeof ResizeObserver === 'function') { this._ro = new ResizeObserver(() => { cancelAnimationFrame(this._ftR); this._ftR = requestAnimationFrame(() => this._fitTabs()); }); } // erst im nächsten Bild: kein „ResizeObserver loop“
       if (this._ro) this._ro.observe(this);
       clearInterval(this._timer);
       this._timer = setInterval(() => {
@@ -1117,8 +1141,10 @@ textarea{width:100%;min-height:90px;resize:vertical}
       const pick = (v, d) => (v === undefined || v === null || v === '' ? !!d : v === true || v === 'true' || v === 'on' || v === 1);
       const sc = Math.min(130, Math.max(70, Number(c.scale !== undefined && c.scale !== '' ? c.scale : g.vScale) || 100));
       const th = c.colors !== undefined && c.colors !== '' ? String(c.colors) : (g.vTheme || '');
-      return { transparent: pick(c.transparent, g.vTransp), compact: pick(c.compact, g.vCompact), equal: pick(c.equal_tiles, g.vEqual), scale: sc, colors: th === 'default' ? null : themeCols(th, this._colPrev || g.vCol) };
+      return { transparent: pick(c.transparent, g.vTransp), compact: pick(c.compact, g.vCompact), equal: pick(c.equal_tiles, g.vEqual), scale: sc, colors: th === 'default' ? null : themeCols(th, this._colPrev || g.vCol, this._darkMode(), !!g.vDarkOwn) };
     }
+
+    _darkMode() { return !!(this._hass && this._hass.themes && this._hass.themes.darkMode); }
 
     _look() {
       const st = this.shadowRoot && this.shadowRoot.getElementById('look');
@@ -1145,7 +1171,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
       ['pointerdown', 'pointerup', 'pointermove', 'pointercancel'].forEach((ev) => this.shadowRoot.addEventListener(ev, (e) => this._sumPointer(e)));
       this.shadowRoot.addEventListener('keydown', (e) => { const el = e.target && e.target.closest && e.target.closest('.ksum.act'); if (el && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); this._sumFire(el.dataset.kid, 'tap'); } });
       // aufgeklappte Bereiche der Datensicherung überleben das Neuzeichnen
-      this.shadowRoot.addEventListener('toggle', (e) => { const d = e.target; if (!d || !d.classList) return; if (d.classList.contains('bklist')) this._bkListOpen = d.open; if (d.classList.contains('bk2')) this._bk2Open = d.open; }, true);
+      this.shadowRoot.addEventListener('toggle', (e) => { const d = e.target; if (!d || !d.classList) return; if (d.classList.contains('bklist')) this._bkListOpen = d.open; if (d.classList.contains('bk2')) this._bk2Open = d.open; if (d.classList.contains('sensy')) this._sensyOpen = d.open; }, true);
       this.shadowRoot.addEventListener('input', (e) => {
         if (e.target && e.target.name === 'tplq') this._filterTpl(e.target.closest('.mbox'));
         if (e.target && e.target.classList && e.target.classList.contains('setq')) this._filterSet();
@@ -1160,6 +1186,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
           // 🌐 Sprache im ersten Fenster bzw. im Assistenten: nur dieses Sprachpaket wird geladen
           this._preLang = el.value; try { if (el.value) localStorage.setItem('kpPreLang', el.value); else localStorage.removeItem('kpPreLang'); } catch (e2) { /* egal */ }
           if (this._loaded && this._isParent() && this._hass.states[this._config.storage]) { this._setCfg({ lang: el.value }); this._preLang = ''; try { localStorage.removeItem('kpPreLang'); } catch (e2) { /* egal */ } }
+          window.__kpLangOwner = this; this._langTry = null; // eben von Hand gewählt: diese Karte bestimmt die Sprache der Seite
           this._langCheck(); this._render(); return;
         }
         if (this._locked()) { this._render(); return; }
@@ -1194,7 +1221,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
           this._colPrev = null; this._setCfg({ vCol: cur }); this._render();
         }
         if (el && el.dataset && el.dataset.cfgs === 'hc') this._setCfg({ hr: '', bl: '' });
-        if (el && el.dataset && el.dataset.cfgs === 'lang') { this._langTry = null; setTimeout(() => { this._langCheck(); this._holTry = 0; this._holCheck(true); }, 50); }
+        if (el && el.dataset && el.dataset.cfgs === 'lang') { this._langTry = null; window.__kpLangOwner = this; setTimeout(() => { this._langCheck(); this._holTry = 0; this._holCheck(true); }, 50); }
         if (el && el.dataset && ['hc', 'hr', 'holCal', 'ferCal'].includes(el.dataset.cfgs)) { this._holTry = 0; setTimeout(() => this._holCheck(true), 50); }
         if (el && el.name === 'cal') this._calPrevUpd();
         if (el && el.name === 'bkfile' && el.files && el.files[0]) {
@@ -1225,10 +1252,39 @@ textarea{width:100%;min-height:90px;resize:vertical}
       }
     }
 
+    // 📱 Offene Freigaben (wartende Aufgaben, unentschiedene Verpasst-Meldungen, Anfragen) als Nachrichten-Kennungen
+    _openTags() {
+      const out = new Set(), from = keyAdd(dk(new Date()), -7);
+      Object.entries(this._db.log || {}).forEach(([d, l]) => {
+        if (d < from || !l || !l.s) return;
+        Object.entries(l.s).forEach(([k, v]) => {
+          if ((v !== 'p' && v !== 'm') || k.split(':').length !== 2) return;
+          const [tid, kid] = k.split(':');
+          out.add(pushTag(`KP|${v === 'p' ? 'ok' : 'me'}|${d}|${tid}|${kid}`));
+        });
+      });
+      Object.values(this._db.req || {}).forEach((q) => out.add(pushTag(`KP|${q.grade ? 'gok' : 'rok'}|${q.id}`)));
+      return out;
+    }
+    // Erledigt (freigegeben, abgelehnt, entschieden, zurückgenommen – egal wo): Nachricht auf allen Handys entfernen
+    _pushClear() {
+      const now = this._openTags(), prev = this._tagsPrev;
+      this._tagsPrev = now;
+      if (!prev) return;
+      const phones = (this._cfg.targets || []).filter((t) => !t.includes('.') && t.startsWith('mobile_app_') && ((this._hass.services || {}).notify || {})[t]);
+      if (!phones.length) return;
+      const g = (window.__kpClr = window.__kpClr || {});
+      prev.forEach((tag) => {
+        if (now.has(tag) || (g[tag] && Date.now() - g[tag] < 3000)) return; // mehrere Karten auf einer Seite: nur einmal
+        g[tag] = Date.now();
+        phones.forEach((t) => this._hass.callService('notify', t, { message: 'clear_notification', data: { tag } }, undefined, false).catch(() => { /* Handy nicht erreichbar */ }));
+      });
+    }
+
     _unsub() { if (typeof this._sub === 'function') this._sub(); this._sub = null; this._subTok = null; }
 
     _onItems(items) {
-      const db = this._emptyDb(), stored = new Set(), seen = new Set(), bad = new Set(), broken = new Set();
+      const db = this._emptyDb(), stored = new Set(), seen = new Set(), bad = new Set(), broken = new Set(), sensRaw = {}, sensSt = {};
       const mem = { total: 0, by: {} };
       for (const it of items) {
         if (!it.summary || !it.summary.startsWith('kp|')) continue;
@@ -1242,6 +1298,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
         seen.add(it.summary);
         stored.add(it.summary);
         const [, type, id] = it.summary.split('|');
+        if (type === 'sens' && /^[\w-]+$/.test(id || '')) { sensRaw[id] = it.description || ''; sensSt[id] = it.status || ''; continue; } // 🔁 dauerhafte Sensoren (für die Vorlage in configuration.yaml)
         if (!Object.prototype.hasOwnProperty.call(db, type) || !/^[\w-]+$/.test(id || '') || id === '__proto__') continue;
         if (type === 'bak') { db.bak[id] = { id, raw: it.description || '' }; continue; }
         if (type === 'ph') { db.ph[id] = { id, raw: it.description || '' }; continue; } // Foto: erst bei Bedarf auslesen
@@ -1251,7 +1308,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
         if (o._c !== undefined) { const c = o._c; delete o._c; if (hsh(JSON.stringify(o)) !== c) bad.add(`${type}|${id}`); }
         db[type][id] = this._clean(type, { ...o, id });
       }
-      this._badKeys = bad; this._brokenKeys = broken; this._mem = mem;
+      this._badKeys = bad; this._brokenKeys = broken; this._mem = mem; this._sensRaw = sensRaw; this._sensSt = sensSt;
       const now = Date.now();
       this._recent.forEach((t, k) => { if (now - t < 15000) stored.add(k); else this._recent.delete(k); });
       this._pending.forEach((p, k) => {
@@ -1266,6 +1323,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
       clearTimeout(this._consT); if (Object.keys(db.pt).length) this._consT = setTimeout(() => this._consCheck(), 6000);
       if (!this._loaded) { this._loaded = true; this._cleanup(); this._schedulePenalty(); }
       this._syncCfg();
+      this._pushClear();
       this._err = null;
       this._langTry = this._langWant() === LANG ? this._langTry : null;
       this._langCheck();
@@ -1330,6 +1388,8 @@ textarea{width:100%;min-height:90px;resize:vertical}
         if (Array.isArray(o.vouch)) o.vouch = o.vouch.filter((x) => x && typeof x === 'object' && /^[\w-]{1,40}$/.test(String(x.id || ''))).slice(0, 50);
       }
       if (type === 'pt') return this._ptClean(o);
+      if (type === 'adc' || type === 'adk' || type === 'ado') return this._advClean(type, o);
+      if (type === 'reward' && o.adv !== undefined) o.adv = !!o.adv;
       if (type === 'task') {
         if (o.steps !== undefined) o.steps = Array.isArray(o.steps) ? o.steps.filter((x) => x && typeof x === 'object' && x.t).map((x) => (x.tid && /^[\w-]{1,40}$/.test(String(x.tid)) && x.tid !== '__proto__' ? { t: String(x.t).slice(0, 60), tid: String(x.tid) } : { t: String(x.t).slice(0, 60) })).slice(0, 12) : [];
         if (o.nfc !== undefined && !/^[\w:.-]{1,80}$/.test(String(o.nfc))) delete o.nfc;
@@ -1340,7 +1400,6 @@ textarea{width:100%;min-height:90px;resize:vertical}
         if (o.kids !== undefined) { if (Array.isArray(o.kids)) o.kids = o.kids.filter((x) => typeof x === 'string' && /^[\w-]{1,40}$/.test(x)).slice(0, 20); else delete o.kids; }
         if (o.costs && typeof o.costs === 'object' && !Array.isArray(o.costs)) { const cs = {}; Object.keys(o.costs).forEach((id) => { const v = Math.round(Number(o.costs[id]) || 0); if (/^[\w-]+$/.test(id) && id !== '__proto__' && v > 0 && v <= 100000) cs[id] = v; }); o.costs = cs; } else delete o.costs;
       }
-      if (['task', 'reward', 'kid'].includes(type) && o.emoji) o.emoji = emoFix(o.emoji);
       const phOk = (x) => PH_RX.test(String(x)) || MEDIA_RX.test(String(x));
       if (type === 'req' && o.pool) {
         const idOk = (x) => typeof x === 'string' && /^[\w-]{1,40}$/.test(x) && x !== '__proto__';
@@ -1358,6 +1417,27 @@ textarea{width:100%;min-height:90px;resize:vertical}
         if (o.pinL !== undefined) o.pinL = Math.min(8, Math.max(4, Number(o.pinL) || 4));
         if (Array.isArray(o.vac)) o.vac = o.vac.filter((x) => x && /^\d{4}-\d\d-\d\d$/.test(String(x.from)) && /^\d{4}-\d\d-\d\d$/.test(String(x.to)));
       }
+      return o;
+    }
+
+    // 🎄 Adventskalender-Daten prüfen (Türchen, Reihenfolge, geöffnete Türchen)
+    _advClean(type, o) {
+      const obj = (v) => v && typeof v === 'object' && !Array.isArray(v);
+      if (type === 'adk') {
+        if (o.doors !== undefined) {
+          const d = {};
+          if (obj(o.doors)) Object.keys(o.doors).forEach((n) => { const x = o.doors[n]; if (/^\d{1,2}$/.test(n) && obj(x)) d[n] = x; });
+          o.doors = d;
+        }
+        if (o.perm !== undefined && !(Array.isArray(o.perm) && o.perm.length <= 31 && o.perm.every((x) => Number.isInteger(x)))) delete o.perm;
+        if (o.dev !== undefined && !/^[\w]{0,80}$/.test(String(o.dev))) o.dev = '';
+        if (o.bgImg !== undefined && typeof o.bgImg !== 'string') o.bgImg = '';
+      }
+      if (type === 'ado') {
+        o.y = Number(o.y) || 0;
+        ['d', 'b'].forEach((f) => { const x = {}; if (obj(o[f])) Object.keys(o[f]).forEach((n) => { if (/^\d{1,2}$/.test(n)) x[n] = Number(o[f][n]) || 1; }); o[f] = x; });
+      }
+      if (type === 'adc' && o.col !== undefined && !obj(o.col)) o.col = {};
       return o;
     }
 
@@ -1386,7 +1466,9 @@ textarea{width:100%;min-height:90px;resize:vertical}
           let desc = stamp(clean), exists = this._stored.has(key);
           if (merge) {
             try {
-              const r = await this._hass.callWS({ type: 'todo/item/list', entity_id: this._config.storage });
+              // frisch lesen; lag zwischen Lesen und Schreiben eine Pause (Handy im Standby), noch einmal lesen
+              let r = null;
+              for (let i = 0; i < 3; i++) { const tq = Date.now(); r = await this._hass.callWS({ type: 'todo/item/list', entity_id: this._config.storage }); if (Date.now() - tq <= 1500) break; }
               const it = ((r && r.items) || []).find((x) => x.summary === key);
               exists = !!it;
               let cur = {};
@@ -1487,7 +1569,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
     }
 
     _syncCfg() {
-      if (this._config.mode === 'kid') return;
+      if (['kid', 'advent'].includes(this._config.mode)) return;
       const c = this._cfg, patch = {};
       const legacy = String(this._config.notify || '').replace(/^notify\./, '');
       if (legacy && !c.targets.includes(legacy) && !c.legacyDone) { patch.targets = [...c.targets, legacy]; patch.legacyDone = true; }
@@ -1533,7 +1615,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
     // ---------- PIN-Schutz ----------
     // PIN: in den Einstellungen festgelegt (nur als Prüfwert gespeichert) – sonst wie bisher aus dem Karten-YAML
     _pin() {
-      if (['kid', 'kids'].includes(this._config.mode)) return '';
+      if (['kid', 'kids', 'advent'].includes(this._config.mode)) return '';
       const c = this._cfg;
       if (c.pinH && c.pinS && Number(c.pinL) >= 4) return '•'.repeat(Number(c.pinL));
       return String(this._config.pin ?? '').replace(/\D/g, '');
@@ -1586,7 +1668,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
     // ---------- Daten-Helfer ----------
     get _approval() { return this._cfg.approval !== false; }
     _kids() { return Object.values(this._db.kid).sort((a, b) => (a.order || 0) - (b.order || 0) || String(a.name).localeCompare(String(b.name))); }
-    _rewards(kidId) { return Object.values(this._db.reward).filter((r) => !kidId || this._rwFor(r, kidId)).sort((a, b) => this._cost(a, kidId) - this._cost(b, kidId)); }
+    _rewards(kidId) { return Object.values(this._db.reward).filter((r) => !kidId || (this._rwFor(r, kidId) && !this._advR(r))).sort((a, b) => this._cost(a, kidId) - this._cost(b, kidId)); }
     // 🎁 Für welche Kinder gibt es eine Belohnung? Gemeinsame Belohnungen: die beteiligten Kinder; sonst „Für wen?“ (leer = alle)
     _rwKids(r) {
       if (this._shareOn(r)) return this._shareKids(r);
@@ -1604,6 +1686,18 @@ textarea{width:100%;min-height:90px;resize:vertical}
       const jk = (r) => !!(this._cfg.jokerOn && r.joker), sh = (r) => this._shareOn(r);
       return [[mine ? T('🎁 Für mich') : T('🎁 Für ein Kind'), list.filter((r) => !sh(r) && !jk(r))], [T('👫 Gemeinsam / Einladen'), list.filter(sh)], [T('🃏 Joker'), list.filter(jk)]]
         .map(([t, l]) => [t, this._rwSorted(l, kidId)]).filter(([, l]) => l.length);
+    }
+    // 👧 Eltern-Ansicht „Nach Kind“: je Kind die Belohnungen nur für dieses Kind (bzw. für einige Kinder – dann bei jedem davon),
+    // danach „Für alle Kinder“, „Gemeinsam / Einladen“ und „Joker“; innerhalb jeder Gruppe nach Sternen
+    _rwKidGroups(list) {
+      const kids = this._kids(), jk = (r) => !!(this._cfg.jokerOn && r.joker), sh = (r) => this._shareOn(r);
+      const single = list.filter((r) => !sh(r) && !jk(r)), part = (r) => this._rwKids(r).length < kids.length;
+      return [
+        ...kids.map((k) => [`${esc(k.emoji || '🙂')} ${esc(k.name)}`, this._rwSorted(single.filter((r) => part(r) && this._rwFor(r, k.id)), k.id)]),
+        [T('👨‍👩‍👧 Für alle Kinder'), this._rwSorted(single.filter((r) => !part(r)))],
+        [T('👫 Gemeinsam / Einladen'), this._rwSorted(list.filter(sh))],
+        [T('🃏 Joker'), this._rwSorted(list.filter(jk))],
+      ].filter(([, l]) => l.length);
     }
     // Preis einer Belohnung für ein Kind: eigener Preis (Zusatzfunktion „Preise je Kind“) oder der Standardpreis
     _cost(r, kidId) {
@@ -1721,9 +1815,22 @@ textarea{width:100%;min-height:90px;resize:vertical}
       return { mine };
     }
     _presSegs(pr, date) {
-      const mins = (x) => { if (!x) return null; const [h, m] = String(x).split(':').map(Number); return h * 60 + m; };
+      const mins = (x) => { if (!x || !/^\d\d?:\d\d$/.test(String(x))) return null; const [h, m] = String(x).split(':').map(Number); return h * 60 + m; };
       const ex = (pr.ex || []).find((x) => x.from && x.to && date >= x.from && date <= x.to);
-      if (ex) return ex.st === 'out' ? [] : [[0, 1440]];
+      if (ex) {
+        // 📌 Ausnahme mit Uhrzeit: „ab“ gilt am ersten Tag, „bis“ am letzten – davor bzw. danach gilt, was sonst gelten würde
+        const f = date === ex.from ? mins(ex.fT) : null, t = date === ex.to ? mins(ex.tT) : null;
+        const a = f === null ? 0 : f, e = t === null ? 1440 : t;
+        if ((f === null && t === null) || e <= a) return ex.st === 'out' ? [] : [[0, 1440]];
+        const base = this._presSegsBase(pr, date);
+        return ex.st === 'out' ? segSub(base, a, e) : segAdd(base, a, e);
+      }
+      return this._presSegsBase(pr, date);
+    }
+
+    // Anwesenheit ohne Ausnahmen: Regeln + Ferienregelung (inkl. Ankunft/Abreise bei Ferienwechsel)
+    _presSegsBase(pr, date) {
+      const mins = (x) => { if (!x) return null; const [h, m] = String(x).split(':').map(Number); return h * 60 + m; };
       const plain = (d) => { const h = this._presHolDay(pr, d); return h ? (h.mine ? [[0, 1440]] : []) : this._presRuleSegs(pr, d); };
       const h = this._presHolDay(pr, date);
       const hA = mins(pr.hA), hL = mins(pr.hL);
@@ -2362,9 +2469,30 @@ textarea{width:100%;min-height:90px;resize:vertical}
     // Sensoren pro Kind (nur möglich, wenn ein Admin-Benutzer die Karte offen hat)
     _pushSensors() {
       const c = this._cfg;
-      if (!this._loaded || c.sensors === false || this._sensorFail || !this._admin()) return;
+      if (!this._loaded || c.sensors === false) return;
+      const keep = !!c.sensKeep, live = !this._sensorFail && this._admin();
+      if (!keep && !live) return;
       this._sensSig = this._sensSig || {};
+      const ids = new Set();
       const rate = Number(c.moneyRate) || 10;
+      const emit = (sid, id, state, name, attrs) => {
+        // 🔁 Dauerhafte Sensoren: Stand in der Yippee-Liste ablegen – die Vorlage in configuration.yaml liest ihn (auch nach einem Neustart, ohne offene Karte)
+        if (keep) {
+          const a = { ...attrs }; delete a.friendly_name; delete a.icon; delete a.unit_of_measurement;
+          const desc = JSON.stringify({ p: state, n: name, a });
+          this._sensQ = this._sensQ || {};
+          if ((this._sensRaw || {})[sid] !== desc) this._sensQ[sid] = desc; else delete this._sensQ[sid];
+          // kurz warten: eine Änderung (Abhaken → Punkte → Abzeichen) wird so zu einem einzigen Schreibvorgang
+          if (Object.keys(this._sensQ).length && !this._sensT) this._sensT = setTimeout(() => this._sensFlush(), 4000);
+        }
+        if (!live) return;
+        const ent = this._hass.entities && this._hass.entities[id];
+        if (ent && ent.platform === 'template') return; // Sensor kommt schon aus der Vorlage – nicht überschreiben
+        const sig = JSON.stringify([state, attrs]);
+        if (this._sensSig[id] === sig) return;
+        this._sensSig[id] = sig;
+        this._hass.callApi('POST', `states/${id}`, { state: String(state), attributes: attrs }).catch(() => { this._sensorFail = true; });
+      };
       this._kids().forEach((k) => {
         const tasks = this._todayTasks(k.id).filter((t) => this._req(t) && this._status(t, k.id).s !== 'taken');
         const st = tasks.map((t) => this._status(t, k.id).s);
@@ -2381,12 +2509,158 @@ textarea{width:100%;min-height:90px;resize:vertical}
           ziel: goal ? goal.title : null, urlaub: this._onVacation(dk(new Date()), k.id), anwesend: this._pres(k.id, dk(new Date())).s !== 'out', feiertag: this._pubHol(dk(new Date())) || null, ferien: this._schoolHol(dk(new Date())) || null,
           ...(c.moneyOn ? { euro: Number(((k.points || 0) / rate).toFixed(2)) } : {}),
         };
-        const id = `sensor.yippee_${slug(k.name)}`;
-        const sig = JSON.stringify([k.points || 0, attrs]);
-        if (this._sensSig[id] === sig) return;
-        this._sensSig[id] = sig;
-        this._hass.callApi('POST', `states/${id}`, { state: String(k.points || 0), attributes: attrs }).catch(() => { this._sensorFail = true; });
+        ids.add(k.id);
+        emit(k.id, `sensor.yippee_${slug(k.name)}`, k.points || 0, k.name, attrs);
       });
+      // 🎯 Familienziel als eigener Sensor (sensor.yippee_familienziel)
+      const fam = this._famSens();
+      if (fam) { ids.add('fam'); emit('fam', 'sensor.yippee_familienziel', fam.p, fam.n, fam.attrs); }
+      // Einträge gelöschter Kinder entfernen
+      Object.keys(this._sensRaw || {}).forEach((kid) => {
+        if (kid === 'tick' || ids.has(kid) || (kid !== 'fam' && this._db.kid[kid])) return;
+        const key = `kp|sens|${kid}`, g = (window.__kpSens = window.__kpSens || {});
+        if (g[key] && g[key].d === '-' && Date.now() - g[key].t < 15000) return;
+        g[key] = { d: '-', t: Date.now() };
+        this._enq(() => this._svc('remove_item', { item: key }).catch(() => { /* schon weg */ }));
+      });
+    }
+
+    // 🎯 Familienziel für den Sensor: Zustand = gesammelte Sterne
+    _famSens() {
+      const f = this._cfg.fam;
+      if (!f || !f.cost || !f.title) return null;
+      const pts = f.pts || 0, reached = !!f.reached || pts >= f.cost;
+      const rate = !reached ? this._kids().reduce((a, k) => a + this._rate(k.id), 0) : 0;
+      const days = rate > 0 ? Math.ceil((f.cost - pts) / rate) : null;
+      return { p: pts, n: f.title, attrs: {
+        friendly_name: T('Yippee! Familienziel'), icon: 'mdi:flag-checkered', unit_of_measurement: 'Punkte',
+        ziel: f.title, ziel_sterne: f.cost, fehlen: Math.max(0, f.cost - pts), prozent: Math.min(100, Math.round((pts / f.cost) * 100)), erreicht: reached,
+        prognose_tage: days, prognose_datum: days !== null && days <= 365 ? keyAdd(dk(new Date()), days) : null,
+      } };
+    }
+
+    _sensFlush() {
+      this._sensT = null;
+      const q = this._sensQ || {}; this._sensQ = {};
+      const g = (window.__kpSens = window.__kpSens || {});
+      Object.entries(q).forEach(([kid, desc]) => {
+        const key = `kp|sens|${kid}`;
+        const w = g[key];
+        if ((kid === 'fam' ? !this._famSens() : !this._db.kid[kid]) || (this._sensRaw || {})[kid] === desc || (w && w.d === desc && Date.now() - w.t < 15000)) return; // schon gespeichert (auch von einer anderen Karte auf dieser Seite)
+        g[key] = { d: desc, t: Date.now() };
+        const has = Object.prototype.hasOwnProperty.call(this._sensRaw || {}, kid);
+        this._enq(async () => {
+          try { await this._svc(has ? 'update_item' : 'add_item', { item: key, description: desc }); }
+          catch (e) { try { await this._svc('add_item', { item: key, description: desc }); } catch (e2) { delete g[key]; } }
+        });
+      });
+      // ⚡ Danach einen Merker umschalten: Die Zahl offener Einträge der Liste ändert sich, die Vorlage reagiert darauf und liest sofort neu
+      // (eine geänderte Beschreibung allein bemerkt Home Assistant nicht – sonst erst zur nächsten vollen Minute)
+      if (Object.keys(q).length) {
+        const has = Object.prototype.hasOwnProperty.call(this._sensRaw || {}, 'tick');
+        this._enq(async () => {
+          const st = (this._sensSt || {}).tick === 'completed' ? 'needs_action' : 'completed';
+          try { await this._svc(has ? 'update_item' : 'add_item', has ? { item: 'kp|sens|tick', status: st } : { item: 'kp|sens|tick', description: '{}' }); if (has) (this._sensSt = this._sensSt || {}).tick = st; } catch (e) { /* egal – dann eben zur nächsten Minute */ }
+        });
+      }
+    }
+
+    // 🤖 Fertige Automation als Zeile: anlegen / ✅ angelegt / 🔄 neu schreiben (wenn sich Einstellungen geändert haben) + YAML
+    _autoRowSig(k, label, extra) {
+      const c = this._cfg, ok = this._autoOk || {};
+      let cfg = null; try { cfg = this._autoCfg(k); } catch (e) { cfg = null; }
+      const fresh = cfg && c[`aSig_${k}`] === hsh(JSON.stringify(cfg));
+      const btn = !ok[k] ? this._autoBtn(k) : fresh || !this._admin() ? `<span class="okb">${T('✅ angelegt')}</span>` : `<button class="btn sm" data-a="autonew" data-k="${k}">${T('🔄 Automation neu schreiben')}</button>`;
+      return `<div class="arow"><span class="grow">${label}</span>${btn}</div>${extra || ''}
+          ${cfg ? `<details><summary class="hint">${T('YAML zum manuellen Anlegen')}</summary><pre class="code">${esc(yml(cfg).trim())}</pre><button class="btn" data-a="copyauto">${T('📋 Kopieren')}</button></details>` : ''}`;
+    }
+
+    // 🤖 Hinweis im Sensoren-Bereich: wo die fertigen Automationen stehen
+    _sensAutoUi() {
+      return `<div class="lbl">${T('🤖 Fertige Automationen')}</div>
+          <div class="hint">${T('📋 Abend-Erinnerung: 🔔 Benachrichtigungen → 🔔 Benachrichtigen bei … · 🎉 Durchsage und Nachricht, wenn das Familienziel erreicht ist: 🎁 Belohnungen → 👨‍👩‍👧 Familienziel. Beide nutzen die Sensoren hier.')}</div>`;
+    }
+
+    _sensKeepUi() {
+      const ss = this._sensState(), fine = ss.on && !ss.bad.length && !ss.old.length;
+      const status = fine ? `<div class="hint sensok">${T('✅ Dauerhafte Sensoren aktiv – Home Assistant liest sie selbst, auch nach einem Neustart.')}</div>`
+        : ss.on ? `<div class="hint senswarn">${T('⚠️ Vorlage neu kopieren – sie passt nicht mehr zu den Kindern.')}${ss.bad.length ? ` ${T('Betrifft: {names}', { names: ss.bad.map(esc).join(', ') })}` : ''}${ss.old.length ? ` ${T('Nicht mehr gebraucht: {names}', { names: ss.old.join(', ') })}` : ''}</div>` : '';
+      const steps = `<div class="hint">${T('1. „📋 Vorlage kopieren“ antippen. 2. Als eigene Datei packages/yippee.yaml speichern (wenn „packages“ eingerichtet ist) – sonst in die configuration.yaml einfügen, z. B. mit dem File editor. 3. Home Assistant neu starten.')}</div>`;
+      return `${status}${fine ? '' : steps}
+          <div class="btnrow"><button class="btn" data-a="sensyaml">${T('📋 Vorlage kopieren')}</button></div>
+          <details class="sensy" ${this._sensyOpen ? 'open' : ''}><summary class="hint">${T('Vorlage anzeigen')}</summary><pre class="yaml">${esc(this._sensYaml())}</pre></details>`;
+    }
+
+    // 🔁 Läuft die Vorlage schon – und passt sie noch zu den Kindern?
+    // Rückgabe: { on: Vorlage gefunden, bad: [Kinder, für die sie nicht passt], old: [übrige Vorlagen-Sensoren] }
+    _sensState() {
+      const ents = this._hass.entities || {}, st = this._hass.states || {}, kids = this._kids();
+      const isT = (id) => !!(ents[id] && ents[id].platform === 'template');
+      const ids = new Set(kids.map((k) => `sensor.yippee_${slug(k.name)}`));
+      const fam = !!this._famSens();
+      if (fam) ids.add('sensor.yippee_familienziel');
+      const on = kids.some((k) => isT(`sensor.yippee_${slug(k.name)}`));
+      const bad = kids.filter((k) => {
+        const id = `sensor.yippee_${slug(k.name)}`;
+        if (!isT(id)) return true;
+        const x = st[id];
+        return Object.prototype.hasOwnProperty.call(this._sensRaw || {}, k.id) && (!x || x.state === 'unavailable'); // Stand liegt bereit, Sensor bleibt leer → Kennung passt nicht
+      }).map((k) => k.name);
+      if (fam && on) { const x = st['sensor.yippee_familienziel']; if (!isT('sensor.yippee_familienziel') || (Object.prototype.hasOwnProperty.call(this._sensRaw || {}, 'fam') && (!x || x.state === 'unavailable'))) bad.push(T('👨‍👩‍👧 Familienziel')); }
+      const old = Object.keys(ents).filter((id) => id.startsWith('sensor.yippee_') && isT(id) && !ids.has(id));
+      return { on, bad, old };
+    }
+
+    // 🔁 Vorlage für configuration.yaml: Sensoren pro Kind, die Home Assistant selbst aus der Yippee-Liste liest
+    _sensYaml() {
+      const ent = this._config.storage, q = (x) => JSON.stringify(String(x));
+      const keys = ['heute_erledigt', 'heute_gesamt', 'heute_netto', 'woche_netto', 'alles_erledigt', 'offen', 'wartet_auf_freigabe', 'level', 'level_name', 'gesamt_verdient', 'abzeichen', 'ziel', 'urlaub', 'anwesend', 'feiertag', 'ferien', ...(this._cfg.moneyOn ? ['euro'] : [])];
+      const kids = this._kids();
+      return `# Yippee! - Kids Chores: Sensoren, die auch nach einem Neustart sofort da sind
+# Am einfachsten als eigene Datei packages/yippee.yaml speichern (wenn "packages" eingerichtet ist).
+# Sonst in die configuration.yaml einfügen – steht dort schon "template:", nur den Teil ab "- triggers:" darunter setzen.
+# Danach Home Assistant neu starten. Neue oder umbenannte Kinder? Vorlage neu kopieren.
+template:
+  - triggers:
+      - trigger: homeassistant
+        event: start
+      - trigger: state
+        entity_id: ${ent}
+      - trigger: time_pattern
+        minutes: "/1"
+    actions:
+      - action: todo.get_items
+        target:
+          entity_id: ${ent}
+        data:
+          status: [needs_action, completed]
+        response_variable: r
+      - variables:
+          y: >-
+            {% set ns = namespace(o={}) %}
+            {% for i in r[${q(ent).replace(/"/g, "'")}]['items'] if i.summary is string and i.summary.startswith('kp|sens|') %}
+            {% set ns.o = dict(ns.o, **{i.summary[8:]: i.description | from_json(default={})}) %}
+            {% endfor %}{{ ns.o }}
+    sensor:
+${kids.map((k) => { const v = `y.get('${k.id}', {})`; return `      - name: ${q(`Yippee! ${k.name}`)}
+        unique_id: yippee_kid_${k.id}
+        default_entity_id: sensor.yippee_${slug(k.name)}
+        icon: mdi:star-circle
+        unit_of_measurement: Punkte
+        availability: "{{ ${v}.p is defined }}"
+        state: "{{ ${v}.p }}"
+        attributes:
+${keys.map((x) => `          ${x}: "{{ ${v}.get('a', {}).get('${x}') }}"`).join('\n')}`; }).join('\n')}${this._famSens() ? `
+      - name: "Yippee! Familienziel"
+        unique_id: yippee_familienziel
+        default_entity_id: sensor.yippee_familienziel
+        icon: mdi:flag-checkered
+        unit_of_measurement: Punkte
+        availability: "{{ y.get('fam', {}).p is defined }}"
+        state: "{{ y.get('fam', {}).p }}"
+        attributes:
+${['ziel', 'ziel_sterne', 'fehlen', 'prozent', 'erreicht', 'prognose_tage', 'prognose_datum'].map((x) => `          ${x}: "{{ y.get('fam', {}).get('a', {}).get('${x}') }}"`).join('\n')}` : ''}
+`;
     }
 
     _schedulePenalty() {
@@ -2541,12 +2815,14 @@ textarea{width:100%;min-height:90px;resize:vertical}
 
     // Jede Punkte-Änderung landet mit Grund im Verlauf (ledger); zählt für Level, Abzeichen und Familienziel
     // ops: zusätzliche Änderungen am Kind (Zähler, Verlauf, Gutscheine …) – werden mit der Buchung gespeichert
-    _addPoints(kidId, n, reason, ops) {
+    // fid: feste Buchungsnummer (z. B. 🎄 Adventskalender) – wurde sie schon gebucht, passiert nichts
+    _addPoints(kidId, n, reason, ops, fid) {
       const k = this._db.kid[kidId];
       if (!k) return;
       const rs = String(reason || ''), refund = rs.startsWith('↩️'), nn = Math.round(Number(n) || 0);
       if (!nn && !ops) return 0;
-      const now = new Date(), id = uid() + uid().slice(0, 4);
+      if (fid && (this._db.pt[fid] || (k.ap || []).includes(fid) || this._stored.has(`kp|pt|${fid}`))) return 0;
+      const now = new Date(), id = fid || uid() + uid().slice(0, 4);
       const ts = Math.max(Date.now(), (this._lastTs || 0) + 1); this._lastTs = ts; // eindeutige Reihenfolge auch bei mehreren Buchungen in derselben Millisekunde
       const x = this._ptClean({ k: kidId, n: nn, r: rs, d: dk(now), t: hhmm(now), ts, ...(this._cfg.negOn ? { ng: 1 } : {}), ...(ops ? { o: ops } : {}) });
       const before = k.points || 0, base = k.total !== undefined ? k.total : before;
@@ -2573,6 +2849,21 @@ textarea{width:100%;min-height:90px;resize:vertical}
       }
       return applied;
     }
+
+    // 🎄 Adventskalender: Belohnung schenken – ohne Sterne abzuziehen, ohne Wochenlimit und ohne Einfluss aufs Ziel
+    _advGift(kidId, rid, n, fid) {
+      const r = this._db.reward[rid], k = this._db.kid[kidId];
+      if (!r || !k) return false;
+      const today = dk(new Date());
+      const push = [['history', { d: today, t: `🎄 ${r.title}`, e: r.emoji, c: 0 }, 10]];
+      if (this._cfg.walletOn && !r.joker) push.push(['vouch', { id: uid(), t: r.title, e: r.emoji || '🎁', d: today }, 50]);
+      this._addPoints(kidId, 0, T('🎁 Geschenkt: {title}', { title: r.title }), { push, ...(r.joker ? { inc: { jokers: 1 } } : {}) }, fid);
+      this._lm(`🎄 ${k.name}: ${r.title}`, 'cash');
+      return true;
+    }
+    // 🎄 Belohnung nur für den Adventskalender: Kinder sehen sie sonst nirgends
+    _advR(r) { return !!(r && r.adv); }
+    _advOn() { return !!this._cfg.advOn; }
 
     // ---------- Buchungen als eigene Einträge ----------
     // Jede Punkte-Änderung wird zuerst als eigener Listen-Eintrag „kp|pt|…“ gespeichert (Anlegen kann nie mit einem
@@ -2633,6 +2924,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
       this._consBusy = true; window.__kpCons = true;
       this._enq(async () => {
         try {
+          const tq = Date.now(); // Zeitpunkt der Anfrage – dauert es bis zum Schreiben zu lange, wird frisch gelesen
           const r = await this._hass.callWS({ type: 'todo/item/list', entity_id: this._config.storage });
           const items = (r && r.items) || [], t0 = Date.now();
           const ds = items.filter((it) => String(it.summary || '').startsWith('kp|pt|')).map((it) => {
@@ -2644,15 +2936,27 @@ textarea{width:100%;min-height:90px;resize:vertical}
           ready.forEach((x) => { (byKid[x.k || ''] = byKid[x.k || ''] || []).push(x); });
           for (const kid of Object.keys(byKid)) {
             const list = byKid[kid].filter((x) => !x.bad).sort((a, b) => (a.ts - b.ts) || String(a.id).localeCompare(String(b.id)));
-            const it = kid && items.find((x) => x.summary === `kp|kid|${kid}`);
-            if (it) {
-              let cur = {};
-              try { cur = JSON.parse(it.description || '{}') || {}; } catch (e) { continue; } // Kind nicht lesbar: Buchungen bleiben liegen
-              delete cur._c; delete cur.id;
-              const ap = new Set(cur.ap || []);
-              let rec = cur;
-              list.forEach((x) => { if (!ap.has(x.id)) rec = this._applyDelta(rec, x); });
-              if (rec !== cur) { const c2 = this._clean('kid', { ...rec }); delete c2.id; await this._svc('update_item', { item: `kp|kid|${kid}`, description: stamp(c2) }); }
+            // Kind unmittelbar vor dem Schreiben frisch lesen: Lag dazwischen eine Pause (z. B. Handy im Standby) oder hat ein anderes
+            // Gerät inzwischen zusammengeführt, würde sonst ein veralteter Stand zurückgeschrieben – erledigte Gutscheine o. Ä. kämen wieder
+            let fresh = items, tr = tq, ok = true, done = !(kid && list.length);
+            if (kid && list.length) {
+              for (let i = 0; i < 3; i++) {
+                if (Date.now() - tr > 1500) { tr = Date.now(); const r2 = await this._hass.callWS({ type: 'todo/item/list', entity_id: this._config.storage }); fresh = (r2 && r2.items) || []; }
+                const it = fresh.find((x) => x.summary === `kp|kid|${kid}`);
+                if (!it) { done = true; break; } // Kind gelöscht: Buchungen verwerfen
+                let cur = {};
+                try { cur = JSON.parse(it.description || '{}') || {}; } catch (e) { ok = false; break; } // Kind nicht lesbar: Buchungen bleiben liegen
+                delete cur._c; delete cur.id;
+                const ap = new Set(cur.ap || []);
+                let rec = cur;
+                list.forEach((x) => { if (!ap.has(x.id)) rec = this._applyDelta(rec, x); });
+                if (rec === cur) { done = true; break; } // schon alles enthalten
+                if (Date.now() - tr > 1500) continue; // zu lange gedauert – nochmal frisch lesen
+                const c2 = this._clean('kid', { ...rec }); delete c2.id;
+                await this._svc('update_item', { item: `kp|kid|${kid}`, description: stamp(c2) });
+                done = true; break;
+              }
+              if (!ok || !done) continue; // nicht sicher gespeichert: Buchungen bleiben liegen und werden beim nächsten Mal verrechnet
             }
             // erst nach erfolgreichem Speichern des Kindes löschen (Kind gelöscht/defekt: Buchungen verwerfen)
             for (const x of byKid[kid]) { try { await this._svc('remove_item', { item: x.key }); } catch (e) { /* schon weg */ } this._stored.delete(x.key); }
@@ -2945,8 +3249,10 @@ textarea{width:100%;min-height:90px;resize:vertical}
           return;
         }
         const data = { title, message: m };
+        const tag = acts && acts.length && t.startsWith('mobile_app_') ? pushTag(acts[0][1]) : '';
+        if (tag) data.data = { tag }; // erledigt → auf allen Handys entfernen (siehe _pushClear)
         if (acts && acts.length && c.nActions !== false) {
-          if (t.startsWith('mobile_app_')) data.data = { actions: acts.map(([title, action]) => ({ action, title })) };
+          if (t.startsWith('mobile_app_')) data.data = { ...(data.data || {}), actions: acts.map(([title, action]) => ({ action, title })) };
           else if ((c.tgTargets || []).includes(t)) data.data = { inline_keyboard: tgKb };
         }
         if (photo) {
@@ -3216,7 +3522,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
     // Nach jedem Tag einmal speichern (60 Tage, 52 Wochen) – fehlende Tage der letzten Woche werden nachgeholt, aber nie vor dem Update
     _repCheck() {
       const c = this._cfg, today = dk(new Date());
-      if (!c.rStart) { if (this._isParent() && !['kid', 'kids'].includes(this._config.mode)) this._setCfg({ rStart: today }); return; }
+      if (!c.rStart) { if (this._isParent() && !['kid', 'kids', 'advent'].includes(this._config.mode)) this._setCfg({ rStart: today }); return; }
       this._repDone = this._repDone || new Set();
       this._kids().forEach((k) => {
         for (let back = 7; back >= 1; back--) {
@@ -3719,7 +4025,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
       }
     }
 
-    async _shareFinish(qid) {
+    async _shareFinish(qid, opt) {
       const q = this._db.req[qid] ? { ...this._db.req[qid] } : null;
       if (!q || !this._poolDone(q) || !(await this._claim(qid))) return;
       const r = this._db.reward[q.reward]; if (!r) { this._render(); return; }
@@ -3731,7 +4037,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
         const guests = q.need.filter((x) => x !== id && (q.cov || {})[x] === id);
         const label = guests.length ? T('{title} ({name} lädt {others} ein)', { title: r.title, name: this._kn(id), others: this._names(guests) }) : `👫 ${r.title}`;
         const push = [['history', { d: today, t: r.title, e: r.emoji, c: (q.paid || {})[id] || 0 }, 10]];
-        if (this._cfg.walletOn) push.push(['vouch', { id: uid(), t: label, e: r.emoji || '🎁', d: today }, 50]);
+        if (this._cfg.walletOn && !(opt && opt.got)) push.push(['vouch', { id: uid(), t: label, e: r.emoji || '🎁', d: today }, 50]);
         this._addPoints(id, 0, '', { push, red: [r.id, today, mon], ungoal: r.id });
       });
       this._audit(T('👫 Gemeinsam eingelöst: {names} – {title}', { names: this._names(q.need), title: r.title }));
@@ -3753,8 +4059,66 @@ textarea{width:100%;min-height:90px;resize:vertical}
     _monday() { const n = new Date(); return dk(new Date(n.getFullYear(), n.getMonth(), n.getDate() - ((n.getDay() + 6) % 7))); }
     _usedWeek(k, rid) { return (((k && k.red) || {})[rid] || []).filter((d) => d >= this._monday()).length; }
 
-    async _redeem(kidId, rid, reqId) {
-      if (reqId && (this._db.req[reqId] || {}).pool) { await this._shareFinish(reqId); return; }
+    // 🎁 Eltern lösen direkt ein (📋 Heute → 🎁 beim Kind): ohne Freigabe, sonst wie eine freigegebene Anfrage
+    _parentRedeemDlg(kidId) {
+      const k = this._db.kid[kidId]; if (!k) return;
+      const pts = k.points || 0, rs = this._rwSorted(Object.values(this._db.reward).filter((r) => this._rwFor(r, kidId) && !this._advR(r)), kidId);
+      const row = (r, btns, sub) => `<div class="row"><span style="font-size:26px">${esc(r.emoji || '🎁')}</span><span class="grow">${esc(r.title)}<small>${sub}</small></span></div>${btns ? `<div class="btnrow" style="margin:-4px 0 8px">${btns}</div>` : ''}`;
+      const btn = (r, m, label, cost, ok) => `<button type="button" class="btn sm ${ok ? 'primary' : ''}" data-a="ardo" data-r="${r.id}" data-k="${kidId}" data-m="${m}" data-cost="${esc(cost)}" ${ok ? '' : 'disabled'}>${label}</button>`;
+      const html = rs.map((r) => {
+        const full = r.limit && this._usedWeek(k, r.id) >= r.limit;
+        if (this._shareOn(r)) {
+          const need = this._shareKids(r), q = this._pool(r.id), open = q ? need.filter((id) => !(q.cov || {})[id]) : need;
+          if (!need.includes(kidId)) return '';
+          if (q && this._poolDone(q)) return row(r, btn(r, 'appr', T('✓ Freigeben'), '', true), T('⏳ angefragt'));
+          const parts = open.map((id) => [id, this._shareCost(r, id, need.length)]);
+          const allOk = parts.every(([id, c]) => ((this._db.kid[id] || {}).points || 0) >= c);
+          const inv = q ? parts.reduce((a, [, c]) => a + c, 0) : this._cost(r, kidId);
+          const sub = `👫 ${parts.map(([id, c]) => `${esc(this._kn(id))} ${c} ⭐`).join(' · ')}${q ? ` · ${T('es fehlen noch: {names}', { names: esc(this._names(open)) })}` : ''}`;
+          return row(r, btn(r, 'share', T('👫 Jeder zahlt seinen Anteil'), parts.map(([id, c]) => `${this._kn(id)} −${c} ⭐`).join(', '), allOk && !full)
+            + (open.length > 1 || (open.length === 1 && open[0] !== kidId) ? btn(r, 'invite', T('💝 {name} lädt ein ({n} ⭐)', { name: esc(k.name), n: inv }), `−${inv} ⭐`, pts >= inv && !full) : ''), sub);
+        }
+        const c = this._cost(r, kidId);
+        return row(r, btn(r, 'one', T('Einlösen'), `−${c} ⭐`, pts >= c && !full), full ? T('diese Woche aufgebraucht') : pts >= c ? `${c} ⭐` : `${c} ⭐ · ${T('noch {n} ⭐', { n: c - pts })}`);
+      }).join('');
+      this._modal(T('🎁 Einlösen für {name}', { name: esc(k.name) }), `<div class="prd"><div class="hint">${T('{name} hat {n} ⭐. Eingelöst wird sofort – ohne Freigabe.', { name: esc(k.name), n: pts })}</div>${html || `<div class="empty">${T('Noch keine Belohnungen.')}</div>`}</div>`);
+    }
+
+    async _parentRedeem(rid, kidId, mode) {
+      const r = this._db.reward[rid], k = this._db.kid[kidId];
+      if (!r || !k || !this._isParent()) return;
+      this._closeModal();
+      if (mode === 'one') {
+        const open = Object.values(this._db.req).find((q) => q.kid === kidId && q.reward === rid && !q.pool);
+        await this._redeem(kidId, rid, open ? open.id : undefined, { got: true }); // Eltern geben die Belohnung gleich – kein Gutschein
+        return;
+      }
+      if (!this._shareOn(r)) return;
+      const need = this._shareKids(r);
+      let q = this._pool(rid);
+      if (mode === 'appr') { if (q && this._poolDone(q)) await this._shareFinish(q.id, { got: true }); return; }
+      if (!need.includes(kidId)) return;
+      const open = q ? need.filter((id) => !(q.cov || {})[id]) : need;
+      if (!open.length) return;
+      // wer zahlt wie viel?
+      const pay = {};
+      if (mode === 'invite') pay[kidId] = q ? open.reduce((a, id) => a + this._shareCost(r, id, need.length), 0) : this._cost(r, kidId);
+      else open.forEach((id) => { pay[id] = this._shareCost(r, id, need.length); });
+      const short = Object.entries(pay).find(([id, c]) => ((this._db.kid[id] || {}).points || 0) < c);
+      if (short) { this._toast(T('{name} hat nicht mehr genug Punkte', { name: this._kn(short[0]) })); this._render(); return; }
+      if (r.limit && Object.keys(pay).some((id) => this._usedWeek(this._db.kid[id], rid) >= r.limit)) { this._toast(T('Diese Woche schon {n}× eingelöst – ab Montag wieder', { n: r.limit })); return; }
+      Object.entries(pay).forEach(([id, c]) => this._addPoints(id, -c, mode === 'invite' ? `💝 Einladung: ${r.title}` : `👫 Anteil: ${r.title}`));
+      const cov = { ...((q && q.cov) || {}) }, paid = { ...((q && q.paid) || {}) };
+      open.forEach((id) => { cov[id] = mode === 'invite' ? kidId : id; });
+      Object.entries(pay).forEach(([id, c]) => { paid[id] = (paid[id] || 0) + c; });
+      if (q) { q = { ...q, cov, paid }; this._save('req', q.id, { ...q }, (c) => ({ ...c, cov: { ...((c && c.cov) || {}), ...cov }, paid })); }
+      else { q = { id: uid(), pool: true, kid: kidId, reward: rid, d: dk(new Date()), need, cov, paid }; this._save('req', q.id, { ...q }); }
+      await this._shareFinish(q.id, { got: true });
+    }
+
+    // opt.got: Eltern lösen direkt ein und geben die Belohnung gleich – dann ohne 🎟️ Gutschein
+    async _redeem(kidId, rid, reqId, opt) {
+      if (reqId && (this._db.req[reqId] || {}).pool) { await this._shareFinish(reqId, opt); return; }
       if (reqId && !(await this._claim(reqId))) return;
       const r = this._db.reward[rid], k = this._db.kid[kidId];
       if (!r || !k) { this._render(); return; }
@@ -3764,7 +4128,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
       const today = dk(new Date()), mon = this._monday();
       // Verlauf, Wochenzähler, Ziel, Joker und Gutschein werden mit der Buchung gespeichert
       const push = [['history', { d: today, t: r.title, e: r.emoji, c: rc }, 10]];
-      if (this._cfg.walletOn && !r.joker) push.push(['vouch', { id: uid(), t: r.title, e: r.emoji || '🎁', d: today }, 50]);
+      if (this._cfg.walletOn && !r.joker && !(opt && opt.got)) push.push(['vouch', { id: uid(), t: r.title, e: r.emoji || '🎁', d: today }, 50]);
       this._addPoints(kidId, -rc, `🎁 ${r.title} eingelöst`, { push, red: [rid, today, mon], ungoal: rid, ...(r.joker ? { inc: { jokers: 1 } } : {}) });
       this._audit(T('🎁 Eingelöst: {name} – {title} (−{cost} ⭐)', { name: k.name, title: r.title, cost: rc }));
       this._lm(`🎁 ${k.name}: ${r.title}`, 'cash');
@@ -3774,18 +4138,46 @@ textarea{width:100%;min-height:90px;resize:vertical}
 
     // ---------- Rendering ----------
     // Neu zeichnen, ohne dass die Seite nach oben springt
+    // Rückfrage „Wirklich …?“ (zweimal tippen): die Karte merkt sich die Rückfrage 8 Sekunden lang selbst –
+    // so überlebt sie ein Neuzeichnen zwischendurch (z. B. Änderung von einem anderen Gerät, Hintergrundprüfung)
+    _sureAsk(el, text) {
+      const key = `${el.dataset.a}|${el.dataset.k || ''}`;
+      if (this._sureK === key && Date.now() < this._sureT) { this._sureK = null; clearTimeout(this._sureTm); return true; }
+      this._sureK = key; this._sureT = Date.now() + 8000; this._sureTx = text;
+      clearTimeout(this._sureTm); this._sureTm = setTimeout(() => { this._sureK = null; this._render(); }, 8000);
+      this._sureApply();
+      return false;
+    }
+
+    _sureApply() {
+      if (!this._sureK || Date.now() >= this._sureT || !this.shadowRoot) return;
+      const [a, k] = this._sureK.split('|');
+      const el = [...this.shadowRoot.querySelectorAll('#app [data-a]')].find((e) => e.dataset.a === a && (e.dataset.k || '') === k);
+      if (!el) return;
+      el.dataset.sure = '1';
+      const h = el.querySelector('.hint');
+      (h || el).textContent = this._sureTx;
+    }
+
     _render() {
       if (!this._built || !this._hass || !this._config) return;
+      if (this._wiz) this._wizKeep();
       const sp = this._scrollParent();
       const sy = sp ? sp.scrollTop : (window.scrollY || window.pageYOffset || 0);
       this._look();
       this._renderInner();
+      this._sureApply();
       this._fitTabs();
       if (this._setQ) this._filterSet();
       if (this._wiz && this._wiz.q && this._wiz.step === 2) this._wizFilter();
       const back = () => { try { if (sp) sp.scrollTop = sy; else if ((window.scrollY || 0) !== sy) window.scrollTo(0, sy); } catch (e) { /* egal */ } };
       back();
-      if (typeof requestAnimationFrame === 'function') requestAnimationFrame(back);
+      // Nach dem nächsten Bild noch einmal – aber nur, wenn das Neuzeichnen die Seite nach oben verschoben hat (Inhalt kurz kürzer)
+      // und kein neueres Neuzeichnen dazwischenkam. So setzt ein verspätetes Nachstellen nie eine veraltete Position,
+      // wenn inzwischen gescrollt wurde.
+      const tok = (this._scrTok = (this._scrTok || 0) + 1);
+      const later = () => { if (this._scrTok !== tok) return; try { if (sp) { if (sp.scrollTop < sy) sp.scrollTop = sy; } else if ((window.scrollY || 0) < sy) window.scrollTo(0, sy); } catch (e) { /* egal */ } };
+      if (typeof requestAnimationFrame === 'function') requestAnimationFrame(later);
     }
 
     // Tab-Namen, die nicht ganz passen (schmales Handy, lange Wörter), nicht abschneiden – dann nur die Symbole zeigen
@@ -3813,7 +4205,10 @@ textarea{width:100%;min-height:90px;resize:vertical}
       if (!this._built || !this._hass || !this._config) return;
       // Nicht neu zeichnen, solange in der Karte gerade etwas eingetippt wird (sonst geht die Eingabe verloren)
       const ae = this.shadowRoot.activeElement;
-      if (ae && ae.closest && ae.closest('#app') && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName) && !/^(checkbox|radio|button)$/.test(ae.type || '')) {
+      // 🎄 auch beim Tippen im Adventskalender (eigener Bereich in der Karte) nicht neu zeichnen
+      const aIn = ae && ae === this._advEl && ae.shadowRoot && ae.shadowRoot.activeElement;
+      const typing = (x) => x && /^(INPUT|TEXTAREA|SELECT)$/.test(x.tagName) && !/^(checkbox|radio|button|file|range|color)$/.test(x.type || '');
+      if ((ae && ae.closest && ae.closest('#app') && typing(ae)) || typing(aIn)) {
         if (!this._deferR) { this._deferR = true; ae.addEventListener('blur', () => { setTimeout(() => { this._deferR = false; this._render(); }, 0); }, { once: true }); }
         return;
       }
@@ -3842,29 +4237,74 @@ textarea{width:100%;min-height:90px;resize:vertical}
       if (this._err) { app.innerHTML = `<div class="card"><div class="empty">⚠️ ${esc(this._err)}</div></div>`; return; }
       if (!this._loaded) { app.innerHTML = `<div class="card"><div class="empty">${T('Lade …')}</div></div>`; return; }
       const mode = this._config.mode;
-      if (!['kid', 'kids'].includes(mode) && !this._isParent()) {
+      if (!['kid', 'kids', 'advent'].includes(mode) && !this._isParent()) {
         const names = (this._cfg.parents || []).map((u) => this._userName(u)).filter(Boolean).join(', ');
         app.innerHTML = `<div class="card"><div class="lock"><div class="le">🔒</div><div class="lt">${T('Eltern-Bereich')}</div><div class="hint">${T('Nur für: {names}', { names: esc(names) })}<br>${T('Angemeldet als {user}.', { user: esc(this._uName()) })}</div></div></div>`;
         return;
       }
       if (this._locked()) { app.innerHTML = this._lockHtml(); return; }
-      if (mode === 'kids') {
+      let html, adv = null;
+      const advPage = (m, kid, back) => { adv = [m, kid || '']; return `<div class="advpg">${back ? `<button class="btn advback" data-a="advclose">${T('← Zurück')}</button>` : ''}<div id="advslot"></div></div>`; };
+      const advKid = this._advKid && this._db.kid[this._advKid] && this._advOn() ? this._advKid : '';
+      if (mode === 'advent') {
+        const ch = String(this._config.child || '').trim(), k = ch ? this._kidByName(ch) : null;
+        if (!this._advOn()) html = `<div class="card"><div class="empty">${T('🎄 Der Adventskalender ist ausgeschaltet – einschalten in der Eltern-Ansicht unter ⚙️ Einstellungen → ⚙️ Allgemein → 🎄 Adventskalender.')}</div></div>`;
+        else if (ch && !k) {
+          const names = this._kids().map((x) => x.name).join(', ');
+          html = `<div class="card"><div class="empty">${T('Kind „{name}“ nicht gefunden.', { name: esc(ch) })}<br>${names ? T('Angelegt sind: {names}', { names: esc(names) }) : T('Lege zuerst in der Eltern-Ansicht ein Kind an.')}</div></div>`;
+        } else if (!this._kids().length) html = `<div class="card"><div class="empty">${T('Noch keine Kinder angelegt – das geht in der Eltern-Ansicht unter 👧 Kinder.')}</div></div>`;
+        else html = advPage(k ? 'kid' : 'kids', k ? k.id : '', false);
+      } else if (mode === 'kids') {
         const kids = this._kids();
-        app.innerHTML = kids.length
+        html = advKid ? advPage('kid', advKid, true) : kids.length
           ? `<div class="kwrap">${this._famShown() ? this._familyHtml() : ''}<div class="kgrid">${kids.map((k) => this._kidHtml(k)).join('')}</div></div>`
           : `<div class="card"><div class="empty">${T('Noch keine Kinder angelegt – das geht in der Eltern-Ansicht unter 👧 Kinder.')}</div></div>`;
       } else if (mode === 'kid') {
         const k = this._kidByName(this._config.child);
         if (!k) {
           const names = this._kids().map((x) => x.name).join(', ');
-          app.innerHTML = `<div class="card"><div class="empty">${T('Kind „{name}“ nicht gefunden.', { name: esc(this._config.child || '') })}<br>${names ? T('Angelegt sind: {names}', { names: esc(names) }) : T('Lege zuerst in der Eltern-Ansicht ein Kind an.')}</div></div>`;
-        } else app.innerHTML = `<div class="kwrap">${this._famShown() ? this._familyHtml() : ''}${this._kidHtml(k)}</div>`;
+          html = `<div class="card"><div class="empty">${T('Kind „{name}“ nicht gefunden.', { name: esc(this._config.child || '') })}<br>${names ? T('Angelegt sind: {names}', { names: esc(names) }) : T('Lege zuerst in der Eltern-Ansicht ein Kind an.')}</div></div>`;
+        } else html = advKid === k.id ? advPage('kid', k.id, true) : `<div class="kwrap">${this._famShown() ? this._familyHtml() : ''}${this._kidHtml(k)}</div>`;
       } else {
-        // aufgeklappte Bereiche (z. B. „YAML anzeigen“) bleiben beim Neuzeichnen offen
-        const openD = [...app.querySelectorAll('details[open] > summary')].map((x) => x.textContent);
-        app.innerHTML = this._adminHtml();
-        if (openD.length) app.querySelectorAll('details > summary').forEach((x) => { if (openD.includes(x.textContent)) x.parentNode.open = true; });
+        html = this._adminHtml();
+        if (this._tab === 'advent' && html.includes('id="advslot"')) adv = ['admin', ''];
       }
+      // 🎄 Adventskalender: Rahmen unverändert → nur den Kalender selbst auffrischen (Dialoge und Eingaben bleiben erhalten)
+      if (adv && this._advEl && app.contains(this._advEl) && this._advHtml === html) { this._advEl.attach(this, adv[0], adv[1]); return; }
+      // aufgeklappte Bereiche (z. B. „YAML anzeigen“) bleiben beim Neuzeichnen offen
+      const openD = [...app.querySelectorAll('details[open] > summary')].map((x) => x.textContent);
+      app.innerHTML = html;
+      if (openD.length) app.querySelectorAll('details > summary').forEach((x) => { if (openD.includes(x.textContent)) x.parentNode.open = true; });
+      this._advHtml = adv ? html : null;
+      if (adv) this._advMount(app, adv[0], adv[1]);
+    }
+
+    // 🎄 Adventskalender einhängen (das Modul wird erst beim ersten Mal geladen)
+    _advMount(app, m, kid) {
+      const slot = app.querySelector('#advslot');
+      if (!slot) return;
+      if (!customElements.get('yippee-advent')) {
+        slot.innerHTML = `<div class="empty">${this._advErr ? T('⚠️ Der Adventskalender konnte nicht geladen werden – liegt die Datei yippee-kids-chores-advent.js neben der Karte?') : T('Lade …')}</div>`;
+        if (!this._advErr && !this._advBusy) {
+          this._advBusy = true;
+          advLoad().then(() => { this._advBusy = false; this._advHtml = null; this._render(); }, () => { this._advBusy = false; this._advErr = true; this._advHtml = null; this._render(); });
+        }
+        return;
+      }
+      if (!this._advEl) this._advEl = document.createElement('yippee-advent');
+      slot.replaceWith(this._advEl);
+      this._advEl.attach(this, m, kid);
+    }
+
+    // 🎄 Knopf in der Kinder-Ansicht (nur im Dezember bzw. im Testmodus des Kalenders)
+    _advBtn(k) {
+      if (!this._advOn() || this._config.summary || this._config.mode === 'advent') return '';
+      let now = new Date();
+      try { const t = localStorage.getItem(`kpAdvTest:${this._config.storage}`) || ''; if (/^\d{4}-\d\d-\d\d$/.test(t)) { const [y, m, d] = t.split('-').map(Number); now = new Date(y, m - 1, d); } } catch (e) { /* egal */ }
+      if (now.getMonth() !== 11) return '';
+      const N = Number((this._db.adc.main || {}).days) === 31 ? 31 : 24, day = now.getDate();
+      const o = this._db.ado[k.id], open = !!(o && o.y === now.getFullYear() && (o.d || {})[day]);
+      return `<button class="btn advbtn" data-a="advopen" data-k="${esc(k.id)}">🎄 ${T('Adventskalender')}${day <= N && !open ? ` <span class="advnew">${T('Türchen {n} wartet!', { n: day })}</span>` : ''}</button>`;
     }
 
     // „Demnächst“: besondere Aufgaben der nächsten 6 Tage (nicht die täglichen)
@@ -4107,7 +4547,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
       const wait = tasks.filter((t) => stat[t.id].s === 'p').length;
       const rewards = this._rewards(k.id), kc = (r) => this._cost(r, k.id);
       const gOn = this._cfg.goalOn !== false;
-      const goal = gOn && k.goal && this._db.reward[k.goal] && this._rwFor(this._db.reward[k.goal], k.id) ? this._db.reward[k.goal] : null;
+      const goal = gOn && k.goal && this._db.reward[k.goal] && this._rwFor(this._db.reward[k.goal], k.id) && !this._advR(this._db.reward[k.goal]) ? this._db.reward[k.goal] : null;
       const next = rewards.find((r) => kc(r) > pts);
       const target = goal || next;
       const reqs = Object.values(this._db.req).filter((q) => q.kid === k.id);
@@ -4138,6 +4578,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
       }
       return `<div class="card ${fold ? 'fold' : ''}" style="${cv(k.color)}">
         ${fold ? `<button class="khbtn" data-a="kfold" data-k="${k.id}">${head}</button><div class="kbody ${this._animK === k.id ? 'anim' : ''}">` : isBd ? `<div class="bdtap" data-a="bdparty" data-k="${k.id}">${head}</div>` : head}
+        ${this._advBtn(k)}
         ${targetHtml}
         ${this._shareBanner(k, pts)}
         ${this._cfg.bdOn && this._isBday(k, dk(new Date())) ? `<div class="bday bdtap" data-a="bdparty" data-k="${k.id}">${T('🎂 Alles Gute zum Geburtstag, {name}!', { name: esc(k.name) })}${this._cfg.bdFree ? ` ${T('Heute hast du aufgabenfrei 🎈')}` : ''}${Number(this._cfg.bdMult) > 1 ? ` ${T('Heute gibt es ×{n} Sterne!', { n: Number(this._cfg.bdMult) })}` : ''} <small>${T('(antippen 🎉)')}</small></div>` : ''}
@@ -4229,7 +4670,8 @@ textarea{width:100%;min-height:90px;resize:vertical}
       const kids = this._kids();
       const pend = this._pendingTasks();
       const reqs = Object.values(this._db.req).filter((q) => this._db.kid[q.kid] && this._db.reward[q.reward]);
-      const tabs = [['heute', T('📋 Heute')], ['aufgaben', T('✅ Aufgaben')], ['belohnungen', T('🎁 Belohnungen')], ['kinder', T('👧 Kinder')], ['einst', T('⚙️ Einstellungen')]];
+      const tabs = [['heute', T('📋 Heute')], ['aufgaben', T('✅ Aufgaben')], ['belohnungen', T('🎁 Belohnungen')], ['kinder', T('👧 Kinder')], ...(this._advOn() ? [['advent', T('🎄 Advent')]] : []), ['einst', T('⚙️ Einstellungen')]];
+      if (this._tab === 'advent' && !this._advOn()) this._tab = 'heute';
       if (this._wizShow(kids)) {
         return `<div class="card">
         <div class="hd"><span class="tt">${LOGO}${this._ttl()}</span><span class="hint">${T('Eltern')}</span></div>
@@ -4240,6 +4682,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
       else if (this._tab === 'belohnungen') body = this._rewardsAdmin();
       else if (this._tab === 'kinder') body = this._kidsAdmin(kids);
       else if (this._tab === 'einst') body = this._settingsAdmin();
+      else if (this._tab === 'advent') body = '<div id="advslot"></div>';
       else body = this._todayAdmin(kids);
       const missed = this._missedTasks();
       const wishes = Object.values(this._db.req).filter((q) => q.wish && this._db.kid[q.kid]);
@@ -4267,12 +4710,43 @@ textarea{width:100%;min-height:90px;resize:vertical}
         <div class="hd"><span class="tt">${LOGO}${this._ttl()}</span><span class="hint">${T('Eltern')}</span><button class="icon" data-a="hb" title="${esc(T('📖 Handbuch'))}" aria-label="${esc(T('📖 Handbuch'))}">📖</button>${this._pin() ? `<button class="icon" data-a="lock" title="${esc(T('Sperren'))}">🔒</button>` : ''}</div>
         ${this._updBanner()}
         ${this._chkBanner()}
-        <div class="tabs">${tabs.map(([id, l]) => { const mm = String(l).match(/^(\S+)\s+(.*)$/); return `<button class="tab ${this._tab === id ? 'on' : ''}" data-a="tab" data-id="${id}" title="${esc(mm ? mm[2] : l)}" aria-label="${esc(mm ? mm[2] : l)}"><span class="te">${mm ? mm[1] : ''}${id === 'heute' && total ? `<b class="tbadge">${total}</b>` : ''}</span><span class="tl">${esc(mm ? mm[2] : l)}</span></button>`; }).join('')}</div>
+        <div class="tabs" ${tabs.length > 5 ? `style="grid-template-columns:repeat(${tabs.length},minmax(0,1fr))"` : ''}>${tabs.map(([id, l]) => { const mm = String(l).match(/^(\S+)\s+(.*)$/); return `<button class="tab ${this._tab === id ? 'on' : ''}" data-a="tab" data-id="${id}" title="${esc(mm ? mm[2] : l)}" aria-label="${esc(mm ? mm[2] : l)}"><span class="te">${mm ? mm[1] : ''}${id === 'heute' && total ? `<b class="tbadge">${total}</b>` : ''}</span><span class="tl">${esc(mm ? mm[2] : l)}</span></button>`; }).join('')}</div>
         ${this._tab === 'heute' || !this._tab ? `${approvals}${this._vchAdmin(kids)}` : ''}
         ${body}</div>`;
     }
 
+    // 🤖 Aktionen für fertige Automationen: Push an die Eltern-Ziele (🔔) bzw. Durchsage über die Lautsprecher (🔊)
+    _autoPush(title, msg) {
+      return (this._cfg.targets || []).map((t) => (t.includes('.')
+        ? { action: 'notify.send_message', target: { entity_id: t }, data: { title, message: msg }, continue_on_error: true }
+        : { action: `notify.${t}`, data: { title, message: msg }, continue_on_error: true }));
+    }
+    _autoSay(msg) {
+      const c = this._cfg, out = [];
+      if (c.rNotify) out.push({ action: `notify.${c.rNotify}`, data: { message: msg, data: { type: 'tts' } }, continue_on_error: true });
+      if (c.rTts && (c.rPlayers || []).length) out.push({ action: 'tts.speak', target: { entity_id: c.rTts }, data: { media_player_entity_id: c.rPlayers, message: msg }, continue_on_error: true });
+      return out;
+    }
+
     _autoCfg(kind) {
+      if (kind === 'famgoal') {
+        const goal = "{{ state_attr('sensor.yippee_familienziel', 'ziel') }}";
+        return {
+          alias: 'Yippee! - Kids Chores – Familienziel erreicht', description: 'Durchsage und Nachricht, sobald das Familienziel erreicht ist (angelegt von der Yippee!-Karte, nutzt sensor.yippee_familienziel)', mode: 'single',
+          triggers: [{ trigger: 'template', value_template: "{{ state_attr('sensor.yippee_familienziel', 'erreicht') == true }}" }],
+          actions: [...this._autoSay(`${T('Familienziel erreicht!')} ${goal}`), ...this._autoPush(T('⭐ Yippee! - Kids Chores'), `🎉 ${T('Familienziel erreicht!')} ${goal}`)],
+        };
+      }
+      if (kind === 'remind') {
+        const at = /^\d\d:\d\d$/.test(this._cfg.remT || '') ? this._cfg.remT : '19:00';
+        return {
+          alias: 'Yippee! - Kids Chores – Abend-Erinnerung', description: 'Nachricht an die Eltern, wenn ein Kind am Abend noch nicht alles erledigt hat (angelegt von der Yippee!-Karte, nutzt die sensor.yippee_…-Sensoren)', mode: 'single',
+          triggers: [{ trigger: 'time', at: `${at}:00` }],
+          variables: { offen: "{% set ns = namespace(l=[]) %}{% for s in states.sensor if s.entity_id.startswith('sensor.yippee_') and s.entity_id != 'sensor.yippee_familienziel' and (s.attributes.heute_gesamt | int(0)) > 0 and s.attributes.alles_erledigt == false and s.attributes.anwesend != false %}{% set ns.l = ns.l + [(s.attributes.friendly_name | default(s.entity_id) | replace('Yippee! ', '')) ~ ': ' ~ ((s.attributes.offen or []) | join(', '))] %}{% endfor %}{{ ns.l | join('\\n') }}" },
+          conditions: [{ condition: 'template', value_template: '{{ offen | length > 0 }}' }],
+          actions: this._autoPush(T('⭐ Yippee! - Kids Chores'), `${T('📋 Noch nicht alles erledigt:')}\n{{ offen }}`),
+        };
+      }
       if (kind === 'bg') {
         const times = this._bgTimes || (this._bgTimes = this._planBuild().times), trig = [];
         if (times.length) trig.push({ trigger: 'time', at: times.map((t) => `${t}:00`) });
@@ -4408,6 +4882,7 @@ sequence:
         if (kind === 'cmd') this._setCfg({ cmdV: 2 });
         if (kind === 'nfc') this._setCfg({ nfcSig: this._nfcTags().join(',') });
         if (kind === 'voice') this._setCfg({ voiceSig: LANG });
+        if (kind === 'famgoal' || kind === 'remind') this._setCfg({ [`aSig_${kind}`]: hsh(JSON.stringify(cfg)) });
         if (kind === 'bg') {
           const c = this._cfg;
           this._setCfg({ bgSig: [...(this._bgTimes || []), c.cmdOn ? 'cmd' : '', BG_V].join(','), bgSince: c.bgSince || dk(new Date()) });
@@ -4430,7 +4905,7 @@ sequence:
         }
       }
       try { await this._hass.callApi('GET', `config/script/config/${SCRIPT_ID}`); if (!this._scriptOk) any = true; this._scriptOk = true; } catch (e) { /* noch nicht angelegt */ }
-      if (any && this._tab === 'einst') this._render();
+      if (any && ['einst', 'belohnungen'].includes(this._tab)) this._render();
     }
 
     // Gründe im Punkte-Verlauf werden auf Deutsch gespeichert (die Logik prüft sie) und erst beim Anzeigen übersetzt
@@ -4479,13 +4954,15 @@ sequence:
       const colors = `<div class="lbl">${T('🎨 Farben')}</div>
         <div class="thm">
           <button type="button" class="thb ${th === '' ? 'on' : ''}" data-a="vtheme" data-v="">${sw('linear-gradient(135deg,#ffffff 50%,#1c1f26 50%)', 'transparent', 'transparent')}<span>${T('Wie das Dashboard')}</span></button>
-          ${THEMES.map((t) => `<button type="button" class="thb ${th === t[0] ? 'on' : ''}" data-a="vtheme" data-v="${t[0]}">${sw(t[2], t[3], t[6])}<span>${T(t[1])}</span></button>`).join('')}
+          ${THEMES.map((t) => { const d = this._darkMode() && darkOf(t); return `<button type="button" class="thb ${th === t[0] ? 'on' : ''}" data-a="vtheme" data-v="${t[0]}">${d ? sw(d.bg, d.surface, d.accent) : sw(t[2], t[3], t[6])}<span>${T(t[1])}</span></button>`; }).join('')}
           <button type="button" class="thb ${th === 'custom' ? 'on' : ''}" data-a="vtheme" data-v="custom">${sw(fc.bg, fc.surface, fc.accent)}<span>${T('✏️ Eigene Farben')}</span></button>
         </div>
         ${th === 'custom' ? `<div class="colpk">${colRow('bg', T('Hintergrund'))}${colRow('surface', T('Kacheln'))}${colRow('text', T('Schrift'))}${colRow('accent', T('Akzentfarbe'))}</div>
           <div class="hint">${T('Tipp: Wähle zuerst den Hintergrund – Schrift und Kacheln passen sich dann automatisch an.')}</div>
           ${bad ? `<div class="hint warn">${T('⚠️ Die Schrift ist auf diesem Hintergrund schwer lesbar.')}</div>` : ''}
-          <div class="btnrow"><button type="button" class="btn sm" data-a="vcolreset">${T('↺ Farben zurücksetzen')}</button></div>` : ''}`;
+          <div class="btnrow"><button type="button" class="btn sm" data-a="vcolreset">${T('↺ Farben zurücksetzen')}</button></div>
+          ${this._chk('vDarkOwn', !!c.vDarkOwn, T('🌙 Im Darkmode automatisch dunkel<small>Auf Geräten, auf denen Home Assistant dunkel eingestellt ist, werden deine Farben passend abgedunkelt. Die Akzentfarbe bleibt.</small>'))}` : ''}
+        ${this._darkMode() && th && (th !== 'custom' || c.vDarkOwn) ? `<div class="hint">${T('🌙 Darkmode erkannt: Helle Vorlagen werden auf diesem Gerät automatisch dunkel.')}</div>` : ''}`;
       return ['look', T('🎨 Darstellung'), sum, `
         ${colors}
         <div class="lbl">${T('📐 Anordnung')}</div>
@@ -4610,6 +5087,9 @@ actions:
           ${this._chk('dOpen', !!c.dOpen, T('📋 Offene Aufgaben mit auflisten'))}
           ${this._repOpts('d')}
           <div><button class="btn" data-a="dtest" ${c.targets.length ? '' : 'disabled'}>${T('🌙 Jetzt senden')}</button></div></div>` : ''}
+          ${c.sensors !== false ? `<div class="lbl">${T('📋 Abend-Erinnerung')}</div>
+          ${this._autoRowSig('remind', T('📋 Abends erinnern, wenn ein Kind noch nicht alles erledigt hat'), `<div class="fopt"><label>${T('Uhrzeit')}<input type="time" data-cfgs="remT" value="${esc(/^\d\d:\d\d$/.test(c.remT || '') ? c.remT : '19:00')}"></label></div>`)}
+          <div class="hint">${T('Kommt nur, wenn noch etwas offen ist – anders als der Tagesabschluss, der immer kommt. Eine Automation in Home Assistant, läuft auch ohne geöffnete Karte.')}${c.targets.length ? '' : ` ${T('⚠️ Für Nachrichten zuerst unter 🔔 Benachrichtigungen ein Ziel auswählen.')}`}</div>` : ''}
 `],
         ['btn', T('✓ Knöpfe &amp; Telegram-Befehle'), [c.nActions !== false ? T('Knöpfe an') : T('Knöpfe aus'), c.cmdOn ? T('Befehle an') : ''].filter(Boolean).join(' · '), `
           ${chk('nActions', c.nActions !== false, T('Freigeben / Ablehnen direkt in der Push-Nachricht anzeigen'))}
@@ -4656,7 +5136,7 @@ actions:
       ];
       const byId = {}; sec.forEach((x) => { byId[x[0]] = x; });
       const groups = [
-        [T('⚙️ Allgemein'), ['lang', 'look', 'vac', 'sec']],
+        [T('⚙️ Allgemein'), ['lang', 'look', 'vac', 'sec', 'f_advOn']],
         [T('✅ Aufgaben & Tagesablauf'), ['f_dayBlocks', 'f_routOn', 'f_extraOn', 'f_photoOn', 'f_nfcOn', 'f_muellOn', 'f_calOn', 'f_orderOn', 'f_prevOn']],
         [T('⭐ Punkte & Boni'), ['appr', 'streak', 'f_wbOn', 'f_teamOn', 'f_dblOn', 'f_bdOn', 'f_behavOn', 'f_negOn', 'f_gradesOn']],
         [T('🎁 Belohnungen & Geld'), ['f_goalOn', 'f_progOn', 'f_wishOn', 'f_jokerOn', 'f_shareOn', 'f_costKidOn', 'f_walletOn', 'f_priceOn', 'money']],
@@ -4931,6 +5411,10 @@ actions:
         ${D(L)}
         ${c.voiceOn ? `<div class="fopt">${autoRow('voice', T('🎙️ Sprach-Automation'))}<div class="hint">${T('Weitere Sätze: „Was muss {name} noch machen?“, „Wie viele Punkte hat {name}?“ – {name} ist der Name des Kindes.', { name: esc((this._kids()[0] || {}).name || 'Mia') })}</div></div>` : ''}
       `);
+      fx.advOn = F('advOn', !!c.advOn, T('🎄 Adventskalender<small>Türchen für jedes Kind vom 1. bis 24. Dezember – mit Text, Bild, Sternen oder einer geschenkten Belohnung. Eltern befüllen sie im neuen Tab 🎄 Advent, die Kinder öffnen sie über den 🎄-Knopf in ihrer Ansicht.</small>'), (L) => `
+        ${D(L)}
+        ${c.advOn ? `<div class="fopt"><div class="hint">${T('Eigene Karte nur mit dem Kalender: Ansicht „🎄 Adventskalender“ im Karten-Editor (optional mit Kind).')}</div><div class="btnrow"><button class="btn sm" data-a="tab" data-id="advent">${T('🎄 Zum Adventskalender')}</button></div></div>` : ''}
+      `);
       fx.lmOn = F('lmOn', !!c.lmOn, T('🟦 LaMetric<small>Zeigt erledigte Aufgaben, „Alles geschafft!“ und eingelöste Belohnungen auf einer LaMetric TIME an.</small>'), (L) => `
         ${D(L)}
         ${c.lmOn ? `<div class="fopt">${lmDevs.length ? `<label>${T('Gerät')}<select data-cfgs="lmDev"><option value="">${T('– bitte wählen –')}</option>${lmDevs.map((d) => `<option value="${esc(d.id)}" ${c.lmDev === d.id ? 'selected' : ''}>${esc(d.name_by_user || d.name || d.id)}</option>`).join('')}</select></label>
@@ -5019,12 +5503,38 @@ actions:
     _ord(a, b) { return this._cfg.orderOn ? (a.order || 0) - (b.order || 0) : 0; }
     _taskOrder() { return Object.values(this._db.task).filter((t) => !t.virtual).sort((a, b) => (a.sched === 'once') - (b.sched === 'once') || this._blkRank(a) - this._blkRank(b) || this._ord(a, b) || String(a.title).localeCompare(String(b.title))); }
 
+    // 📋 Eltern-Heute: Kinder und Tagesblöcke einklappbar – gemerkt auf diesem Gerät
+    _admFolded(key) {
+      if (!this._admF) { try { this._admF = JSON.parse(localStorage.getItem('kpAdmFold') || '{}') || {}; } catch (e) { this._admF = {}; } }
+      return !!this._admF[key];
+    }
+
+    // Tagesblock im Eltern-Heute offen? Von Hand geschlossen gilt dauerhaft, von Hand geöffnet für heute;
+    // sonst automatisch zu, wenn alle Pflicht-Aufgaben erledigt sind oder das Zeitfenster vorbei ist (wie in der Kinder-Ansicht)
+    _admBlkOpen(key, list, k) {
+      this._admFolded('');
+      const m = this._admF[key], today = dk(new Date());
+      let auto = false; // würde automatisch zuklappen
+      if (this._cfg.autoFold !== false) {
+        const rq = list.filter((t) => this._req(t) && this._status(t, k.id).s !== 'taken');
+        const allDone = rq.length > 0 && rq.every((t) => ['d', 'p', 'e', 'x', 'm'].includes(this._status(t, k.id).s));
+        const ends = list.map((t) => this._winTo(t)).filter(Boolean).sort();
+        auto = allDone || (ends.length > 0 && ends.length === list.length && hhmm(new Date()) > ends[ends.length - 1]);
+      }
+      if (m === 1) return { open: false, auto };
+      if (m && typeof m === 'object' && m.day === today) return { open: true, auto };
+      return { open: !auto, auto };
+    }
+
     _todayAdmin(kids) {
       if (!kids.length) return `<div class="empty">${T('Lege zuerst unter 👧 Kinder ein Kind an.')}</div>`;
-      return `${this._checkHtml()}<div style="margin:0 0 10px"><button class="btn primary" data-a="etask">${T('＋ Aufgabe')}</button></div><div class="cols">${kids.map((k) => {
+      const anyOpen = kids.some((k) => !this._admFolded(`kid:${k.id}`));
+      return `${this._checkHtml()}<div class="btnrow" style="margin:0 0 10px"><button class="btn primary" data-a="etask">${T('＋ Aufgabe')}</button>${kids.length > 1 ? `<button class="btn" data-a="admall" data-v="${anyOpen ? 0 : 1}">${anyOpen ? T('▸ Alle einklappen') : T('▾ Alle aufklappen')}</button>` : ''}</div><div class="cols">${kids.map((k) => {
         const tasks = this._todayTasks(k.id);
-        return `<div class="box" style="${cv(k.color)}"><div class="colh">${this._avc(k)}<span>${esc(k.name)}</span>${this._cfg.behavOn ? `<span class="behav">${this._cfg.behavMinus ? `<button class="btn sm bhv no" data-a="behav" data-k="${k.id}" data-n="-1" title="${esc(T('😠 Unartig'))}" aria-label="${esc(T('😠 Unartig'))}">😠 −${Math.max(1, Number(this._cfg.behavMinusN) || 1)}</button>` : ''}<button class="btn sm bhv ok" data-a="behav" data-k="${k.id}" data-n="1" title="${esc(T('😊 Artig'))}" aria-label="${esc(T('😊 Artig'))}">😊 +${Math.max(1, Number(this._cfg.behavPlus) || 1)}</button></span>` : ''}<span class="pts">⭐ ${k.points || 0}</span></div>${this._pres(k.id, dk(new Date())).s === 'out' ? `<div class="hint">${(() => { const n = this._presNext(k.id, dk(new Date())); return n ? T('🏠 Nicht da – wieder da: {day} {date}{time}', { day: DAYS[new Date(`${n.d}T12:00:00`).getDay()], date: shortDate(n.d), time: n.at ? ` ${T('ab {time} Uhr', { time: n.at })}` : '' }) : T('🏠 Nicht da'); })()}</div>` : ''}
-          ${this._adminRows(k, tasks)}</div>`;
+        const kOpen = !this._admFolded(`kid:${k.id}`);
+        const rq = tasks.filter((t) => this._req(t) && this._status(t, k.id).s !== 'taken'), dn = rq.filter((t) => this._status(t, k.id).s === 'd').length;
+        return `<div class="box" style="${cv(k.color)}"><div class="colh"><button type="button" class="admk" data-a="admfold" data-id="kid:${k.id}" aria-expanded="${kOpen}" title="${esc(T('Ein-/Ausklappen'))}"><span class="chev">${kOpen ? '▾' : '▸'}</span>${this._avc(k)}<span>${esc(k.name)}</span></button>${this._cfg.behavOn ? `<span class="behav">${this._cfg.behavMinus ? `<button class="btn sm bhv no" data-a="behav" data-k="${k.id}" data-n="-1" title="${esc(T('😠 Unartig'))}" aria-label="${esc(T('😠 Unartig'))}">😠 −${Math.max(1, Number(this._cfg.behavMinusN) || 1)}</button>` : ''}<button class="btn sm bhv ok" data-a="behav" data-k="${k.id}" data-n="1" title="${esc(T('😊 Artig'))}" aria-label="${esc(T('😊 Artig'))}">😊 +${Math.max(1, Number(this._cfg.behavPlus) || 1)}</button></span>` : ''}<span class="pts">⭐ ${k.points || 0}</span>${Object.keys(this._db.reward).length ? `<button class="btn sm ardm" data-a="ardm" data-k="${k.id}" title="${esc(T('🎁 Belohnung einlösen'))}" aria-label="${esc(T('🎁 Belohnung einlösen'))}">🎁</button>` : ''}</div>${this._pres(k.id, dk(new Date())).s === 'out' ? `<div class="hint">${(() => { const n = this._presNext(k.id, dk(new Date())); return n ? T('🏠 Nicht da – wieder da: {day} {date}{time}', { day: DAYS[new Date(`${n.d}T12:00:00`).getDay()], date: shortDate(n.d), time: n.at ? ` ${T('ab {time} Uhr', { time: n.at })}` : '' }) : T('🏠 Nicht da'); })()}</div>` : ''}
+          ${kOpen ? this._adminRows(k, tasks) : `<div class="hint">${rq.length ? T('{done}/{total} heute erledigt', { done: dn, total: rq.length }) : T('Heute keine Aufgaben.')}</div>`}</div>`;
       }).join('')}</div><div class="hint">${T('Antippen hakt eine Aufgabe direkt ab (gibt Punkte) oder nimmt sie zurück.')}</div>`;
     }
 
@@ -5033,8 +5543,9 @@ actions:
             const { s, by, bySt } = this._status(t, k.id);
             const streak = t.sched === 'once' ? 0 : this._curStreak(t, k.id);
             const sub = [this._winText(t) ? `⏰ ${this._winText(t)}` : '', t.sched === 'once' ? T('⚡ Sonderaufgabe') : '', this._calLabel(t, dk(new Date())) ? `🗓️ ${esc(this._calLabel(t, dk(new Date())))}` : '', this._isExtra(t) ? T('🙋 Zusatzaufgabe') : '', streak >= 2 ? T('🔥 {n} Tage', { n: streak }) : '', s === 'x' ? T('−{n} ⭐ abgezogen', { n: t.penalty || 0 }) : '', s === 'taken' ? (bySt === 'p' ? T('⏳ {name} hat es gemacht – wartet auf Freigabe', { name: esc((this._db.kid[by] || {}).name || T('Jemand')) }) : T('✓ Schon erledigt von {name}', { name: esc((this._db.kid[by] || {}).name || T('Jemand')) })) : ''].filter(Boolean).join(' · ');
-            const cls = s === 'x' || s === 'm' ? 'm' : s === 'e' ? 'e' : s === 'taken' ? '' : s || (this._win(t) === 'after' ? 'm' : '');
-            const ico = s === 'd' ? '✓' : s === 'p' ? '⏳' : s === 'e' ? '🙂' : s === 'm' ? '?' : s === 'taken' ? '🔒' : s === 'x' || this._win(t) === 'after' ? '✕' : '';
+            const over = !s && this._win(t) === 'after' && !this._isExtra(t); // Zusatzaufgaben sind freiwillig – nach Ablauf kein „verpasst“
+            const cls = s === 'x' || s === 'm' ? 'm' : s === 'e' ? 'e' : s === 'taken' ? '' : s || (over ? 'm' : '');
+            const ico = s === 'd' ? '✓' : s === 'p' ? '⏳' : s === 'e' ? '🙂' : s === 'm' ? '?' : s === 'taken' ? '🔒' : s === 'x' || over ? '✕' : '';
             return `<button class="trow" data-a="atap" data-t="${t.id}" data-k="${k.id}">
             <span class="st ${cls}">${ico}</span><span class="grow">${esc(t.emoji || '')} ${esc(t.title)}${sub ? `<small>${sub}</small>` : ''}</span><span class="pts">+${t.points || 0}</span></button>`;
                 };
@@ -5043,8 +5554,8 @@ actions:
       return this._blockDefs().map(([id, label]) => {
         const list = tasks.filter((t) => this._blk(t) === id);
         if (!list.length) return '';
-        const rq = list.filter((t) => this._req(t) && this._status(t, k.id).s !== 'taken');
-        return `<div class="sect" style="font-size:15px;margin-top:6px"><span>${label}</span><span class="hint">${rq.filter((t) => this._status(t, k.id).s === 'd').length}/${rq.length}</span></div>${list.map(rowOf).join('')}`;
+        const rq = list.filter((t) => this._req(t) && this._status(t, k.id).s !== 'taken'), key = `${k.id}:${id}`, bo = this._admBlkOpen(key, list, k), open = bo.open;
+        return `<button type="button" class="sect blkh admb" data-a="admfold" data-id="${key}" data-auto="${bo.auto ? 1 : 0}" aria-expanded="${open}" title="${esc(T('Ein-/Ausklappen'))}"><span class="chev">${open ? '▾' : '▸'}</span><span class="grow">${label}</span><span class="hint">${rq.filter((t) => this._status(t, k.id).s === 'd').length}/${rq.length}</span></button>${open ? list.map(rowOf).join('') : ''}`;
       }).join('');
     }
 
@@ -5129,7 +5640,7 @@ actions:
       const sk = this._shareOn(r) ? this._shareKids(r) : null;
       const only = !sk && this._rwKids(r).length < this._kids().length ? T('👧 nur für {names}', { names: this._names(this._rwKids(r)) }) : '';
       const share = sk ? T('👫 Gemeinsam: {names}', { names: sk.map((id) => nw(`${esc(this._kn(id))} ${this._shareCost(r, id, sk.length)} ⭐`)).join(' · ') }) : '';
-      return `<div class="row"><span style="font-size:24px">${esc(r.emoji || '🎁')}</span><span class="grow">${esc(r.title)}${r.limit ? `<small>${T('max. {n}× pro Woche', { n: r.limit })}</small>` : ''}${line ? `<small>${line}</small>` : ''}${share ? `<small>${share}</small>` : ''}${only ? `<small>${esc(only)}</small>` : ''}</span><span class="pts">${diff ? `${lo}–${hi}` : own ? lo : r.cost} ⭐</span><button class="icon" data-a="erew" data-id="${r.id}">✎</button></div>`;
+      return `<div class="row"><span style="font-size:24px">${esc(r.emoji || '🎁')}</span><span class="grow">${esc(r.title)}${this._advR(r) ? `<small>${T('🎄 Nur im Adventskalender')}</small>` : ''}${r.limit ? `<small>${T('max. {n}× pro Woche', { n: r.limit })}</small>` : ''}${line ? `<small>${line}</small>` : ''}${share ? `<small>${share}</small>` : ''}${only ? `<small>${esc(only)}</small>` : ''}</span><span class="pts">${diff ? `${lo}–${hi}` : own ? lo : r.cost} ⭐</span><button class="icon" data-a="erew" data-id="${r.id}">✎</button></div>`;
     }
 
     _rewardsAdmin() {
@@ -5138,10 +5649,13 @@ actions:
       const fam = `<div class="box"><h3>${T('👨‍👩‍👧 Familienziel')}</h3>${f && f.cost
         ? `<div class="row"><span style="font-size:24px">${esc(f.emoji || '👨‍👩‍👧')}</span><span class="grow">${esc(f.title)}<small>${T('{n}/{cost} ⭐ gemeinsam gesammelt', { n: Math.min(f.pts || 0, f.cost), cost: f.cost })}${f.reached ? ` · ${T('🎉 erreicht!')}` : ''}</small></span><button class="icon" data-a="famedit">✎</button></div>
           <div class="bar"><i style="width:${Math.round((Math.min(f.pts || 0, f.cost) / f.cost) * 100)}%"></i></div>
-          ${f.reached ? `<div><button class="btn primary" data-a="famreset">${T('✓ Eingelöst – von vorne sammeln')}</button></div>` : ''}`
+          ${f.reached ? `<div><button class="btn primary" data-a="famreset">${T('✓ Eingelöst – von vorne sammeln')}</button></div>` : ''}
+          ${this._cfg.sensors !== false && this._famSens() ? `${this._autoRowSig('famgoal', T('🎉 Durchsage und Nachricht, wenn das Familienziel erreicht ist'))}${!(this._cfg.targets || []).length && !(this._cfg.rNotify || (this._cfg.rTts && (this._cfg.rPlayers || []).length)) ? `<div class="hint">${T('⚠️ Kein Lautsprecher und kein Benachrichtigungs-Ziel eingestellt.')}</div>` : ''}` : ''}`
         : `<div class="hint">${T('Alle Kinder sammeln zusätzlich gemeinsam auf ein großes Ziel – ihre eigenen Punkte bleiben dabei erhalten.')}</div><div><button class="btn primary" data-a="famedit">${T('＋ Familienziel festlegen')}</button></div>`}</div>`;
-      const gs = this._rwGroups(rs), az = this._cfg.rwSort === 'az';
-      const sortBar = rs.length > 1 ? `<div class="tkf tkg"><span class="hint">${T('Sortieren:')}</span><button class="btn sm ${az ? '' : 'on'}" data-a="rws" data-m="stars">${T('⭐ Sterne')}</button><button class="btn sm ${az ? 'on' : ''}" data-a="rws" data-m="az">${T('🔤 A–Z')}</button></div>` : '';
+      const mode = ['az', 'kid'].includes(this._cfg.rwSort) ? this._cfg.rwSort : 'stars', kidsN = this._kids().length;
+      const gs = mode === 'kid' && kidsN > 1 ? this._rwKidGroups(rs) : this._rwGroups(rs);
+      const sb = (m, l) => `<button class="btn sm ${mode === m ? 'on' : ''}" data-a="rws" data-m="${m}">${l}</button>`;
+      const sortBar = rs.length > 1 ? `<div class="tkf tkg"><span class="hint">${T('Sortieren:')}</span>${sb('stars', T('⭐ Sterne'))}${sb('az', T('🔤 A–Z'))}${kidsN > 1 ? sb('kid', T('👧 Nach Kind')) : ''}</div>` : '';
       return `${fam}<div class="box"><h3>${T('🎁 Belohnungen')}</h3>${sortBar}${gs.map(([t, l]) => `${gs.length > 1 ? `<div class="tcat">${t}</div>` : ''}${l.map((r) => this._rewardRow(r)).join('')}`).join('') || `<div class="hint">${T('Noch keine Belohnungen. Ideen: 🍦 Eisgutschein · 📺 30 Min. Fernsehen · 🎮 Spieleabend')}</div>`}
         <div class="btnrow"><button class="btn primary" data-a="erew">${T('＋ Belohnung')}</button>${this._cfg.priceOn && rs.length ? `<button class="btn" data-a="psug">${T('💡 Preise vorschlagen')}</button>` : ''}</div></div>`;
     }
@@ -5329,7 +5843,7 @@ actions:
     }
     async _updCheck(force) {
       const c = this._cfg;
-      if (c.updOn === false || ['kid', 'kids'].includes(this._config.mode) || !this._hass) return;
+      if (c.updOn === false || ['kid', 'kids', 'advent'].includes(this._config.mode) || !this._hass) return;
       if (!force && this._updT && Date.now() - this._updT < 6 * 3600000) return;
       this._updT = Date.now();
       const u = { file: 0, res: null };
@@ -5623,7 +6137,7 @@ actions:
       const old = this._dchk ? this._dchk.sig : '';
       this._dchk = any ? { miss, bad, broken, sig } : null;
       if ((this._dchk ? sig : '') !== old) this._render();
-      if (any && !['kid', 'kids'].includes(this._config.mode)) {
+      if (any && !['kid', 'kids', 'advent'].includes(this._config.mode)) {
         let sent = '';
         try { sent = localStorage.getItem(`${this._manKey()}:sent`) || ''; } catch (e) { sent = ''; }
         if (sent !== sig) {
@@ -5752,7 +6266,8 @@ actions:
       const today = dk(new Date()), curTomb = { ...(this._cfg.tomb || {}) }, dels = {}, back = new Set();
       this._noTomb = true;
       try {
-        ['kid', 'task', 'reward', 'log', 'req', 'cfg'].forEach((ty) => {
+        ['kid', 'task', 'reward', 'log', 'req', 'cfg', 'adc', 'adk'].forEach((ty) => {
+          if (['adc', 'adk'].includes(ty) && !j.data[ty]) return; // ältere Sicherung ohne Adventskalender: vorhandene Türchen behalten
           const src = j.data[ty] || {};
           Object.keys(this._db[ty]).forEach((id) => {
             if (src[id] || (this._db[ty][id] || {}).virtual) return;
@@ -5880,7 +6395,7 @@ actions:
     // Plan für die nächsten 14 Tage in die Liste schreiben – daraus liest die Automation in Home Assistant
     _planCheck() {
       const c = this._cfg;
-      if (!['kid', 'kids'].includes(this._config.mode)) {
+      if (!['kid', 'kids', 'advent'].includes(this._config.mode)) {
         this._autoStatus();
         // Knöpfe-Automation der Handy-App auf neuen Stand bringen (merkt sich jetzt, wer gedrückt hat)
         if ((this._autoOk || {}).app && c.appV !== 2 && !this._appUpd) { this._appUpd = true; this._autoCreate('app', true); }
@@ -5898,7 +6413,7 @@ actions:
         if (c.nfcSig !== sig) { this._nfcBusy = true; this._autoCreate('nfc', true).then(() => this._setCfg({ nfcSig: sig })).finally(() => { this._nfcBusy = false; }); }
       }
       if (c.voiceOn && (this._autoOk || {}).voice && this._admin() && !this._voiceBusy && c.voiceSig !== LANG) { this._voiceBusy = true; this._autoCreate('voice', true).then(() => this._setCfg({ voiceSig: LANG })).finally(() => { this._voiceBusy = false; }); }
-      if (!c.bgOn && !c.voiceOn) { if (this._db.plan.main && !['kid', 'kids'].includes(this._config.mode)) this._del('plan', 'main'); return; }
+      if (!c.bgOn && !c.voiceOn) { if (this._db.plan.main && !['kid', 'kids', 'advent'].includes(this._config.mode)) this._del('plan', 'main'); return; }
       if (!this._kids().length) return;
       const { plan, times } = this._planBuild();
       this._bgTimes = times;
@@ -5909,7 +6424,7 @@ actions:
       if (strip(plan) !== strip(cur) && (!cur.gen || cur.dev === window.__kpDev || age > 10 * 60000)) this._save('plan', 'main', { ...plan, gen: Date.now(), dev: window.__kpDev });
       // Uhrzeiten geändert -> Automation anpassen (nur als Administrator möglich)
       const sig = [...times, c.cmdOn ? 'cmd' : '', BG_V].join(',');
-      if (!['kid', 'kids'].includes(this._config.mode)) this._autoStatus();
+      if (!['kid', 'kids', 'advent'].includes(this._config.mode)) this._autoStatus();
       if (c.bgOn && (this._autoOk || {}).bg && c.bgSig !== sig && !this._bgBusy) { this._bgBusy = true; this._autoCreate('bg', true).finally(() => { this._bgBusy = false; }); }
     }
 
@@ -6062,7 +6577,7 @@ actions:
 
     _backupJson() {
       const data = {};
-      ['kid', 'task', 'reward', 'log', 'req', 'cfg'].forEach((ty) => {
+      ['kid', 'task', 'reward', 'log', 'req', 'cfg', 'adc', 'adk'].forEach((ty) => {
         data[ty] = {};
         Object.values(this._db[ty]).forEach((x) => { if (x.virtual) return; const c = { ...x }; delete c.id; data[ty][x.id] = c; });
       });
@@ -6151,7 +6666,10 @@ actions:
           <div class="hint">${T('Ausgezahlt wird unter 👧 Kinder mit 💶 – die Sterne werden abgezogen und im Verlauf vermerkt.')}</div>`],
           ['sens', T('📊 Sensoren & Automationen'), c.sensors !== false ? T('an') : T('aus'), `
           ${this._chk('sensors', c.sensors !== false, T('Punktestand und Tagesstand jedes Kindes als Sensor bereitstellen'))}
-          <div class="hint">${sens.length ? sens.map((x) => `<code>${x}</code>`).join(' ') : T('Sensoren entstehen, sobald Kinder angelegt sind.')}<br>${T('Zustand = Punkte · Attribute: {attrs}. Z. B. für Automationen wie „Fernseher erst, wenn alles erledigt ist“. Aktualisiert, solange eine Yippee!-Karte bei einem Administrator geöffnet ist.', { attrs: `heute_erledigt, heute_gesamt, heute_netto, woche_netto, alles_erledigt, offen, wartet_auf_freigabe, level, ziel, urlaub${c.moneyOn ? ', euro' : ''}` })}${this._sensorFail ? `<br>${T('⚠️ Dieser Benutzer darf keine Sensoren anlegen (kein Administrator).')}` : ''}</div>          ${this._ptsInfo()}
+          <div class="hint">${sens.length ? sens.map((x) => `<code>${x}</code>`).join(' ') : T('Sensoren entstehen, sobald Kinder angelegt sind.')}<br>${T('Zustand = Punkte · Attribute: {attrs}. Z. B. für Automationen wie „Fernseher erst, wenn alles erledigt ist“. Aktualisiert, solange eine Yippee!-Karte bei einem Administrator geöffnet ist.', { attrs: `heute_erledigt, heute_gesamt, heute_netto, woche_netto, alles_erledigt, offen, wartet_auf_freigabe, level, ziel, urlaub${c.moneyOn ? ', euro' : ''}` })}${this._sensorFail ? `<br>${T('⚠️ Dieser Benutzer darf keine Sensoren anlegen (kein Administrator).')}` : ''}</div>
+          ${c.sensors !== false ? `${this._chk('sensKeep', !!c.sensKeep, T('🔁 Auch nach einem Neustart sofort da<small>Home Assistant liest die Sensoren dann selbst aus der Yippee-Liste – ohne geöffnete Karte. Einmalig eine Vorlage in die configuration.yaml kopieren.</small>'))}
+          ${c.sensKeep ? this._sensKeepUi() : ''}
+          ${this._sensAutoUi()}` : ''}          ${this._ptsInfo()}
 `],
           ['bk', T('💾 Datensicherung'), [c.abOn !== false && bks.length ? T('zuletzt {date}', { date: shortDate(bks[0]) }) : c.abOn === false ? T('Automatik aus') : '', this._dchk ? T('⚠️ Datenprüfung') : ''].filter(Boolean).join(' · '), `
           ${this._chkBanner()}
@@ -6306,7 +6824,7 @@ actions:
     _presEditor(k) {
       const pr = this._presCfg(k.pres && { ...k.pres, on: true }) || {}, on = !!(k.pres && k.pres.on), hol = pr.hol || {};
       const wd = (attr, v) => `<select ${attr}>${[1, 2, 3, 4, 5, 6, 0].map((x) => `<option value="${x}" ${Number(v) === x ? 'selected' : ''}>${DAYS[x]}</option>`).join('')}</select>`;
-      const exRow = (x = {}) => `<div class="g3 exrow" style="grid-template-columns:1fr 1fr;align-items:end;margin-top:8px;padding-bottom:8px;border-bottom:1px solid var(--ln)"><label>${T('von')}<input type="date" data-exf value="${esc(x.from || '')}"></label><label>${T('bis')}<input type="date" data-ext value="${esc(x.to || '')}"></label><label><select data-exs><option value="in" ${x.st !== 'out' ? 'selected' : ''}>${T('da')}</option><option value="out" ${x.st === 'out' ? 'selected' : ''}>${T('nicht da')}</option></select></label><div style="text-align:right"><button type="button" class="icon" data-a="exdel">✕</button></div></div>`;
+      const exRow = (x = {}) => `<div class="g3 exrow" style="grid-template-columns:repeat(2,minmax(0,1fr));align-items:end;margin-top:8px;padding-bottom:8px;border-bottom:1px solid var(--ln)"><label>${T('von')}<input type="date" data-exf value="${esc(x.from || '')}"></label><label>${T('bis')}<input type="date" data-ext value="${esc(x.to || '')}"></label><label>${T('ab (Uhrzeit)')}<input type="time" data-exft value="${esc(x.fT || '')}"></label><label>${T('bis (Uhrzeit)')}<input type="time" data-extt value="${esc(x.tT || '')}"></label><label><select data-exs><option value="in" ${x.st !== 'out' ? 'selected' : ''}>${T('da')}</option><option value="out" ${x.st === 'out' ? 'selected' : ''}>${T('nicht da')}</option></select></label><div style="text-align:right"><button type="button" class="icon" data-a="exdel">✕</button></div></div>`;
       const ruRow = (r = {}) => `<div class="prule" style="margin-top:8px;padding:8px;border-radius:12px;background:var(--bg)">
         <div class="g2 g2e"><label>${T('Kind ist')}<select data-rst><option value="out" ${r.st !== 'in' ? 'selected' : ''}>${T('nicht da')}</option><option value="in" ${r.st === 'in' ? 'selected' : ''}>${T('da')}</option></select></label>
         <label>${T('Rhythmus')}<select data-rev>${[[1, T('jede Woche')], [2, T('alle 2 Wochen')], [3, T('alle 3 Wochen')], [4, T('alle 4 Wochen')]].map(([v, l]) => `<option value="${v}" ${Number(r.every || 1) === v ? 'selected' : ''}>${l}</option>`).join('')}</select></label></div>
@@ -6329,7 +6847,7 @@ actions:
         <div class="lbl">${T('📌 Ausnahmen')}</div>
         <div data-exs-wrap>${(pr.ex || []).map((x) => exRow(x)).join('')}</div>
         <button type="button" class="btn sm" data-a="exadd">${T('＋ Ausnahme')}</button>
-        <div class="hint">${T('Z. B. getauschtes Wochenende. Ausnahmen gelten vor Ferienregelung und Regeln.')}</div>
+        <div class="hint">${T('Z. B. getauschtes Wochenende. Ausnahmen gelten vor Ferienregelung und Regeln.')} ${T('Uhrzeit „ab“ gilt am ersten Tag, „bis“ am letzten (z. B. Ankunft und Abreise) – davor bzw. danach gilt, was sonst gilt. Leer = ganzer Tag.')}</div>
         <div class="tplbar"><span class="lbl">${T('Vorschau: da in den nächsten 8 Wochen')}</span><button type="button" class="btn sm" data-a="prprev">${T('🔄 Vorschau')}</button></div>
         <div class="hint" data-prprev>${k.id && on ? this._presPreview(k.id, 8).map(esc).join('<br>') || T('In den nächsten 8 Wochen nicht da.') : ''}</div>
       </details>`;
@@ -6340,7 +6858,8 @@ actions:
       if (!q('presOn')) return null;
       const hol = {};
       HOL_TYPES.forEach(([id]) => { const m = q(`ph_${id}`).value; if (m) hol[id] = { m, w: Math.max(1, Math.min(8, Math.round(Number(q(`pw_${id}`).value) || 3))) }; });
-      const ex = [...b.querySelectorAll('.exrow')].map((r) => ({ from: r.querySelector('[data-exf]').value, to: r.querySelector('[data-ext]').value, st: r.querySelector('[data-exs]').value })).filter((x) => x.from && x.to).map((x) => (x.from > x.to ? { ...x, from: x.to, to: x.from } : x));
+      const tm = (el) => { const v = el ? el.value : ''; return /^\d\d:\d\d$/.test(v) ? v : ''; };
+      const ex = [...b.querySelectorAll('.exrow')].map((r) => { const x = { from: r.querySelector('[data-exf]').value, to: r.querySelector('[data-ext]').value, st: r.querySelector('[data-exs]').value }; const fT = tm(r.querySelector('[data-exft]')), tT = tm(r.querySelector('[data-extt]')); if (fT) x.fT = fT; if (tT) x.tT = tT; return x; }).filter((x) => x.from && x.to).map((x) => (x.from > x.to ? { ...x, from: x.to, to: x.from } : x));
       const rules = [...b.querySelectorAll('.prule')].map((r) => ({ st: r.querySelector('[data-rst]').value, every: Number(r.querySelector('[data-rev]').value) || 1, start: r.querySelector('[data-rsd]').value, fT: r.querySelector('[data-rft]').value || '', toDay: Number(r.querySelector('[data-rtd]').value), tT: r.querySelector('[data-rtt]').value || '' })).filter((r) => r.start);
       return { on: q('presOn').checked, base: q('pBase').value === 'out' ? 'out' : 'in', rules, hol, swap: q('pSwap').checked, hA: q('pHA').value || '', hL: q('pHL').value || '', ex };
     }
@@ -6540,16 +7059,22 @@ actions:
       this.shadowRoot.querySelectorAll('.wizg').forEach((g) => { const n = g.querySelector('.wizn'); if (n) n.textContent = `${g.querySelectorAll('.wizt:checked').length}/${g.querySelectorAll('.wizt').length}`; });
     }
 
+    // Auswahl im Assistenten aus den Kästchen übernehmen – auch vor jedem Neuzeichnen (sonst gingen Häkchen verloren,
+    // wenn sich währenddessen z. B. auf einem anderen Gerät etwas ändert)
+    _wizKeep() {
+      const w = this._wiz, root = this.shadowRoot;
+      if (!w || !root.querySelector('.wiz')) return;
+      if (w.step === 2 && root.querySelector('.wizt')) { w.t = new Set([...root.querySelectorAll('.wizt:checked')].map((x) => Number(x.value))); w.open = new Set([...root.querySelectorAll('.wizg[open]')].map((x) => x.dataset.b)); }
+      if (w.step === 3 && root.querySelector('.wizr')) {
+        w.r = new Set([...root.querySelectorAll('.wizr:checked')].map((x) => Number(x.value)));
+        w.rc = w.rc || {}; root.querySelectorAll('.wizrcv').forEach((x) => { const v = Math.round(Number(x.value)); if (v > 0) w.rc[x.dataset.i] = Math.min(9999, v); });
+      }
+      if (w.step === 4 && root.querySelector('.wizf, .wizp')) { w.f = w.f || {}; root.querySelectorAll('.wizf').forEach((x) => { w.f[x.dataset.k] = x.checked; }); w.p = new Set([...root.querySelectorAll('.wizp:checked')].map((x) => x.value)); }
+    }
+
     _wizAct(ds, el) {
       const w = this._wiz || (this._wiz = { step: 1, kids: new Set() }), kids = this._kids(), root = this.shadowRoot;
-      const keep = () => {
-        if (w.step === 2) { w.t = new Set([...root.querySelectorAll('.wizt:checked')].map((x) => Number(x.value))); w.open = new Set([...root.querySelectorAll('.wizg[open]')].map((x) => x.dataset.b)); }
-        if (w.step === 3) {
-          w.r = new Set([...root.querySelectorAll('.wizr:checked')].map((x) => Number(x.value)));
-          w.rc = w.rc || {}; root.querySelectorAll('.wizrcv').forEach((x) => { const v = Math.round(Number(x.value)); if (v > 0) w.rc[x.dataset.i] = Math.min(9999, v); });
-        }
-        if (w.step === 4) { w.f = w.f || {}; root.querySelectorAll('.wizf').forEach((x) => { w.f[x.dataset.k] = x.checked; }); w.p = new Set([...root.querySelectorAll('.wizp:checked')].map((x) => x.value)); }
-      };
+      const keep = () => this._wizKeep();
       if (ds.s !== 'addkid') { const ae = root.activeElement; if (ae && ae.blur) ae.blur(); }
       switch (ds.s) {
         case 'addkid': {
@@ -6604,7 +7129,7 @@ actions:
     // 💽 Speicher: Größe der Liste und Aufräumen
     _memSection() {
       const m = this._mem || { total: 0, by: {} }, kb = (b) => `${Math.max(1, Math.round(b / 1024))} KB`;
-      const parts = [['📦', T('Kinder, Aufgaben, Belohnungen'), ['kid', 'task', 'reward', 'cfg', 'plan', 'pt', 'act', 'req']], ['📅', T('Tagesprotokolle'), ['log']], ['💾', T('Automatische Sicherungen'), ['bak']], ['📷', T('Fotos'), ['ph']], ['🗑️', T('Papierkorb'), ['trash']], ['📜', T('Änderungsprotokoll'), ['audit']]];
+      const parts = [['📦', T('Kinder, Aufgaben, Belohnungen'), ['kid', 'task', 'reward', 'cfg', 'plan', 'pt', 'act', 'req', 'sens']], ['📅', T('Tagesprotokolle'), ['log']], ['💾', T('Automatische Sicherungen'), ['bak']], ['📷', T('Fotos'), ['ph']], ['🗑️', T('Papierkorb'), ['trash']], ['📜', T('Änderungsprotokoll'), ['audit']]];
       const rows = parts.map(([e, l, ts]) => [e, l, ts.reduce((a, t) => a + (m.by[t] || 0), 0)]).filter((x) => x[2] > 0);
       const big = m.total > 1.5 * 1024 * 1024;
       return ['mem', T('💽 Speicher'), `${kb(m.total)}${big ? ' ⚠️' : ''}`, `
@@ -6740,7 +7265,9 @@ actions:
       const t0 = (id && this._db.task[id]) || cp;
       const rout = !!(this._cfg.routOn && (asRoutine || (t0 && Array.isArray(t0.steps) && t0.steps.length)));
       const t = t0 || { title: '', emoji: rout ? '📋' : '🦷', points: rout ? 0 : 1, kids: this._kids().map((k) => k.id), days: [], sched: 'week', dates: [], from: '', to: '' };
-      const days = (t.days || []).length ? t.days : WEEK;
+      // 🌙 „Am Abend vorher“: gespeichert sind die Abende, angezeigt werden die Tage mit Schule bzw. Termin (wie beim 🎽 Sporttage-Dialog)
+      const prevShift = t.school && (t.sched || 'week') === 'week' && this._schoolPrev(t) && (t.days || []).length;
+      const days = (t.days || []).length ? (prevShift ? t.days.map((x) => (x + 1) % 7) : t.days) : WEEK;
       const dates = (t.dates || []).filter((d) => d >= dk(new Date())).sort();
       const isDates = t.sched === 'dates';
       const isOnce = t.sched === 'once';
@@ -6800,7 +7327,7 @@ actions:
         <div class="sw-twice" style="display:${Array.isArray(t.slots) && t.slots.length > 1 ? 'block' : 'none'}"><div data-slots>${this._slotExtra(t).map((x, i) => this._slotRow(i + 2, x.from, x.to)).join('')}</div>
           <button type="button" class="btn sm" data-a="slotadd">${T('＋ Zeitfenster')}</button></div>
         <label class="crow"><input type="checkbox" name="school" data-a="schx" ${t.school || (!id && SCHOOL_RX.test(t.title || '')) ? 'checked' : ''}><span>${T('🎒 Nur an Schultagen')}<small>${this._cfg.hc ? T('Pausiert in den Schulferien, an Feiertagen und am Wochenende.') : T('Pausiert in den Schulferien, an Feiertagen und am Wochenende – dafür in ⚙️ Einstellungen → 🏖️ Urlaub &amp; Ferien Land und Region wählen.')}<br>${T('Schultage = Montag bis Freitag. Hat ein Kind auch samstags Unterricht: unter 👧 Kinder → ✎ „Samstagsschule“ anhaken.')}</small></span></label>
-        <div class="sub"><label class="crow"><input type="checkbox" name="schoolPrev" ${(id ? this._schoolPrev(t) : PREV_TPL.some((x) => String(t.title || '').toLowerCase() === T(x).toLowerCase())) ? 'checked' : ''}><span>${T('🌙 Am Abend vorher')}<small>${T('Für Aufgaben wie „Ranzen packen“: Sie kommt, wenn am nächsten Tag Schule ist – also auch sonntags, aber nicht am letzten Tag vor den Ferien.')}</small></span></label></div>
+        <div class="sub"><label class="crow"><input type="checkbox" name="schoolPrev" ${(id ? this._schoolPrev(t) : PREV_TPL.some((x) => String(t.title || '').toLowerCase() === T(x).toLowerCase())) ? 'checked' : ''}><span>${T('🌙 Am Abend vorher')}<small>${T('Für Aufgaben wie „Ranzen packen“: Sie kommt, wenn am nächsten Tag Schule ist – also auch sonntags, aber nicht am letzten Tag vor den Ferien.')}</small></span></label><div class="hint">${T('Bei den Wochentagen oben die Tage mit Schule bzw. Termin wählen – die Aufgabe kommt dann jeweils am Abend davor.')}</div></div>
         <label class="crow"><input type="checkbox" name="noschool" data-a="schx" ${t.noschool && !t.school ? 'checked' : ''}><span>${T('🏖️ Nur an schulfreien Tagen<small>Am Wochenende, in den Ferien und an Feiertagen (Ferien und Feiertage brauchen Land und Region unter 🏖️ Urlaub &amp; Ferien).</small>')}</span></label>
         ${this._cfg.freeLate ? `<label class="crow"><input type="checkbox" name="fixTime" ${t.fixTime ? 'checked' : ''}><span>${T('⏰ Feste Zeit auch an schulfreien Tagen<small>Für Aufgaben, die immer pünktlich sein müssen (z. B. Medikament, Haustier füttern): Die lockereren Zeiten an schulfreien Tagen gelten hier nicht.</small>')}</span></label>` : ''}
         <div class="lbl">${T('🌦️ Saison (optional)')}</div>
@@ -6825,6 +7352,8 @@ actions:
           const curT = (id && this._db.task[id]) || t;
           const keepDone = sched === 'once' && curT.sched === 'once' && curT.done ? { done: curT.done } : {};
           if (dd.length === 7) dd = [];
+          // 🌙 „Am Abend vorher“: gewählt sind die Tage mit Schule bzw. Termin – die Aufgabe kommt jeweils am Abend davor
+          if (sched === 'week' && dd.length && (b.querySelector('[name=school]') || {}).checked && (b.querySelector('[name=schoolPrev]') || {}).checked) dd = dd.map((x) => (x + 6) % 7);
           const from = b.querySelector('[name=from]').value, to = b.querySelector('[name=to]').value;
           if (from && to && from >= to) { this._toast(T('„von“ muss vor „bis“ liegen')); return false; }
           let slots;
@@ -6983,6 +7512,7 @@ actions:
           <div class="pick" style="margin-top:8px">${REWARD_TEMPLATES.map((x, i) => (x[3] === 'joker' && !this._cfg.jokerOn ? '' : `<button type="button" class="qp ${r.title === x[1] || r.title === T(x[1]) ? 'on' : ''}" data-a="rpick" data-i="${i}">${x[0]}<small>${esc(T(x[1]))}<br><b>${x[2]} ⭐</b></small></button>`)).join('')}</div>
         </details>
         ${this._cfg.jokerOn || r.joker ? this._chk('', !!r.joker, T('🃏 Ist ein Joker<small>Beim Einlösen bekommt das Kind einen Joker und kann damit eine Pflicht-Aufgabe auslassen.</small>')).replace('data-a="cfg" data-k=""', 'name="joker"') : ''}
+        ${this._advOn() || r.adv ? this._chk('', !!r.adv, T('🎄 Nur im Adventskalender<small>Die Kinder sehen diese Belohnung nicht in ihrer Liste – sie wird nur von einem Türchen geschenkt.</small>')).replace('data-a="cfg" data-k=""', 'name="advr"') : ''}
 `,
       id, {
         save: (b) => {
@@ -6997,7 +7527,7 @@ actions:
             costs = {};
             b.querySelectorAll('[data-kcost]').forEach((x) => { const v = Math.round(Number(x.value) || 0); if (v > 0 && v !== cost) costs[x.dataset.kcost] = v; });
           }
-          this._save('reward', id || uid(), { title, emoji: b.querySelector('[name=emoji]').value.trim() || '🎁', cost, ...(Object.keys(costs).length ? { costs } : {}), limit: Math.max(0, Math.round(Number(b.querySelector('[name=limit]').value) || 0)), joker: !!(b.querySelector('[name=joker]') || {}).checked, ...(rk.length && rk.length < allK.length ? { kids: rk } : {}), ...this._shareSave(b, r) });
+          this._save('reward', id || uid(), { title, emoji: b.querySelector('[name=emoji]').value.trim() || '🎁', cost, ...(Object.keys(costs).length ? { costs } : {}), limit: Math.max(0, Math.round(Number(b.querySelector('[name=limit]').value) || 0)), joker: !!(b.querySelector('[name=joker]') || {}).checked, ...((b.querySelector('[name=advr]') || {}).checked ? { adv: true } : {}), ...(rk.length && rk.length < allK.length ? { kids: rk } : {}), ...this._shareSave(b, r) });
           return true;
         },
         del: () => { this._delUndo('reward', id); return true; },
@@ -7176,6 +7706,8 @@ actions:
       if (this._pin()) this._touch();
       if (PARENT_ACTS.includes(a) && !this._isParent()) { this._toast(T('🔒 Nur für Eltern')); return; }
       switch (a) {
+        case 'advopen': if (this._db.kid[ds.k]) { this._advKid = ds.k; this._render(); } break;
+        case 'advclose': this._advKid = ''; this._render(); break;
         case 'hb': this._hbOpen(''); break;
         case 'hbt': this._hbOpen('', ds.t); break;
         case 'caled': this._editCalLink(ds.id || ''); break;
@@ -7217,7 +7749,7 @@ actions:
           try { localStorage.setItem('kpKv', JSON.stringify([...this._kvo])); } catch (e2) { /* egal */ }
           this._render(); break;
         }
-        case 'rws': this._setCfg({ rwSort: ds.m === 'az' ? 'az' : 'stars' }); this._render(); break;
+        case 'rws': this._setCfg({ rwSort: ['az', 'kid'].includes(ds.m) ? ds.m : 'stars' }); this._render(); break;
         case 'kadm': {
           // 👧 Kinder-Tab: Kind auf-/zuklappen (gemerkt pro Gerät)
           const c = this._kadmShut(); if (c.has(ds.k)) c.delete(ds.k); else c.add(ds.k);
@@ -7316,6 +7848,13 @@ actions:
         }
         case 'rej': this._adminSet(ds.d, ds.t, ds.k, false); break;
         case 'req': this._request(ds.r, ds.k, e); break;
+        case 'ardm': this._parentRedeemDlg(ds.k); break;
+        case 'ardo': {
+          // erster Tipp fragt nach, zweiter löst ein (Dialog wird nicht neu gezeichnet)
+          if (!el.dataset.sure) { el.dataset.sure = '1'; el.dataset.txt = el.textContent; el.textContent = T('Wirklich? {what}', { what: el.dataset.cost || '' }); setTimeout(() => { if (el.isConnected && el.dataset.sure) { delete el.dataset.sure; el.textContent = el.dataset.txt; } }, 8000); break; }
+          this._parentRedeem(ds.r, ds.k, ds.m || 'one');
+          break;
+        }
         case 'rapr': { const q = this._db.req[ds.q]; if (q) this._redeem(q.kid, q.reward, q.id); break; }
         case 'rrej': if ((this._db.req[ds.q] || {}).pool) { this._shareCancel(ds.q); break; } this._audReq(ds.q, false); this._del('req', ds.q); this._render(); break;
         case 'shr': this._shareTap(ds.r, ds.k, ds.m, e); break;
@@ -7406,6 +7945,7 @@ actions:
           } catch (err) { this._toast(T('Teilen geht auf diesem Gerät nicht – bitte „Herunterladen“ oder „Kopieren“')); }
           break;
         }
+        case 'sensyaml': this._copy(this._sensYaml(), T('📋 Vorlage kopiert – als packages/yippee.yaml speichern oder in die configuration.yaml einfügen, dann Home Assistant neu starten')); break;
         case 'bkcopy': this._copy(this._backupJson(), T('📋 Sicherung kopiert – z. B. in eine Notiz einfügen')); break;
         case 'bkrestore': this._restore(); break;
         case 'autonew': this._autoCreate(ds.k); break;
@@ -7421,13 +7961,13 @@ actions:
         case 'audmore': this._audN = (this._audN || 30) + 50; this._render(); break;
         case 'pinset': this._pinSet(); break;
         case 'pindel': {
-          if (!el.dataset.sure) { el.dataset.sure = '1'; el.textContent = T('Wirklich entfernen?'); break; }
+          if (!this._sureAsk(el, T('Wirklich entfernen?'))) break;
           this._setCfg({ pinH: '', pinS: '', pinL: 0 }); this._audit(T('🔢 PIN entfernt')); this._toast(T('PIN entfernt')); this._render();
           break;
         }
         case 'chkfix': this._chkFix(); break;
         case 'chkok': {
-          if (!el.dataset.sure) { el.dataset.sure = '1'; el.textContent = T('Wirklich übernehmen?'); break; }
+          if (!this._sureAsk(el, T('Wirklich übernehmen?'))) break;
           this._chkOk();
           break;
         }
@@ -7452,7 +7992,7 @@ actions:
         }
         case 'holnow': this._holTry = 0; this._holCheck(true); this._toast(T('🔄 Ferien und Feiertage werden neu geladen')); this._render(); break;
         case 'ledclr': {
-          if (!el.dataset.sure) { el.dataset.sure = '1'; el.textContent = T('Wirklich leeren?'); break; }
+          if (!this._sureAsk(el, T('Wirklich leeren?'))) break;
           const k = this._db.kid[ds.k];
           if (k) { this._save('kid', ds.k, { ...k, ledger: [], wk: {} }, (cur) => ({ ...cur, ledger: [], wk: {} })); this._audit(T('🗑️ Punkte-Verlauf geleert: {name}', { name: k.name })); }
           this._closeModal(); this._toast(T('🗑️ Verlauf geleert')); this._render();
@@ -7469,7 +8009,7 @@ actions:
         case 'vcolreset': { const b = themeCols('light'); this._colPrev = null; this._setCfg({ vCol: { bg: b.bg, surface: b.surface, text: b.text, accent: b.accent } }); this._render(); break; }
         case 'setview': this._setCfg({ setView: ds.v === 'simple' ? 'simple' : 'all' }); this._render(); break;
         case 'memclean': {
-          if (!el.dataset.sure) { el.dataset.sure = '1'; el.querySelector('.hint').textContent = T('Wirklich aufräumen? Nochmal tippen'); break; }
+          if (!this._sureAsk(el, T('Wirklich aufräumen? Nochmal tippen'))) break;
           this._memClean();
           break;
         }
@@ -7597,6 +8137,21 @@ actions:
         case 'tkf': this._tkf = ds.k || ''; this._render(); break;
         case 'tkg': this._tkg = ds.m; try { localStorage.setItem('kpTkg', ds.m); } catch (e2) { /* egal */ } this._render(); break;
         case 'tkfold': { this._tkOpen(''); this._tkO[ds.id] = el.dataset.open !== '1'; try { localStorage.setItem('kpTkO', JSON.stringify(this._tkO)); } catch (e2) { /* egal */ } this._render(); break; }
+        case 'admall': {
+          this._admFolded('');
+          this._kids().forEach((k) => { if (ds.v === '1') delete this._admF[`kid:${k.id}`]; else this._admF[`kid:${k.id}`] = 1; });
+          try { localStorage.setItem('kpAdmFold', JSON.stringify(this._admF)); } catch (e2) { /* egal */ }
+          this._render(); break;
+        }
+        case 'admfold': {
+          this._admFolded('');
+          if (ds.id.startsWith('kid:')) { if (this._admF[ds.id]) delete this._admF[ds.id]; else this._admF[ds.id] = 1; }
+          else if (el.getAttribute('aria-expanded') === 'true') this._admF[ds.id] = 1; // von Hand zu: bleibt zu
+          else if (ds.auto === '1') this._admF[ds.id] = { o: 1, day: dk(new Date()) }; // automatisch zu → heute offen lassen
+          else delete this._admF[ds.id];
+          try { localStorage.setItem('kpAdmFold', JSON.stringify(this._admF)); } catch (e2) { /* egal */ }
+          this._render(); break;
+        }
         case 'blkfold': { this._blkO = this._blkO || { day: dk(new Date()) }; this._blkO[ds.id] = el.dataset.open !== '1'; this._render(); break; }
         case 'exadd': { const w = el.closest('.mbox') && el.closest('.mbox').querySelector('[data-exs-wrap]'); if (w && this._exRow) w.insertAdjacentHTML('beforeend', this._exRow({})); break; }
         case 'exdel': { const r = el.closest('.exrow'); if (r) r.remove(); break; }
@@ -7715,7 +8270,7 @@ actions:
       const todos = Object.keys(this._hass.states).filter((e) => e.startsWith('todo.')).sort();
       const opt = (v, l, sel) => `<option value="${esc(v)}" ${sel ? 'selected' : ''}>${esc(l)}</option>`;
       const kid = c.mode === 'kid' || c.mode === 'kids';
-      const single = c.mode === 'kid';
+      const single = c.mode === 'kid', advM = c.mode === 'advent';
       const foldOn = !!c.collapsed;
       this.shadowRoot.innerHTML = `<style>
         .ed{display:flex;flex-direction:column;gap:14px;color:var(--primary-text-color)}
@@ -7728,9 +8283,10 @@ actions:
       </style><div class="ed">
         <label>${T('Speicher (Lokale To-do-Liste)')}<select data-k="storage">${(todos.includes(c.storage) ? todos : [c.storage, ...todos]).map((e) => opt(e, `${(this._hass.states[e] && this._hass.states[e].attributes.friendly_name) || e} (${e})`, e === c.storage)).join('')}</select></label>
         <label>${T('Sprache (nur diese Karte)')}<select data-k="language"><option value="">${esc(T('wie in den Einstellungen der Karte'))}</option>${LANGS.map(([code, n]) => opt(code, n, c.language === code)).join('')}</select></label>
-        <label>${T('Ansicht')}<select data-k="mode">${opt('admin', T('👨‍👩‍👧 Eltern-Ansicht'), !kid)}${opt('kids', T('👧👦 Alle Kinder (automatisch)'), c.mode === 'kids')}${opt('kid', T('🧒 Ein bestimmtes Kind'), single)}</select></label>
+        <label>${T('Ansicht')}<select data-k="mode">${opt('admin', T('👨‍👩‍👧 Eltern-Ansicht'), !kid)}${opt('kids', T('👧👦 Alle Kinder (automatisch)'), c.mode === 'kids')}${opt('kid', T('🧒 Ein bestimmtes Kind'), single)}${opt('advent', T('🎄 Adventskalender'), advM)}</select></label>
         ${c.mode === 'kids' ? `<small>${T('Zeigt automatisch alle Kinder – neu angelegte Kinder erscheinen von selbst.')}</small>` : ''}
-        ${single ? `<label>${T('Kind')}<input type="text" data-k="child" list="kids" value="${esc(c.child || '')}" placeholder="${esc(T('z. B. Mia'))}"><datalist id="kids">${(this._kidNames || []).map((n) => `<option value="${esc(n)}"></option>`).join('')}</datalist>
+        ${advM ? `<small>${T('Zeigt nur den Adventskalender. Einschalten und befüllen in der Eltern-Ansicht (⚙️ Einstellungen → 🎄 Adventskalender). Ohne Kind: alle Kinder zum Umschalten.')}</small>` : ''}
+        ${single || advM ? `<label>${T('Kind')}<input type="text" data-k="child" list="kids" value="${esc(c.child || '')}" placeholder="${esc(advM ? T('leer = alle Kinder') : T('z. B. Mia'))}"><datalist id="kids">${(this._kidNames || []).map((n) => `<option value="${esc(n)}"></option>`).join('')}</datalist>
           <small>${(this._kidNames || []).length ? T('Angelegt: {names}', { names: esc(this._kidNames.join(', ')) }) : T('Kinder legst du in der Eltern-Ansicht an.')}</small></label>` : ''}
         ${kid ? `<label class="row"><input type="checkbox" data-k="summary" ${c.summary ? 'checked' : ''}> ${T('🧒 Nur kleine Übersicht (z. B. fürs Familien-Dashboard)')}</label>
           ${c.summary ? `<div class="sub">${[['points', T('⭐ Punkte')], ['today', T('✅ Heute')], ['goal', T('🎯 Ziel')], ['level', T('🌱 Level')], ['net', T('➖ Bilanz (bei Minus-Stand)')]].map(([v, l]) => `<label class="row"><input type="checkbox" data-k="show" data-v="${v}" ${!Array.isArray(c.show) || !c.show.length || c.show.includes(v) ? 'checked' : ''}> ${l}</label>`).join('')}</div>
@@ -7745,10 +8301,16 @@ actions:
             <small>${T('{kind} in der Seite wird durch den Namen des angetippten Kindes ersetzt, z. B. /dashboard-haus/{kind} → /dashboard-haus/mia.')}</small></div>` : ''}
           <label class="row"><input type="checkbox" data-k="collapsed" ${foldOn ? 'checked' : ''}> ${T('Eingeklappt anzeigen – nur Name und Punkte, Aufgaben erst nach Antippen')}</label>
           <label class="row"><input type="checkbox" data-k="family" ${c.family === false ? '' : 'checked'}> ${T('Familienziel anzeigen')}${single ? ` <small>${T('(bei mehreren Kinder-Karten auf einer Seite erscheint es automatisch nur einmal)')}</small>` : ''}</label>
-          <small>${T('Freigabe und Benachrichtigungen stellst du in der Eltern-Ansicht unter ⚙️ Einstellungen ein – sie gelten automatisch auch hier.')}</small>` : `<small>${T('Freigabe und Benachrichtigungen (auch mehrere Handys) stellst du direkt in der Eltern-Ansicht unter ⚙️ Einstellungen ein.')}</small>
+          <small>${T('Freigabe und Benachrichtigungen stellst du in der Eltern-Ansicht unter ⚙️ Einstellungen ein – sie gelten automatisch auch hier.')}</small>` : advM ? '' : `<small>${T('Freigabe und Benachrichtigungen (auch mehrere Handys) stellst du direkt in der Eltern-Ansicht unter ⚙️ Einstellungen ein.')}</small>
         <label>${T('PIN für die Eltern-Ansicht')}<input type="text" inputmode="numeric" autocomplete="off" data-k="pin" value="${esc(c.pin ?? '')}" placeholder="${esc(T('leer = kein Schutz'))}">
           <small>${T('Nur Ziffern, z. B. 1234. Nach {n} Minuten ohne Bedienung wird wieder gesperrt.', { n: Number(c.pin_minutes) || 5 })}</small></label>`}
         <div class="lbl2">${T('🎨 Darstellung')}</div>
+        ${kid || advM ? (() => {
+          const cur = Number(c.advent_size) >= 50 && Number(c.advent_size) <= 220 ? Math.round(Number(c.advent_size)) : 0;
+          const vals = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220];
+          return `<label>${T('🎄 Türchengröße im Adventskalender (nur diese Karte)')}<select data-k="advent_size">${opt('', T('wie in der Eltern-Ansicht'), !cur)}${(vals.includes(cur) || !cur ? vals : [...vals, cur].sort((a, b) => a - b)).map((v) => opt(String(v), `${v} px`, cur === v)).join('')}</select>
+          <small>${T('Gilt auf jedem Gerät, das diese Karte zeigt – praktisch fürs Wand-Tablet mit eigenem Dashboard. Eine Größe „nur dieses Gerät“ aus der Eltern-Ansicht hat Vorrang.')}</small></label>`;
+        })() : ''}
         ${(() => {
           const gt = this._gLook ? this._gLook.vTheme : undefined;
           const nm = (id) => (id === 'custom' ? T('✏️ Eigene Farben') : id && THEMES.find((x) => x[0] === id) ? T(THEMES.find((x) => x[0] === id)[1]) : T('Wie das Dashboard'));
@@ -7778,6 +8340,7 @@ actions:
       else if (k === 'summary') { if (el.checked) c[k] = true; else { delete c[k]; delete c.show; delete c.tap_action; delete c.double_tap_action; delete c.hold_action; } }
       else if (['compact', 'transparent', 'equal_tiles'].includes(k)) { if (el.value === 'on') c[k] = true; else if (el.value === 'off') c[k] = false; else delete c[k]; }
       else if (k === 'scale') { if (el.value) c.scale = Number(el.value); else delete c.scale; }
+      else if (k === 'advent_size') { if (el.value) c.advent_size = Number(el.value); else delete c.advent_size; }
       else if (k === 'act') {
         // 👆 Aktion der Übersichtskarte: nichts = Eintrag entfernen; Pfad/Adresse bleibt beim Wechsel erhalten, wo sie passt
         const x = el.dataset.x, old = c[x] && typeof c[x] === 'object' ? c[x] : {};
@@ -7793,7 +8356,7 @@ actions:
       }
       else if (el.value) c[k] = el.value.trim();
       else delete c[k];
-      if (k === 'mode') { if (c.mode !== 'kid') delete c.child; delete c.collapsed; if (c.mode === 'admin') { delete c.summary; delete c.show; delete c.tap_action; delete c.double_tap_action; delete c.hold_action; } if (c.mode === 'kid' || c.mode === 'kids') { delete c.pin; delete c.pin_minutes; } }
+      if (k === 'mode') { if (!['kid', 'advent'].includes(c.mode)) delete c.child; delete c.collapsed; if (c.mode === 'advent') { delete c.summary; delete c.show; delete c.family; delete c.pin; delete c.pin_minutes; } if (c.mode === 'admin') { delete c.advent_size; delete c.summary; delete c.show; delete c.tap_action; delete c.double_tap_action; delete c.hold_action; } if (c.mode === 'kid' || c.mode === 'kids') { delete c.pin; delete c.pin_minutes; } }
       if (k === 'storage') this._kidsFor = null;
       this._config = c;
       this._draw();
@@ -7847,6 +8410,13 @@ actions:
     if (HB) return Promise.resolve(HB);
     if (!hbP) hbP = cardImport('yippee-kids-chores-manual.js', (m) => m && m.default && m.default.de && Array.isArray(m.default.de.t)).then((m) => { HB = m.default; return HB; }, (e) => { hbP = null; throw e; });
     return hbP;
+  };
+  // 🎄 Adventskalender: eigene Datei (yippee-kids-chores-advent.js), wird erst geladen, wenn er eingeschaltet ist
+  let advP = null;
+  const advLoad = () => {
+    if (customElements.get('yippee-advent')) return Promise.resolve(true);
+    if (!advP) advP = cardImport('yippee-kids-chores-advent.js', (m) => m && typeof m.default === 'function').then((m) => m.default({ T }), (e) => { advP = null; throw e; });
+    return advP;
   };
   const hbNorm = (x) => String(x || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ß/g, 'ss');
   // Übersetzungen: siehe yippee-kids-chores-lang-xx.js (eigene Dateien neben der Karte)

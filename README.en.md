@@ -24,6 +24,9 @@
 
 <p align="center"><a href="https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/README.md">🇩🇪 Deutsche Version</a></p>
 
+> ### 🎄 New in 1.7.0: the advent calendar
+> Just in time for Christmas, Yippee! has its own **advent calendar** – 24 doors for every kid with text, a picture, stars or a small reward as a present. A door can also stay shut until chores are done. Switch it on under **⚙️ Settings → ⚙️ General → 🎄 Advent calendar** – more in [Advent calendar 🎄](#advent-calendar--optional).
+
 ---
 
 ## What is Yippee!?
@@ -63,6 +66,7 @@ Parents create chores and rewards, approve finished chores (also right from the 
 - **Streaks** 🔥 with bonus stars, **"Coming up"** 📅 preview
 - **Birthday** 🎂: confetti, bonus, point multiplier, optional day off
 - **School grades** 🎓 (optional): stars for good grades – kids can report a grade themselves, optionally with a photo of the test
+- **Advent calendar** 🎄 (optional): a door every day in December – with text, a picture, stars or a reward as a present
 - Collapsed view: only name and points until tapped
 
 ### Chores
@@ -75,7 +79,7 @@ Parents create chores and rewards, approve finished chores (also right from the 
 
 ### Presence 🏠 – for separated parents and patchwork families (optional)
 
-If a child doesn't always live in your household, set it **per kid** under **👧 Kids → ✎ → 🏠 Presence**: **normally** "mostly with us" or "mostly elsewhere", plus any number of **rules** – *here* or *away*, **every week or every 2, 3, 4 weeks**, from day + time to day + time (e.g. away every week **Wed 14:00 – Thu 08:00** and every 2nd weekend **Fri 15:00 – Sun 18:00**). Add a **holiday arrangement** per holiday type (summer, autumn, Christmas, winter, Easter, Whitsun: rules continue, all with us, all with the other parent, first/second half, **first/last … weeks with us**), optionally **alternating every year**, and **exceptions** (date ranges "here"/"away"). A preview of the next 8 weeks is shown in the editor.
+If a child doesn't always live in your household, set it **per kid** under **👧 Kids → ✎ → 🏠 Presence**: **normally** "mostly with us" or "mostly elsewhere", plus any number of **rules** – *here* or *away*, **every week or every 2, 3, 4 weeks**, from day + time to day + time (e.g. away every week **Wed 14:00 – Thu 08:00** and every 2nd weekend **Fri 15:00 – Sun 18:00**). Add a **holiday arrangement** per holiday type (summer, autumn, Christmas, winter, Easter, Whitsun: rules continue, all with us, all with the other parent, first/second half, **first/last … weeks with us**), optionally **alternating every year**, and **exceptions** (date ranges "here"/"away", optionally with an arrival/departure time – chores due before arrival don’t count as missed). A preview of the next 8 weeks is shown in the editor.
 
 While the child is away there are **no chores, reminders or "missed"**, the streak 🔥 is kept, rotations skip the child and the morning announcement leaves them out. On days with arrivals or departures only chores whose time window falls into the time the child is here appear. The holiday arrangement uses the school holidays of your region (⚙️ Settings → 🏖️ Holidays).
 
@@ -94,6 +98,20 @@ Turn on under **⚙️ Settings → ⭐ Points & bonuses → 🎓 School grades*
 - **Kids report grades themselves** with 🎓 on their card, optionally with a **photo of the test**; you approve under 🔔 Approvals or straight from the **app or Telegram button**. The photo is deleted after your decision.
 - **📊 Grade overview** per kid and subject: average, count, latest grade and trend
 - Grade stars count towards **levels** and the **family goal** like all earned stars
+
+### Advent calendar 🎄 (optional)
+
+Turn on under **⚙️ Settings → ⚙️ General → 🎄 Advent calendar** – the parents view then gets a **🎄 Advent** tab. The calendar uses the kids, stars, rewards, PIN and colours of Yippee! directly – nothing else to set up.
+
+- **🚪 Doors** from December 1 to 24 (or 31) for every kid, in mixed order: text, emoji, picture, 💌 message, ⭐ stars and a 🎁 **reward as a present** (costs no stars; with 🎟️ vouchers it arrives as a voucher)
+- **✨ Fill automatically** from templates (baking, crafts, vouchers, riddles …) and special days – St Nicholas, the four Advent Sundays (recalculated every year), Christmas Eve
+- **🔗 Condition:** a door only opens once a specific task or X tasks are done today
+- **🎄 Advent calendar only:** tick it on a reward – kids don’t see it anywhere else, only a door can give it
+- **Look:** starry night with garlands and a snowy landscape, colourfully patterned doors, ❄️ snowfall, 🔔 bells or your own sound, ⏳ countdown, progress bar, 🎚️ door size slider – for everyone, for this device only (📱) or for one card only (`advent_size`), adapts automatically on phones
+- **📁 Files:** upload your own JPG pictures and MP3 sounds (stored under Media → advent; administrator only)
+- **📱 Morning message** in December to the kid’s phone (the card creates the automation; administrator only) and **🧪 test mode** to try it out in November
+
+In December kids open their doors with the **🎄 button** in their view – or in a separate card with `mode: advent`. The calendar lives in its own file (`yippee-kids-chores-advent.js`), loaded only when it is switched on.
 
 ### More extra features (all optional)
 
@@ -119,7 +137,7 @@ Each can be switched on under **⚙️ Settings** – every feature sits where i
 - **Behaviour** 😊 (optional): reward with one tap on the green “😊 +1” button in the Today tab (stars adjustable), optionally deduct stars with the red “😠 −1” button – logged in the points history. Under 👧 Kids a **📊 behaviour chart** shows the last 14 days with average and trend
 - **🏖️ Only on school-free days** for chores that should only appear at weekends, in the holidays and on public holidays – the counterpart to “🎒 school days only”
 - **🕒 More relaxed times on school-free days** (optional): on school-free days a time window runs longer – you choose how much: until the end of its day block (“brush teeth until 9:00” then counts until the end of 🌅 Morning), 30 minutes, 1 or 2 hours longer, or no time limit. Chores that must always be on time (e.g. medicine) get the tick **⏰ Fixed time on days without school too**. Sleeping in isn't “missed”. **You set the day block times yourself** (default: midday from 11:30, afternoon from 16:00, evening from 18:00) – each block ends where the next begins, no overlaps; the Tasks tab lists chores **per child**, optionally divided by time of day, by type (routines / required / bonus / special) or not at all – each group collapsible
-- **Approval** of chores and rewards – in the card, via app button or Telegram button
+- **Approval** of chores and rewards – in the card, via app button or Telegram button; handled approvals disappear from all phones
 - **Penalties only after your decision**: missed = excused, minus stars or done after all
 - Manual adjustments, **points history**, **5-week chart** under 📊 Reports, **pocket money** conversion, **double-points days**
 - **Holidays** per kid, **school holidays and public holidays** automatically
@@ -128,7 +146,9 @@ Each can be switched on under **⚙️ Settings** – every feature sits where i
 ### Safety and data
 - **Automatic backups** (optionally into a second list), backup file download
 - **Data check** that warns about missing or externally changed entries
-- **🎁 Rewards sorted by type** (for one kid · together · Joker), by ⭐ stars or 🔤 A–Z – the kid view shows redeemable ones first
+- **▾ Collapsible parent Today tab:** tap a child or a time-of-day block (Morning … No time) to collapse/expand it, remembered on the device; finished or past times of day collapse automatically, “▸ Collapse all” for all children at once
+- **🎁 Parents redeem directly:** 📋 Today → 🎁 next to the kid – right away, no approval; shared rewards by share or 💝 invitation
+- **🎁 Rewards sorted by type** (for one kid · together · Joker), by ⭐ stars or 🔤 A–Z – or **👧 by child** (per child, for all, together); the kid view shows redeemable ones first
 - **👧 Kids tab** with one card per kid: stars, today's progress, statistics and behaviour chart in one place
 - **✓ Approve all chores** with one tap and **⧉ copy** chores and rewards
 - **🌙 Light and dark:** all coloured hints adapt to the Home Assistant theme
@@ -155,10 +175,10 @@ HACS adds the resource automatically.
 
 ### Manual
 
-1. Download all files from the [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist) folder: the card `yippee-kids-chores-card.js`, the 📖 manual `yippee-kids-chores-manual.js` and the language files `yippee-kids-chores-lang-xx.js`.
+1. Download all files from the [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist) folder: the card `yippee-kids-chores-card.js`, the 📖 manual `yippee-kids-chores-manual.js`, the 🎄 advent calendar `yippee-kids-chores-advent.js` and the language files `yippee-kids-chores-lang-xx.js`.
 2. Create the folder **`/config/www/community/yippee-kids-chores-card/`** and copy all files into it. This is the same folder HACS uses, so you can switch to HACS later without changes.
 3. **Settings → Dashboards → ⋮ → Resources → Add resource**
-   - URL: `/hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.6.0`
+   - URL: `/hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.7.0`
    - Type: **JavaScript module**
 4. Reload the page.
 
@@ -188,6 +208,14 @@ storage: todo.yippee_kids_chores
 mode: kid
 child: Mia
 ```
+```yaml
+# Just the 🎄 advent calendar (switch it on under ⚙️ Settings first; leave out child = all kids to switch between)
+type: custom:yippee-kids-chores-card
+storage: todo.yippee_kids_chores
+mode: advent
+child: Mia
+advent_size: 120   # optional: door size for this card only (50–220)
+```
 
 3. In the parents view: add **kids**, **chores**, **rewards**, then go through **⚙️ Settings**. All settings apply to every kids card and device automatically.
 
@@ -198,8 +226,8 @@ A complete example dashboard is in [`examples/dashboard.yaml`](https://github.co
 | Option | Values | Default | Description |
 |---|---|---|---|
 | `storage` | `todo.…` | – | **Required.** The Local To-do list used as storage |
-| `mode` | `admin`, `kids`, `kid` | `admin` | Parents view, all kids or one kid |
-| `child` | name | – | Only with `mode: kid` |
+| `mode` | `admin`, `kids`, `kid`, `advent` | `admin` | Parents view, all kids, one kid or just the 🎄 advent calendar |
+| `child` | name | – | With `mode: kid`: which kid. Optional with `mode: advent` (without: all kids to switch between) |
 | `collapsed` | `true` / `false` | `false` | Show kids collapsed |
 | `summary` | `true` / `false` | `false` | Only a small summary per kid (points, today, goal, level, balance) – e.g. for a family dashboard |
 | `show` | list | all | With `summary`: which parts – `points`, `today`, `goal`, `level`, `net` |
@@ -209,6 +237,7 @@ A complete example dashboard is in [`examples/dashboard.yaml`](https://github.co
 | `compact` | `true` / `false` | as ⚙️ | Less spacing |
 | `transparent` | `true` / `false` | as ⚙️ | No own background – blends into the dashboard |
 | `scale` | `70`–`130` | as ⚙️ | Card size in percent |
+| `advent_size` | `50`–`220` | as ⚙️ | With `mode: kid`, `kids` and `advent`: size of the 🎄 advent calendar doors in px for this card only (e.g. wall tablet). “📱 This device only” from the parents view takes priority |
 | `family` | `true` / `false` | automatic | Show the family goal on this card (automatically only once per page) |
 | `language` | e.g. `en`, `fr` | setting / HA language | Language for this card only (e.g. on the kids’ tablet) |
 | `wizard` | `true`, `false` | `true` | `false` = no setup assistant on first start (can still be started under ⚙️ Settings) |
@@ -228,9 +257,9 @@ All integrations are **optional** and can be switched on and off individually.
 - **📚 Events as tasks:** under ⚙️ Settings **＋ Link a calendar** – each entry turns into its own chore with its text as the title. Ideal for homework: “HW: Maths p. 42” due Friday shows up on Thursday for the chosen child. Settings: calendar, children, emoji, stars, “the day before” or “on the day”, keyword filter (e.g. `HW:`) and minus points (default **0**). **✅ Tasks → 📚 From calendars** lists the next 14 days; single events can be hidden with 🙈 without touching the calendar.
 - **School holidays and public holidays:** choose country and region – the card fetches the data itself from the **[OpenHolidays API](https://www.openholidaysapi.org)** (free, **no API key**, 36 countries). Fallback: the built-in **Holiday** integration and a school-holiday calendar.
 - **Stars from automations / voice assistants:** the card creates the script `script.yippee_sterne` (fields `kind`, `sterne` – negative to deduct –, `grund`), usable in automations, scripts and – via one script per kid – Google Assistant or Alexa.
-- **🎨 Appearance** (⚙️ Settings → ⚙️ General for all cards, or per card in the card editor): **🎨 colour presets** to tap (like the dashboard, light, dark, pastel, ocean, forest, sun, night, candy) or ✏️ your own colours with a colour picker – text and tiles adapt automatically, with a warning if the text is hard to read –, 📏 equal-height tiles (several kid cards side by side line up), compact, no background and size 70–130 %.
+- **🎨 Appearance** (⚙️ Settings → ⚙️ General for all cards, or per card in the card editor): **🎨 colour presets** to tap (like the dashboard, light, dark, pastel, ocean, forest, sun, night, candy) or ✏️ your own colours with a colour picker – text and tiles adapt automatically, with a warning if the text is hard to read; in Home Assistant's dark mode, light presets automatically turn dark on that device, own colours optionally too –, 📏 equal-height tiles (several kid cards side by side line up), compact, no background and size 70–130 %.
 - **Theming:** CSS variables `--yippee-bg`, `--yippee-surface`, `--yippee-accent`, `--yippee-text`, `--yippee-text-secondary` for themes or card_mod.
-- **Sensors:** `sensor.yippee_<name>` per kid (state = points) with the attributes `heute_erledigt`, `heute_gesamt`, `alles_erledigt`, `offen`, `wartet_auf_freigabe`, `level`, `level_name`, `gesamt_verdient`, `abzeichen`, `ziel`, `urlaub`, `anwesend`, `feiertag`, `ferien` (and `euro`) – e.g. "TV only after all chores are done". Updated while the card is open for an administrator.
+- **Sensors:** `sensor.yippee_<name>` per kid (state = points) with the attributes `heute_erledigt`, `heute_gesamt`, `alles_erledigt`, `offen`, `wartet_auf_freigabe`, `level`, `level_name`, `gesamt_verdient`, `abzeichen`, `ziel`, `urlaub`, `anwesend`, `feiertag`, `ferien` (and `euro`) – e.g. "TV only after all chores are done". Updated while the card is open for an administrator. **🔁 Available right after a restart** (1.7.0, optional): ⚙️ → 🔌 Devices & voice → 📊 Sensors → turn on “Available right after a restart”, **📋 Copy template**, save it as `packages/yippee.yaml` (if packages are set up) or paste it into `configuration.yaml` and restart Home Assistant – a template sensor then reads each kid's last state from the Yippee list, no open card needed. The card shows ✅ when it is running and ⚠️ when it needs to be copied again after adding or renaming children Sensors update within seconds when something is checked off. Ready-made automations at the tap of a button: 🎉 announcement and message when the family goal is reached, and 📋 an evening reminder if a child hasn't finished everything. With a family goal there is also `sensor.yippee_familienziel` (state = stars collected; attributes `ziel`, `ziel_sterne`, `fehlen`, `prozent`, `erreicht`, `prognose_tage`, `prognose_datum`). Home Assistant 2025.10 or newer.
 - **Background automation:** morning announcement, reminders, missed-chore messages, daily summary and Telegram commands run inside Home Assistant – **even when no card is open**. The card writes a 14-day plan and creates the automation with one tap.
 
 ## Data safety
@@ -274,7 +303,7 @@ Yippee! stands on the shoulders of great open-source projects and lives from its
 
 - **[Waste Collection Schedule](https://github.com/mampfes/hacs_waste_collection_schedule)** by [@mampfes](https://github.com/mampfes) and all contributors – thanks to this integration, collection dates from hundreds of waste providers go straight into the “Take out the trash” chore.
 - **[Locodice67](https://github.com/Locodice67)** – for ideas and groundwork in his fork: behaviour chart, “only on school-free days”, more relaxed times on school-free days and the toddler templates (since 1.5.0), plus the morning and evening routine templates and “😊 Behaviour” ([#1](https://github.com/Chrism1412/yippee-kids-chores-card/pull/1)).
-- **[RkcCorian](https://github.com/RkcCorian)** – summary card per kid, appearance options, kid order, equal-height tiles and the report about the ✓ buttons ([#4](https://github.com/Chrism1412/yippee-kids-chores-card/issues/4), [#5](https://github.com/Chrism1412/yippee-kids-chores-card/issues/5), [#6](https://github.com/Chrism1412/yippee-kids-chores-card/issues/6), [#9](https://github.com/Chrism1412/yippee-kids-chores-card/issues/9), [#10](https://github.com/Chrism1412/yippee-kids-chores-card/issues/10)).
+- **[RkcCorian](https://github.com/RkcCorian)** – summary card per kid, appearance options, kid order, equal-height tiles, tap actions on the summary card, persistent sensors after a restart, clearing handled approvals on all phones and the reports about the ✓ buttons, the phone layout and own emojis ([#4](https://github.com/Chrism1412/yippee-kids-chores-card/issues/4), [#5](https://github.com/Chrism1412/yippee-kids-chores-card/issues/5), [#6](https://github.com/Chrism1412/yippee-kids-chores-card/issues/6), [#9](https://github.com/Chrism1412/yippee-kids-chores-card/issues/9), [#10](https://github.com/Chrism1412/yippee-kids-chores-card/issues/10), [#11](https://github.com/Chrism1412/yippee-kids-chores-card/issues/11), [#12](https://github.com/Chrism1412/yippee-kids-chores-card/issues/12), [#13](https://github.com/Chrism1412/yippee-kids-chores-card/issues/13), [#14](https://github.com/Chrism1412/yippee-kids-chores-card/issues/14), [#15](https://github.com/Chrism1412/yippee-kids-chores-card/issues/15)).
 - **[gogui63](https://github.com/gogui63)** – negative balance with net score and stars from automations or voice assistants ([#7](https://github.com/Chrism1412/yippee-kids-chores-card/issues/7), [#8](https://github.com/Chrism1412/yippee-kids-chores-card/issues/8)).
 - **[Sysman2018](https://github.com/Sysman2018)** – the idea for 🎓 stars for good school grades ([#2](https://github.com/Chrism1412/yippee-kids-chores-card/issues/2)).
 - **[Daniel-PT](https://github.com/Daniel-PT)** – found the IP-ban bug for non-admin users ([#3](https://github.com/Chrism1412/yippee-kids-chores-card/issues/3)).
