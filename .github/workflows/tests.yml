@@ -16,7 +16,7 @@ jobs:
           python-version: '3.12'
       - name: Abhängigkeiten
         run: |
-          pip install playwright jinja2 pillow
+          pip install playwright jinja2 pillow pyyaml
           python -m playwright install --with-deps chromium
       - name: Tests
         run: python tests/run_tests.py
