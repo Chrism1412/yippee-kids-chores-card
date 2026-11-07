@@ -1,0 +1,26 @@
+name: 💡 Idee / Feature request
+description: Vorschlag für eine neue Funktion oder Verbesserung. / Suggest a new feature or improvement.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Neue Funktionen kommen immer als **optionale** Einstellung dazu, damit die Karte für alle einfach bleibt.
+        New features are always added as an **optional** setting so the card stays simple for everyone.
+  - type: textarea
+    id: idea
+    attributes:
+      label: Deine Idee / Your idea
+      description: Was soll die Karte können? / What should the card be able to do?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Wofür brauchst du das? / Why do you need it?
+      description: Ein Beispiel aus eurem Familienalltag hilft sehr. / An example from your family life helps a lot.
+  - type: input
+    id: version
+    attributes:
+      label: Version der Karte / Card version
+      placeholder: "1.4.0"

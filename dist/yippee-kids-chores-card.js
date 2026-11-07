@@ -1,12 +1,12 @@
 /*
- * Yippee! - Kids Chores – Karte für Home Assistant – Version 1.7.0
+ * Yippee! - Kids Chores – Karte für Home Assistant – Version 1.7.1
  * Aufgaben abhaken · Punkte sammeln · Belohnungen einlösen · Freigabe durch Eltern
  *
  * https://github.com/Chrism1412/yippee-kids-chores-card  ·  Lizenz: MIT
  *
  * Installation: über HACS (empfohlen) oder von Hand nach
  *   /config/www/community/yippee-kids-chores-card/yippee-kids-chores-card.js
- *   Ressource: /hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js (Typ: JavaScript-Modul)
+ *   Ressource: /local/community/yippee-kids-chores-card/yippee-kids-chores-card.js (Typ: JavaScript-Modul)
  *
  * Voraussetzung: eine "Lokale To-do-Liste" als Speicher, z. B. todo.yippee_kids_chores
  *
@@ -40,7 +40,7 @@
  *   CSS-Variablen für Themes/card_mod: --yippee-bg, --yippee-surface, --yippee-accent, --yippee-text, --yippee-text-secondary
  */
 (() => {
-  const VERSION = '1.7.0';
+  const VERSION = '1.7.1';
 
   // ---------- Sprache ----------
   // Alle Texte stehen auf Deutsch im Code. T() übersetzt sie über die Sprachdatei der gewählten Sprache (yippee-kids-chores-lang-xx.js).
@@ -1383,6 +1383,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
         if (o.pres && o.pres.hol && typeof o.pres.hol === 'object') Object.keys(o.pres.hol).forEach((h) => { const v = o.pres.hol[h]; if (v && typeof v === 'object') v.w = Number(v.w) || 0; });
         if (o.user !== undefined && !/^[\w-]{0,64}$/.test(String(o.user))) o.user = '';
         if (o.ap !== undefined) o.ap = Array.isArray(o.ap) ? o.ap.filter((x) => typeof x === 'string' && /^[\w-]{1,40}$/.test(x)).slice(0, 400) : [];
+        if (o.vgone !== undefined) o.vgone = Array.isArray(o.vgone) ? o.vgone.filter((x) => typeof x === 'string' && /^[\w-]{1,40}$/.test(x)).slice(0, 50) : [];
         ['history', 'vouch'].forEach((f) => { if (o[f] !== undefined && !Array.isArray(o[f])) delete o[f]; });
         ['rd', 'rw'].forEach((f) => { if (o[f] === undefined) return; if (!o[f] || typeof o[f] !== 'object' || Array.isArray(o[f])) { delete o[f]; return; } const x = {}; Object.keys(o[f]).forEach((d) => { const v = o[f][d]; if (/^\d{4}-\d\d-\d\d$/.test(d) && Array.isArray(v)) x[d] = v.slice(0, 6).map((n) => Math.round(Number(n) || 0)); }); o[f] = x; });
         if (Array.isArray(o.vouch)) o.vouch = o.vouch.filter((x) => x && typeof x === 'object' && /^[\w-]{1,40}$/.test(String(x.id || ''))).slice(0, 50);
@@ -2582,13 +2583,22 @@ textarea{width:100%;min-height:90px;resize:vertical}
     }
 
     _sensKeepUi() {
-      const ss = this._sensState(), fine = ss.on && !ss.bad.length && !ss.old.length;
+      const ss = this._sensState(), fine = ss.on && !ss.bad.length && !ss.old.length && !ss.stale;
       const status = fine ? `<div class="hint sensok">${T('✅ Dauerhafte Sensoren aktiv – Home Assistant liest sie selbst, auch nach einem Neustart.')}</div>`
+        : ss.on && ss.stale && !ss.bad.length ? `<div class="hint senswarn">${T('🔁 Es gibt eine neue Vorlage – bitte neu kopieren, einfügen und Home Assistant neu starten.')}${ss.old.length ? ` ${T('Nicht mehr gebraucht: {names}', { names: ss.old.join(', ') })}` : ''}</div>`
         : ss.on ? `<div class="hint senswarn">${T('⚠️ Vorlage neu kopieren – sie passt nicht mehr zu den Kindern.')}${ss.bad.length ? ` ${T('Betrifft: {names}', { names: ss.bad.map(esc).join(', ') })}` : ''}${ss.old.length ? ` ${T('Nicht mehr gebraucht: {names}', { names: ss.old.join(', ') })}` : ''}</div>` : '';
       const steps = `<div class="hint">${T('1. „📋 Vorlage kopieren“ antippen. 2. Als eigene Datei packages/yippee.yaml speichern (wenn „packages“ eingerichtet ist) – sonst in die configuration.yaml einfügen, z. B. mit dem File editor. 3. Home Assistant neu starten.')}</div>`;
       return `${status}${fine ? '' : steps}
           <div class="btnrow"><button class="btn" data-a="sensyaml">${T('📋 Vorlage kopieren')}</button></div>
           <details class="sensy" ${this._sensyOpen ? 'open' : ''}><summary class="hint">${T('Vorlage anzeigen')}</summary><pre class="yaml">${esc(this._sensYaml())}</pre></details>`;
+    }
+
+    // 🔁 Hinweis oben in der Eltern-Ansicht, wenn die kopierte Sensor-Vorlage nicht mehr aktuell ist
+    _sensBanner() {
+      if (!this._cfg.sensKeep || this._cfg.sensors === false) return '';
+      const ss = this._sensState();
+      if (!ss.on || !(ss.stale || ss.bad.length)) return '';
+      return `<div class="box"><div class="hint warn">${T('🔁 Die Sensor-Vorlage ist nicht mehr aktuell. Unter ⚙️ Einstellungen → 🔌 Geräte & Sprache → 📊 Sensoren & Automationen „📋 Vorlage kopieren“ antippen, neu einfügen und Home Assistant neu starten.')}</div></div>`;
     }
 
     // 🔁 Läuft die Vorlage schon – und passt sie noch zu den Kindern?
@@ -2608,14 +2618,20 @@ textarea{width:100%;min-height:90px;resize:vertical}
       }).map((k) => k.name);
       if (fam && on) { const x = st['sensor.yippee_familienziel']; if (!isT('sensor.yippee_familienziel') || (Object.prototype.hasOwnProperty.call(this._sensRaw || {}, 'fam') && (!x || x.state === 'unavailable'))) bad.push(T('👨‍👩‍👧 Familienziel')); }
       const old = Object.keys(ents).filter((id) => id.startsWith('sensor.yippee_') && isT(id) && !ids.has(id));
-      return { on, bad, old };
+      // 🔁 veraltet: ein laufender Vorlagen-Sensor trägt nicht die Kennung der aktuellen Vorlage (z. B. nach einem Update)
+      const sig = on ? this._tplSig() : '';
+      const stale = on && [...ids].some((id) => isT(id) && st[id] && st[id].state !== 'unavailable' && String((st[id].attributes || {}).vorlage || '') !== sig);
+      return { on, bad, old, stale };
     }
 
-    // 🔁 Vorlage für configuration.yaml: Sensoren pro Kind, die Home Assistant selbst aus der Yippee-Liste liest
-    _sensYaml() {
+    // 🔁 Vorlage für configuration.yaml: Sensoren pro Kind, die Home Assistant selbst aus der Yippee-Liste liest.
+    // Jeder Sensor trägt die Kennung der Vorlage („vorlage“) – ändert sich die Vorlage (Update, Kinder, Einstellungen), merkt die Karte das.
+    _sensYaml() { const raw = this._sensYamlRaw('@VORLAGE@'); return raw.split('@VORLAGE@').join(this._tplSig(raw)); }
+    _tplSig(raw) { return `v${hsh(raw || this._sensYamlRaw('@VORLAGE@'))}`; }
+    _sensYamlRaw(sig) {
       const ent = this._config.storage, q = (x) => JSON.stringify(String(x));
       const keys = ['heute_erledigt', 'heute_gesamt', 'heute_netto', 'woche_netto', 'alles_erledigt', 'offen', 'wartet_auf_freigabe', 'level', 'level_name', 'gesamt_verdient', 'abzeichen', 'ziel', 'urlaub', 'anwesend', 'feiertag', 'ferien', ...(this._cfg.moneyOn ? ['euro'] : [])];
-      const kids = this._kids();
+      const kids = [...this._kids()].sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0)); // feste Reihenfolge: Umsortieren der Kinder ändert die Vorlage nicht
       return `# Yippee! - Kids Chores: Sensoren, die auch nach einem Neustart sofort da sind
 # Am einfachsten als eigene Datei packages/yippee.yaml speichern (wenn "packages" eingerichtet ist).
 # Sonst in die configuration.yaml einfügen – steht dort schon "template:", nur den Teil ab "- triggers:" darunter setzen.
@@ -2650,7 +2666,8 @@ ${kids.map((k) => { const v = `y.get('${k.id}', {})`; return `      - name: ${q(
         availability: "{{ ${v}.p is defined }}"
         state: "{{ ${v}.p }}"
         attributes:
-${keys.map((x) => `          ${x}: "{{ ${v}.get('a', {}).get('${x}') }}"`).join('\n')}`; }).join('\n')}${this._famSens() ? `
+${keys.map((x) => `          ${x}: "{{ ${v}.get('a', {}).get('${x}') }}"`).join('\n')}
+          vorlage: "${sig}"`; }).join('\n')}${this._famSens() ? `
       - name: "Yippee! Familienziel"
         unique_id: yippee_familienziel
         default_entity_id: sensor.yippee_familienziel
@@ -2659,7 +2676,8 @@ ${keys.map((x) => `          ${x}: "{{ ${v}.get('a', {}).get('${x}') }}"`).join(
         availability: "{{ y.get('fam', {}).p is defined }}"
         state: "{{ y.get('fam', {}).p }}"
         attributes:
-${['ziel', 'ziel_sterne', 'fehlen', 'prozent', 'erreicht', 'prognose_tage', 'prognose_datum'].map((x) => `          ${x}: "{{ y.get('fam', {}).get('a', {}).get('${x}') }}"`).join('\n')}` : ''}
+${['ziel', 'ziel_sterne', 'fehlen', 'prozent', 'erreicht', 'prognose_tage', 'prognose_datum'].map((x) => `          ${x}: "{{ y.get('fam', {}).get('a', {}).get('${x}') }}"`).join('\n')}
+          vorlage: "${sig}"` : ''}
 `;
     }
 
@@ -2882,6 +2900,11 @@ ${['ziel', 'ziel_sterne', 'fehlen', 'prozent', 'erreicht', 'prognose_tage', 'pro
         if (Array.isArray(op.red) && /^[\w-]{1,40}$/.test(String(op.red[0])) && /^\d{4}-\d\d-\d\d$/.test(String(op.red[1])) && /^\d{4}-\d\d-\d\d$/.test(String(op.red[2]))) q.red = op.red.slice(0, 3);
         if (op.ungoal && /^[\w-]{1,40}$/.test(String(op.ungoal))) q.ungoal = String(op.ungoal);
         if (op.unvouch && /^[\w-]{1,40}$/.test(String(op.unvouch))) q.unvouch = String(op.unvouch);
+        // 🧹 Adventskalender zurücksetzen: gemerkte Buchungen vergessen, Gutscheine und Verlaufs-Einträge der Geschenke entfernen
+        if (op.adv && typeof op.adv === 'object') {
+          const ids = (v) => (Array.isArray(v) ? v.map(String).filter((x) => /^[\w-]{1,40}$/.test(x)).slice(0, 80) : []);
+          q.adv = { ap: ids(op.adv.ap), v: ids(op.adv.v), h: Array.isArray(op.adv.h) ? op.adv.h.map((x) => String(x).slice(0, 120)).slice(0, 40) : [] };
+        }
         if (Object.keys(q).length) out.o = q;
       }
       return out;
@@ -2902,11 +2925,27 @@ ${['ziel', 'ziel_sterne', 'fehlen', 'prozent', 'erreicht', 'prognose_tage', 'pro
       const o = x.o || {};
       Object.entries(o.inc || {}).forEach(([f, v]) => { rec[f] = Math.max(0, (Number(rec[f]) || 0) + v); });
       Object.entries(o.max || {}).forEach(([f, v]) => { rec[f] = Math.max(Number(rec[f]) || 0, v); });
-      (o.push || []).forEach(([f, v, cap]) => { rec[f] = [v, ...(Array.isArray(rec[f]) ? rec[f] : [])].slice(0, cap); });
+      (o.push || []).forEach(([f, v, cap]) => {
+        if (f === 'vouch' && v && (rec.vgone || []).includes(v.id)) return; // schon eingelöst – kommt nie wieder (auch wenn eine Buchung verspätet ankommt)
+        rec[f] = [v, ...(Array.isArray(rec[f]) ? rec[f] : [])].slice(0, cap);
+      });
       if (o.red) { const [rid, d, mon] = o.red; rec.red = { ...(rec.red || {}), [rid]: [...(((rec.red || {})[rid]) || []).filter((z) => z >= mon), d] }; }
       if (o.ungoal && rec.goal === o.ungoal) rec.goal = '';
-      if (o.unvouch && Array.isArray(rec.vouch)) rec.vouch = rec.vouch.filter((v) => v && v.id !== o.unvouch);
-      if (x.id) rec.ap = [x.id, ...(cur.ap || [])].slice(0, 400);
+      if (o.unvouch) {
+        if (Array.isArray(rec.vouch)) rec.vouch = rec.vouch.filter((v) => v && v.id !== o.unvouch);
+        rec.vgone = [o.unvouch, ...(rec.vgone || []).filter((v) => v !== o.unvouch)].slice(0, 50);
+      }
+      if (o.adv) {
+        const a = o.adv;
+        if ((a.ap || []).length) rec.ap = (rec.ap || []).filter((v) => !a.ap.includes(v));
+        if ((a.v || []).length && Array.isArray(rec.vouch)) rec.vouch = rec.vouch.filter((v) => v && !a.v.includes(v.id));
+        if ((a.h || []).length && Array.isArray(rec.history)) {
+          const h = [...rec.history];
+          a.h.forEach((t) => { const i = h.findIndex((e) => e && e.t === t && !e.c); if (i >= 0) h.splice(i, 1); });
+          rec.history = h;
+        }
+      }
+      if (x.id) rec.ap = [x.id, ...(rec.ap || [])].slice(0, 400);
       return rec;
     }
     // Kind + noch nicht zusammengeführte Buchungen (in Zeitfolge)
@@ -2919,7 +2958,8 @@ ${['ziel', 'ziel_sterne', 'fehlen', 'prozent', 'erreicht', 'prognose_tage', 'pro
     // Offene Buchungen in die Kinder übernehmen (nur ältere als 5 s, damit alle Geräte sie schon kennen)
     _consCheck() {
       const now = Date.now();
-      const due = Object.values(this._db.pt).some((x) => now - (x.ts || 0) > 5000 && this._stored.has(`kp|pt|${x.id}`));
+      // ⏰ Buchungen mit Zeitstempel in der Zukunft (Uhr am Gerät falsch gestellt) gleich mit zusammenführen – sonst blieben sie bis zu diesem Datum liegen
+      const due = Object.values(this._db.pt).some((x) => (now - (x.ts || 0) > 5000 || (x.ts || 0) - now > 120000) && this._stored.has(`kp|pt|${x.id}`));
       if (!due || this._consBusy || window.__kpCons) return;
       this._consBusy = true; window.__kpCons = true;
       this._enq(async () => {
@@ -2931,7 +2971,7 @@ ${['ziel', 'ziel_sterne', 'fehlen', 'prozent', 'erreicht', 'prognose_tage', 'pro
             let o = null; try { o = JSON.parse(it.description || '{}'); } catch (e) { o = null; }
             return o && typeof o === 'object' ? { ...this._ptClean(o), id: it.summary.slice(6), key: it.summary } : { id: it.summary.slice(6), key: it.summary, bad: true };
           });
-          const ready = ds.filter((x) => x.bad || t0 - (x.ts || 0) > 5000);
+          const ready = ds.filter((x) => x.bad || t0 - (x.ts || 0) > 5000 || (x.ts || 0) - t0 > 120000);
           const byKid = {};
           ready.forEach((x) => { (byKid[x.k || ''] = byKid[x.k || ''] || []).push(x); });
           for (const kid of Object.keys(byKid)) {
@@ -4711,7 +4751,7 @@ ${['ziel', 'ziel_sterne', 'fehlen', 'prozent', 'erreicht', 'prognose_tage', 'pro
         ${this._updBanner()}
         ${this._chkBanner()}
         <div class="tabs" ${tabs.length > 5 ? `style="grid-template-columns:repeat(${tabs.length},minmax(0,1fr))"` : ''}>${tabs.map(([id, l]) => { const mm = String(l).match(/^(\S+)\s+(.*)$/); return `<button class="tab ${this._tab === id ? 'on' : ''}" data-a="tab" data-id="${id}" title="${esc(mm ? mm[2] : l)}" aria-label="${esc(mm ? mm[2] : l)}"><span class="te">${mm ? mm[1] : ''}${id === 'heute' && total ? `<b class="tbadge">${total}</b>` : ''}</span><span class="tl">${esc(mm ? mm[2] : l)}</span></button>`; }).join('')}</div>
-        ${this._tab === 'heute' || !this._tab ? `${approvals}${this._vchAdmin(kids)}` : ''}
+        ${this._tab === 'heute' || !this._tab ? `${this._sensBanner()}${approvals}${this._vchAdmin(kids)}` : ''}
         ${body}</div>`;
     }
 
@@ -5270,7 +5310,7 @@ actions:
           ${this._chk('ferFree', !!c.ferFree, T('🏖️ In den Schulferien komplett aufgabenfrei<small>Sonst pausieren in den Ferien nur Aufgaben mit „🎒 Nur an Schultagen“ (bei der Aufgabe ✎ anhaken).</small>'))}
           <div><button class="btn" data-a="holnow">${T('🔄 Jetzt aktualisieren')}</button></div>
           <details ${h.src === 'ha' || (c.hc && !ok) ? 'open' : ''}><summary class="hint">${T('Ausweichlösung: Kalender aus Home Assistant')}</summary>
-            <div class="hint">${T('Wird automatisch genutzt, wenn der Internet-Abruf nicht klappt. Feiertage: Integration „Holiday“ (Einstellungen → Geräte &amp; Dienste → Integration hinzufügen → „Holiday“, Land + Region). Ferien: ein Ferien-Kalender, z. B. über HACS „HASH“ oder einen Ferien-iCal-Link mit „Remote Calendar“.')}</div>
+            <div class="hint">${T('Wird automatisch genutzt, wenn der Internet-Abruf nicht klappt. Feiertage: Integration „Holiday“ (Einstellungen → Geräte &amp; Dienste → Integration hinzufügen → „Holiday“, Land + Region). Ferien: ein Ferien-Kalender, z. B. über den Marketplace (HACS) „HASH“ oder einen Ferien-iCal-Link mit „Remote Calendar“.')}</div>
             <label>${T('Feiertags-Kalender')}<select data-cfgs="holCal"><option value="">${fe ? T('automatisch ({name})', { name: esc(this._ename(fe)) }) : T('automatisch – keiner gefunden')}</option>${cals.map((e) => `<option value="${e}" ${c.holCal === e ? 'selected' : ''}>${esc(this._ename(e))}</option>`).join('')}</select></label>
             <label>${T('Ferien-Kalender')}<select data-cfgs="ferCal"><option value="">${sc ? T('automatisch ({name})', { name: esc(this._ename(sc)) }) : T('automatisch – keiner gefunden')}</option>${cals.map((e) => `<option value="${e}" ${c.ferCal === e ? 'selected' : ''}>${esc(this._ename(e))}</option>`).join('')}</select></label>
           </details>` : `<div class="hint">${T('Land und Region wählen – dann holt die Karte Schulferien und Feiertage selbst und hält sie aktuell (36 Länder, u. a. ganz Europa).')}</div>`}`;
@@ -5385,7 +5425,7 @@ actions:
         ${D(L)}
         ${c.muellOn ? (() => { const cals = Object.keys(this._hass.states).filter((e) => e.startsWith('calendar.')).sort((a, b) => /m(ü|ue)ll|abfall|waste|tonne/i.test(b + this._ename(b)) - /m(ü|ue)ll|abfall|waste|tonne/i.test(a + this._ename(a)) || a.localeCompare(b)); return `<div class="fopt">
           <label>${T('Müllkalender')}<select data-cfgs="muellCal"><option value="">${T('– bitte wählen –')}</option>${cals.map((e) => `<option value="${e}" ${c.muellCal === e ? 'selected' : ''}>${esc(this._ename(e))} (${e})</option>`).join('')}</select></label>
-          ${cals.length ? '' : `<div class="hint">${T('⚠️ Kein Kalender gefunden. Z. B. über HACS „Waste Collection Schedule“ installieren oder unter Einstellungen → Geräte &amp; Dienste die Integration „Lokaler Kalender“ bzw. „Fernkalender“ (ICS-Link deines Entsorgers) hinzufügen.').replace('Waste Collection Schedule', '<a href="https://github.com/mampfes/hacs_waste_collection_schedule" target="_blank" rel="noopener"><b>Waste Collection Schedule</b></a>')}</div>`}
+          ${cals.length ? '' : `<div class="hint">${T('⚠️ Kein Kalender gefunden. Z. B. über den Marketplace (HACS) „Waste Collection Schedule“ installieren oder unter Einstellungen → Geräte &amp; Dienste die Integration „Lokaler Kalender“ bzw. „Fernkalender“ (ICS-Link deines Entsorgers) hinzufügen.').replace('Waste Collection Schedule', '<a href="https://github.com/mampfes/hacs_waste_collection_schedule" target="_blank" rel="noopener"><b>Waste Collection Schedule</b></a>')}</div>`}
           ${c.muellCal ? `<div class="hint">${this._calPreview(c.muellCal)}</div>
           <div><button type="button" class="btn sm" data-a="mueltask">${T('＋ Aufgabe „Müll rausbringen“ anlegen')}</button></div>` : ''}</div>`; })() : ''}
       `);
@@ -5468,7 +5508,7 @@ actions:
       if (!HB) {
         this._modal(esc(T('📖 Handbuch')), `<div class="empty">${T('⏳ Handbuch wird geladen …')}</div>`, false, null);
         hbLoad().then(() => { if (this.shadowRoot.getElementById('modal').classList.contains('open')) this._hbOpen(q, topic); })
-          .catch(() => { this._modal(esc(T('📖 Handbuch')), `<div class="hint">${T('⚠️ Handbuch-Datei nicht gefunden. „yippee-kids-chores-manual.js“ muss im selben Ordner liegen wie die Karte – bei HACS passiert das automatisch, bei manueller Installation bitte mitkopieren.')}</div>`, false, null); });
+          .catch(() => { this._modal(esc(T('📖 Handbuch')), `<div class="hint">${T('⚠️ Handbuch-Datei nicht gefunden. „yippee-kids-chores-manual.js“ muss im selben Ordner liegen wie die Karte – beim Marketplace (HACS) passiert das automatisch, bei manueller Installation bitte mitkopieren.')}</div>`, false, null); });
         return;
       }
       const { ui, t } = this._hb();
@@ -5858,9 +5898,9 @@ actions:
             if (m) r.ver = m[1];
           } catch (e) { /* Datei fehlt */ }
         }
-        // Mehrere Einträge der Karte? Den HACS-Eintrag bzw. die neueste Datei behalten, die anderen sind überflüssig
-        // Reihenfolge: neueste Datei vor HACS-Pfad vor neuem Dateinamen (yippee-…) – eine veraltete Kopie bleibt nie als einziger Eintrag übrig
-        const rank = (r) => [this._vnum(r.ver), /^\/hacsfiles\//.test(r.url) ? 1 : 0, /yippee-kids-chores-card\.js/.test(r.url) ? 1 : 0];
+        // Mehrere Einträge der Karte? Den Eintrag des Marketplace (früher HACS) bzw. die neueste Datei behalten, die anderen sind überflüssig
+        // Reihenfolge: neueste Datei vor Marketplace-Pfad (/local/community/, früher /hacsfiles/) vor neuem Dateinamen (yippee-…) – eine veraltete Kopie bleibt nie als einziger Eintrag übrig
+        const rank = (r) => [this._vnum(r.ver), /^\/local\/community\//.test(r.url) ? 2 : /^\/hacsfiles\//.test(r.url) ? 1 : 0, /yippee-kids-chores-card\.js/.test(r.url) ? 1 : 0];
         const keep = mine.slice().sort((a, b) => { const x = rank(a), y = rank(b); return y[0] - x[0] || y[1] - x[1] || y[2] - x[2]; })[0];
         if (keep) { u.res = keep; u.file = keep.ver; u.dups = mine.filter((r) => r !== keep); }
       } catch (e) { /* kein Administrator oder Datei nicht lesbar */ }
@@ -5917,7 +5957,7 @@ actions:
           : `<div class="hint">${T('Einstellungen → Dashboards → ⋮ → Ressourcen → Eintrag der Karte öffnen → am Ende ?v={n} eintragen → speichern → Seite neu laden.', { n: esc(i.stale) })}</div>`}</div>`);
       } else if (i.avail && hide !== i.avail) {
         out.push(`<div class="box upd"><div class="lbl">${T('⬆️ Update verfügbar: Version {n}', { n: esc(i.avail) })}</div>
-          <div class="hint">${T('Installiert ist Version {n}. Das Update spielst du in HACS ein – danach erinnert dich die Karte, die Ressourcen-Version zu erhöhen.', { n: esc(VERSION) })}</div>
+          <div class="hint">${T('Installiert ist Version {n}. Das Update spielst du im Marketplace (früher HACS) ein – danach erinnert dich die Karte, die Ressourcen-Version zu erhöhen.', { n: esc(VERSION) })}</div>
           ${i.h.release_summary ? `<div class="hint">${esc(String(i.h.release_summary).slice(0, 300))}</div>` : ''}
           <div class="btnrow"><button class="btn primary" data-a="updopen">${T('⬆️ Zu den Updates')}</button>${i.h.release_url ? `<a class="btn" href="${esc(i.h.release_url)}" target="_blank" rel="noopener">${T('Was ist neu?')}</a>` : ''}<button class="btn" data-a="updhide" data-v="${esc(i.avail)}">${T('Später')}</button></div></div>`);
       }
@@ -5954,11 +5994,11 @@ actions:
       const c = this._cfg, i = this._updInfo();
       const st = i.stale ? T('⚠️ neue Version noch nicht aktiv') : i.avail ? T('Update {n} verfügbar', { n: i.avail }) : T('aktuell');
       return ['upd', T('⬆️ Updates'), `${T('Version {n}', { n: VERSION })} · ${c.updOn === false ? T('aus') : st}`, `
-        ${this._chk('updAuto', c.updAuto !== false, T('Ressource nach einem Update automatisch erhöhen<small>Die Karte trägt die neue Version selbst in die Ressource ein, sobald ein Administrator den Eltern-Bereich öffnet. Bei Installation über HACS erledigt das HACS.</small>'))}
-        ${this._chk('updOn', c.updOn !== false, T('Auf Updates prüfen<small>Zeigt im Eltern-Bereich, wenn HACS eine neue Version kennt – und erinnert daran, die Ressourcen-Version zu erhöhen, wenn ein Update installiert, aber noch nicht geladen ist.</small>'))}
+        ${this._chk('updAuto', c.updAuto !== false, T('Ressource nach einem Update automatisch erhöhen<small>Die Karte trägt die neue Version selbst in die Ressource ein, sobald ein Administrator den Eltern-Bereich öffnet. Bei Installation über den Marketplace (früher HACS) erledigt das der Marketplace.</small>'))}
+        ${this._chk('updOn', c.updOn !== false, T('Auf Updates prüfen<small>Zeigt im Eltern-Bereich, wenn der Marketplace (früher HACS) eine neue Version kennt – und erinnert daran, die Ressourcen-Version zu erhöhen, wenn ein Update installiert, aber noch nicht geladen ist.</small>'))}
         <div class="hint">${T('Läuft gerade: Version {n}', { n: VERSION })}${i.u.file ? ` · ${T('Datei auf dem Server: Version {n}', { n: esc(i.u.file) })}` : ''}${i.h ? ` · ${T('HACS: installiert {a}, neueste {b}', { a: esc(i.h.installed_version || '–'), b: esc(i.h.latest_version || '–') })}` : ''}</div>
         ${i.u.res ? `<div class="hint">${T('Ressource: {url}', { url: `<code>${esc(i.u.res.url)}</code>` })}</div>` : `<div class="hint">${T('Die Ressource kann nur ein Administrator auslesen.')}</div>`}
-        ${i.h ? '' : `<div class="hint">${T('Kein HACS-Eintrag gefunden – bei manueller Installation gibt es nur die Erinnerung an die Ressourcen-Version.')}</div>`}
+        ${i.h ? '' : `<div class="hint">${T('Kein Eintrag im Marketplace (HACS) gefunden – bei manueller Installation gibt es nur die Erinnerung an die Ressourcen-Version.')}</div>`}
         <div><button class="btn" data-a="updnow">${T('🔄 Jetzt prüfen')}</button></div>`];
     }
 

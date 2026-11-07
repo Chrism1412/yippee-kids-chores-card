@@ -623,6 +623,34 @@ details.adv[open]{display:flex;flex-direction:column;gap:6px}
       if (d && d.rwd && this.host._db.reward[d.rwd]) { this.host._advGift(k.id, d.rwd, n, `adv${y % 100}${pad(n)}r${k.id}`.slice(0, 40)); any = true; }
       return any;
     }
+    // 🧹 Komplett zurücksetzen (z. B. nach einem Test): Türchen wieder zu, Sterne und Geschenke dieser Saison zurücknehmen
+    // und die gemerkten Buchungen vergessen – so werden sie beim echten Öffnen wieder gebucht
+    _resetKid(k) {
+      const H = this.host, y = this._season(new Date()), kid = H && H._db.kid[k.id];
+      if (!kid) return 0;
+      const ap = new Set(kid.ap || []), vouch = [...(kid.vouch || [])], ids = [], vs = [], hs = [];
+      let pts = 0, jok = 0, undone = 0;
+      for (let n = 1; n <= 31; n++) {
+        const d = this._doorOf(k, n);
+        [['p', `adv${y % 100}${pad(n)}p${k.id}`.slice(0, 40)], ['r', `adv${y % 100}${pad(n)}r${k.id}`.slice(0, 40)]].forEach(([t, id]) => {
+          if ((H._db.pt || {})[id]) { H._del('pt', id); undone++; return; } // noch nicht verrechnet: Buchung einfach löschen
+          if (!ap.has(id)) return;
+          ids.push(id); undone++;
+          if (t === 'p') { pts += Math.max(-100, Math.min(100, Math.round(Number(d && d.pts) || 0))); return; }
+          const r = d && d.rwd && H._db.reward[d.rwd];
+          if (!r) return;
+          hs.push(`🎄 ${r.title}`);
+          if (r.joker) { jok++; return; }
+          const v = vouch.find((x) => x && x.t === r.title && !vs.includes(x.id));
+          if (v) vs.push(v.id);
+        });
+      }
+      if (ids.length) H._addPoints(k.id, -pts, `Zurückgenommen: ${T('🎄 Adventskalender')}`, { adv: { ap: ids, v: vs, h: hs }, ...(jok ? { inc: { jokers: -jok } } : {}) });
+      const upd = () => ({ y, d: {}, b: {} });
+      this._save('op', k.id, upd(), upd);
+      if (this._tmp) delete this._tmp[k.id];
+      return undone;
+    }
 
     // ---------- Dateien: Mediathek (HA-Medienordner /media/advent) ----------
     // Mediathek-Dateien brauchen eine signierte URL von Home Assistant
@@ -1138,7 +1166,9 @@ details.adv[open]{display:flex;flex-direction:column;gap:6px}
         ${kids.length > 1 ? `<button class="btn" data-a="copyto">${T('📋 Auf anderes Kind kopieren')}</button>` : ''}
         <button class="btn" data-a="shuffle">${T('🔀 Neu mischen')}</button>
         <button class="btn" data-a="ekid" data-k="${esc(k.id)}">${T('⚙️ Hintergrund & Handy für {name}', { name: esc(k.name) })}</button>
-        <button class="btn" data-a="closeall">${this._sureKey === `close:${k.id}` ? T('Wirklich alle schließen? Nochmal tippen') : T('🚪 Alle Türchen schließen')}</button></div>`;
+        <button class="btn" data-a="closeall">${this._sureKey === `close:${k.id}` ? T('Wirklich alle schließen? Nochmal tippen') : T('🚪 Alle Türchen schließen')}</button>
+        <button class="btn" data-a="advreset">${this._sureKey === `reset:${k.id}` ? T('Auch Sterne und Geschenke zurücknehmen? Nochmal tippen') : T('🧹 Komplett zurücksetzen')}</button></div>
+        <div class="hint">${T('🚪 Schließen: Die Türchen gehen wieder zu, Sterne und Geschenke bleiben. 🧹 Komplett zurücksetzen: Auch Sterne, Gutscheine und Geschenke dieser Saison werden zurückgenommen – z. B. nach einem Test. Danach wird beim Öffnen wieder ganz normal gebucht.')}</div>`;
     }
 
     _chk(k, label, hint) { const c = this._cfg; return `<label class="crow"><input type="checkbox" data-c="${k}" ${c[k] ? 'checked' : ''}><span>${label}${hint ? `<small>${hint}</small>` : ''}</span></label>`; }
@@ -1546,6 +1576,13 @@ details.adv[open]{display:flex;flex-direction:column;gap:6px}
           const upd = (cur) => ({ y, d: {}, b: cur && cur.y === y ? (cur.b || {}) : {} });
           this._save('op', k.id, upd((this._db.op || {})[k.id]), upd);
           this._toast(T('🚪 Alle Türchen wieder zu')); this._render();
+          break;
+        }
+        case 'advreset': {
+          const k = this._adminKid();
+          if (!k || !this._sure(`reset:${k.id}`)) break;
+          const n = this._resetKid(k);
+          this._toast(n ? T('🧹 {name}: Türchen, Sterne und Geschenke zurückgesetzt', { name: k.name }) : T('🚪 Alle Türchen wieder zu')); this._render();
           break;
         }
         case 'ekid': this._editKid(ds.k); break;

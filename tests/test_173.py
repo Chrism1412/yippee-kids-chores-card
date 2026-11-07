@@ -88,7 +88,7 @@ with sync_playwright() as p:
     ok('opened template stays open after re-render', ev("A.shadowRoot.querySelector('details.sensy').open") and ev("A.shadowRoot.querySelector('details.sensy').getBoundingClientRect().height")>100)
     ev("A.shadowRoot.querySelector('details.sensy summary').click()"); t(200)
     # beide per Vorlage und mit Werten -> ✅, keine Schritte
-    ev("A._hass.entities['sensor.yippee_ben_juergen']={entity_id:'sensor.yippee_ben_juergen',platform:'template'}; A._hass.states['sensor.yippee_mia']={state:'13',attributes:{}}; A._hass.states['sensor.yippee_ben_juergen']={state:'8',attributes:{}}; A._render()"); t(400)
+    ev("A._hass.entities['sensor.yippee_ben_juergen']={entity_id:'sensor.yippee_ben_juergen',platform:'template'}; A._hass.states['sensor.yippee_mia']={state:'13',attributes:{vorlage:A._tplSig()}}; A._hass.states['sensor.yippee_ben_juergen']={state:'8',attributes:{vorlage:A._tplSig()}}; A._render()"); t(400)
     tx=box()
     ok('all via template: ✅ status, no steps, no warning', '✅ Dauerhafte Sensoren aktiv' in tx and '⚠️' not in tx and 'packages/yippee.yaml' not in tx, tx[-400:])
     ok('copy button still there', ev("!!A.shadowRoot.querySelector('[data-a=sensyaml]')"))
@@ -96,7 +96,7 @@ with sync_playwright() as p:
     ev("A._hass.states['sensor.yippee_mia']={state:'unavailable',attributes:{}}; A._render()"); t(400)
     tx=box()
     ok('unavailable although data is there: warning for Mia', '⚠️' in tx and 'Mia' in tx and 'Ben' not in tx.split('⚠️')[1].split('\n')[0], tx[-300:])
-    ev("A._hass.states['sensor.yippee_mia']={state:'13',attributes:{}}")
+    ev("A._hass.states['sensor.yippee_mia']={state:'13',attributes:{vorlage:A._tplSig()}}")
     # Kind umbenannt -> alter Vorlagen-Sensor übrig + neuer Name fehlt
     ev("(()=>{const o={...A._db.kid.B}; delete o.id; A._save('kid','B',{...o,name:'Benno'});})()"); t(800); show()
     tx=box()

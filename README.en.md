@@ -10,15 +10,16 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/hacs/integration"><img src="https://img.shields.io/badge/HACS-Custom-41BDF5.svg" alt="HACS Custom"></a>
+  <a href="https://www.home-assistant.io/integrations/marketplace/"><img src="https://img.shields.io/badge/Marketplace-Custom-41BDF5.svg" alt="Marketplace Custom"></a>
   <a href="https://github.com/Chrism1412/yippee-kids-chores-card/releases"><img src="https://img.shields.io/github/v/release/Chrism1412/yippee-kids-chores-card" alt="Version"></a>
   <img src="https://img.shields.io/badge/Home%20Assistant-2024.10%2B-03a9f4" alt="Home Assistant 2024.10+">
   <img src="https://img.shields.io/badge/languages-27-ffc93c" alt="27 languages">
   <a href="https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="MIT"></a>
+  <a href="https://buymeacoffee.com/Chrism1412"><img src="https://img.shields.io/badge/Buy%20me%20a%20coffee-%E2%98%95-ffdd00" alt="Buy me a coffee"></a>
 </p>
 
 > ⚠️ **Important for updates:** **Since version 1.4.0 the card consists of several files** (card, 📖 manual and one small file per language).<br>
-> **HACS:** nothing to do – the update loads everything automatically.<br>
+> **Marketplace (formerly HACS):** nothing to do – the update loads everything automatically.<br>
 > **Manual installation:** when updating, please copy **all files from [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist)** into the same folder – otherwise the card shows up in German and the manual is missing.
 
 
@@ -26,6 +27,8 @@
 
 > ### 🎄 New in 1.7.0: the advent calendar
 > Just in time for Christmas, Yippee! has its own **advent calendar** – 24 doors for every kid with text, a picture, stars or a small reward as a present. A door can also stay shut until chores are done. Switch it on under **⚙️ Settings → ⚙️ General → 🎄 Advent calendar** – more in [Advent calendar 🎄](#advent-calendar--optional).
+>
+> **New in 1.7.1:** 🧹 reset the advent calendar per kid (e.g. after a test), 🔁 a hint when the sensor template is out of date, and installing straight from Home Assistant's new **Marketplace** (formerly HACS) – with a one-tap button.
 
 ---
 
@@ -36,7 +39,7 @@
 Parents create chores and rewards, approve finished chores (also right from the push or Telegram notification) and decide for themselves whether a missed chore costs stars – **nothing is deducted automatically**.
 
 - **No cloud, no account, no server:** all data lives in a *Local To-do* list in your Home Assistant.
-- **One file, no dependencies:** no other HACS cards needed, light enough for older tablets.
+- **One file, no dependencies:** no other add-on cards from the Marketplace needed, light enough for older tablets.
 - **Made for phones:** works in the Home Assistant app in portrait mode just as well as on a wall tablet.
 
 > ### 💡 Ready to go: 221 chores and 51 rewards built in
@@ -51,6 +54,12 @@ Parents create chores and rewards, approve finished chores (also right from the 
 | Kids view | Parents view | Rewards | Settings | Presence |
 |:---:|:---:|:---:|:---:|:---:|
 | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/kinder-ansicht.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/eltern-heute.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/belohnungen.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/einstellungen.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/anwesenheit.png" width="200"> |
+
+**🎄 New in 1.7: advent calendar and dark mode**
+
+| 🎄 Advent calendar | 🎁 Door opened | 🚪 Filling doors (parents) | 🌙 Dark mode |
+|:---:|:---:|:---:|:---:|
+| <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/adventskalender.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/advent-tuerchen.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/advent-eltern.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/darkmode.png" width="200"> |
 
 *(Screenshots in German – the card shows your Home Assistant language automatically.)*
 
@@ -110,6 +119,9 @@ Turn on under **⚙️ Settings → ⚙️ General → 🎄 Advent calendar** �
 - **Look:** starry night with garlands and a snowy landscape, colourfully patterned doors, ❄️ snowfall, 🔔 bells or your own sound, ⏳ countdown, progress bar, 🎚️ door size slider – for everyone, for this device only (📱) or for one card only (`advent_size`), adapts automatically on phones
 - **📁 Files:** upload your own JPG pictures and MP3 sounds (stored under Media → advent; administrator only)
 - **📱 Morning message** in December to the kid’s phone (the card creates the automation; administrator only) and **🧪 test mode** to try it out in November
+- **🧹 Reset completely** (per kid): closes the doors and takes back stars, vouchers and gifts of this season – e.g. after a test with a changed date. “🚪 Close all doors” keeps stars and gifts
+
+<p align="center"><img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/adventskalender.png" width="260" alt="Advent calendar"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/advent-tuerchen.png" width="260" alt="Door opened"></p>
 
 In December kids open their doors with the **🎄 button** in their view – or in a separate card with `mode: advent`. The calendar lives in its own file (`yippee-kids-chores-advent.js`), loaded only when it is switched on.
 
@@ -118,7 +130,7 @@ In December kids open their doors with the **🎄 button** in their view – or 
 Each can be switched on under **⚙️ Settings** – every feature sits where it belongs by topic: **⚙️ General · ✅ Tasks & daily routine · ⭐ Points & bonuses · 🎁 Rewards & money · 🔔 Notifications · 🔌 Devices & voice · 📈 Analysis · 💾 Data**, each in its own collapsible section showing “on” or “off”.
 
 - **📋 Routines:** several steps in one chore (e.g. a morning routine); the child ticks off each step, the stars come with the last one. Own “📋 ＋ Routine” button; add steps via search (suggestions from the first letter) from your chores and templates or type them, sort with ▲▼. Chores in a routine only appear as a step. 11 templates included: morning, evening, after-school, homework, room, weekend, nap, bath, mealtime, pet and sports routine.
-- **📖 Manual** in the parents area (📖 top right) with **search and keywords** (e.g. NFC, presence, PIN) in all 27 languages – 47 topics from “Getting started” to “👫 Shared rewards” and “💽 Storage & clean-up” – a separate file `yippee-kids-chores-manual.js` next to the card, installed automatically by HACS and loaded only when opened.
+- **📖 Manual** in the parents area (📖 top right) with **search and keywords** (e.g. NFC, presence, PIN) in all 27 languages – 47 topics from “Getting started” to “👫 Shared rewards” and “💽 Storage & clean-up” – a separate file `yippee-kids-chores-manual.js` next to the card, installed automatically by the Marketplace and loaded only when opened.
 - **🔮 Savings forecast:** savings goal and family goal show roughly when they will be reached at the current pace (real stars of the last 3 weeks).
 - **🧮 Price assistant:** every reward shows how many days each child saves for it; "Suggest prices" recalculates prices from the children's weekly stars (e.g. "2 rewards per week") and suggests a family goal.
 - **👧 Prices per child:** each reward can have its own price per child; "⚖️ Share fairly" calculates from stars per day.
@@ -164,21 +176,31 @@ Each can be switched on under **⚙️ Settings** – every feature sits where i
 
 ## Installation
 
-### HACS (recommended)
+### Marketplace (recommended)
 
-1. HACS → ⋮ (top right) → **Custom repositories**
-2. Repository: `https://github.com/Chrism1412/yippee-kids-chores-card` · Type: **Dashboard** → **Add**
-3. Search **Yippee! - Kids Chores** → **Download**
+Since Home Assistant 2026.11, HACS is built in as the **Marketplace**.
+
+**Quickest:** tap the button – it opens Yippee! directly in the Marketplace of your Home Assistant, then just **Install**:
+
+[![Open in the Marketplace](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Chrism1412&repository=yippee-kids-chores-card&category=plugin)
+
+Or by hand:
+
+1. **Settings → Marketplace** → the link icon (🔗 with ➕) next to the search, top right → **Add from link**
+2. GitHub link: `https://github.com/Chrism1412/yippee-kids-chores-card` → **Add** (if asked, choose type **Dashboard**)
+3. Open **Yippee! - Kids Chores** → **Install** → confirm the version → **Install**
 4. Reload the page
 
-HACS adds the resource automatically.
+The Marketplace adds the resource automatically. Custom repositories need a connected GitHub account (the Marketplace asks the first time). Alternatively use ⋮ → **Custom repositories**.
+
+> **Older Home Assistant with HACS:** HACS → ⋮ (top right) → **Custom repositories** → repository `https://github.com/Chrism1412/yippee-kids-chores-card`, type **Dashboard** → **Add** → search **Yippee! - Kids Chores** → **Download** → reload the page.
 
 ### Manual
 
 1. Download all files from the [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist) folder: the card `yippee-kids-chores-card.js`, the 📖 manual `yippee-kids-chores-manual.js`, the 🎄 advent calendar `yippee-kids-chores-advent.js` and the language files `yippee-kids-chores-lang-xx.js`.
-2. Create the folder **`/config/www/community/yippee-kids-chores-card/`** and copy all files into it. This is the same folder HACS uses, so you can switch to HACS later without changes.
+2. Create the folder **`/config/www/community/yippee-kids-chores-card/`** and copy all files into it. This is the same folder the Marketplace (formerly HACS) uses, so you can switch later without changes.
 3. **Settings → Dashboards → ⋮ → Resources → Add resource**
-   - URL: `/hacsfiles/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.7.0`
+   - URL: `/local/community/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.7.1`
    - Type: **JavaScript module**
 4. Reload the page.
 
@@ -252,14 +274,14 @@ All integrations are **optional** and can be switched on and off individually.
 
 - **Home Assistant companion app:** notifications for finished chores, reward requests, missed chores, daily summary and weekly review – with **action buttons** (approve / reject, excused / minus stars / done). The card creates the needed automation with one tap.
 - **Telegram:** the same messages with **inline buttons**, photos for photo proof, and the commands `/punkte` (points), `/offen` (open chores), `/heute` (daily summary now), `/woche` (weekly review now) and `/hilfe` (help). The settings show when the last button press arrived, from whom and whether it was booked – and warn clearly if the buttons automation is missing. A test button shows Telegram's error message if buttons are rejected.
-- **Text-to-speech / Alexa:** any TTS integration with media players, or *Alexa Media Player* (HACS) – for the **morning announcement** ("Good morning Mia! Today: brush teeth, make bed and take out the trash (paper).") and **reminders** shortly before a time window ends.
-- **🗑️ Trash calendar:** chores like "Take out the trash" or "Pack the sports bag" (keyword `Training`) take their dates from any Home Assistant calendar – e.g. **[Waste Collection Schedule](https://github.com/mampfes/hacs_waste_collection_schedule)** (HACS, hundreds of providers), a **Remote calendar** with your provider's ICS link, or a **Local calendar**. Per chore: keywords (e.g. `paper, residual`), and **"the evening before"** so the bin goes out in time. The tile shows what is collected.
+- **Text-to-speech / Alexa:** any TTS integration with media players, or *Alexa Media Player* (Marketplace) – for the **morning announcement** ("Good morning Mia! Today: brush teeth, make bed and take out the trash (paper).") and **reminders** shortly before a time window ends.
+- **🗑️ Trash calendar:** chores like "Take out the trash" or "Pack the sports bag" (keyword `Training`) take their dates from any Home Assistant calendar – e.g. **[Waste Collection Schedule](https://github.com/mampfes/hacs_waste_collection_schedule)** (Marketplace, hundreds of providers), a **Remote calendar** with your provider's ICS link, or a **Local calendar**. Per chore: keywords (e.g. `paper, residual`), and **"the evening before"** so the bin goes out in time. The tile shows what is collected.
 - **📚 Events as tasks:** under ⚙️ Settings **＋ Link a calendar** – each entry turns into its own chore with its text as the title. Ideal for homework: “HW: Maths p. 42” due Friday shows up on Thursday for the chosen child. Settings: calendar, children, emoji, stars, “the day before” or “on the day”, keyword filter (e.g. `HW:`) and minus points (default **0**). **✅ Tasks → 📚 From calendars** lists the next 14 days; single events can be hidden with 🙈 without touching the calendar.
 - **School holidays and public holidays:** choose country and region – the card fetches the data itself from the **[OpenHolidays API](https://www.openholidaysapi.org)** (free, **no API key**, 36 countries). Fallback: the built-in **Holiday** integration and a school-holiday calendar.
 - **Stars from automations / voice assistants:** the card creates the script `script.yippee_sterne` (fields `kind`, `sterne` – negative to deduct –, `grund`), usable in automations, scripts and – via one script per kid – Google Assistant or Alexa.
 - **🎨 Appearance** (⚙️ Settings → ⚙️ General for all cards, or per card in the card editor): **🎨 colour presets** to tap (like the dashboard, light, dark, pastel, ocean, forest, sun, night, candy) or ✏️ your own colours with a colour picker – text and tiles adapt automatically, with a warning if the text is hard to read; in Home Assistant's dark mode, light presets automatically turn dark on that device, own colours optionally too –, 📏 equal-height tiles (several kid cards side by side line up), compact, no background and size 70–130 %.
 - **Theming:** CSS variables `--yippee-bg`, `--yippee-surface`, `--yippee-accent`, `--yippee-text`, `--yippee-text-secondary` for themes or card_mod.
-- **Sensors:** `sensor.yippee_<name>` per kid (state = points) with the attributes `heute_erledigt`, `heute_gesamt`, `alles_erledigt`, `offen`, `wartet_auf_freigabe`, `level`, `level_name`, `gesamt_verdient`, `abzeichen`, `ziel`, `urlaub`, `anwesend`, `feiertag`, `ferien` (and `euro`) – e.g. "TV only after all chores are done". Updated while the card is open for an administrator. **🔁 Available right after a restart** (1.7.0, optional): ⚙️ → 🔌 Devices & voice → 📊 Sensors → turn on “Available right after a restart”, **📋 Copy template**, save it as `packages/yippee.yaml` (if packages are set up) or paste it into `configuration.yaml` and restart Home Assistant – a template sensor then reads each kid's last state from the Yippee list, no open card needed. The card shows ✅ when it is running and ⚠️ when it needs to be copied again after adding or renaming children Sensors update within seconds when something is checked off. Ready-made automations at the tap of a button: 🎉 announcement and message when the family goal is reached, and 📋 an evening reminder if a child hasn't finished everything. With a family goal there is also `sensor.yippee_familienziel` (state = stars collected; attributes `ziel`, `ziel_sterne`, `fehlen`, `prozent`, `erreicht`, `prognose_tage`, `prognose_datum`). Home Assistant 2025.10 or newer.
+- **Sensors:** `sensor.yippee_<name>` per kid (state = points) with the attributes `heute_erledigt`, `heute_gesamt`, `alles_erledigt`, `offen`, `wartet_auf_freigabe`, `level`, `level_name`, `gesamt_verdient`, `abzeichen`, `ziel`, `urlaub`, `anwesend`, `feiertag`, `ferien` (and `euro`) – e.g. "TV only after all chores are done". Updated while the card is open for an administrator. **🔁 Available right after a restart** (1.7.0, optional): ⚙️ → 🔌 Devices & voice → 📊 Sensors → turn on “Available right after a restart”, **📋 Copy template**, save it as `packages/yippee.yaml` (if packages are set up) or paste it into `configuration.yaml` and restart Home Assistant – a template sensor then reads each kid's last state from the Yippee list, no open card needed. The card shows ✅ when it is running and ⚠️ when it needs to be copied again after adding or renaming children. If the template itself changes (e.g. after an update), the parents view shows a hint at the top – just copy it again, paste it and restart. Sensors update within seconds when something is checked off. Ready-made automations at the tap of a button: 🎉 announcement and message when the family goal is reached, and 📋 an evening reminder if a child hasn't finished everything. With a family goal there is also `sensor.yippee_familienziel` (state = stars collected; attributes `ziel`, `ziel_sterne`, `fehlen`, `prozent`, `erreicht`, `prognose_tage`, `prognose_datum`). Home Assistant 2025.10 or newer.
 - **Background automation:** morning announcement, reminders, missed-chore messages, daily summary and Telegram commands run inside Home Assistant – **even when no card is open**. The card writes a 14-day plan and creates the automation with one tap.
 
 ## Data safety
@@ -282,8 +304,8 @@ All integrations are **optional** and can be switched on and off individually.
 
 ## Updates
 
-- **Update available:** when HACS knows a newer version, the parents area shows a notice.
-- **Resource raised automatically:** when the file on the server is newer than the one running in the browser, the card writes the new version into the resource itself (`?v=1.5.0` …) as soon as an administrator opens the parents area, then offers a reload button. With HACS, HACS updates the resource; the card just offers the reload. Can be switched off under ⬆️ Updates.
+- **Update available:** when the Marketplace (formerly HACS) knows a newer version, the parents area shows a notice.
+- **Resource raised automatically:** when the file on the server is newer than the one running in the browser, the card writes the new version into the resource itself (`?v=1.5.0` …) as soon as an administrator opens the parents area, then offers a reload button. With the Marketplace (formerly HACS), the Marketplace updates the resource; the card just offers the reload. Can be switched off under ⬆️ Updates.
 
 See the [CHANGELOG](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/CHANGELOG.md).
 
@@ -308,7 +330,11 @@ Yippee! stands on the shoulders of great open-source projects and lives from its
 - **[Sysman2018](https://github.com/Sysman2018)** – the idea for 🎓 stars for good school grades ([#2](https://github.com/Chrism1412/yippee-kids-chores-card/issues/2)).
 - **[Daniel-PT](https://github.com/Daniel-PT)** – found the IP-ban bug for non-admin users ([#3](https://github.com/Chrism1412/yippee-kids-chores-card/issues/3)).
 - **[OpenHolidays API](https://www.openholidaysapi.org)** – provides public and school holidays.
-- **[Home Assistant](https://www.home-assistant.io)** and **[HACS](https://hacs.xyz)** – without them this card would not exist.
+- **[Home Assistant](https://www.home-assistant.io)** and **[HACS](https://hacs.xyz)** (now the Marketplace in Home Assistant) – without them this card would not exist.
+
+## Support ☕
+
+Yippee! is and will stay free and open source. If it makes your family life a bit easier, I’d be happy about a coffee: **[buymeacoffee.com/Chrism1412](https://buymeacoffee.com/Chrism1412)** – completely optional. A ⭐ on GitHub or an idea or bug report as an [issue](https://github.com/Chrism1412/yippee-kids-chores-card/issues) helps just as much.
 
 ## License
 

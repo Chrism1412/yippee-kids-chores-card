@@ -3,7 +3,23 @@
 Alle wichtigen Änderungen an **Yippee! - Kids Chores**.
 Versionsnummern: `MAJOR.MINOR.PATCH` – Fehlerbehebungen erhöhen PATCH, neue Funktionen MINOR, grundlegende Änderungen (z. B. am Speicherformat) MAJOR.
 
-## [1.7.0] – 2026-10-30
+## [1.7.1] – 2026-11-07
+
+Danke an [@RkcCorian](https://github.com/RkcCorian) für die Idee, auf eine veraltete Sensor-Vorlage hinzuweisen ([#13](https://github.com/Chrism1412/yippee-kids-chores-card/issues/13))!
+
+### Neu
+- **🔁 Hinweis bei veralteter Sensor-Vorlage** ([#13](https://github.com/Chrism1412/yippee-kids-chores-card/issues/13)): Die kopierte Vorlage für „🔁 Auch nach einem Neustart sofort da“ trägt jetzt eine Kennung. Ändert sich die Vorlage – nach einem Update, durch neue Kinder oder Einstellungen wie 💶 Taschengeld –, zeigt die Eltern-Ansicht oben im 📋 Heute-Tab einen Hinweis, und unter 📊 Sensoren steht „🔁 Es gibt eine neue Vorlage“. Dann einfach „📋 Vorlage kopieren“, neu einfügen und Home Assistant neu starten. **Wer die Vorlage schon nutzt, sieht den Hinweis nach dem Update einmal** – die Vorlage aus 1.7.0 hat noch keine Kennung.
+- **🧹 Adventskalender komplett zurücksetzen** (🎄 Advent → 🚪 Türchen, pro Kind): schließt alle Türchen und nimmt Sterne, Gutscheine und Geschenke dieser Saison wieder zurück. Danach wird beim Öffnen wieder ganz normal gebucht – praktisch nach einem Test mit umgestelltem Datum. „🚪 Alle Türchen schließen“ lässt Sterne und Geschenke wie bisher stehen.
+
+### Behoben
+- **⏰ Falsch gestellte Uhr am Gerät:** Jede Buchung trägt die Uhrzeit des Geräts. Ging die Uhr vor (z. B. Datum zum Testen auf den 24.12. gestellt), blieben solche Buchungen bis zu diesem Datum „offen“ und wurden immer wieder neu angezeigt – ein eingelöster Gutschein tauchte so ständig wieder auf. Jetzt werden sie gleich verrechnet.
+- **🎟️ Eingelöste Gutscheine kommen nie wieder:** Das Kind merkt sich eingelöste Gutscheine. Kommt eine Buchung mit demselben Gutschein verspätet an (anderes Gerät, falsche Uhr), erscheint er nicht noch einmal.
+
+### Sonstiges
+- **🛒 Marketplace statt HACS:** Seit Home Assistant 2026.11 ist HACS als **Marketplace** eingebaut. Texte in der Karte, im Handbuch und in der README sprechen jetzt vom Marketplace (früher HACS); die Installationsanleitung zeigt den neuen Weg (Einstellungen → Marketplace → 🔗 „Über einen GitHub-Link hinzufügen“). Bei manueller Installation lautet die Ressource jetzt `/local/community/yippee-kids-chores-card/yippee-kids-chores-card.js` – funktioniert mit und ohne Marketplace (der alte Pfad `/hacsfiles/…` geht weiterhin). Ist die Karte doppelt als Ressource eingetragen, behält die Karte bevorzugt den Eintrag des Marketplace.
+- **☕ Unterstützen:** Wer mag, kann Yippee! jetzt mit einem Kaffee unterstützen – [buymeacoffee.com/Chrism1412](https://buymeacoffee.com/Chrism1412) (❤️ Sponsor-Knopf im Repo und Abschnitt „Unterstützen“ in der README). Ganz freiwillig, Yippee! bleibt kostenlos.
+
+## [1.7.0] – 2026-11-04
 
 Danke an [@RkcCorian](https://github.com/RkcCorian) für den Hinweis auf die fehlenden Sensoren nach einem Neustart ([#13](https://github.com/Chrism1412/yippee-kids-chores-card/issues/13)), die Idee, erledigte Freigaben von allen Handys zu entfernen ([#14](https://github.com/Chrism1412/yippee-kids-chores-card/issues/14)), und den Hinweis auf verschwundene eigene Emojis ([#15](https://github.com/Chrism1412/yippee-kids-chores-card/issues/15))!
 

@@ -78,10 +78,10 @@ with sync_playwright() as p:
     ev("A._setCfg({fam:{title:'Freizeitpark',emoji:'🎢',cost:400,pts:150}}); A._pushSensors()"); t(5500)
     ok('family entry updated', json.loads({i['summary']:i.get('description') for i in ev("items['todo.kinderpunkte']")}['kp|sens|fam'])['p']==150)
     # Status: Kinder per Vorlage, Familienziel fehlt -> Warnung
-    ev("['sensor.yippee_mia','sensor.yippee_ben'].forEach(id=>{A._hass.entities[id]={platform:'template'}; A._hass.states[id]={state:'5',attributes:{}};}); A._setCfg({setView:'all'}); A._accAll=false; A._accOpen='sens'; A._tab='einst'; A._render()"); t(500)
+    ev("['sensor.yippee_mia','sensor.yippee_ben'].forEach(id=>{A._hass.entities[id]={platform:'template'}; A._hass.states[id]={state:'5',attributes:{vorlage:A._tplSig()}};}); A._setCfg({setView:'all'}); A._accAll=false; A._accOpen='sens'; A._tab='einst'; A._render()"); t(500)
     tx=ev("A.shadowRoot.querySelector('#app').innerText")
     ok('template without family goal -> warning names it', '⚠️' in tx and 'Familienziel' in tx.split('⚠️')[1][:200], tx.split('⚠️')[1][:200] if '⚠️' in tx else '')
-    ev("A._hass.entities['sensor.yippee_familienziel']={platform:'template'}; A._hass.states['sensor.yippee_familienziel']={state:'150',attributes:{}}; A._render()"); t(400)
+    ev("A._hass.entities['sensor.yippee_familienziel']={platform:'template'}; A._hass.states['sensor.yippee_familienziel']={state:'150',attributes:{vorlage:A._tplSig()}}; A._render()"); t(400)
     ok('with family sensor -> ✅', '✅ Dauerhafte Sensoren aktiv' in ev("A.shadowRoot.querySelector('#app').innerText"))
     # Ziel entfernt -> Eintrag weg, Sensor als „nicht mehr gebraucht“
     ev("A._setCfg({fam:null}); A._pushSensors()"); t(5500)
