@@ -243,7 +243,7 @@ Alles unter **⚙️ Einstellungen** einzeln ein- und ausschaltbar – jede Funk
 - **🧭 Einrichtungs-Assistent** beim ersten Start: Kinder mit Geburtsdatum, Avatar und Farbe anlegen → passende Routinen und Aufgaben anhaken (nach Tageszeit gruppiert, mit Suche) → Belohnungen mit eigenem Preis wählen → beliebte Funktionen und das Handy für Benachrichtigungen einschalten → fertig, inklusive fertigem Text für die Kinder-Karte. Jederzeit wieder startbar unter ⚙️ Einstellungen
 - **Einstellungen „Einfach“ oder „Alle“**: auf Wunsch nur das Wichtigste (Sprache, Urlaub, Freigabe, Benachrichtigungen, Sicherung, Zugriffsschutz) – alles andere mit einem Tipp, nach Themen sortiert, mit **🔎 Suchfeld** (Treffer im Titel zuerst), **Schalter direkt in der Zeile** und **📖-Knopf** zum passenden Handbuch-Thema
 - **Benehmen** 😊 (optional): im Heute-Tab mit einem Tipp auf den grünen Knopf „😊 +1“ belohnen (Sterne einstellbar), auf Wunsch auch mit dem roten Knopf „😠 −1“ Sterne abziehen – alles im Punkte-Verlauf. Unter 👧 Kinder zeigt ein **📊 Verhaltens-Diagramm** die letzten 14 Tage mit Durchschnitt und Trend
-- **Freigabe** von Aufgaben und Einlösungen – in der Karte, per Push-Knopf oder Telegram-Knopf; erledigte Freigaben verschwinden auf allen Handys
+- **Freigabe** von Aufgaben und Einlösungen – in der Karte, per Push-Knopf oder Telegram-Knopf; erledigte Freigaben verschwinden auf allen Handys – per Knopf in der Nachricht sogar ohne geöffnete Karte
 - **Minuspunkte nur nach Entscheidung**: verpasst = „entschuldigt“, „Minuspunkte“ oder „doch erledigt“
 - Punkte von Hand anpassen, **Punkte-Verlauf** pro Kind, **5-Wochen-Diagramm** unter 📊 Berichte
 - **Taschengeld**: Sterne in Euro umrechnen und auszahlen
@@ -304,7 +304,7 @@ Der Marketplace legt die Ressource automatisch an. Für eigene Repositories muss
 2. In Home Assistant den Ordner **`/config/www/community/yippee-kids-chores-card/`** anlegen und alle Dateien dort hineinkopieren (z. B. mit dem Add-on *File editor* oder *Samba share*).
    Das ist derselbe Ordner, den auch der Marketplace (früher HACS) verwendet – ein späterer Wechsel klappt dadurch ohne Umbau.
 3. **Einstellungen → Dashboards → ⋮ (oben rechts) → Ressourcen → Ressource hinzufügen**
-   - URL: `/local/community/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.7.1`
+   - URL: `/local/community/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.7.2`
    - Typ: **JavaScript-Modul**
 4. Seite neu laden.
 
@@ -354,6 +354,19 @@ mode: advent
 child: Mia
 advent_size: 120   # optional: Türchengröße nur für diese Karte (50–220)
 ```
+
+**🎄 Adventskalender als eigenes Dashboard** über die ganze Breite – neues Dashboard anlegen → ✏️ Bearbeiten → ⋮ → **Raw-Konfigurationseditor** → alles ersetzen durch:
+```yaml
+views:
+  - title: Advent
+    path: advent
+    type: panel
+    cards:
+      - type: custom:yippee-kids-chores-card
+        storage: todo.yippee_kids_chores
+        mode: advent
+```
+Wichtig: `views:` steht ganz links, darunter jede Ebene 2 Leerzeichen weiter eingerückt. Mit `child: Mia` (unter `mode: advent`) zeigt das Dashboard nur ein Kind – z. B. fürs Tablet im Kinderzimmer.
 
 > Tipp: Die Kinder-Ansicht wirkt am besten in einer Ansicht vom Typ **Panel** (eine Karte über die ganze Breite). Ein vollständiges Beispiel-Dashboard liegt unter [`examples/dashboard.yaml`](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/examples/dashboard.yaml).
 
@@ -406,7 +419,7 @@ Unter **📱 Benachrichtigungen an** die Handys auswählen. Die Eltern bekommen 
 - eine Aufgabe mit Minuspunkten verpasst wurde,
 - der Tagesabschluss oder Wochenrückblick fällig ist.
 
-**Knöpfe direkt in der Nachricht** (✓ Freigeben / ✕ Ablehnen, 🙂 Entschuldigt / −2 ⭐ / ✓ Erledigt): Unter **✓ Knöpfe & Telegram-Befehle** einmal auf **⚙️ Automatisch anlegen** tippen (als Administrator). Die Karte legt dafür eine kleine Automation an; das YAML steht zum Nachlesen bzw. manuellen Anlegen ebenfalls dort.
+**Knöpfe direkt in der Nachricht** (✓ Freigeben / ✕ Ablehnen, 🙂 Entschuldigt / −2 ⭐ / ✓ Erledigt): Unter **✓ Knöpfe & Telegram-Befehle** einmal auf **⚙️ Automatisch anlegen** tippen (als Administrator). Die Karte legt dafür eine kleine Automation an; das YAML steht zum Nachlesen bzw. manuellen Anlegen ebenfalls dort. Nach dem Tippen entfernt die Automation die Nachricht sofort auch auf den anderen ausgewählten Handys – ganz ohne geöffnete Karte.
 
 ### Telegram
 
@@ -500,7 +513,7 @@ actions:
 
 > Die Sensoren werden aktualisiert, solange die Karte bei einem Administrator geöffnet ist (z. B. auf dem Wand-Tablet). Nach einem Neustart von Home Assistant erscheinen sie wieder, sobald die Karte geöffnet wird.
 >
-> **🔁 Auch nach einem Neustart sofort da** (ab 1.7.0, optional): ⚙️ → 🔌 Geräte & Sprache → 📊 Sensoren → „🔁 Auch nach einem Neustart sofort da“ einschalten, **📋 Vorlage kopieren**, als eigene Datei `packages/yippee.yaml` speichern (wenn „packages“ eingerichtet ist) oder in die `configuration.yaml` einfügen und Home Assistant neu starten. Die Karte legt den Stand jedes Kindes dann zusätzlich in der Yippee-Liste ab (auch von Kinder-Geräten), und ein Template-Sensor liest ihn jede Minute und direkt beim Start – ohne geöffnete Karte. Die Tageswerte zeigen nach einem Neustart den zuletzt bekannten Stand. Läuft die Vorlage, zeigt die Karte „✅ Dauerhafte Sensoren aktiv“; passt sie nach neuen oder umbenannten Kindern nicht mehr, erscheint „⚠️ Vorlage neu kopieren“. Ändert sich die Vorlage selbst (z. B. nach einem Update), zeigt die Eltern-Ansicht oben einen Hinweis – dann einfach neu kopieren, einfügen und neu starten. Hakt jemand etwas ab, sind die Sensoren nach wenigen Sekunden aktuell. Fertige Automationen per Knopf: 🎉 Durchsage und Nachricht, wenn das Familienziel erreicht ist, und 📋 eine Abend-Erinnerung, wenn ein Kind noch nicht alles erledigt hat. Mit Familienziel kommt `sensor.yippee_familienziel` dazu (Zustand = gesammelte Sterne, Attribute `ziel`, `ziel_sterne`, `fehlen`, `prozent`, `erreicht`, `prognose_tage`, `prognose_datum`). Benötigt Home Assistant 2025.10 oder neuer.
+> **🔁 Auch nach einem Neustart sofort da** (ab 1.7.0, optional): ⚙️ → 🔌 Geräte & Sprache → 📊 Sensoren → „🔁 Auch nach einem Neustart sofort da“ einschalten, **📋 Vorlage kopieren**, als eigene Datei `packages/yippee.yaml` speichern (wenn „packages“ eingerichtet ist) oder in die `configuration.yaml` einfügen und Home Assistant neu starten. Die Karte legt den Stand jedes Kindes dann zusätzlich in der Yippee-Liste ab (auch von Kinder-Geräten), und ein Template-Sensor liest ihn jede Minute und direkt beim Start – ohne geöffnete Karte. Die Tageswerte zeigen nach einem Neustart den zuletzt bekannten Stand. Läuft die Vorlage, zeigt die Karte „✅ Dauerhafte Sensoren aktiv“; passt sie nach neuen oder umbenannten Kindern nicht mehr, erscheint „⚠️ Vorlage neu kopieren“. Ändert sich die Vorlage selbst (z. B. nach einem Update), zeigt die Eltern-Ansicht oben einen Hinweis – dann einfach neu kopieren, einfügen und neu starten. **Wichtig:** Die Vorlage darf nur an einer Stelle stehen – eine ältere Kopie (z. B. in der `configuration.yaml`) ersetzen, nicht zusätzlich einfügen. Ist sie doppelt eingetragen, meldet die Karte das. Hakt jemand etwas ab, sind die Sensoren nach wenigen Sekunden aktuell. Fertige Automationen per Knopf: 🎉 Durchsage und Nachricht, wenn das Familienziel erreicht ist, und 📋 eine Abend-Erinnerung, wenn ein Kind noch nicht alles erledigt hat. Mit Familienziel kommt `sensor.yippee_familienziel` dazu (Zustand = gesammelte Sterne, Attribute `ziel`, `ziel_sterne`, `fehlen`, `prozent`, `erreicht`, `prognose_tage`, `prognose_datum`). Benötigt Home Assistant 2025.10 oder neuer.
 
 ### Hintergrund-Automation
 

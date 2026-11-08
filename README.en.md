@@ -149,7 +149,7 @@ Each can be switched on under **⚙️ Settings** – every feature sits where i
 - **Behaviour** 😊 (optional): reward with one tap on the green “😊 +1” button in the Today tab (stars adjustable), optionally deduct stars with the red “😠 −1” button – logged in the points history. Under 👧 Kids a **📊 behaviour chart** shows the last 14 days with average and trend
 - **🏖️ Only on school-free days** for chores that should only appear at weekends, in the holidays and on public holidays – the counterpart to “🎒 school days only”
 - **🕒 More relaxed times on school-free days** (optional): on school-free days a time window runs longer – you choose how much: until the end of its day block (“brush teeth until 9:00” then counts until the end of 🌅 Morning), 30 minutes, 1 or 2 hours longer, or no time limit. Chores that must always be on time (e.g. medicine) get the tick **⏰ Fixed time on days without school too**. Sleeping in isn't “missed”. **You set the day block times yourself** (default: midday from 11:30, afternoon from 16:00, evening from 18:00) – each block ends where the next begins, no overlaps; the Tasks tab lists chores **per child**, optionally divided by time of day, by type (routines / required / bonus / special) or not at all – each group collapsible
-- **Approval** of chores and rewards – in the card, via app button or Telegram button; handled approvals disappear from all phones
+- **Approval** of chores and rewards – in the card, via app button or Telegram button; handled approvals disappear from all phones – via the button in the message even without an open card
 - **Penalties only after your decision**: missed = excused, minus stars or done after all
 - Manual adjustments, **points history**, **5-week chart** under 📊 Reports, **pocket money** conversion, **double-points days**
 - **Holidays** per kid, **school holidays and public holidays** automatically
@@ -200,7 +200,7 @@ The Marketplace adds the resource automatically. Custom repositories need a conn
 1. Download all files from the [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist) folder: the card `yippee-kids-chores-card.js`, the 📖 manual `yippee-kids-chores-manual.js`, the 🎄 advent calendar `yippee-kids-chores-advent.js` and the language files `yippee-kids-chores-lang-xx.js`.
 2. Create the folder **`/config/www/community/yippee-kids-chores-card/`** and copy all files into it. This is the same folder the Marketplace (formerly HACS) uses, so you can switch later without changes.
 3. **Settings → Dashboards → ⋮ → Resources → Add resource**
-   - URL: `/local/community/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.7.1`
+   - URL: `/local/community/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.7.2`
    - Type: **JavaScript module**
 4. Reload the page.
 
@@ -239,6 +239,19 @@ child: Mia
 advent_size: 120   # optional: door size for this card only (50–220)
 ```
 
+**🎄 Advent calendar as its own dashboard** across the full width – create a new dashboard → ✏️ Edit → ⋮ → **Raw configuration editor** → replace everything with:
+```yaml
+views:
+  - title: Advent
+    path: advent
+    type: panel
+    cards:
+      - type: custom:yippee-kids-chores-card
+        storage: todo.yippee_kids_chores
+        mode: advent
+```
+Important: `views:` starts at the very left, each level below is indented by 2 more spaces. With `child: Mia` (below `mode: advent`) the dashboard shows only one kid – e.g. for the tablet in the kids' room.
+
 3. In the parents view: add **kids**, **chores**, **rewards**, then go through **⚙️ Settings**. All settings apply to every kids card and device automatically.
 
 A complete example dashboard is in [`examples/dashboard.yaml`](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/examples/dashboard.yaml).
@@ -272,7 +285,7 @@ A complete example dashboard is in [`examples/dashboard.yaml`](https://github.co
 
 All integrations are **optional** and can be switched on and off individually.
 
-- **Home Assistant companion app:** notifications for finished chores, reward requests, missed chores, daily summary and weekly review – with **action buttons** (approve / reject, excused / minus stars / done). The card creates the needed automation with one tap.
+- **Home Assistant companion app:** notifications for finished chores, reward requests, missed chores, daily summary and weekly review – with **action buttons** (approve / reject, excused / minus stars / done). The card creates the needed automation with one tap. After a tap, the automation removes the message right away from the other selected phones too – no open card needed.
 - **Telegram:** the same messages with **inline buttons**, photos for photo proof, and the commands `/punkte` (points), `/offen` (open chores), `/heute` (daily summary now), `/woche` (weekly review now) and `/hilfe` (help). The settings show when the last button press arrived, from whom and whether it was booked – and warn clearly if the buttons automation is missing. A test button shows Telegram's error message if buttons are rejected.
 - **Text-to-speech / Alexa:** any TTS integration with media players, or *Alexa Media Player* (Marketplace) – for the **morning announcement** ("Good morning Mia! Today: brush teeth, make bed and take out the trash (paper).") and **reminders** shortly before a time window ends.
 - **🗑️ Trash calendar:** chores like "Take out the trash" or "Pack the sports bag" (keyword `Training`) take their dates from any Home Assistant calendar – e.g. **[Waste Collection Schedule](https://github.com/mampfes/hacs_waste_collection_schedule)** (Marketplace, hundreds of providers), a **Remote calendar** with your provider's ICS link, or a **Local calendar**. Per chore: keywords (e.g. `paper, residual`), and **"the evening before"** so the bin goes out in time. The tile shows what is collected.
@@ -281,7 +294,7 @@ All integrations are **optional** and can be switched on and off individually.
 - **Stars from automations / voice assistants:** the card creates the script `script.yippee_sterne` (fields `kind`, `sterne` – negative to deduct –, `grund`), usable in automations, scripts and – via one script per kid – Google Assistant or Alexa.
 - **🎨 Appearance** (⚙️ Settings → ⚙️ General for all cards, or per card in the card editor): **🎨 colour presets** to tap (like the dashboard, light, dark, pastel, ocean, forest, sun, night, candy) or ✏️ your own colours with a colour picker – text and tiles adapt automatically, with a warning if the text is hard to read; in Home Assistant's dark mode, light presets automatically turn dark on that device, own colours optionally too –, 📏 equal-height tiles (several kid cards side by side line up), compact, no background and size 70–130 %.
 - **Theming:** CSS variables `--yippee-bg`, `--yippee-surface`, `--yippee-accent`, `--yippee-text`, `--yippee-text-secondary` for themes or card_mod.
-- **Sensors:** `sensor.yippee_<name>` per kid (state = points) with the attributes `heute_erledigt`, `heute_gesamt`, `alles_erledigt`, `offen`, `wartet_auf_freigabe`, `level`, `level_name`, `gesamt_verdient`, `abzeichen`, `ziel`, `urlaub`, `anwesend`, `feiertag`, `ferien` (and `euro`) – e.g. "TV only after all chores are done". Updated while the card is open for an administrator. **🔁 Available right after a restart** (1.7.0, optional): ⚙️ → 🔌 Devices & voice → 📊 Sensors → turn on “Available right after a restart”, **📋 Copy template**, save it as `packages/yippee.yaml` (if packages are set up) or paste it into `configuration.yaml` and restart Home Assistant – a template sensor then reads each kid's last state from the Yippee list, no open card needed. The card shows ✅ when it is running and ⚠️ when it needs to be copied again after adding or renaming children. If the template itself changes (e.g. after an update), the parents view shows a hint at the top – just copy it again, paste it and restart. Sensors update within seconds when something is checked off. Ready-made automations at the tap of a button: 🎉 announcement and message when the family goal is reached, and 📋 an evening reminder if a child hasn't finished everything. With a family goal there is also `sensor.yippee_familienziel` (state = stars collected; attributes `ziel`, `ziel_sterne`, `fehlen`, `prozent`, `erreicht`, `prognose_tage`, `prognose_datum`). Home Assistant 2025.10 or newer.
+- **Sensors:** `sensor.yippee_<name>` per kid (state = points) with the attributes `heute_erledigt`, `heute_gesamt`, `alles_erledigt`, `offen`, `wartet_auf_freigabe`, `level`, `level_name`, `gesamt_verdient`, `abzeichen`, `ziel`, `urlaub`, `anwesend`, `feiertag`, `ferien` (and `euro`) – e.g. "TV only after all chores are done". Updated while the card is open for an administrator. **🔁 Available right after a restart** (1.7.0, optional): ⚙️ → 🔌 Devices & voice → 📊 Sensors → turn on “Available right after a restart”, **📋 Copy template**, save it as `packages/yippee.yaml` (if packages are set up) or paste it into `configuration.yaml` and restart Home Assistant – a template sensor then reads each kid's last state from the Yippee list, no open card needed. The card shows ✅ when it is running and ⚠️ when it needs to be copied again after adding or renaming children. If the template itself changes (e.g. after an update), the parents view shows a hint at the top – just copy it again, paste it and restart. **Important:** the template may only be in one place – replace an older copy (e.g. in `configuration.yaml`), don’t add a second one. If it is entered twice, the card tells you. Sensors update within seconds when something is checked off. Ready-made automations at the tap of a button: 🎉 announcement and message when the family goal is reached, and 📋 an evening reminder if a child hasn't finished everything. With a family goal there is also `sensor.yippee_familienziel` (state = stars collected; attributes `ziel`, `ziel_sterne`, `fehlen`, `prozent`, `erreicht`, `prognose_tage`, `prognose_datum`). Home Assistant 2025.10 or newer.
 - **Background automation:** morning announcement, reminders, missed-chore messages, daily summary and Telegram commands run inside Home Assistant – **even when no card is open**. The card writes a 14-day plan and creates the automation with one tap.
 
 ## Data safety

@@ -3,6 +3,15 @@
 Alle wichtigen Änderungen an **Yippee! - Kids Chores**.
 Versionsnummern: `MAJOR.MINOR.PATCH` – Fehlerbehebungen erhöhen PATCH, neue Funktionen MINOR, grundlegende Änderungen (z. B. am Speicherformat) MAJOR.
 
+## [1.7.2] – 2026-11-08
+
+Danke an [@RkcCorian](https://github.com/RkcCorian) für den Hinweis ([#14](https://github.com/Chrism1412/yippee-kids-chores-card/issues/14))!
+
+### Verbessert
+- **📱 Freigabe per Knopf – Nachricht verschwindet sofort auf allen Handys, auch ohne geöffnete Karte** ([#14](https://github.com/Chrism1412/yippee-kids-chores-card/issues/14)): Bisher entfernte die Karte die Nachricht auf den anderen Handys erst, sobald irgendwo eine Yippee!-Karte geöffnet war. Jetzt erledigt das die Automation „Knöpfe in Benachrichtigungen“ direkt in Home Assistant: Tippt z. B. Papa auf ✓ Freigeben, verschwindet die Nachricht sofort auch bei Mama. Gebucht werden die Sterne wie bisher, sobald wieder eine Karte offen ist.
+- **Nichts einzurichten:** Wer die Automation von der Karte hat anlegen lassen, bekommt sie beim nächsten Öffnen der Eltern-Ansicht (als Administrator) automatisch neu geschrieben – ebenso, wenn sich unter 🔔 Benachrichtigungen die Handys ändern. Wer sie von Hand angelegt hat: unter 🔔 → ✓ Knöpfe das YAML neu kopieren.
+- **🔁 Sensor-Vorlage doppelt eingetragen?** Steht die Vorlage für „🔁 Auch nach einem Neustart sofort da“ an zwei Stellen (z. B. alt in der `configuration.yaml` und neu in `packages/yippee.yaml`), nutzt Home Assistant weiter die alte – der Hinweis „neue Vorlage“ ging dann trotz Neu-Kopieren nicht weg. Die Karte erkennt das jetzt (als Administrator, aus dem Home-Assistant-Protokoll) und sagt genau, was zu tun ist: alte Kopie löschen, neu starten. Die Anleitung weist außerdem darauf hin, die Vorlage nur an einer Stelle einzufügen.
+
 ## [1.7.1] – 2026-11-07
 
 Danke an [@RkcCorian](https://github.com/RkcCorian) für die Idee, auf eine veraltete Sensor-Vorlage hinzuweisen ([#13](https://github.com/Chrism1412/yippee-kids-chores-card/issues/13))!

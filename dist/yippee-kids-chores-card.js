@@ -1,5 +1,5 @@
 /*
- * Yippee! - Kids Chores – Karte für Home Assistant – Version 1.7.1
+ * Yippee! - Kids Chores – Karte für Home Assistant – Version 1.7.2
  * Aufgaben abhaken · Punkte sammeln · Belohnungen einlösen · Freigabe durch Eltern
  *
  * https://github.com/Chrism1412/yippee-kids-chores-card  ·  Lizenz: MIT
@@ -40,7 +40,7 @@
  *   CSS-Variablen für Themes/card_mod: --yippee-bg, --yippee-surface, --yippee-accent, --yippee-text, --yippee-text-secondary
  */
 (() => {
-  const VERSION = '1.7.1';
+  const VERSION = '1.7.2';
 
   // ---------- Sprache ----------
   // Alle Texte stehen auf Deutsch im Code. T() übersetzt sie über die Sprachdatei der gewählten Sprache (yippee-kids-chores-lang-xx.js).
@@ -116,7 +116,7 @@
   const LOGO = '<svg class="logo" viewBox="0 0 200 200" aria-hidden="true"><rect width="200" height="200" rx="46" fill="#4a56e2"/><polygon points="100.0,30.0 122.1,76.6 173.3,83.2 135.8,118.6 145.3,169.4 100.0,144.6 54.7,169.4 64.2,118.6 26.7,83.2 77.9,76.6" fill="#ffc93c" stroke="#ffc93c" stroke-width="16" stroke-linejoin="round"/><path d="M79 100 q7 -9 14 0 M107 100 q7 -9 14 0" fill="none" stroke="#2b2d42" stroke-width="8" stroke-linecap="round"/><path d="M81 115 q19 23 38 0 z" fill="#2b2d42" stroke="#2b2d42" stroke-width="6" stroke-linejoin="round"/></svg>';
   // 📱 Kennung einer Freigabe-Nachricht (aus dem ersten Knopf) – damit sie auf allen Handys wieder entfernt werden kann (#14)
   const PUSH_GRP = { ok: 't', no: 't', rok: 'r', rno: 'r', gok: 'g', gno: 'g', me: 'm', mx: 'm', md: 'm' };
-  const pushTag = (action) => { const p = String(action || '').split('|'), g = PUSH_GRP[p[1]]; return g ? `yippee_${g}_${p.slice(2).join('_')}`.replace(/[^\w-]/g, '_') : ''; };
+  const pushTag = (action) => { const p = String(action || '').split('|'), g = PUSH_GRP[p[1]]; return g ? `yippee_${g}_${p.slice(2).join('_')}`.replace(/[^A-Za-z0-9_-]/g, '_') : ''; };
   const TRACK = ['kid', 'task', 'reward']; // Datenprüfung: fehlen diese Einträge plötzlich, warnt die Karte
   const AUTO_IDS = { app: 'yippee_app_knoepfe', tg: 'yippee_telegram_knoepfe', cmd: 'yippee_telegram_befehle', bg: 'yippee_hintergrund', nfc: 'yippee_nfc', voice: 'yippee_sprache', famgoal: 'yippee_familienziel_erreicht', remind: 'yippee_abend_erinnerung' };
   const SCRIPT_ID = 'yippee_sterne';
@@ -1267,11 +1267,13 @@ textarea{width:100%;min-height:90px;resize:vertical}
       return out;
     }
     // Erledigt (freigegeben, abgelehnt, entschieden, zurückgenommen – egal wo): Nachricht auf allen Handys entfernen
+    // Handys aus 🔔 Benachrichtigungen (Home-Assistant-App) – an sie geht „Nachricht entfernen“
+    _appPhones() { return [...new Set((this._cfg.targets || []).filter((t) => !t.includes('.') && t.startsWith('mobile_app_')))].sort(); }
     _pushClear() {
       const now = this._openTags(), prev = this._tagsPrev;
       this._tagsPrev = now;
       if (!prev) return;
-      const phones = (this._cfg.targets || []).filter((t) => !t.includes('.') && t.startsWith('mobile_app_') && ((this._hass.services || {}).notify || {})[t]);
+      const phones = this._appPhones().filter((t) => ((this._hass.services || {}).notify || {})[t]);
       if (!phones.length) return;
       const g = (window.__kpClr = window.__kpClr || {});
       prev.forEach((tag) => {
@@ -2584,13 +2586,29 @@ textarea{width:100%;min-height:90px;resize:vertical}
 
     _sensKeepUi() {
       const ss = this._sensState(), fine = ss.on && !ss.bad.length && !ss.old.length && !ss.stale;
-      const status = fine ? `<div class="hint sensok">${T('✅ Dauerhafte Sensoren aktiv – Home Assistant liest sie selbst, auch nach einem Neustart.')}</div>`
+      const dup = !fine && ss.on && this._sensDupCheck() ? `<div class="hint senswarn">${T('⚠️ Die Vorlage ist doppelt eingetragen – Home Assistant nutzt noch die alte Kopie. Die alte löschen (z. B. in der configuration.yaml nach „yippee_kid_“ suchen), dann Home Assistant neu starten.')}</div>` : '';
+      const status = dup ? dup : fine ? `<div class="hint sensok">${T('✅ Dauerhafte Sensoren aktiv – Home Assistant liest sie selbst, auch nach einem Neustart.')}</div>`
         : ss.on && ss.stale && !ss.bad.length ? `<div class="hint senswarn">${T('🔁 Es gibt eine neue Vorlage – bitte neu kopieren, einfügen und Home Assistant neu starten.')}${ss.old.length ? ` ${T('Nicht mehr gebraucht: {names}', { names: ss.old.join(', ') })}` : ''}</div>`
         : ss.on ? `<div class="hint senswarn">${T('⚠️ Vorlage neu kopieren – sie passt nicht mehr zu den Kindern.')}${ss.bad.length ? ` ${T('Betrifft: {names}', { names: ss.bad.map(esc).join(', ') })}` : ''}${ss.old.length ? ` ${T('Nicht mehr gebraucht: {names}', { names: ss.old.join(', ') })}` : ''}</div>` : '';
-      const steps = `<div class="hint">${T('1. „📋 Vorlage kopieren“ antippen. 2. Als eigene Datei packages/yippee.yaml speichern (wenn „packages“ eingerichtet ist) – sonst in die configuration.yaml einfügen, z. B. mit dem File editor. 3. Home Assistant neu starten.')}</div>`;
+      const steps = `<div class="hint">${T('1. „📋 Vorlage kopieren“ antippen. 2. Als eigene Datei packages/yippee.yaml speichern (wenn „packages“ eingerichtet ist) – sonst in die configuration.yaml einfügen, z. B. mit dem File editor. 3. Home Assistant neu starten.')} ${T('Wichtig: Die Vorlage darf nur an einer Stelle stehen. Eine ältere Kopie (z. B. in der configuration.yaml) vorher löschen bzw. ersetzen – sonst nutzt Home Assistant weiter die alte.')}</div>`;
       return `${status}${fine ? '' : steps}
           <div class="btnrow"><button class="btn" data-a="sensyaml">${T('📋 Vorlage kopieren')}</button></div>
           <details class="sensy" ${this._sensyOpen ? 'open' : ''}><summary class="hint">${T('Vorlage anzeigen')}</summary><pre class="yaml">${esc(this._sensYaml())}</pre></details>`;
+    }
+
+    // 🔁 Vorlage doppelt eingetragen? Home Assistant meldet das im Protokoll („ID yippee_… is already used“).
+    // Nur Administratoren dürfen das Protokoll lesen – alle anderen fragen nie nach; höchstens einmal pro Minute.
+    _sensDupCheck() {
+      if (!this._admin() || !this._hass || typeof this._hass.callWS !== 'function') return false;
+      const now = Date.now();
+      if (!this._dupBusy && now - (this._dupAt || 0) > 60000) {
+        this._dupBusy = true; this._dupAt = now;
+        this._hass.callWS({ type: 'system_log/list' }).then((l) => {
+          const dup = (Array.isArray(l) ? l : []).some((e) => /ID yippee_(kid_|familienziel)\S* is already used/.test([].concat((e && e.message) || []).join(' ')));
+          if (dup !== !!this._sensDup) { this._sensDup = dup; this._render(); }
+        }).catch(() => { /* Protokoll nicht lesbar */ }).finally(() => { this._dupBusy = false; });
+      }
+      return !!this._sensDup;
     }
 
     // 🔁 Hinweis oben in der Eltern-Ansicht, wenn die kopierte Sensor-Vorlage nicht mehr aktuell ist
@@ -2598,6 +2616,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
       if (!this._cfg.sensKeep || this._cfg.sensors === false) return '';
       const ss = this._sensState();
       if (!ss.on || !(ss.stale || ss.bad.length)) return '';
+      if (this._sensDupCheck()) return `<div class="box"><div class="hint warn">${T('⚠️ Die Vorlage ist doppelt eingetragen – Home Assistant nutzt noch die alte Kopie. Die alte löschen (z. B. in der configuration.yaml nach „yippee_kid_“ suchen), dann Home Assistant neu starten.')}</div></div>`;
       return `<div class="box"><div class="hint warn">${T('🔁 Die Sensor-Vorlage ist nicht mehr aktuell. Unter ⚙️ Einstellungen → 🔌 Geräte & Sprache → 📊 Sensoren & Automationen „📋 Vorlage kopieren“ antippen, neu einfügen und Home Assistant neu starten.')}</div></div>`;
     }
 
@@ -4825,11 +4844,20 @@ ${['ziel', 'ziel_sterne', 'fehlen', 'prozent', 'erreicht', 'prognose_tage', 'pro
         };
       }
       if (kind === 'app') {
+        // 📱 Nach dem Tippen auf ✓/✕: dieselbe Nachricht sofort auf allen ausgewählten Handys entfernen – auch ohne geöffnete Karte
+        // (Kennung wie pushTag() in der Karte: yippee_<Gruppe>_<Rest der Aktion>)
+        const phones = this._appPhones(), grp = JSON.stringify(PUSH_GRP).replace(/"/g, "'");
         return {
-          alias: 'Yippee! - Kids Chores – Knöpfe in Benachrichtigungen', description: 'Freigeben/Ablehnen direkt aus der Push-Nachricht (angelegt von der Yippee!-Karte)', mode: 'queued',
+          alias: 'Yippee! - Kids Chores – Knöpfe in Benachrichtigungen', description: 'Freigeben/Ablehnen direkt aus der Push-Nachricht – die Nachricht verschwindet danach auf allen Handys (angelegt von der Yippee!-Karte)', mode: 'queued',
           triggers: [{ trigger: 'event', event_type: 'mobile_app_notification_action' }],
           conditions: [{ condition: 'template', value_template: "{{ (trigger.event.data.action | default('')).startswith('KP|') }}" }],
-          actions: [add('trigger.event.data.action', "trigger.event.context.user_id | default('')")],
+          actions: [
+            add('trigger.event.data.action', "trigger.event.context.user_id | default('')"),
+            ...(phones.length ? [
+              { variables: { kp_tag: `{% set p = trigger.event.data.action.split('|') %}{% set g = ${grp}.get(p[1] if p | count > 1 else '', '') %}{{ ('yippee_' ~ g ~ '_' ~ (p[2:] | join('_'))) | regex_replace('[^A-Za-z0-9_-]', '_') if g else '' }}` } },
+              { if: [{ condition: 'template', value_template: "{{ kp_tag != '' }}" }], then: phones.map((t) => ({ action: `notify.${t}`, continue_on_error: true, data: { message: 'clear_notification', data: { tag: '{{ kp_tag }}' } } })) },
+            ] : []),
+          ],
         };
       }
       if (kind === 'cmd') {
@@ -4918,7 +4946,7 @@ sequence:
         const cfg = this._autoCfg(kind);
         await this._hass.callApi('POST', `config/automation/config/${id}`, cfg);
         this._autoOk = { ...(this._autoOk || {}), [kind]: true };
-        if (kind === 'app') this._setCfg({ appV: 2 });
+        if (kind === 'app') this._setCfg({ appV: 2, appSig: hsh(JSON.stringify(cfg)) });
         if (kind === 'cmd') this._setCfg({ cmdV: 2 });
         if (kind === 'nfc') this._setCfg({ nfcSig: this._nfcTags().join(',') });
         if (kind === 'voice') this._setCfg({ voiceSig: LANG });
@@ -5038,22 +5066,7 @@ sequence:
       const rest = [...allEnts.filter((e) => !ents.includes(e) && (c.targets.includes(e) || !isPhone(e))), ...others.filter((o) => !/telegram/i.test(o))];
       const missing = c.targets.filter((t) => (t.includes('.') ? !this._hass.states[t] : !avail.includes(t)));
       const st = this._config.storage;
-      const auto = `alias: Yippee! - Kids Chores – Knöpfe in Benachrichtigungen
-description: Freigeben/Ablehnen direkt aus der Push-Nachricht
-mode: queued
-triggers:
-  - trigger: event
-    event_type: mobile_app_notification_action
-conditions:
-  - condition: template
-    value_template: "{{ (trigger.event.data.action | default('')).startswith('KP|') }}"
-actions:
-  - action: todo.add_item
-    target:
-      entity_id: ${st}
-    data:
-      item: "kp|act|{{ now().timestamp() | int }}{{ range(1000, 9999) | random }}"
-      description: "{{ {'a': trigger.event.data.action, 'u': trigger.event.context.user_id | default('')} | to_json }}"`;
+      const auto = yml(this._autoCfg('app')).trim();
       const autoTg = `alias: Yippee! - Kids Chores – Telegram-Knöpfe
 description: Freigeben/Ablehnen direkt aus der Telegram-Nachricht
 mode: queued
@@ -5147,7 +5160,7 @@ actions:
             <button class="btn" data-a="copyauto">${T('📋 Kopieren')}</button></details>
           <div class="hint">${T('Die Telegram-Automation gilt für alle ausgewählten Telegram-Chats – Telegram meldet selbst, aus welchem Chat der Knopf kommt.')}</div>` : `<div class="hint">${T('Für Telegram-Knöpfe oben einen Telegram-Chat auswählen und „Telegram – Freigabe-Knöpfe mitsenden“ anhaken.')}</div>`}
           <div class="hint">${T('Falls du eine dieser Automationen schon von Hand angelegt hast, lösche die alte – sonst läuft sie doppelt (schadet nicht, ist aber unnötig).')}</div>
-          <div class="hint">${T('Ausgeführt wird die Freigabe, sobald irgendwo eine Yippee!-Karte geöffnet ist (z. B. das Tablet).')}</div>
+          <div class="hint">${T('Ausgeführt wird die Freigabe, sobald irgendwo eine Yippee!-Karte geöffnet ist (z. B. das Tablet).')} ${T('📱 Die Nachricht verschwindet nach dem Tippen sofort auf allen ausgewählten Handys – auch wenn keine Karte geöffnet ist. Ändern sich die Handys, schreibt die Karte die Automation beim nächsten Öffnen der Eltern-Ansicht (als Administrator) selbst neu.')}</div>
           <div class="lbl">${T('💬 Telegram-Befehle')}</div>
         ${this._chk('cmdOn', !!c.cmdOn, T('💬 Telegram-Befehle<small>Im Telegram-Chat /punkte, /offen, /heute, /woche oder /hilfe schreiben – die Antwort kommt sofort zurück.</small>'))}
         ${c.cmdOn ? `<div class="fopt">${hasTgAny ? '' : `<div class="hint">${T('⚠️ Unter „📱 Benachrichtigungen an“ zuerst einen Telegram-Chat auswählen – dorthin kommt die Antwort.')}</div>`}
@@ -6327,7 +6340,7 @@ actions:
         const nc = { ...cm, tomb };
         // Geräte-/Ablauf-Stand vom aktuellen Speicher behalten: sonst schlagen andere Geräte falschen Alarm (born)
         // oder Tagesabschluss/Wochenbericht/Morgen-Ansage werden erneut verschickt
-        ['born', 'dLast', 'lastWeekly', 'mLast', 'appV', 'cmdV', 'bgSig', 'rStart'].forEach((x) => { if (this._cfg[x] !== undefined) nc[x] = this._cfg[x]; });
+        ['born', 'dLast', 'lastWeekly', 'mLast', 'appV', 'appSig', 'cmdV', 'bgSig', 'rStart'].forEach((x) => { if (this._cfg[x] !== undefined) nc[x] = this._cfg[x]; });
         delete nc.id;
         this._save('cfg', 'main', nc, () => nc);
       } finally { this._noTomb = false; }
@@ -6437,8 +6450,11 @@ actions:
       const c = this._cfg;
       if (!['kid', 'kids', 'advent'].includes(this._config.mode)) {
         this._autoStatus();
-        // Knöpfe-Automation der Handy-App auf neuen Stand bringen (merkt sich jetzt, wer gedrückt hat)
-        if ((this._autoOk || {}).app && c.appV !== 2 && !this._appUpd) { this._appUpd = true; this._autoCreate('app', true); }
+        // Knöpfe-Automation der Handy-App auf neuen Stand bringen (nach Updates oder wenn sich die Handys unter 🔔 ändern)
+        if ((this._autoOk || {}).app && this._admin()) {
+          let sig = ''; try { sig = hsh(JSON.stringify(this._autoCfg('app'))); } catch (e) { sig = ''; }
+          if (sig && c.appSig !== sig && this._appUpd !== sig) { this._appUpd = sig; this._autoCreate('app', true); }
+        }
         // Telegram-Befehle: /heute und /woche nachrüsten (nur als Administrator)
         if ((this._autoOk || {}).cmd && c.cmdV !== 2 && !this._cmdUpd && this._admin()) { this._cmdUpd = true; this._autoCreate('cmd', true); }
         // alte Automationen unter neuem Namen anlegen und die alten löschen
