@@ -18,17 +18,15 @@
   <a href="https://buymeacoffee.com/Chrism1412"><img src="https://img.shields.io/badge/Buy%20me%20a%20coffee-%E2%98%95-ffdd00" alt="Buy me a coffee"></a>
 </p>
 
-> ⚠️ **Wichtig für Updates:** **Ab Version 1.4.0 besteht die Karte aus mehreren Dateien** (Karte, 📖 Handbuch und je eine kleine Datei pro Sprache).<br>
-> **Marketplace (früher HACS):** nichts zu tun – das Update lädt alles automatisch.<br>
-> **Manuelle Installation:** beim Update bitte **alle Dateien aus [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist)** in denselben Ordner kopieren, sonst erscheint die Karte auf Deutsch und das Handbuch fehlt.
-
-
 <p align="center"><a href="https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/README.en.md">🇬🇧 English version</a></p>
 
-> ### 🎄 Neu in 1.7.0: der Adventskalender
-> Pünktlich zur Weihnachtszeit hat Yippee! einen eigenen **Adventskalender** – für jedes Kind 24 Türchen mit Text, Bild, Sternen oder einer kleinen Belohnung als Geschenk. Ein Türchen kann auch erst nach erledigten Aufgaben aufgehen. Einschalten unter **⚙️ Einstellungen → ⚙️ Allgemein → 🎄 Adventskalender** – mehr dazu unter [Adventskalender 🎄](#adventskalender--optional).
+> ### 🦷 Neu in Version 1.8: der Zahnputz-Timer
+> Zähneputzen mit Musik: 2 Minuten lang verschwindet Bereich für Bereich der Schaum, und darunter kommt ein Bild zum Vorschein – 14 selbst gezeichnete Vorlagen oder eigene Bilder – auf Wunsch mit dem eingebauten KI-Prompt selbst erstellt. Mit Timer gibt es die Sterne sofort, auf Wunsch morgens mehr als abends. Mit einer Oral-B-Zahnbürste startet der Timer sogar von selbst. Einschalten unter **⚙️ Einstellungen → ⚙️ Allgemein → 🦷 Zahnputz-Timer** – mehr dazu unter [Zahnputz-Timer 🦷](#zahnputz-timer--optional).
 >
-> **Neu in 1.7.1:** 🧹 Adventskalender pro Kind komplett zurücksetzen (z. B. nach einem Test), 🔁 Hinweis, wenn die Sensor-Vorlage veraltet ist, und die Installation direkt über den neuen **Marketplace** von Home Assistant (früher HACS) – mit Ein-Klick-Knopf.
+> **Außerdem neu:**
+> - **1.7:** 🎄 der [Adventskalender](#adventskalender--optional) – 24 Türchen für jedes Kind mit Text, Bild, Sternen oder einer Belohnung als Geschenk
+> - **1.7.2:** 📱 Freigabe per Knopf in der Benachrichtigung – die Nachricht verschwindet sofort auf allen Handys, auch ohne geöffnete Karte · ⚠️ Hinweis, wenn die Sensor-Vorlage doppelt eingetragen ist
+> - **1.7.1:** 🧹 Adventskalender pro Kind komplett zurücksetzen, 🔁 Hinweis bei veralteter Sensor-Vorlage und die Installation direkt über den neuen **Marketplace** von Home Assistant (früher HACS) – mit Ein-Klick-Knopf.
 
 ---
 
@@ -221,6 +219,22 @@ Unter **⚙️ Einstellungen → ⚙️ Allgemein → 🎄 Adventskalender** ein
 
 Die Kinder öffnen ihre Türchen im Dezember über den **🎄-Knopf** in ihrer Ansicht – oder in einer eigenen Karte mit `mode: advent`. Der Kalender steckt in einer eigenen Datei (`yippee-kids-chores-advent.js`), die nur geladen wird, wenn er eingeschaltet ist.
 
+### Zahnputz-Timer 🦷 (optional)
+
+Unter **⚙️ Einstellungen → ⚙️ Allgemein → 🦷 Zahnputz-Timer** einschalten – dann haben Zahnputz-Aufgaben in der Kinder-Ansicht den Knopf **🦷 Los geht's!**, und in der Eltern-Ansicht gibt es den Tab **🦷 Zähne**.
+
+- **Bild freiputzen:** Der Bildschirm ist voller Zahnpasta-Schaum. Der Timer läuft in 4 Bereichen (oben links, oben rechts, unten links, unten rechts) – Zahn für Zahn wird geschrubbt – erst wird der Schaum dünner, dann wird er weggeputzt, mit Schaumspritzern, Resten, die am Ende „ploppen“, und weichen Übergängen zwischen den Bereichen. Dazu Tipp und Wechsel-Ton. Nach der Zeit bleibt das Bild stehen: **🖼️ Bild ansehen**, erst **Weiter** führt zurück zu den Aufgaben.
+- **⭐ Sterne sofort:** Mit Timer wird die Aufgabe ohne Freigabe abgehakt (abschaltbar). Sterne **für alle gleich** oder **je Kind & Tageszeit** – putzt ein Kind morgens ungern, gibt es dort mehr, und auf der Kachel steht „🔥 Extra!“. Optional **🔒 nur mit Timer abhaken** und **🔥 Bonus nach 7 Tagen am Stück**.
+- **🖼️ 14 Vorlagen** (Mondlandung, Drachenburg, Tauchgang, Baumhaus, Piratenschiff, Dino-Tal, Feuerwehr, Bauernhof, Pinguine, Safari, Zirkus, Einhorn-Wiese, Zauberwald, Dampflok) plus **📷 eigene Bilder** – per 🎲 Zufall (ein Bild kommt erst wieder, wenn alle dran waren, nie zweimal am Tag) oder in 🔢 fester Reihenfolge. Jedes freigeputzte Bild sammelt das Kind unter „🦷 Meine Zahnputz-Bilder“.
+- **🎵 Musik:** eine eigens komponierte, ruhige 2-Minuten-Musik, eigene MP3s oder Zufall; ⏱️ Putzdauer pro Kind 1, 2 oder 3 Minuten. Dazu auf Wunsch ein **🔊 Putzgeräusch** (Schrubben oder elektrische Zahnbürste).
+- **🤖 Eigene Bilder mit KI:** Im Tab 🦷 Zähne steht ein fertiger Prompt – Motiv eintragen (oder 🎲), kopieren, in ChatGPT, Gemini oder Microsoft Designer einfügen. Im selben Chat lässt sich das Bild weiter anpassen, z. B. „mach den Drachen grün“.
+- **✨ Bewegte Effekte** und optional **🌫️ Bild erst am Ende scharf** – für Kinder, die sonst nur aufs Bild schauen statt zu putzen.
+- **🦷 Oral-B:** Mit der Home-Assistant-Integration „Oral-B“ (Bluetooth) startet der Timer von selbst, sobald die Zahnbürste läuft, hält an, wenn sie aus ist, und warnt bei zu viel Druck.
+
+<p align="center"><img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-kachel.png" width="200" alt="Kachel mit Knopf"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-timer.png" width="200" alt="Zahnputz-Timer"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-fertig.png" width="200" alt="Bild freigeputzt"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-eltern.png" width="200" alt="Tab Zähne"></p>
+
+Der Timer steckt in einer eigenen Datei (`yippee-kids-chores-teeth.js`, die Musik in `yippee-kids-chores-teeth-music.js`), die nur geladen wird, wenn er gebraucht wird. Eigene Bilder und MP3s landen unter Medien → yippee-zaehne (hochladen nur als Administrator).
+
 ### Weitere Zusatzfunktionen (alle optional)
 
 Alles unter **⚙️ Einstellungen** einzeln ein- und ausschaltbar – jede Funktion steht dort, wo sie thematisch hingehört: **⚙️ Allgemein · ✅ Aufgaben & Tagesablauf · ⭐ Punkte & Boni · 🎁 Belohnungen & Geld · 🔔 Benachrichtigungen · 🔌 Geräte & Sprache · 📈 Auswertung · 💾 Daten**. Jede hat einen eigenen aufklappbaren Abschnitt, der „an“ oder „aus“ zeigt.
@@ -300,7 +314,7 @@ Der Marketplace legt die Ressource automatisch an. Für eigene Repositories muss
 
 ### Von Hand
 
-1. Alle Dateien aus dem Ordner [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist) herunterladen: die Karte `yippee-kids-chores-card.js`, das 📖 Handbuch `yippee-kids-chores-manual.js`, den 🎄 Adventskalender `yippee-kids-chores-advent.js` und die Sprachdateien `yippee-kids-chores-lang-xx.js` (Deutsch steckt in der Karte selbst).
+1. Alle Dateien aus dem Ordner [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist) herunterladen: die Karte `yippee-kids-chores-card.js`, das 📖 Handbuch `yippee-kids-chores-manual.js`, den 🎄 Adventskalender `yippee-kids-chores-advent.js`, den 🦷 Zahnputz-Timer `yippee-kids-chores-teeth.js` mit Musik `yippee-kids-chores-teeth-music.js` und die Sprachdateien `yippee-kids-chores-lang-xx.js` (Deutsch steckt in der Karte selbst).
 2. In Home Assistant den Ordner **`/config/www/community/yippee-kids-chores-card/`** anlegen und alle Dateien dort hineinkopieren (z. B. mit dem Add-on *File editor* oder *Samba share*).
    Das ist derselbe Ordner, den auch der Marketplace (früher HACS) verwendet – ein späterer Wechsel klappt dadurch ohne Umbau.
 3. **Einstellungen → Dashboards → ⋮ (oben rechts) → Ressourcen → Ressource hinzufügen**
@@ -308,7 +322,7 @@ Der Marketplace legt die Ressource automatisch an. Für eigene Repositories muss
    - Typ: **JavaScript-Modul**
 4. Seite neu laden.
 
-> **Updates von Hand:** Neue Datei an dieselbe Stelle kopieren – fertig. Die Karte erhöht die Zahl hinter `?v=` in der Ressource automatisch, sobald ein Administrator den Eltern-Bereich öffnet, und bietet dann das Neuladen an (siehe [Updates](#updates)).
+> **Updates von Hand:** wieder **alle Dateien aus [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist)** in denselben Ordner kopieren (nicht nur die Karte – sonst erscheint sie auf Deutsch, und Handbuch, Adventskalender oder Zahnputz-Timer fehlen) – fertig. Die Karte erhöht die Zahl hinter `?v=` in der Ressource automatisch, sobald ein Administrator den Eltern-Bereich öffnet, und bietet dann das Neuladen an (siehe [Updates](#updates)).
 
 ## Einrichtung
 
@@ -567,7 +581,7 @@ Unter **⬆️ Updates** und oben im Eltern-Bereich:
 - **Ressource automatisch erhöhen:** Liegt nach einem Update eine neuere Datei auf dem Server als die, die gerade im Browser läuft, trägt die Karte die neue Version **selbst** in die Ressource ein (`?v=1.5.0` usw.), sobald ein Administrator den Eltern-Bereich öffnet. Danach erscheint „Neue Version ist bereit“ mit einem Knopf zum Neuladen. Bei Installation über den Marketplace (früher HACS) erledigt der Marketplace das Umstellen; die Karte bietet dann nur das Neuladen an.
 - Wer das nicht möchte, schaltet unter ⬆️ Updates „Ressource nach einem Update automatisch erhöhen“ aus – dann erinnert die Karte nur und stellt auf Knopfdruck um.
 
-Die Änderungen jeder Version stehen im [CHANGELOG](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/CHANGELOG.md).
+Die Änderungen jeder Version stehen im [CHANGELOG](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/CHANGELOG.md) ([English](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/CHANGELOG.en.md)).
 
 ## Datenschutz
 

@@ -18,17 +18,15 @@
   <a href="https://buymeacoffee.com/Chrism1412"><img src="https://img.shields.io/badge/Buy%20me%20a%20coffee-%E2%98%95-ffdd00" alt="Buy me a coffee"></a>
 </p>
 
-> ⚠️ **Important for updates:** **Since version 1.4.0 the card consists of several files** (card, 📖 manual and one small file per language).<br>
-> **Marketplace (formerly HACS):** nothing to do – the update loads everything automatically.<br>
-> **Manual installation:** when updating, please copy **all files from [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist)** into the same folder – otherwise the card shows up in German and the manual is missing.
-
-
 <p align="center"><a href="https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/README.md">🇩🇪 Deutsche Version</a></p>
 
-> ### 🎄 New in 1.7.0: the advent calendar
-> Just in time for Christmas, Yippee! has its own **advent calendar** – 24 doors for every kid with text, a picture, stars or a small reward as a present. A door can also stay shut until chores are done. Switch it on under **⚙️ Settings → ⚙️ General → 🎄 Advent calendar** – more in [Advent calendar 🎄](#advent-calendar--optional).
+> ### 🦷 New in version 1.8: the toothbrush timer
+> Brushing teeth with music: for 2 minutes the foam disappears area by area and a picture appears underneath – 14 hand-drawn templates or your own pictures – optionally created yourself with the built-in AI prompt. With the timer stars are given right away, optionally more in the morning than in the evening. With an Oral-B toothbrush the timer even starts by itself. Switch it on under **⚙️ Settings → ⚙️ General → 🦷 Toothbrush timer** – more in [Toothbrush timer 🦷](#toothbrush-timer--optional).
 >
-> **New in 1.7.1:** 🧹 reset the advent calendar per kid (e.g. after a test), 🔁 a hint when the sensor template is out of date, and installing straight from Home Assistant's new **Marketplace** (formerly HACS) – with a one-tap button.
+> **Also new:**
+> - **1.7:** 🎄 the [advent calendar](#advent-calendar--optional) – 24 doors for every kid with text, a picture, stars or a reward as a present
+> - **1.7.2:** 📱 approving via the button in the notification removes the message from all phones right away, even without an open card · ⚠️ a hint when the sensor template is entered twice
+> - **1.7.1:** 🧹 reset the advent calendar per kid, 🔁 a hint when the sensor template is out of date, and installing straight from Home Assistant's new **Marketplace** (formerly HACS) – with a one-tap button.
 
 ---
 
@@ -125,6 +123,22 @@ Turn on under **⚙️ Settings → ⚙️ General → 🎄 Advent calendar** �
 
 In December kids open their doors with the **🎄 button** in their view – or in a separate card with `mode: advent`. The calendar lives in its own file (`yippee-kids-chores-advent.js`), loaded only when it is switched on.
 
+### Toothbrush timer 🦷 (optional)
+
+Switch it on under **⚙️ Settings → ⚙️ General → 🦷 Toothbrush timer** – brushing tasks then get a **🦷 Let's go!** button in the kids view, and the parents view gets a **🦷 Teeth** tab.
+
+- **Brush the picture free:** the screen is full of toothpaste foam. The timer runs in 4 areas (top left, top right, bottom left, bottom right) – it is scrubbed tooth by tooth – first the foam gets thinner, then it is brushed away, with foam splashes, leftovers that “pop” at the end and soft transitions between the areas. Plus a tip and a change sound. When the time is up the picture stays: **🖼️ View picture**, only **Next** goes back to the chores.
+- **⭐ Stars right away:** with the timer the task is ticked off without approval (can be switched off). Stars **the same for all** or **per child & time of day** – if a child dislikes brushing in the morning, give more stars there and the tile shows “🔥 Extra!”. Optional **🔒 tick off only with timer** and **🔥 bonus after 7 days in a row**.
+- **🖼️ 14 templates** (moon landing, dragon castle, diving, treehouse, pirate ship, dino valley, fire brigade, farm, penguins, safari, circus, unicorn meadow, magic forest, steam train) plus **📷 your own pictures** – 🎲 random (a picture only comes again when all others had their turn, never twice a day) or in 🔢 fixed order. Every revealed picture is collected under “🦷 My brushing pictures”.
+- **🎵 Music:** a specially composed, calm 2-minute tune, your own MP3s or random; ⏱️ brushing time per child 1, 2 or 3 minutes. Optionally with a **🔊 brushing sound** (scrubbing or electric toothbrush).
+- **🤖 Your own pictures with AI:** the 🦷 Teeth tab contains a ready-made prompt – enter a subject (or 🎲), copy it, paste it into ChatGPT, Gemini or Microsoft Designer. In the same chat you can keep adjusting the picture, e.g. “make the dragon green”.
+- **✨ Moving effects** and optional **🌫️ picture sharp only at the end** – for kids who otherwise just look at the picture instead of brushing.
+- **🦷 Oral-B:** with Home Assistant's “Oral-B” integration (Bluetooth) the timer starts by itself as soon as the toothbrush runs, pauses when it's off and warns about too much pressure.
+
+<p align="center"><img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-kachel.png" width="200" alt="Tile with button"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-timer.png" width="200" alt="Toothbrush timer"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-fertig.png" width="200" alt="Picture revealed"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-eltern.png" width="200" alt="Teeth tab"></p>
+
+The timer lives in its own file (`yippee-kids-chores-teeth.js`, the music in `yippee-kids-chores-teeth-music.js`), loaded only when needed. Own pictures and MP3s are stored under Media → yippee-zaehne (upload by administrators only). The screenshots show the German interface.
+
 ### More extra features (all optional)
 
 Each can be switched on under **⚙️ Settings** – every feature sits where it belongs by topic: **⚙️ General · ✅ Tasks & daily routine · ⭐ Points & bonuses · 🎁 Rewards & money · 🔔 Notifications · 🔌 Devices & voice · 📈 Analysis · 💾 Data**, each in its own collapsible section showing “on” or “off”.
@@ -197,14 +211,14 @@ The Marketplace adds the resource automatically. Custom repositories need a conn
 
 ### Manual
 
-1. Download all files from the [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist) folder: the card `yippee-kids-chores-card.js`, the 📖 manual `yippee-kids-chores-manual.js`, the 🎄 advent calendar `yippee-kids-chores-advent.js` and the language files `yippee-kids-chores-lang-xx.js`.
+1. Download all files from the [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist) folder: the card `yippee-kids-chores-card.js`, the 📖 manual `yippee-kids-chores-manual.js`, the 🎄 advent calendar `yippee-kids-chores-advent.js`, the 🦷 toothbrush timer `yippee-kids-chores-teeth.js` with its music `yippee-kids-chores-teeth-music.js` and the language files `yippee-kids-chores-lang-xx.js`.
 2. Create the folder **`/config/www/community/yippee-kids-chores-card/`** and copy all files into it. This is the same folder the Marketplace (formerly HACS) uses, so you can switch later without changes.
 3. **Settings → Dashboards → ⋮ → Resources → Add resource**
    - URL: `/local/community/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.7.2`
    - Type: **JavaScript module**
 4. Reload the page.
 
-> **Manual updates:** copy the new file to the same place – that's it. The card raises the number after `?v=` in the resource automatically when an administrator opens the parents area – see [Updates](#updates).
+> **Manual updates:** copy **all files from [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist)** into the same folder again (not just the card – otherwise it shows up in German and the manual, advent calendar or toothbrush timer is missing) – that's it. The card raises the number after `?v=` in the resource automatically when an administrator opens the parents area – see [Updates](#updates).
 
 ## Setup
 
@@ -320,7 +334,7 @@ All integrations are **optional** and can be switched on and off individually.
 - **Update available:** when the Marketplace (formerly HACS) knows a newer version, the parents area shows a notice.
 - **Resource raised automatically:** when the file on the server is newer than the one running in the browser, the card writes the new version into the resource itself (`?v=1.5.0` …) as soon as an administrator opens the parents area, then offers a reload button. With the Marketplace (formerly HACS), the Marketplace updates the resource; the card just offers the reload. Can be switched off under ⬆️ Updates.
 
-See the [CHANGELOG](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/CHANGELOG.md).
+See the [CHANGELOG](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/CHANGELOG.en.md) (also available in [German](https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/CHANGELOG.md)).
 
 ## Privacy
 

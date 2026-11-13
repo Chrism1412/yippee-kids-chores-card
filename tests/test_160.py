@@ -48,7 +48,7 @@ with sync_playwright() as p:
     ev("A.shadowRoot.activeElement && A.shadowRoot.activeElement.blur()"); t(300)
     ok('clear shows all', ev("A.shadowRoot.querySelectorAll('.acc[hidden]').length")==0)
     # Schalter im Kopf
-    ok('switch per feature', ev("A.shadowRoot.querySelectorAll('.accsw input').length")==29)
+    ok('switch per feature', ev("A.shadowRoot.querySelectorAll('.accsw input').length")==30)
     ev(f"{q('.accsw input[data-k=wishOn]')}.click()"); t(400)
     ok('switch turns feature on', ev("A._cfg.wishOn===true") and ev(f"{q('.accsw input[data-k=wishOn]')}.checked"))
     ok('switch does not open section', ev("!A._accOpen"))

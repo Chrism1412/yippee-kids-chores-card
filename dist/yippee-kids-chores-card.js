@@ -1,5 +1,5 @@
 /*
- * Yippee! - Kids Chores – Karte für Home Assistant – Version 1.7.2
+ * Yippee! - Kids Chores – Karte für Home Assistant – Version 1.8.0
  * Aufgaben abhaken · Punkte sammeln · Belohnungen einlösen · Freigabe durch Eltern
  *
  * https://github.com/Chrism1412/yippee-kids-chores-card  ·  Lizenz: MIT
@@ -40,7 +40,9 @@
  *   CSS-Variablen für Themes/card_mod: --yippee-bg, --yippee-surface, --yippee-accent, --yippee-text, --yippee-text-secondary
  */
 (() => {
-  const VERSION = '1.7.2';
+  const VERSION = '1.8.0';
+  // Bau-Stempel: ändert sich bei jedem Paket, damit Zusatzdateien (Sprachen, Handbuch, Adventskalender, Zahnputz) nie aus einem alten Cache kommen
+  const BUILD = '20261113-0950';
 
   // ---------- Sprache ----------
   // Alle Texte stehen auf Deutsch im Code. T() übersetzt sie über die Sprachdatei der gewählten Sprache (yippee-kids-chores-lang-xx.js).
@@ -77,7 +79,7 @@
   const HB_TOPIC = { lang: 'update', look: 'views', vac: 'vacation', sec: 'security', f_dayBlocks: 'layout', f_routOn: 'routine', f_extraOn: 'extra', f_photoOn: 'photo', f_nfcOn: 'nfc', f_muellOn: 'trash_cal', f_calOn: 'trash_cal', f_orderOn: 'layout', f_prevOn: 'layout',
     appr: 'approval', streak: 'bonus', f_wbOn: 'bonus', f_teamOn: 'bonus', f_dblOn: 'bonus', f_bdOn: 'birthday', f_behavOn: 'today', f_negOn: 'missed', f_gradesOn: 'grades', f_goalOn: 'goal', f_progOn: 'goal', f_wishOn: 'goal', f_jokerOn: 'joker',
     f_shareOn: 'shared', f_costKidOn: 'cost', f_walletOn: 'wallet', f_priceOn: 'cost', money: 'money', notif: 'notify', when: 'notify', f_welcOn: 'presence', bg: 'background', btn: 'buttons', audio: 'audio', f_voiceOn: 'voice',
-    f_lmOn: 'lametric', f_advOn: 'advent', sens: 'sensors', f_checkOn: 'stats', audit: 'trash', bk: 'backup', mem: 'storage', trash: 'trash', upd: 'update' };
+    f_lmOn: 'lametric', f_advOn: 'advent', f_zOn: 'teeth', sens: 'sensors', f_checkOn: 'stats', audit: 'trash', bk: 'backup', mem: 'storage', trash: 'trash', upd: 'update' };
   // Version der Hintergrund-Vorlage – erhöht sich, wenn sich die Automation ändert (wird dann neu geschrieben)
   const BG_V = 'v2';
   // 🔎 zusätzliche Suchwörter für Abschnitte, deren Titel das naheliegende Wort nicht enthält
@@ -112,6 +114,8 @@
     return { bg, surface: mixHex(a, '#121418', 0.2), text, mu: mixHex(text, bg, 0.62), accent: a }; // Akzent bleibt gleich: auf dunklem Grund gut sichtbar, weiße Schrift darauf wie bisher
   };
   const themeCols = (id, custom, dark, darkOwn) => { if (id === 'custom') { const f = fullCols(custom); return (dark && darkOwn && darkOf(['custom', '', f.bg, f.surface, f.text, f.mu, f.accent])) || f; } const t = THEMES.find((x) => x[0] === id); if (!t) return null; return (dark && darkOf(t)) || { bg: t[2], surface: t[3], text: t[4], mu: t[5], accent: t[6] }; };
+  // 🦷 Zahnputz-Vorlagen (die Bilder selbst stecken in yippee-kids-chores-teeth.js)
+  const ZTPL = ['mond', 'drache', 'riff', 'baum', 'pirat', 'dino', 'feuer', 'hof', 'pinguin', 'safari', 'zirkus', 'einhorn', 'wald', 'zug'];
   const PARENT_ACTS = ['behav', 'ruadd', 'rudel', 'prprev', 'exadd', 'exdel', 'tup', 'tdown', 'slotadd', 'slotdel', 'grade', 'gapr', 'grej', 'resclean', 'updres', 'updhide', 'apr', 'aprall', 'mcopy', 'rej', 'mdec', 'rapr', 'rrej', 'wapr', 'pts', 'payout', 'ledclr', 'famreset', 'famedit', 'chkfix', 'chkok', 'abres', 'abnow', 'bkrestore', 'trres', 'pinset', 'pindel', 'ekid', 'etask', 'erew', 'cfg', 'autonew', 'atap', 'vadd', 'vdel', 'suggest', 'holnow', 'ntest', 'wtest', 'dtest', 'mtest', 'rtest', 'tgtest', 'bkdl', 'bkcopy', 'bkshare', 'abdl', 'cfair', 'vuse', 'hhide', 'psug', 'pcalc', 'lmtest', 'hb', 'hbt', 'caled', 'calhide', 'kord', 'scriptnew', 'repday', 'mueltask', 'mklist', 'rws', 'kadm', 'erout', 'wiz', 'wizstart', 'setview', 'memclean'];
   const LOGO = '<svg class="logo" viewBox="0 0 200 200" aria-hidden="true"><rect width="200" height="200" rx="46" fill="#4a56e2"/><polygon points="100.0,30.0 122.1,76.6 173.3,83.2 135.8,118.6 145.3,169.4 100.0,144.6 54.7,169.4 64.2,118.6 26.7,83.2 77.9,76.6" fill="#ffc93c" stroke="#ffc93c" stroke-width="16" stroke-linejoin="round"/><path d="M79 100 q7 -9 14 0 M107 100 q7 -9 14 0" fill="none" stroke="#2b2d42" stroke-width="8" stroke-linecap="round"/><path d="M81 115 q19 23 38 0 z" fill="#2b2d42" stroke="#2b2d42" stroke-width="6" stroke-linejoin="round"/></svg>';
   // 📱 Kennung einer Freigabe-Nachricht (aus dem ersten Knopf) – damit sie auf allen Handys wieder entfernt werden kann (#14)
@@ -721,6 +725,9 @@ pre.yaml{width:0;min-width:100%;box-sizing:border-box;font:11px/1.4 ui-monospace
 .tile .e{font-size:46px;line-height:1}
 .tile .t{font-weight:800;font-size:15px;text-align:center;overflow-wrap:break-word;hyphens:auto}
 .tile .p{font-size:13px;font-weight:800;color:var(--gold)}
+.tile .zgo{display:block;margin-top:4px;background:linear-gradient(135deg,#22c1c3,#3b82f6);color:#fff;border-radius:12px;padding:8px 10px;font-weight:800;font-size:14px;line-height:1.2;box-shadow:0 3px 10px rgba(59,130,246,.3)}
+.tile .zx{font-size:12px;font-weight:800;color:#ea580c}
+.zgal{display:flex;flex-wrap:wrap;gap:6px;width:100%;margin-top:4px}.zgi{width:46px;height:74px;border-radius:8px;overflow:hidden;background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:20px}.zgi svg{width:100%;height:100%;display:block}
 .tile.p{background:#fff3bf;border-color:var(--gold);color:#5c4400}
 .tile.d{background:var(--cs);border-color:var(--c)}
 .tile .badge{position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:15px;font-weight:900;animation:pop .35s}
@@ -1017,13 +1024,13 @@ textarea{width:100%;min-height:90px;resize:vertical}
       this._pv = 0;
       this._q = Promise.resolve();
       this._loaded = false;
-      this._tab = (() => { try { const x = localStorage.getItem('kpTab'); return ['heute', 'aufgaben', 'belohnungen', 'kinder', 'advent', 'einst'].includes(x) ? x : 'heute'; } catch (e) { return 'heute'; } })();
+      this._tab = (() => { try { const x = localStorage.getItem('kpTab'); return ['heute', 'aufgaben', 'belohnungen', 'kinder', 'advent', 'zaehne', 'einst'].includes(x) ? x : 'heute'; } catch (e) { return 'heute'; } })();
       this._day = dk(new Date());
       this._until = 0;
       this._pinBuf = '';
     }
 
-    _emptyDb() { return { kid: {}, task: {}, reward: {}, log: {}, req: {}, cfg: {}, act: {}, bak: {}, plan: {}, trash: {}, audit: {}, ph: {}, pt: {}, adc: {}, adk: {}, ado: {} }; }
+    _emptyDb() { return { kid: {}, task: {}, reward: {}, log: {}, req: {}, cfg: {}, act: {}, bak: {}, plan: {}, trash: {}, audit: {}, ph: {}, pt: {}, adc: {}, adk: {}, ado: {}, zc: {}, zk: {} }; }
 
     static getConfigElement() { return document.createElement('yippee-kids-chores-card-editor'); }
     static getStubConfig(hass) {
@@ -1392,6 +1399,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
       }
       if (type === 'pt') return this._ptClean(o);
       if (type === 'adc' || type === 'adk' || type === 'ado') return this._advClean(type, o);
+      if (type === 'zc' || type === 'zk') return this._zClean(type, o);
       if (type === 'reward' && o.adv !== undefined) o.adv = !!o.adv;
       if (type === 'task') {
         if (o.steps !== undefined) o.steps = Array.isArray(o.steps) ? o.steps.filter((x) => x && typeof x === 'object' && x.t).map((x) => (x.tid && /^[\w-]{1,40}$/.test(String(x.tid)) && x.tid !== '__proto__' ? { t: String(x.t).slice(0, 60), tid: String(x.tid) } : { t: String(x.t).slice(0, 60) })).slice(0, 12) : [];
@@ -2214,6 +2222,8 @@ textarea{width:100%;min-height:90px;resize:vertical}
     }
 
     _curStreak(t, kidId) {
+      // 🦷 Zahnputz-Aufgaben: nur eine Serie – die Zahnputz-Serie (keine zweite Aufgaben-Serie)
+      if (this._zLinked(t)) return this._zStreak(kidId);
       const today = dk(new Date());
       if (this._st(today, t.id, kidId) === 'd') return this._streak(t, kidId, today);
       const y = new Date(); y.setDate(y.getDate() - 1);
@@ -2223,6 +2233,7 @@ textarea{width:100%;min-height:90px;resize:vertical}
     _streakBonus(date, t, kidId) {
       const sc = this._streakCfg;
       if (!sc.on || !sc.bonus || t.sched === 'once') return;
+      if (this._zLinked(t)) return; // 🦷 Zahnputz-Aufgaben bekommen nur den Bonus der Zahnputz-Serie (kein doppelter Serien-Bonus)
       const n = this._streak(t, kidId, date);
       if (n < sc.days || n % sc.days !== 0) return;
       const bk = `b:${t.id}:${kidId}`;
@@ -2758,7 +2769,11 @@ ${['ziel', 'ziel_sterne', 'fehlen', 'prozent', 'erreicht', 'prognose_tage', 'pro
 
     _st(date, taskId, kidId) { const l = this._db.log[date]; return (l && l.s && l.s[`${taskId}:${kidId}`]) || ''; }
 
-    _setSt(date, taskId, kidId, val) { this._setMark(date, `${taskId}:${kidId}`, val); }
+    _setSt(date, taskId, kidId, val) {
+      this._setMark(date, `${taskId}:${kidId}`, val);
+      // 🦷 nicht (mehr) erledigt oder wartend → Timer-Marken entfernen (z. B. abgelehnt oder zurückgenommen)
+      if (val !== 'd' && val !== 'p') ['zt', 'zp'].forEach((m) => { if (this._mark(date, `${m}:${taskId}:${kidId}`)) this._setMark(date, `${m}:${taskId}:${kidId}`, ''); });
+    }
 
     _mark(date, key) { const l = this._db.log[date]; return (l && l.s && l.s[key]) || ''; }
 
@@ -2901,6 +2916,222 @@ ${['ziel', 'ziel_sterne', 'fehlen', 'prozent', 'erreicht', 'prognose_tage', 'pro
     // 🎄 Belohnung nur für den Adventskalender: Kinder sehen sie sonst nirgends
     _advR(r) { return !!(r && r.adv); }
     _advOn() { return !!this._cfg.advOn; }
+
+    // ---------- 🦷 Zahnputz-Timer ----------
+    // Einstellungen: kp|zc|main · Fortschritt je Kind: kp|zk|<Kind> · Marken im Tageslog: zt:<Aufgabe>:<Kind> = mit Timer geputzt, zp:… = gebuchte Sterne
+    _zOn() { return !!this._cfg.zOn; }
+    _zc() { const c = { ...((this._db.zc || {}).main || {}) }; delete c.id; return c; }
+    _zSet(patch) {
+      const mg = (cur) => {
+        const n = { ...(cur || {}) }; delete n.id;
+        Object.keys(patch).forEach((k) => {
+          if (k === 'pt') { const pt = { ...(n.pt || {}) }; Object.keys(patch.pt || {}).forEach((kid) => { pt[kid] = { ...(pt[kid] || {}), ...patch.pt[kid] }; }); n.pt = pt; }
+          else if (k === 'dur' || k === 'brush') n[k] = { ...(n[k] || {}), ...patch[k] };
+          else n[k] = patch[k];
+        });
+        return n;
+      };
+      this._save('zc', 'main', mg(this._zc()), mg);
+      this._render();
+    }
+    // Zahnputz-Aufgaben automatisch erkennen (Titel in allen 27 Sprachen bzw. 🦷), solange die Eltern nichts ausgewählt haben
+    _zAuto() {
+      const rx = /🪥|\b(z[aä]hn|teeth|tooth|dent|dient|dant|tand|tänder|hamp|hamb|zob|zub|fog|din[țţt]i|diş|fiacl)|zęb|зъб|зуб|δόντ|snien/i;
+      return Object.values(this._db.task).filter((t) => !t.virtual && t.sched !== 'once' && (t.emoji === '🪥' || rx.test(String(t.title || '')))).map((t) => t.id);
+    }
+    _zTasks() {
+      const c = this._zc();
+      if (!Array.isArray(c.tasks)) return this._zAuto();
+      return c.tasks.filter((id) => { const t = this._db.task[id]; return t && !t.virtual && t.sched !== 'once'; });
+    }
+    _zLinked(t) { return !!(t && this._zOn() && t.sched !== 'once' && this._zTasks().includes(t.virtual ? t.parent : t.id)); }
+    // Spalten für „Je Kind & Tageszeit“: jede Zahnputz-Aufgabe (bei „mehrmals am Tag“ jedes Zeitfenster)
+    _zCols() {
+      const out = [], lbl = Object.fromEntries(this._blockDefs());
+      this._zTasks().map((id) => this._db.task[id]).filter(Boolean).forEach((t) => {
+        const parts = Array.isArray(t.slots) && t.slots.length > 1 ? t.slots.map((sl, i) => this._db.task[`${t.id}-${i + 1}`]).filter(Boolean) : [t];
+        parts.forEach((x) => out.push({ id: x.id, from: x.from || '', label: lbl[this._blk(x)] || x.title, title: x.title, kids: x.kids || [] }));
+      });
+      out.sort((a, b) => String(a.from || '99').localeCompare(String(b.from || '99')));
+      const n = {}; out.forEach((x) => { n[x.label] = (n[x.label] || 0) + 1; });
+      out.forEach((x) => { if (n[x.label] > 1) x.label = `${x.label} · ${x.title}`; });
+      return out;
+    }
+    _zBase(t) { return Math.max(0, Number(t && t.points) || 0); }
+    _zPtsCol(colId, kidId) {
+      const c = this._zc(), t = this._db.task[colId], v = c.pm === 'kid' && c.pt && c.pt[kidId] ? c.pt[kidId][colId] : undefined;
+      if (v !== undefined && v !== null && Number.isFinite(Number(v))) return Math.max(0, Math.round(Number(v)));
+      if (c.pAll !== undefined && c.pAll !== null && Number.isFinite(Number(c.pAll))) return Math.max(0, Math.round(Number(c.pAll)));
+      return this._zBase(t);
+    }
+    // Sterne für eine Zahnputz-Aufgabe: mit Timer (oder „auch ohne Timer“) die Werte aus 🦷 Zähne, sonst die der Aufgabe
+    _zPts(t, kidId, timer) {
+      if (!this._zLinked(t)) return this._zBase(t);
+      if (!timer && !this._zc().pNoT) return this._zBase(t);
+      return this._zPtsCol(t.id, kidId);
+    }
+    _zExtra(t, kidId) {
+      const mine = this._zCols().filter((x) => x.kids.includes(kidId));
+      if (mine.length < 2) return false;
+      const v = mine.map((x) => this._zPtsCol(x.id, kidId)), me = this._zPtsCol(t.id, kidId);
+      return me === Math.max(...v) && me > Math.min(...v);
+    }
+    // 🦷 Oral-B-Zahnbürsten (Integration „Oral-B“): Gerät → Entitäten Zustand und Druck
+    _zBrushes() {
+      const ents = (this._hass && this._hass.entities) || {}, devs = (this._hass && this._hass.devices) || {}, st = (this._hass && this._hass.states) || {}, by = {};
+      Object.values(ents).forEach((e) => {
+        if (!e || e.platform !== 'oralb' || !e.device_id || !/^[\w-]{1,64}$/.test(e.device_id)) return;
+        const d = by[e.device_id] || (by[e.device_id] = { id: e.device_id });
+        const key = e.translation_key || '', id = e.entity_id || '';
+        if (key === 'toothbrush_state' || /_toothbrush_state$/.test(id)) d.state = id;
+        else if (key === 'pressure' || /_pressure$/.test(id)) d.pressure = id;
+      });
+      return Object.values(by).filter((d) => d.state).map((d) => {
+        const dv = devs[d.id] || {}, fn = (st[d.state] && st[d.state].attributes && st[d.state].attributes.friendly_name) || '';
+        return { ...d, name: dv.name_by_user || dv.name || fn.replace(/\s*(Toothbrush state|Zahnbürstenstatus|Status)$/i, '') || d.id };
+      }).sort((a, b) => String(a.name).localeCompare(String(b.name)));
+    }
+    _zBrush(kidId) { const id = (this._zc().brush || {})[kidId]; return (id && this._zBrushes().find((b) => b.id === id)) || null; }
+    _zStreak(kidId) {
+      const z = this._db.zk[kidId] || {}, today = dk(new Date());
+      return z.sd === today || z.sd === keyAdd(today, -1) ? Math.max(0, Number(z.sn) || 0) : 0;
+    }
+    _zClean(type, o) {
+      const idOk = (x) => typeof x === 'string' && /^[\w-]{1,40}$/.test(x) && x !== '__proto__';
+      const ref = (x) => typeof x === 'string' && /^media-source:\/\/media_source\/[\w-]+\/[^"'<>\\]+$/.test(x) && x.length < 400;
+      const int = (v, a, b) => Math.max(a, Math.min(b, Math.round(Number(v) || 0)));
+      const obj = (v) => v && typeof v === 'object' && !Array.isArray(v);
+      if (type === 'zc') {
+        if (o.tasks !== undefined) o.tasks = Array.isArray(o.tasks) ? o.tasks.filter(idOk).slice(0, 30) : [];
+        ['inst', 'only', 'pNoT', 'chime', 'tada', 'anim', 'blur', 'bFollow'].forEach((k) => { if (o[k] !== undefined) o[k] = !!o[k]; });
+        if (o.brush !== undefined) { const b = {}; if (obj(o.brush)) Object.keys(o.brush).forEach((k) => { const v = String(o.brush[k] || ''); if (idOk(k) && /^[\w-]{1,64}$/.test(v)) b[k] = v; }); o.brush = b; }
+        if (o.pm !== undefined) o.pm = o.pm === 'kid' ? 'kid' : 'all';
+        if (o.pAll !== undefined && o.pAll !== null) o.pAll = int(o.pAll, 0, 100);
+        if (o.bonus !== undefined) o.bonus = int(o.bonus, 0, 100);
+        if (o.pt !== undefined) { const pt = {}; if (obj(o.pt)) Object.keys(o.pt).forEach((k) => { if (idOk(k) && obj(o.pt[k])) { const r = {}; Object.keys(o.pt[k]).forEach((c) => { if (idOk(c)) r[c] = int(o.pt[k][c], 0, 100); }); pt[k] = r; } }); o.pt = pt; }
+        if (o.dur !== undefined) { const d = {}; if (obj(o.dur)) Object.keys(o.dur).forEach((k) => { const v = Number(o.dur[k]); if (idOk(k) && [60, 120, 180].includes(v)) d[k] = v; }); o.dur = d; }
+        if (o.mode !== undefined) o.mode = o.mode === 'ord' ? 'ord' : 'rnd';
+        if (o.mus !== undefined) o.mus = ['std', 'own', 'rnd', 'off'].includes(o.mus) ? o.mus : 'std';
+        if (o.snd !== undefined) o.snd = ['off', 'scrub', 'el'].includes(o.snd) ? o.snd : 'off';
+        ['hide', 'ord'].forEach((k) => { if (o[k] !== undefined) o[k] = Array.isArray(o[k]) ? [...new Set(o[k].filter(idOk))].slice(0, 80) : []; });
+        if (o.own !== undefined) o.own = Array.isArray(o.own) ? o.own.filter((x) => obj(x) && idOk(x.i) && ref(x.r)).map((x) => ({ i: x.i, r: x.r, n: String(x.n || '').slice(0, 40), k: Array.isArray(x.k) ? x.k.filter(idOk).slice(0, 20) : [] })).slice(0, 40) : [];
+        if (o.mp3 !== undefined) o.mp3 = Array.isArray(o.mp3) ? o.mp3.filter((x) => obj(x) && ref(x.r)).map((x) => ({ r: x.r, n: String(x.n || '').slice(0, 40) })).slice(0, 20) : [];
+        if (o.musF !== undefined && !ref(o.musF)) o.musF = '';
+      }
+      if (type === 'zk') {
+        const dOk = (x) => /^\d{4}-\d\d-\d\d$/.test(String(x || ''));
+        if (o.n !== undefined) o.n = int(o.n, 0, 1e6);
+        if (o.sn !== undefined) o.sn = int(o.sn, 0, 1e5);
+        if (o.oi !== undefined) o.oi = int(o.oi, 0, 1000);
+        if (o.sd !== undefined && !dOk(o.sd)) delete o.sd;
+        ['seen', 'bag'].forEach((k) => { if (o[k] !== undefined) o[k] = Array.isArray(o[k]) ? [...new Set(o[k].filter(idOk))].slice(-100) : []; });
+        if (o.td !== undefined) {
+          if (obj(o.td) && dOk(o.td.d)) { const m = {}; if (obj(o.td.m)) Object.keys(o.td.m).forEach((k) => { if (idOk(k) && idOk(o.td.m[k])) m[k] = o.td.m[k]; }); o.td = { d: o.td.d, l: Array.isArray(o.td.l) ? o.td.l.filter(idOk).slice(-12) : [], m }; } else delete o.td;
+        }
+        if (o.cur !== undefined) { if (obj(o.cur) && dOk(o.cur.d) && idOk(o.cur.t) && idOk(o.cur.i)) o.cur = { d: o.cur.d, t: o.cur.t, i: o.cur.i }; else delete o.cur; }
+        if (o.bd !== undefined && !dOk(o.bd)) delete o.bd;
+      }
+      return o;
+    }
+
+    // Tab 🦷 Zähne einhängen (das Modul wird erst beim ersten Mal geladen)
+    _zMount(app) {
+      const slot = app.querySelector('#zslot');
+      if (!slot) return;
+      if (!customElements.get('yippee-teeth')) {
+        slot.innerHTML = `<div class="empty">${this._zErr ? T('⚠️ Der Zahnputz-Timer konnte nicht geladen werden – liegt die Datei yippee-kids-chores-teeth.js neben der Karte?') : T('Lade …')}</div>`;
+        if (!this._zErr && !this._zBusy) { this._zBusy = true; zLoad().then(() => { this._zBusy = false; this._render(); }, () => { this._zBusy = false; this._zErr = true; this._render(); }); }
+        return;
+      }
+      if (!this._zEl) this._zEl = document.createElement('yippee-teeth');
+      slot.replaceWith(this._zEl);
+      this._zEl.attach(this);
+    }
+
+    // 🦷 Timer starten (aus der Kinder-Ansicht)
+    _zStart(tid, kidId) {
+      const t = this._db.task[tid], k = this._db.kid[kidId];
+      if (!t || !k || !this._zLinked(t)) return;
+      const { s } = this._status(t, kidId);
+      if (s && s !== 'p') { this._render(); return; }
+      const w = this._win(t);
+      if (w === 'before') { this._toast(T('⏰ Erst ab {time} Uhr', { time: t.from })); return; }
+      if (w === 'after') { this._toast(T('Zeit ist vorbei (bis {time} Uhr)', { time: this._winTo(t) })); return; }
+      const go = () => {
+        if (!this._zRun || !this._zRun.isConnected) { this._zRun = document.createElement('yippee-teeth-run'); this.shadowRoot.appendChild(this._zRun); }
+        this._zRun.start(this, tid, kidId);
+      };
+      if (customElements.get('yippee-teeth-run')) { go(); return; }
+      this._toast(T('Lade …'));
+      zLoad().then(go, () => this._toast(T('⚠️ Der Zahnputz-Timer konnte nicht geladen werden – liegt die Datei yippee-kids-chores-teeth.js neben der Karte?')));
+    }
+    _zClosed() { this._render(); }
+
+    // 🦷 Timer fertig: Aufgabe erledigen (sofort oder zur Freigabe), Serie und Bonus, Bild merken
+    _zFinish(tid, kidId, date, img) {
+      const t = this._db.task[tid], k = this._db.kid[kidId];
+      const res = { pts: 0, streak: 0, bonus: 0, msg: T('Super geputzt!') };
+      if (!t || !k) return res;
+      const c = this._zc(), today = dk(new Date());
+      const prog = (x) => ({ ...x, n: (Number(x.n) || 0) + 1, seen: [...new Set([...(x.seen || []).filter((y) => y !== img), ...(img ? [img] : [])])].slice(-100) });
+      this._save('zk', kidId, prog(this._db.zk[kidId] || {}), prog);
+      const st = this._st(date, tid, kidId), stat = date === today ? this._status(t, kidId) : { s: st };
+      if (st === 'd') res.msg = T('Das war schon erledigt – trotzdem super geputzt!');
+      else if (['x', 'm', 'e'].includes(st) || stat.s === 'taken') res.msg = T('Diese Aufgabe ist schon entschieden – trotzdem super geputzt!');
+      else {
+        this._setMark(date, `zt:${tid}:${kidId}`, '1');
+        if (!this._approval || c.inst !== false) {
+          this._markDone(date, tid, kidId);
+          if (st === 'p') this._photoDone(date, tid, kidId);
+          res.pts = this._zPts(t, kidId, true) * this._mult(date, kidId);
+          res.msg = T('„{title}“ ist erledigt.', { title: t.title });
+        } else if (st !== 'p') {
+          this._setSt(date, tid, kidId, 'p');
+          this._notify(T('🦷 {name} hat mit dem Timer geputzt – bitte freigeben.', { name: k.name }), 'task',
+            [[T('✓ Freigeben'), `KP|ok|${date}|${tid}|${kidId}`], [T('✕ Ablehnen'), `KP|no|${date}|${tid}|${kidId}`]]);
+          res.pending = true; res.msg = T('⏳ Mama oder Papa geben es noch frei.');
+        } else { res.pending = true; res.msg = T('⏳ Mama oder Papa geben es noch frei.'); }
+        // 🔥 Serie: ein Tag zählt, wenn heute alle Zahnputz-Aufgaben mit dem Timer geputzt wurden
+        if (date === today) {
+          const due = this._todayTasks(kidId).filter((x) => this._zLinked(x) && this._status(x, kidId).s !== 'taken');
+          const all = due.length && due.every((x) => this._mark(today, `zt:${x.id}:${kidId}`));
+          const z = this._db.zk[kidId] || {};
+          if (all && z.sd !== today) {
+            const sn = z.sd === keyAdd(today, -1) ? (Number(z.sn) || 0) + 1 : 1;
+            const upd = (x) => (x.sd === today ? x : { ...x, sd: today, sn: x.sd === keyAdd(today, -1) ? (Number(x.sn) || 0) + 1 : 1 });
+            this._save('zk', kidId, upd(z), upd);
+            const b = Math.max(0, Number(c.bonus) || 0);
+            if (b && sn % 7 === 0) {
+              const got = this._addPoints(kidId, b, T('🦷 Zahnputz-Serie: {n} Tage', { n: sn }), null, `zb${today.replace(/-/g, '')}${kidId}`.slice(0, 40));
+              if (got) res.bonus = b;
+            }
+          }
+          res.streak = this._zStreak(kidId);
+        }
+      }
+      this._render();
+      // „Alles geschafft“ wie beim normalen Abhaken
+      if (!res.pending && res.pts !== undefined && st !== 'd') {
+        const list = this._todayTasks(kidId).filter((x) => this._req(x) && this._status(x, kidId).s !== 'taken');
+        if (this._req(t) && list.length > 1 && list.every((x) => this._status(x, kidId).s === 'd')) setTimeout(() => this._celebrate('🏆', T('{cheer}, {name}!', { cheer: cheer(), name: k.name }), T('Alles für heute erledigt!')), 1200);
+      }
+      return res;
+    }
+
+    // Kinder-Ansicht: 🦷 Meine Zahnputz-Bilder (zugeklappt; aufgeklappt mit kleinen Bildern)
+    _zKidHtml(k) {
+      if (!this._zOn() || !this._todayTasks(k.id).some((t) => this._zLinked(t)) && !(this._db.zk[k.id] || {}).n) return '';
+      const z = this._db.zk[k.id] || {}, c = this._zc(), ids = [...ZTPL, ...(c.own || []).filter((o) => !(o.k && o.k.length) || o.k.includes(k.id)).map((o) => o.i)];
+      // Zähler: nur Bilder, die dieses Kind gerade bekommen kann (ausgeblendete zählen nicht) – gesammelte bleiben trotzdem in der Galerie
+      const hide = new Set(c.hide || []), vis = ids.filter((x) => !hide.has(x));
+      const seen = (z.seen || []).filter((x) => ids.includes(x)), nVis = seen.filter((x) => vis.includes(x)).length, sn = this._zStreak(k.id), o = this._kvOpen(k.id, 'z');
+      let body = '';
+      if (o) {
+        if (!ZAPI.thumb) { if (!this._zBusy) { this._zBusy = true; zLoad().then(() => { this._zBusy = false; this._render(); }, () => { this._zBusy = false; }); } body = `<div class="hint">${T('Lade …')}</div>`; }
+        else body = seen.length ? `<div class="zgal">${seen.slice().reverse().map((id) => { const ow = (c.own || []).find((x) => x.i === id); return `<span class="zgi">${ow ? '📷' : ZAPI.thumb(id)}</span>`; }).join('')}</div>` : `<div class="hint">${T('Noch kein Bild freigeputzt – beim nächsten Zähneputzen geht\'s los!')}</div>`;
+      }
+      return `<div class="badges"><button type="button" class="kvbtn" data-a="kvtog" data-x="z" data-k="${k.id}" aria-expanded="${o}">🦷 ${T('Meine Zahnputz-Bilder {n}/{total}', { n: nVis, total: vis.length })}${sn >= 2 ? ` <span class="kvgot">🔥${sn}</span>` : ''} <span class="accc">▸</span></button>${body}</div>`;
+    }
 
     // ---------- Buchungen als eigene Einträge ----------
     // Jede Punkte-Änderung wird zuerst als eigener Listen-Eintrag „kp|pt|…“ gespeichert (Anlegen kann nie mit einem
@@ -3249,8 +3480,11 @@ ${['ziel', 'ziel_sterne', 'fehlen', 'prozent', 'erreicht', 'prognose_tage', 'pro
       const st = this._st(date, tid, kidId);
       const xp = this._mark(date, `xp:${tid}:${kidId}`);
       const mf = this._mult(date, kidId);
-      const pts = (Number(t.points) || 0) * mf, back = st === 'x' ? (xp !== '' ? Number(xp) || 0 : Number(t.penalty) || 0) : 0;
+      // 🦷 Zahnputz-Aufgabe: mit Timer (oder „auch ohne Timer“) gelten die Sterne aus 🦷 Zähne – gemerkt fürs Zurücknehmen
+      const zb = this._zLinked(t) ? this._zPts(t, kidId, !!this._mark(date, `zt:${tid}:${kidId}`)) : null;
+      const pts = (zb !== null ? zb : (Number(t.points) || 0)) * mf, back = st === 'x' ? (xp !== '' ? Number(xp) || 0 : Number(t.penalty) || 0) : 0;
       this._setSt(date, tid, kidId, 'd');
+      if (zb !== null && zb !== (Number(t.points) || 0)) this._setMark(date, `zp:${tid}:${kidId}`, String(zb));
       if (t.sched === 'once') this._save('task', tid, { ...t, done: { kid: kidId, d: date } });
       const sk = this._streak(t, kidId, date);
       const extra = { inc: { doneCount: 1, ...(t.sched === 'once' ? { onceCount: 1 } : {}) }, max: { best: sk } };
@@ -3269,9 +3503,10 @@ ${['ziel', 'ziel_sterne', 'fehlen', 'prozent', 'erreicht', 'prognose_tage', 'pro
       const t = this._db.task[tid];
       if (!t) return;
       if (this._st(date, tid, kidId) !== 'd') { this._setSt(date, tid, kidId, ''); return; }
+      const zp = this._mark(date, `zp:${tid}:${kidId}`), base = zp !== '' && Number.isFinite(Number(zp)) ? Number(zp) : (Number(t.points) || 0);
       this._setSt(date, tid, kidId, '');
       if (t.sched === 'once') { const c = { ...t }; delete c.done; this._save('task', tid, c); }
-      this._addPoints(kidId, -(Number(t.points) || 0) * this._mult(date, kidId), `Zurückgenommen: ${t.emoji || '⭐'} ${t.title}`, { inc: { doneCount: -1 } });
+      this._addPoints(kidId, -base * this._mult(date, kidId), `Zurückgenommen: ${t.emoji || '⭐'} ${t.title}`, { inc: { doneCount: -1 } });
       const bk = `b:${tid}:${kidId}`;
       const b = Number(this._mark(date, bk)) || 0;
       if (b) { this._setMark(date, bk, ''); this._addPoints(kidId, -b, `Zurückgenommen: 🔥 Serien-Bonus ${t.title}`); }
@@ -3954,6 +4189,8 @@ ${['ziel', 'ziel_sterne', 'fehlen', 'prozent', 'erreicht', 'prognose_tage', 'pro
         const w = this._win(t);
         if (w === 'before') { this._toast(T('⏰ Erst ab {time} Uhr', { time: t.from })); return; }
         if (w === 'after') { this._toast(T('Zeit ist vorbei (bis {time} Uhr)', { time: this._winTo(t) })); return; }
+        // 🦷 „Nur mit Timer abhaken“: Antippen startet den Timer
+        if (this._zLinked(t) && this._zc().only) { this._zStart(tid, kidId); return; }
         if (this._routine(t) && !this._routSkip && this._routDone(today, tid, kidId, t.steps.length).length < t.steps.length) { this._routDlg(t, k, e); return; }
         if (this._approval && t.photo && this._cfg.photoOn) { this._askPhoto(t, k, today, e); return; }
         if (this._approval) {
@@ -4265,7 +4502,7 @@ ${['ziel', 'ziel_sterne', 'fehlen', 'prozent', 'erreicht', 'prognose_tage', 'pro
       // Nicht neu zeichnen, solange in der Karte gerade etwas eingetippt wird (sonst geht die Eingabe verloren)
       const ae = this.shadowRoot.activeElement;
       // 🎄 auch beim Tippen im Adventskalender (eigener Bereich in der Karte) nicht neu zeichnen
-      const aIn = ae && ae === this._advEl && ae.shadowRoot && ae.shadowRoot.activeElement;
+      const aIn = ae && (ae === this._advEl || ae === this._zEl) && ae.shadowRoot && ae.shadowRoot.activeElement;
       const typing = (x) => x && /^(INPUT|TEXTAREA|SELECT)$/.test(x.tagName) && !/^(checkbox|radio|button|file|range|color)$/.test(x.type || '');
       if ((ae && ae.closest && ae.closest('#app') && typing(ae)) || typing(aIn)) {
         if (!this._deferR) { this._deferR = true; ae.addEventListener('blur', () => { setTimeout(() => { this._deferR = false; this._render(); }, 0); }, { once: true }); }
@@ -4336,6 +4573,7 @@ ${['ziel', 'ziel_sterne', 'fehlen', 'prozent', 'erreicht', 'prognose_tage', 'pro
       if (openD.length) app.querySelectorAll('details > summary').forEach((x) => { if (openD.includes(x.textContent)) x.parentNode.open = true; });
       this._advHtml = adv ? html : null;
       if (adv) this._advMount(app, adv[0], adv[1]);
+      if (app.querySelector('#zslot')) this._zMount(app);
     }
 
     // 🎄 Adventskalender einhängen (das Modul wird erst beim ersten Mal geladen)
@@ -4474,7 +4712,8 @@ ${['ziel', 'ziel_sterne', 'fehlen', 'prozent', 'erreicht', 'prognose_tage', 'pro
           const w = s ? 'open' : this._win(t);
           const cls = s === 'taken' ? 'wait' : s === 'm' ? 'miss' : s === 'e' ? 'exc' : s || (w === 'before' ? 'wait' : w === 'after' ? 'miss' : '');
           const streak = once ? 0 : this._curStreak(t, k.id);
-          let info = `+${(t.points || 0) * this._mult(dk(new Date()), k.id)} ⭐${this._winTo(t) ? ` · ${T('bis {time}', { time: this._winTo(t) })}` : ''}`;
+          const zl = this._zLinked(t), zgo = zl && !s && w === 'open' && !this._config.summary;
+          let info = `+${(zl ? this._zPts(t, k.id, true) : (t.points || 0)) * this._mult(dk(new Date()), k.id)} ⭐${this._winTo(t) ? ` · ${T('bis {time}', { time: this._winTo(t) })}` : ''}`;
           if (s === 'taken') { const o = this._db.kid[by], nm = o ? esc(o.name) : T('Jemand'); info = bySt === 'p' ? T('⏳ {name} hat es gemacht – wartet auf Freigabe', { name: nm }) : T('✓ Schon erledigt von {name}', { name: nm }); }
           else if (s === 'p') info = T('wartet auf Freigabe');
           else if (s === 'x') info = T('verpasst · −{n} ⭐', { n: t.penalty || 0 });
@@ -4498,6 +4737,7 @@ ${['ziel', 'ziel_sterne', 'fehlen', 'prozent', 'erreicht', 'prognose_tage', 'pro
             ${streak >= 2 ? `<span class="fire">🔥${streak}</span>` : ''}
             <span class="e">${esc(t.emoji || '⭐')}</span><span class="t"><span>${esc(t.title)}</span></span>
             <span class="p">${info}</span>
+            ${zgo ? `${this._zExtra(t, k.id) ? `<span class="zx">${T('🔥 Extra!')}</span>` : ''}<span class="zgo" data-a="zgo" data-t="${t.id}" data-k="${k.id}" role="button">${T('🦷 Los geht\'s!')}</span>` : ''}
             ${badge ? `<span class="badge">${badge}</span>` : ''}</button>`;
         }).join('')}</div>`;
     }
@@ -4652,6 +4892,7 @@ ${['ziel', 'ziel_sterne', 'fehlen', 'prozent', 'erreicht', 'prognose_tage', 'pro
           const got = BADGES.filter((b) => b[3](k)), o = this._kvOpen(k.id, 'b');
           return `<div class="badges"><button type="button" class="kvbtn" data-a="kvtog" data-x="b" data-k="${k.id}" aria-expanded="${o}">🏅 ${T('Abzeichen {n}/{total}', { n: got.length, total: BADGES.length })}${o ? '' : ` <span class="kvgot">${got.map((b) => b[1]).join('')}</span>`} <span class="accc">▸</span></button>${o ? BADGES.map((b) => `<span class="bdg ${b[3](k) ? 'on' : ''}" data-a="bdgi" data-b="${b[0]}" data-k="${k.id}" title="${esc(T(b[2]))}">${b[1]}</span>`).join('') : ''}</div>`;
         })()}
+        ${this._zKidHtml(k)}
         ${this._cfg.dayBlocks || (this._presCfg(k.pres) && this._pres(k.id, dk(new Date())).s === 'out') ? '' : `<div class="sect"><span>${T('Heute')}</span><span class="hint">${T('{done}/{total} erledigt', { done, total: reqT.length })}</span></div>`}
         ${reqT.length && done === reqT.length ? `<div class="trophy">${T('🏆 Alles geschafft – super!')}</div>` : ''}
         ${this._presCfg(k.pres) && this._pres(k.id, dk(new Date())).s === 'out' ? '' : this._dayBlocks(tasks, stat, k)}
@@ -4729,8 +4970,9 @@ ${['ziel', 'ziel_sterne', 'fehlen', 'prozent', 'erreicht', 'prognose_tage', 'pro
       const kids = this._kids();
       const pend = this._pendingTasks();
       const reqs = Object.values(this._db.req).filter((q) => this._db.kid[q.kid] && this._db.reward[q.reward]);
-      const tabs = [['heute', T('📋 Heute')], ['aufgaben', T('✅ Aufgaben')], ['belohnungen', T('🎁 Belohnungen')], ['kinder', T('👧 Kinder')], ...(this._advOn() ? [['advent', T('🎄 Advent')]] : []), ['einst', T('⚙️ Einstellungen')]];
+      const tabs = [['heute', T('📋 Heute')], ['aufgaben', T('✅ Aufgaben')], ['belohnungen', T('🎁 Belohnungen')], ['kinder', T('👧 Kinder')], ...(this._advOn() ? [['advent', T('🎄 Advent')]] : []), ...(this._zOn() ? [['zaehne', T('🦷 Zähne')]] : []), ['einst', T('⚙️ Einstellungen')]];
       if (this._tab === 'advent' && !this._advOn()) this._tab = 'heute';
+      if (this._tab === 'zaehne' && !this._zOn()) this._tab = 'heute';
       if (this._wizShow(kids)) {
         return `<div class="card">
         <div class="hd"><span class="tt">${LOGO}${this._ttl()}</span><span class="hint">${T('Eltern')}</span></div>
@@ -4742,6 +4984,7 @@ ${['ziel', 'ziel_sterne', 'fehlen', 'prozent', 'erreicht', 'prognose_tage', 'pro
       else if (this._tab === 'kinder') body = this._kidsAdmin(kids);
       else if (this._tab === 'einst') body = this._settingsAdmin();
       else if (this._tab === 'advent') body = '<div id="advslot"></div>';
+      else if (this._tab === 'zaehne') body = '<div id="zslot"></div>';
       else body = this._todayAdmin(kids);
       const missed = this._missedTasks();
       const wishes = Object.values(this._db.req).filter((q) => q.wish && this._db.kid[q.kid]);
@@ -5189,7 +5432,7 @@ actions:
       ];
       const byId = {}; sec.forEach((x) => { byId[x[0]] = x; });
       const groups = [
-        [T('⚙️ Allgemein'), ['lang', 'look', 'vac', 'sec', 'f_advOn']],
+        [T('⚙️ Allgemein'), ['lang', 'look', 'vac', 'sec', 'f_advOn', 'f_zOn']],
         [T('✅ Aufgaben & Tagesablauf'), ['f_dayBlocks', 'f_routOn', 'f_extraOn', 'f_photoOn', 'f_nfcOn', 'f_muellOn', 'f_calOn', 'f_orderOn', 'f_prevOn']],
         [T('⭐ Punkte & Boni'), ['appr', 'streak', 'f_wbOn', 'f_teamOn', 'f_dblOn', 'f_bdOn', 'f_behavOn', 'f_negOn', 'f_gradesOn']],
         [T('🎁 Belohnungen & Geld'), ['f_goalOn', 'f_progOn', 'f_wishOn', 'f_jokerOn', 'f_shareOn', 'f_costKidOn', 'f_walletOn', 'f_priceOn', 'money']],
@@ -5468,6 +5711,10 @@ actions:
         ${D(L)}
         ${c.advOn ? `<div class="fopt"><div class="hint">${T('Eigene Karte nur mit dem Kalender: Ansicht „🎄 Adventskalender“ im Karten-Editor (optional mit Kind).')}</div><div class="btnrow"><button class="btn sm" data-a="tab" data-id="advent">${T('🎄 Zum Adventskalender')}</button></div></div>` : ''}
       `);
+      fx.zOn = F('zOn', !!c.zOn, T('🦷 Zahnputz-Timer<small>2 Minuten Zähneputzen mit Musik – Bereich für Bereich verschwindet der Schaum und ein Bild kommt zum Vorschein. Mit Timer gibt es die Sterne sofort. Einstellungen im neuen Tab 🦷 Zähne.</small>'), (L) => `
+        ${D(L)}
+        ${c.zOn ? `<div class="fopt"><div class="btnrow"><button class="btn sm" data-a="tab" data-id="zaehne">${T('🦷 Zum Zahnputz-Timer')}</button></div></div>` : ''}
+      `);
       fx.lmOn = F('lmOn', !!c.lmOn, T('🟦 LaMetric<small>Zeigt erledigte Aufgaben, „Alles geschafft!“ und eingelöste Belohnungen auf einer LaMetric TIME an.</small>'), (L) => `
         ${D(L)}
         ${c.lmOn ? `<div class="fopt">${lmDevs.length ? `<label>${T('Gerät')}<select data-cfgs="lmDev"><option value="">${T('– bitte wählen –')}</option>${lmDevs.map((d) => `<option value="${esc(d.id)}" ${c.lmDev === d.id ? 'selected' : ''}>${esc(d.name_by_user || d.name || d.id)}</option>`).join('')}</select></label>
@@ -5685,7 +5932,7 @@ actions:
       const c = this._cfg, kids = this._kids().filter((k) => this._rwFor(r, k.id));
       const pr = kids.map((k) => this._cost(r, k.id)), lo = pr.length ? Math.min(...pr) : r.cost, hi = pr.length ? Math.max(...pr) : r.cost;
       const own = !!(c.costKidOn && r.costs && Object.keys(r.costs).some((id) => this._db.kid[id])), diff = own && lo !== hi;
-      const days = (k) => { if (!c.priceOn) return ''; const b = this._weekBudget(k.id); return b > 0 ? T('{n} Tage', { n: Math.max(1, Math.ceil(this._cost(r, k.id) / (b / 7))) }) : ''; };
+      const days = (k) => { if (!c.priceOn) return ''; const b = this._weekBudget(k.id); if (!(b > 0)) return ''; const n = Math.max(1, Math.ceil(this._cost(r, k.id) / (b / 7))); return n === 1 ? T('1 Tag') : T('{n} Tage', { n }); };
       let line = '';
       const nw = (x) => `<span class="nw">${x}</span>`;
       if (own) line = kids.map((k) => { const d = days(k); return nw(`${esc(k.name)} ${this._cost(r, k.id)} ⭐${d ? ` (≈ ${d})` : ''}`); }).join(' · ');
@@ -6319,8 +6566,8 @@ actions:
       const today = dk(new Date()), curTomb = { ...(this._cfg.tomb || {}) }, dels = {}, back = new Set();
       this._noTomb = true;
       try {
-        ['kid', 'task', 'reward', 'log', 'req', 'cfg', 'adc', 'adk'].forEach((ty) => {
-          if (['adc', 'adk'].includes(ty) && !j.data[ty]) return; // ältere Sicherung ohne Adventskalender: vorhandene Türchen behalten
+        ['kid', 'task', 'reward', 'log', 'req', 'cfg', 'adc', 'adk', 'zc', 'zk'].forEach((ty) => {
+          if (['adc', 'adk', 'zc', 'zk'].includes(ty) && !j.data[ty]) return; // ältere Sicherung ohne Adventskalender/Zahnputz-Timer: vorhandene Daten behalten
           const src = j.data[ty] || {};
           Object.keys(this._db[ty]).forEach((id) => {
             if (src[id] || (this._db[ty][id] || {}).virtual) return;
@@ -6633,7 +6880,7 @@ actions:
 
     _backupJson() {
       const data = {};
-      ['kid', 'task', 'reward', 'log', 'req', 'cfg', 'adc', 'adk'].forEach((ty) => {
+      ['kid', 'task', 'reward', 'log', 'req', 'cfg', 'adc', 'adk', 'zc', 'zk'].forEach((ty) => {
         data[ty] = {};
         Object.values(this._db[ty]).forEach((x) => { if (x.virtual) return; const c = { ...x }; delete c.id; data[ty][x.id] = c; });
       });
@@ -7829,6 +8076,7 @@ actions:
           break;
         }
         case 'ktap': this._kidTap(ds.t, ds.k, e); break;
+        case 'zgo': this._zStart(ds.t, ds.k); break;
         case 'kfold': {
           this._opens = this._opens || {}; this._opens[ds.k] = !this._opens[ds.k]; this._animK = ds.k; this._render(); this._animK = null;
           const kk = this._db.kid[ds.k];
@@ -8454,7 +8702,7 @@ actions:
         const u = new URL(file, new URL(dir, location.href));
         if (u.origin !== location.origin) continue;
         const tag = cardTag();
-        const m = await import(`${u.pathname}?v=${VERSION}${tag ? `&r=${encodeURIComponent(tag)}` : ''}`);
+        const m = await import(`${u.pathname}?v=${VERSION}-${BUILD}${tag ? `&r=${encodeURIComponent(tag)}` : ''}`);
         if (!check || check(m)) { cardDir = dir; return m; }
       } catch (e) { /* nächster Ordner */ }
     }
@@ -8473,6 +8721,14 @@ actions:
     if (customElements.get('yippee-advent')) return Promise.resolve(true);
     if (!advP) advP = cardImport('yippee-kids-chores-advent.js', (m) => m && typeof m.default === 'function').then((m) => m.default({ T }), (e) => { advP = null; throw e; });
     return advP;
+  };
+  // 🦷 Zahnputz-Timer: eigene Datei (yippee-kids-chores-teeth.js), wird erst geladen, wenn er gebraucht wird
+  let zP = null;
+  const ZAPI = {};
+  const zLoad = () => {
+    if (customElements.get('yippee-teeth')) return Promise.resolve(true);
+    if (!zP) zP = cardImport('yippee-kids-chores-teeth.js', (m) => m && typeof m.default === 'function').then((m) => m.default({ T, api: ZAPI }), (e) => { zP = null; throw e; });
+    return zP;
   };
   const hbNorm = (x) => String(x || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ß/g, 'ss');
   // Übersetzungen: siehe yippee-kids-chores-lang-xx.js (eigene Dateien neben der Karte)

@@ -1,7 +1,28 @@
 # Changelog
 
+🇬🇧 [English version](CHANGELOG.en.md)
+
 Alle wichtigen Änderungen an **Yippee! - Kids Chores**.
 Versionsnummern: `MAJOR.MINOR.PATCH` – Fehlerbehebungen erhöhen PATCH, neue Funktionen MINOR, grundlegende Änderungen (z. B. am Speicherformat) MAJOR.
+
+## [1.8.0] – 2026-11-11
+
+### 🦷 Das Highlight: der Zahnputz-Timer
+Optional unter ⚙️ Einstellungen → ⚙️ Allgemein → 🦷 Zahnputz-Timer. Eingeschaltet bekommen Zahnputz-Aufgaben in der Kinder-Ansicht den Knopf **🦷 Los geht's!**, und die Eltern-Ansicht den neuen Tab **🦷 Zähne**. Welche Aufgaben dazugehören, wählt man dort aus einer Liste: verknüpfte Aufgaben oben, alle anderen aufklappbar nach Kind bzw. „Gemeinsam“ sortiert.
+- **Bild freiputzen:** Der Bildschirm ist voller Zahnpasta-Schaum. Der Timer läuft 1, 2 oder 3 Minuten (pro Kind einstellbar) in 4 Bereichen – oben links, oben rechts, unten links, unten rechts. Die Bürste schrubbt Zahn für Zahn: im ersten Durchgang wird der Schaum dünner, im zweiten wird er weggeputzt – mit Schaumspritzern, Schaumresten, die am Ende des Bereichs „ploppen“, und weichen, welligen Übergängen zwischen den Bereichen. Die Zahnbürste dreht sich passend zur Seite; dazu ein Tipp pro Bereich, ein Wechsel-Ton und ein kleiner Mund, der den Bereich zeigt. Am Ende „Blitzblank! ✨“ mit Konfetti. Das Bild bleibt danach stehen: **🖼️ Bild ansehen** zeigt es ganz, erst **Weiter** führt zurück zu den Aufgaben.
+- **⭐ Sterne sofort:** Mit Timer wird die Aufgabe direkt abgehakt, ohne Freigabe der Eltern („✅ Mit Timer sofort gutschreiben“, abschaltbar). Sterne **für alle gleich** oder **je Kind & Tageszeit** – putzt ein Kind z. B. morgens ungern, gibt es dort mehr, und auf der Kachel steht „🔥 Extra!“. Wer ohne Timer abhakt, bekommt die Sterne der Aufgabe (oder auf Wunsch auch die Timer-Sterne). Zurücknehmen bucht genau die gebuchten Sterne zurück, Doppelte-Punkte-Tage und Geburtstags-Faktor gelten wie immer.
+- **🔒 Nur mit Timer abhaken** (optional): Antippen der Aufgabe startet dann den Timer. **🔥 Bonus nach 7 Tagen am Stück** (optional): wenn an 7 Tagen jedes Zähneputzen mit Timer war. Für Zahnputz-Aufgaben gibt es nur diese eine 🔥-Serie – der allgemeine Serien-Bonus zählt dort nicht zusätzlich, und die Kachel zeigt die Zahnputz-Serie.
+- **🖼️ 14 selbst gezeichnete Vorlagen** – Mondlandung, Drachenburg, Tauchgang am Riff, Baumhaus bei Nacht, Piratenschiff, Dino-Tal, Feuerwehr, Bauernhof, Pinguine im Eis, Safari, Zirkus, Einhorn-Wiese, Zauberwald, Dampflok – plus **📷 eigene Bilder** (werden automatisch verkleinert, auf Wunsch nur für ein Kind; hochladen nur als Administrator; in der Home-Assistant-App ein Bild pro Auswahl, im Browser mehrere auf einmal). Auswahl per **🎲 Zufall** (ein Bild kommt erst wieder, wenn alle anderen dran waren – nie zweimal am selben Tag) oder in **🔢 fester Reihenfolge**; einzelne Bilder lassen sich ausblenden. Die Kinder sammeln ihre Bilder unter „🦷 Meine Zahnputz-Bilder“.
+- **🎵 Musik:** eigens komponierte, ruhige 2-Minuten-Musik (eigene Datei, wird erst beim Putzen geladen), eigene MP3s oder Zufall; Wechsel-Ton und „Ta-da“ einzeln abschaltbar. Optional **🔊 Putzgeräusch**: Schrubben oder elektrische Zahnbürste (mit Vibration, wo das Handy das kann; bei einer Oral-B-Zahnbürste immer aus).
+- **🤖 Eigene Bilder mit KI:** Im Tab 🦷 Zähne gibt es einen fertigen Prompt in zwei Stilen (🧸 verspielt 3–8, 😎 cool 9–14) – Motiv eintragen oder eine Idee bzw. 🎲 wählen, **📋 Kopieren**, in ChatGPT, Gemini oder Microsoft Designer einfügen. Im selben Chat lässt sich das Bild danach mit eigenen Worten anpassen – so entsteht auch eine ganze Serie im gleichen Stil.
+- **✨ Bewegte Effekte** (funkelnde Sterne, Bläschen, schwebende Lichter) und optional **🌫️ Bild erst am Ende scharf** – für Kinder, die sonst nur aufs Bild schauen statt zu putzen.
+- **🦷 Oral-B:** Mit der Home-Assistant-Integration „Oral-B“ (Bluetooth) pro Kind die Zahnbürste wählen – der Timer startet von selbst, sobald sie läuft, hält an, wenn sie aus ist („⏸️ Zahnbürste aus – weiter putzen!“), und warnt bei zu viel Druck.
+- Der Bildschirm bleibt während des Putzens an. Abbrechen geht nur mit zweitem Tipp aufs ✕ – dann wird nichts gebucht. Läuft schon Freigabe, Verpasst-Meldung oder ist die Aufgabe erledigt, gibt es keine doppelten Sterne.
+- Der Timer ist eine eigene Datei (`yippee-kids-chores-teeth.js`, Musik `yippee-kids-chores-teeth-music.js`) und wird nur geladen, wenn er gebraucht wird. Einstellungen und Fortschritt sind in der Sicherung enthalten. Neues Handbuch-Thema in allen 27 Sprachen.
+
+### Sonstiges
+- **README:** Der Hinweis „Ab Version 1.4.0 besteht die Karte aus mehreren Dateien“ ist entfallen; bei der manuellen Installation steht jetzt richtig, dass bei Updates alle Dateien aus `dist/` kopiert werden.
+- **🇬🇧 Englischer Changelog** ([#16](https://github.com/Chrism1412/yippee-kids-chores-card/issues/16), Idee von [@gogui63](https://github.com/gogui63)): `CHANGELOG.en.md`, Release-Texte ab jetzt auf Deutsch und Englisch.
 
 ## [1.7.2] – 2026-11-08
 
