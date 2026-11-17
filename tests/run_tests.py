@@ -16,13 +16,23 @@ ROOT = os.path.dirname(HERE)
 def build():
     card = open(os.path.join(ROOT, 'dist', 'yippee-kids-chores-card.js'), encoding='utf-8').read()
     page = open(os.path.join(HERE, 'test_page.html'), encoding='utf-8').read()
-    page = page.replace('/*CARD*/', card, 1)
+    # Eltern-Bereich (eigene Datei) für die Tests direkt mitliefern – das echte Nachladen prüft test_190 mit kp_lazy.html
+    adm = open(os.path.join(ROOT, 'dist', 'yippee-kids-chores-admin.js'), encoding='utf-8').read()
+    pre = adm.replace('export default function install(', 'window.YippeeKidsChoresAdmin = function install(', 1)
+    # Ältere Tests erwarten die klassische Kinder-Ansicht: Standard „kompakt für neue Installationen“ nur, wenn ein Test window.__kvAuto setzt
+    card = card.replace('    _kViewInit() {\n', '    _kViewInit() {\n      if (!window.__kvAuto) return;\n', 1)
+    assert 'window.__kvAuto' in card
+    lazy = page.replace('/*CARD*/', card, 1)
+    page = page.replace('/*CARD*/', pre + ';\n' + card, 1)
     page = page.replace('window.A=A;', 'window.A=A;window.items=items;', 1)
     # Einrichtungs-Assistent nur, wenn die Seite mit #wiz geöffnet wird (sonst starten die Tests mit der normalen Eltern-Ansicht)
     page = page.replace("mode:'admin',", "mode:'admin',wizard:location.hash.includes('wiz'),", 1)
     page = page.replace('const hass={', 'const hass={user:{id:"admin1",name:"Papa",is_admin:true},', 1)
     page = page.replace('\n</script>', '\n;customElements.define("kinderpunkte-card", class extends customElements.get("yippee-kids-chores-card"){});\n</script>', 1)
     open(os.path.join(HERE, 'kp_test.html'), 'w', encoding='utf-8').write(page)
+    for fix in (("window.A=A;", "window.A=A;window.items=items;"), ("mode:'admin',", "mode:'admin',wizard:location.hash.includes('wiz'),"), ('const hass={', 'const hass={user:{id:"admin1",name:"Papa",is_admin:true},'), ('\n</script>', '\n;customElements.define("kinderpunkte-card", class extends customElements.get("yippee-kids-chores-card"){});\n</script>')):
+        lazy = lazy.replace(fix[0], fix[1], 1)
+    open(os.path.join(HERE, 'kp_lazy.html'), 'w', encoding='utf-8').write(lazy)
     import shutil  # Handbuch und Sprachen liegen als eigene Dateien neben der Karte
     for f in glob.glob(os.path.join(ROOT, 'dist', 'yippee-kids-chores-*.js')):
         if not f.endswith('yippee-kids-chores-card.js'): shutil.copy(f, HERE)

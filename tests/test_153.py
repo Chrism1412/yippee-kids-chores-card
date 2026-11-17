@@ -10,7 +10,7 @@ PAGE=sys.argv[2] if len(sys.argv)>2 else os.path.join(HERE,'kp_test.html')
 root=os.path.join(HERE,'_hacsroot'); shutil.rmtree(root, ignore_errors=True)
 d=os.path.join(root,'hacsfiles','yippee-kids-chores-card'); os.makedirs(d)
 for f in os.listdir(DIST):
-    if (f.startswith('yippee-kids-chores-lang-') or f == 'yippee-kids-chores-manual.js') and f.endswith('.js'): shutil.copy(os.path.join(DIST,f), d)
+    if (f.startswith('yippee-kids-chores-lang-') or f in ('yippee-kids-chores-manual.js', 'yippee-kids-chores-admin.js')) and f.endswith('.js'): shutil.copy(os.path.join(DIST,f), d)
 CARD=os.path.join(DIST,'yippee-kids-chores-card.js') if DIST!=HERE else os.path.join(HERE,'kinderpunkte-card.js')
 shutil.copy(CARD, os.path.join(d,'yippee-kids-chores-card.js'))
 os.remove(os.path.join(d,'yippee-kids-chores-lang-it.js'))  # fehlende Sprachdatei simulieren

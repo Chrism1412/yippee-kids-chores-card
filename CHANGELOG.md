@@ -5,7 +5,38 @@
 Alle wichtigen Änderungen an **Yippee! - Kids Chores**.
 Versionsnummern: `MAJOR.MINOR.PATCH` – Fehlerbehebungen erhöhen PATCH, neue Funktionen MINOR, grundlegende Änderungen (z. B. am Speicherformat) MAJOR.
 
-## [1.8.0] – 2026-11-11
+## [1.9.0] – 2026-11-17
+
+### 📱 Das Highlight: eine übersichtliche Kinder-Ansicht
+Mit jeder Erweiterung kam in der Kinder-Ansicht ein Balken dazu – jetzt gibt es eine aufgeräumte **kompakte Ansicht** (umschaltbar unter ⚙️ Einstellungen → 🎨 Darstellung → 🧒 Kinder-Ansicht). Neue Installationen starten kompakt, wer schon Kinder angelegt hat, behält erst einmal die gewohnte klassische Ansicht.
+- **Kopf in drei Zeilen:** Avatar mit Level-Ring, „Hallo Mia!“, Level und eine große Sterne-Zahl; darunter das Ziel als schmaler Balken.
+- **Sammel-Knöpfe:** 🎄 Adventskalender (nur im Dezember, mit Türchen-Zahl), 🦷 Zahnputz-Bilder (mit Serie), 🏅 Abzeichen, 👨‍👩‍👧 Familienziel (in %) und 📅 Rückblick – was gerade nicht aktiv ist, fällt weg.
+- **„Jetzt dran“:** groß nur die Aufgaben, deren Zeitfenster gerade offen ist. Erledigtes schrumpft zu einer Zeile „✅ Schon geschafft: 🛏️ 📚 🗑️“, spätere Tagesblöcke, „Ohne Zeit“ und Verpasstes stehen eingeklappt darunter.
+- **Leiste unten: 🏠 Heute · 🎁 Belohnungen · 🏆 Sammlung.** Belohnungen, Wünsche und Joker auf einer eigenen Seite (mit roter Zahl, wenn etwas einlösbar ist); in der Sammlung liegen Adventskalender, Zahnputz-Bilder, Abzeichen, Familienziel, Rückblick und Gutscheine.
+
+### Neu
+- **⏱️ Aufgaben-Timer** (pro Aufgabe, im Aufgaben-Editor): z. B. „15 Min. lesen“ oder „Zimmer aufräumen in 10 Min.“ – großer Countdown-Ring mit ruhiger Musik – wahlweise deine eigenen Zahnputz-MP3s (🦷 Zähne) oder ganz ohne Musik, ⏸️ Pause, Abbrechen mit zweitem Tipp (bucht nichts). Am Ende pro Aufgabe wählbar: **✅ automatisch abhaken**, **👆 Kind bestätigt** oder **⏱️ nur Countdown** (abhaken wie gewohnt). Freigabe der Eltern und Foto-Nachweis gelten wie immer; der Bildschirm bleibt während des Timers an.
+- **🔊 Leseanfänger-Modus** (pro Kind, im Kind-Editor): große Bilder, Sterne als Symbole statt Text und ein 🔊-Knopf auf jeder Aufgabe, der sie vorliest („Zähne putzen – dafür bekommst du einen Stern!“). Vorgelesen wird über das Gerät oder über die Lautsprecher aus 🔊 Sprachausgabe.
+- **🎄 Adventskalender liest vor** (für Kinder mit 🔊 Leseanfänger-Modus): Beim Öffnen werden Türchen-Text, Nachricht, Sterne und Geschenk vorgelesen, auch Sperr-Hinweise wie „Noch 3 Tage …“ – beides einzeln abschaltbar in den Kalender-Einstellungen. Ein 🔊-Knopf im Türchen liest nochmal vor.
+- **🦷 Zahnputz-Timer als Schritt einer Routine** ([#17](https://github.com/Chrism1412/yippee-kids-chores-card/issues/17)): Steckt eine mit dem Zahnputz-Timer verknüpfte Aufgabe als Schritt in einer Routine, zeigt der Schritt jetzt den Knopf „🦷 Los geht's!“. Das geht auch mit einfachen Text-Schritten: Schritte, die mit 🦷 beginnen (z. B. aus den Routine-Vorlagen), haben den Timer automatisch, bei anderen schaltest du ihn im Schritt-Editor mit 🦷 ein oder aus. Nach dem Timer ist der Schritt abgehakt, das Putzen zählt für Bilder, Zähler und Serie. Die Sterne gibt es wie bisher am Ende der Routine.
+- **📅 Rückblick:** „Dein Oktober“ den ganzen Monat in der 🏆 Sammlung bzw. klassisch als 📅-Knopf unter den Abzeichen, vom 1. bis 14. als „neu“ markiert – Sterne mit Vergleich zum Vormonat, Aufgaben, längste Serie, Zähneputzen, Lieblingsaufgabe und eingelöste Belohnungen; im Januar zusätzlich „Dein Jahr“ mit stärkstem Monat und Level. Für die Eltern unter 📊 Berichte → 📅 Rückblick.
+- **⚡ Schnellerer Start:** Einstellungen, Aufgaben-, Kinder- und Belohnungs-Verwaltung, Berichte und der Einrichtungs-Assistent liegen jetzt in einer eigenen Datei (`yippee-kids-chores-admin.js`) und werden erst geladen, wenn die Eltern-Ansicht geöffnet wird. Die Karte selbst ist dadurch rund 30 % kleiner – Kinder-Tablets starten spürbar schneller. Fehlt die Datei, läuft die Kinder-Ansicht trotzdem, und die Eltern-Ansicht sagt genau, was fehlt.
+- **Bau-Stempel:** Zusatzdateien (Sprachen, Handbuch, Eltern-Bereich, Adventskalender, Zahnputz-Timer) werden nach jedem Update sicher neu geladen – auch wenn der Browser die alte Datei noch zwischengespeichert hat.
+- Zwei neue Handbuch-Themen (🧒 Kinder-Ansicht, ⏱️ Timer) in allen 27 Sprachen.
+
+### Verbessert
+- 🦷 Das Zahn-Symbol im Reiter hat einen feinen Schatten und ist auf hellem Grund besser zu sehen.
+- README: alle Screenshots neu und gleich hoch, damit die Tabellen auf GitHub sauber nebeneinander stehen.
+
+### Behoben
+- 🦷 „Meine Zahnputz-Bilder“: Eigene Fotos erscheinen in der Galerie jetzt als kleines Bild statt nur als 📷 – und jedes Bild lässt sich antippen und groß ansehen (mit ‹ › zum Blättern). Das geht auch in der Bilder-Übersicht der Eltern im Tab 🦷 Zähne.
+- 🔊 Vorlesen über „📱 dieses Gerät“: Ist unter 🔊 Sprachausgabe eine Stimme eingestellt (z. B. Home Assistant Cloud), erzeugt Home Assistant die Sprachdatei und das Handy spielt sie selbst ab – damit klappt das Vorlesen auch in der Companion-App, die keine eigene Browser-Stimme hat.
+- ⏱️ Aufgaben-Timer und 🦷 Zahnputz-Timer in der Home-Assistant-App (Companion-App) auf Android-Handys: Die Knöpfe unten liegen nicht mehr hinter den Navigationstasten des Handys; auf dem Handy füllt der Aufgaben-Timer jetzt den ganzen Bildschirm.
+- 🦷 **Ein einzelnes Putzen zurücknehmen:** Setzen Eltern eine mit dem Timer geputzte Aufgabe auf „nicht erledigt“ (oder lehnen sie ab), gehen jetzt außer den Sternen auch das Bild dieses Putzens, der Zähler „× geputzt“, der Serien-Tag und ein an dem Tag gebuchter Serien-Bonus zurück. Putzt das Kind danach doch noch, wird alles wieder gebucht. Das ↺ im 🦷-Tab setzt weiterhin alles zurück.
+- Weiße Emojis (z. B. 🦷 unter Windows) waren auf hellen Kacheln kaum zu sehen – große Emojis auf Kacheln, Belohnungen und im Rückblick haben jetzt einen feinen Umriss.
+- 📋 Routinen: Bei einer frisch geöffneten Routine war der erste Schritt schon abgehakt (Anzeige „1/…“ statt „0/…“). Jetzt startet jede Routine mit null erledigten Schritten.
+
+## [1.8.0] – 2026-11-13
 
 ### 🦷 Das Highlight: der Zahnputz-Timer
 Optional unter ⚙️ Einstellungen → ⚙️ Allgemein → 🦷 Zahnputz-Timer. Eingeschaltet bekommen Zahnputz-Aufgaben in der Kinder-Ansicht den Knopf **🦷 Los geht's!**, und die Eltern-Ansicht den neuen Tab **🦷 Zähne**. Welche Aufgaben dazugehören, wählt man dort aus einer Liste: verknüpfte Aufgaben oben, alle anderen aufklappbar nach Kind bzw. „Gemeinsam“ sortiert.

@@ -198,6 +198,7 @@ export default function install(Y) {
     doorAlpha: '0.15', openTime: '00:00',
     targetDate: '',
     soundType: 'bells', soundFile: '',
+    rdAuto: true, rdLock: true,
     snow: true, snowAmt: 'm', snowSpd: 'n', snowFl: '❄',
     shape: 'tile', size: 'm', font: 'fun', big24: false, anim: 'flip', countdown: true, progress: true,
     yPend: false,
@@ -282,7 +283,7 @@ code{font-size:12px}
 .crow{display:flex;align-items:flex-start;gap:10px;font-size:15px;font-weight:600;cursor:pointer}
 .crow small{display:block;font-weight:400;font-size:12px;color:var(--mu,#666)}
 .g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.btns{display:flex;flex-wrap:wrap;gap:8px}
+.btns{display:flex;flex-wrap:wrap;gap:8px}.btns.rvsay{justify-content:center;margin-top:12px}
 .egrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(62px,1fr));gap:6px}
 .ec{position:relative;aspect-ratio:1;border-radius:12px;background:rgba(127,127,127,.12);display:grid;place-items:center}
 .ec .en{font-size:12px;font-weight:800;position:absolute;top:4px;left:6px;color:var(--mu,#666)}
@@ -955,22 +956,22 @@ details.adv[open]{display:flex;flex-direction:column;gap:6px}
       if (this._isOpen(k, n)) { this._reveal(k, n, false); return; }
       if (!fin && n > day) {
         if (now.getMonth() === 11 && n === now.getDate()) {
-          this._toast(T('🔒 Geduld! Türchen {n} öffnet heute ab {time} Uhr.', { n, time: c.openTime || '00:00' }));
+          this._lockMsg(k, T('🔒 Geduld! Türchen {n} öffnet heute ab {time} Uhr.', { n, time: c.openTime || '00:00' }));
         } else {
           const t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
           const dd = Math.max(1, Math.round((new Date(this._season(now), 11, n) - t0) / 864e5));
-          this._toast(dd === 1 ? T('🔒 Nur noch einmal schlafen – Türchen {n} öffnet morgen!', { n }) : T('🔒 Noch {d} Tage – Türchen {n} öffnet am {n}. Dezember', { d: dd, n }));
+          this._lockMsg(k, dd === 1 ? T('🔒 Nur noch einmal schlafen – Türchen {n} öffnet morgen!', { n }) : T('🔒 Noch {d} Tage – Türchen {n} öffnet am {n}. Dezember', { d: dd, n }));
         }
         return;
       }
-      if (!fin && n < day && c.catchUp === false) { this._toast(T('Dieses Türchen ist leider schon vorbei.')); return; }
+      if (!fin && n < day && c.catchUp === false) { this._lockMsg(k, T('Dieses Türchen ist leider schon vorbei.')); return; }
       const d = this._doorOf(k, n);
       soundUnlock(c.soundType, c.soundType === 'file' ? this._url(c.soundFile) : '');
       this._busy = true;
       try {
         if (!this._sim()) {
           const ok = this._cond(k, d);
-          if (!ok.ok) { this._toast(ok.msg); return; }
+          if (!ok.ok) { this._lockMsg(k, ok.msg); return; }
         }
         const anim = c.anim === 'confetti' ? 'flip' : c.anim;
         const el = this.shadowRoot.querySelector(`.door[data-n="${n}"]`);
@@ -993,11 +994,33 @@ details.adv[open]{display:flex;flex-direction:column;gap:6px}
       const r = d.rwd && this.host._db.reward[d.rwd];
       const body = `<div class="rv"><div class="re">${esc(d.e || '🎁')}</div>${d.t ? `<div class="rt">${esc(d.t)}</div>` : ''}${d.msg ? `<div class="rt rm">💌 ${esc(d.msg)}</div>` : ''}${isImgRef(d.img) ? this._rimg(d.img) : ''}${has ? '' : `<div class="rt">${T('Überraschung! 🎉')}</div>`}${pts ? `<div class="rp">${pts > 0 ? T('+{n} ⭐ für dich!', { n: pts }) : T('−{n} ⭐', { n: -pts })}</div>` : ''}${r ? `<div class="rp">${T('🎁 Geschenk: {title}!', { title: esc(`${r.emoji || '🎁'} ${r.title}`) })}</div>` : ''}</div>`;
       this._m = null;
-      this._modal(`${T('🚪 Türchen {n}', { n })}${this._kids().length > 1 ? ` – ${esc(k.name)}` : ''}`, body);
+      const rd = this._rdKid(k);
+      this._modal(`${T('🚪 Türchen {n}', { n })}${this._kids().length > 1 ? ` – ${esc(k.name)}` : ''}`, rd ? `${body}<div class="btns rvsay"><button class="btn" data-a="rvsay" data-n="${n}" data-k="${k.id}">${T('🔊 Vorlesen')}</button></div>` : body);
       if (fresh) {
         if (c.anim === 'confetti' || n === this._N() || n === 24) this._burst(n === 24 ? 50 : 30);
         playSound(c.soundType || 'bells', c.soundType === 'file' ? this._url(c.soundFile) : '');
+        // 🔊 Leseanfänger: nach dem Tür-Ton automatisch vorlesen (abschaltbar)
+        if (rd && c.rdAuto !== false) { clearTimeout(this._rdT); this._rdT = setTimeout(() => this._rvSay(k, n), c.soundType === 'none' ? 300 : 1600); }
       }
+    }
+
+    // ---------- 🔊 Vorlesen für Leseanfänger (Schalter „🔊 Leseanfänger-Modus“ im Kind-Editor von Yippee) ----------
+    _rdKid(k) { const h = this.host, hk = h && h._db && k && h._db.kid[k.id]; return !!(hk && hk.rdr && typeof h._sayKid === 'function'); }
+    _rvText(k, n) {
+      const d = this._doorOf(k, n) || {}, pts = Math.round(Number(d.pts) || 0), r = d.rwd && this.host._db.reward[d.rwd];
+      const parts = [T('🚪 Türchen {n}', { n })];
+      if (d.t) parts.push(d.t);
+      if (d.msg) parts.push(d.msg);
+      if (!this._hasContent(d)) parts.push(T('Überraschung! 🎉'));
+      if (pts > 0) parts.push(pts === 1 ? T('Du bekommst einen Stern!') : T('Du bekommst {n} Sterne!', { n: pts }));
+      if (r) parts.push(T('🎁 Geschenk: {title}!', { title: r.title }));
+      return parts.map((x) => String(x).replace(/[\p{Extended_Pictographic}\u{1F3FB}-\u{1F3FF}\uFE0F\u200D]/gu, '').trim()).filter(Boolean).map((x) => (/[.!?…:]$/.test(x) ? x : `${x}.`)).join(' ');
+    }
+    _rvSay(k, n) { if (this._rdKid(k)) this.host._sayKid(this._rvText(k, n), k.id); }
+    // Sperr-Hinweis: wie bisher anzeigen – bei Leseanfängern auch vorlesen (abschaltbar)
+    _lockMsg(k, msg) {
+      this._toast(msg);
+      if (this._cfg.rdLock !== false && this._rdKid(k)) this.host._sayKid(msg, k.id);
     }
 
     _gallery(k) {
@@ -1219,6 +1242,10 @@ details.adv[open]{display:flex;flex-direction:column;gap:6px}
         <div class="hint">${T('Eigene MP3-Töne lädst du unter <b>📁 Dateien</b> hoch. Kann die Datei nicht gespielt werden, ertönen die eingebauten Glocken.')}</div>
         <details class="adv"><summary>${T('Profi: eigenen Pfad eingeben')}</summary><label class="f">${T('Pfad (/local/… oder https://…)')}<input data-c="soundFile" value="${MS_RX.test(c.soundFile || '') ? '' : esc(c.soundFile || '')}" placeholder="/local/advent/glocken.mp3"></label></details>` : ''}
         ${c.soundType !== 'none' ? `<div class="btns"><button class="btn" data-a="sndtest">${T('▶️ Anhören')}</button></div>` : ''}</div>
+        <div class="box"><h3>${T('🔊 Vorlesen für Leseanfänger')}</h3>
+        ${this._chk('rdAuto', T('Türchen beim Öffnen automatisch vorlesen'), T('Text, Nachricht, Sterne und Geschenk – nach dem Tür-Ton.'))}
+        ${this._chk('rdLock', T('Sperr-Hinweise vorlesen'), T('z. B. „Noch 3 Tage …“ oder „Erst Zähne putzen …“'))}
+        <div class="hint">${this._kids().some((k) => this._rdKid(k)) ? T('Gilt für: {names}. Ein 🔊-Knopf zum Nochmal-Anhören ist im Türchen immer da.', { names: esc(this._kids().filter((k) => this._rdKid(k)).map((k) => k.name).join(', ')) }) : T('Noch kein Kind mit 🔊 Leseanfänger-Modus – einschalten im Kind-Editor von Yippee (✏️ beim Kind). Dort stellst du auch ein, ob über das Gerät oder die Lautsprecher vorgelesen wird.')}</div></div>
         <div class="box"><h3>${T('⏰ Uhrzeit & Countdown')}</h3>
         <label class="f">${T('Ab welcher Uhrzeit darf das Türchen des Tages geöffnet werden?')}<input type="time" data-c="openTime" value="${esc(c.openTime || '00:00')}"></label>
         <label class="f">${T('Countdown-Ziel')}<input type="datetime-local" data-c="targetDate" value="${esc(tgtVal)}"></label>
@@ -1485,6 +1512,7 @@ details.adv[open]{display:flex;flex-direction:column;gap:6px}
         case 'door': this._door(Number(ds.n)); return;
         case 'sel': this._selKid = ds.k; try { localStorage.setItem('kpAdvSel', ds.k); } catch (e2) { /* egal */ } this._render(); return;
         case 'gal': { const k = this._curKid(this._kids()); if (k) this._gallery(k); return; }
+        case 'rvsay': { const k = this._kid(ds.k); if (k) this._rvSay(k, Number(ds.n)); return; }
         case 'gopen': { const k = this._curKid(this._kids()); if (k) this._reveal(k, Number(ds.n), false); return; }
         case 'mclose': this._closeModal(); return;
         case 'mback': if (e.target === el) this._closeModal(); return;

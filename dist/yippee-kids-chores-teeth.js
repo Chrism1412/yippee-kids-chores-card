@@ -390,6 +390,8 @@ export default function install(Y) {
     return p;
   };
   const cachedUrl = (ref) => (URLS[ref] && URLS[ref].url) || '';
+  // für die Galerie „Meine Zahnputz-Bilder“ in der Karte (eigene Fotos als kleine Bilder)
+  if (Y.api) { Y.api.res = resolve; Y.api.url = cachedUrl; }
 
   // Bildauswahl: 🎲 Zufall (jedes Bild erst wieder, wenn alle dran waren) oder 🔢 feste Reihenfolge
   const pool = (H, kidId) => {
@@ -408,7 +410,7 @@ export default function install(Y) {
 :host{position:fixed;inset:0;z-index:9700;display:none;font-family:var(--paper-font-body1_-_font-family,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif);-webkit-tap-highlight-color:transparent}
 :host([open]){display:block}
 *{box-sizing:border-box}
-.wrap{position:absolute;inset:0;overflow:hidden;background:#0b1026;color:#fff;user-select:none;-webkit-user-select:none}
+.wrap{--kpsb:max(env(safe-area-inset-bottom,0px),var(--safe-area-inset-bottom,0px))}.wrap.app{--kpsb:max(env(safe-area-inset-bottom,0px),var(--safe-area-inset-bottom,0px),48px)}.wrap{position:absolute;inset:0;overflow:hidden;background:#0b1026;color:#fff;user-select:none;-webkit-user-select:none}
 .pic{position:absolute;inset:0}
 .pic svg,.pic img{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:contain}
 .pic .bk{object-fit:cover;filter:blur(18px) brightness(.85) saturate(1.1);transform:scale(1.12)}
@@ -427,7 +429,7 @@ export default function install(Y) {
 @keyframes flt{0%,100%{transform:translate(0,0);opacity:.35}50%{transform:translate(12px,-22px);opacity:1}}
 .chip{position:absolute;left:50%;top:calc(max(12px,env(safe-area-inset-top)) + 58px);transform:translateX(-50%);background:rgba(220,38,38,.92);color:#fff;border-radius:999px;padding:8px 16px;font-weight:800;font-size:15px;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.25)}
 .chip.pause{background:rgba(30,41,59,.9)}
-.viewbar{position:absolute;left:0;right:0;bottom:max(16px,env(safe-area-inset-bottom));display:flex;justify-content:center;gap:10px}
+.viewbar{position:absolute;left:0;right:0;bottom:calc(16px + var(--kpsb,0px));display:flex;justify-content:center;gap:10px}
 .viewbar button{background:rgba(255,255,255,.95);color:#1f2937;border-radius:999px;padding:12px 20px;font-weight:800;font-size:16px;box-shadow:0 4px 14px rgba(0,0,0,.25)}
 .viewbar button.pri{background:#5b6cff;color:#fff}
 .two{display:flex;gap:8px;margin-top:14px}.two .ok{margin-top:0}.two .ok.sec{background:#eef2ff;color:#3730a3}
@@ -451,14 +453,14 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 button{font:inherit;cursor:pointer;border:0}
 .x{background:rgba(0,0,0,.42);color:#fff;border-radius:999px;min-width:40px;height:40px;padding:0 12px;font-size:17px;font-weight:800}
 .x.sure{background:#dc2626}
-.bot{position:absolute;left:12px;right:12px;bottom:max(14px,env(safe-area-inset-bottom));background:rgba(8,24,48,.26);border:1px solid rgba(255,255,255,.22);border-radius:20px;padding:10px 14px 12px;text-shadow:0 1px 3px rgba(0,0,0,.9),0 0 10px rgba(0,0,0,.55)}
+.bot{position:absolute;left:12px;right:12px;bottom:calc(14px + var(--kpsb,0px));background:rgba(8,24,48,.26);border:1px solid rgba(255,255,255,.22);border-radius:20px;padding:10px 14px 12px;text-shadow:0 1px 3px rgba(0,0,0,.9),0 0 10px rgba(0,0,0,.55)}
 .bot .mini{filter:drop-shadow(0 1px 3px rgba(0,0,0,.6))}
 .zone{display:flex;align-items:center;gap:12px;font-weight:900;font-size:21px;line-height:1.2}
 .zone small{display:block;font-size:13.5px;font-weight:600;opacity:.92;margin-top:2px}
 .mini{width:58px;height:58px;flex:none}
 .prog{display:flex;gap:6px;margin-top:10px}.prog b{flex:1;height:8px;border-radius:4px;background:rgba(255,255,255,.35);overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.45)}.prog b i{display:block;height:100%;width:0;background:#ffd166}.prog b.d i{width:100%;background:#7cf0c0}
 .card{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(340px,calc(100% - 32px));background:rgba(255,255,255,.96);color:#1f2937;border-radius:22px;padding:20px 18px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.3)}
-.card.low{top:auto;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%)}
+.card.low{top:auto;bottom:calc(16px + var(--kpsb,0px));transform:translateX(-50%)}
 .card h2{margin:0;font-size:24px;font-weight:900}
 .card .sub{color:#4b5563;font-weight:700;font-size:14.5px;margin-top:4px;line-height:1.4}
 .card .chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}.card .chips span{background:#f3f4f6;border-radius:12px;padding:6px 10px;font-weight:800;font-size:14.5px}
@@ -479,7 +481,9 @@ button{font:inherit;cursor:pointer;border:0}
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
-      this.shadowRoot.innerHTML = `<style>${RUN_CSS}</style><div class="wrap" id="w"></div>`;
+      // Android-App: Navigationstasten liegen über der Seite → unten Sicherheitsabstand
+      const app = /Android/i.test(navigator.userAgent || '') && /Home ?Assistant\//i.test(navigator.userAgent || '');
+      this.shadowRoot.innerHTML = `<style>${RUN_CSS}</style><div class="wrap${app ? ' app' : ''}" id="w"></div>`;
       this.shadowRoot.addEventListener('click', (e) => this._click(e));
       this._vis = () => { if (document.visibilityState === 'visible' && this._st === 'run') { this._tick(true); this._lock(); } };
       this._rs = () => { if (this._st) this._sizeCanvas(); };
@@ -999,7 +1003,13 @@ td{padding:6px 2px;border-top:1px solid var(--divider-color,rgba(127,127,127,.15
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:8px;margin-top:10px}
 .tp{position:relative;background:rgba(127,127,127,.08);border-radius:10px;padding:5px;display:flex;flex-direction:column;align-items:center;gap:3px}
 .tp.off .im{opacity:.35}
-.im{width:100%;aspect-ratio:300/480;border-radius:8px;overflow:hidden;background:rgba(127,127,127,.2);display:flex;align-items:center;justify-content:center;font-size:22px}
+.im{width:100%;aspect-ratio:300/480;border-radius:8px;overflow:hidden;background:rgba(127,127,127,.2);display:flex;align-items:center;justify-content:center;font-size:22px;border:0;padding:0;cursor:zoom-in;color:inherit}
+.pv{position:fixed;inset:0;z-index:9800;background:rgba(10,14,30,.88);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:14px;box-sizing:border-box}
+.pvim{height:min(72vh,150vw);aspect-ratio:300/480;max-width:94vw;border-radius:14px;overflow:hidden;background:#1c2233;display:flex;align-items:center;justify-content:center;font-size:48px}
+.pvim svg,.pvim img{width:100%;height:100%;display:block;object-fit:cover}
+.pvt{color:#fff;font-weight:800;font-size:16px;text-align:center;max-width:94vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pvb{display:flex;align-items:center;gap:14px;color:#fff;font-weight:700}
+.pvb button{min-width:48px;height:44px;border:0;border-radius:12px;background:rgba(255,255,255,.18);color:#fff;font-size:22px;cursor:pointer}.pvb button:disabled{opacity:.3;cursor:default}
 .im svg,.im img{width:100%;height:100%;display:block;object-fit:cover}
 .tn{font-size:10.5px;font-weight:700;text-align:center;line-height:1.15;min-height:24px;word-break:break-word}
 .no{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:7px;font-size:10px;font-weight:800;padding:1px 5px}
@@ -1125,7 +1135,7 @@ Age-appropriate, no violence, nothing scary.`,
         const o = own.find((x) => x.i === id), off = hide.has(id);
         const im = o ? (() => { const u = cachedUrl(o.r); if (!u) resolve(this._hass, o.r).then(() => this._later()); return u ? `<img src="${esc(u)}" alt="">` : '📷'; })() : sceneSvg(id);
         const forSel = o ? `<select data-c="ownk" data-id="${esc(id)}" aria-label="${esc(T('Für welches Kind?'))}"><option value="">${T('alle')}</option>${kids.map((k) => `<option value="${esc(k.id)}" ${(o.k || []).includes(k.id) ? 'selected' : ''}>${esc(k.name)}</option>`).join('')}</select>` : '';
-        return `<div class="tp ${off ? 'off' : ''}"><span class="no">${n + 1}</span><div class="im">${im}</div><div class="tn">${esc(o ? o.n : tplName(id))}</div>${forSel}
+        return `<div class="tp ${off ? 'off' : ''}"><span class="no">${n + 1}</span><button type="button" class="im" data-a="pv" data-id="${esc(id)}" title="${esc(T('Groß ansehen'))}">${im}</button><div class="tn">${esc(o ? o.n : tplName(id))}</div>${forSel}
           <div class="tb"><button data-a="hide" data-id="${esc(id)}" title="${esc(off ? T('Wieder zeigen') : T('Ausblenden'))}">${off ? '🙈' : '👁️'}</button>${c.mode === 'ord' ? `<button data-a="mv" data-id="${esc(id)}" data-d="-1" ${n === 0 ? 'disabled' : ''}>◀</button><button data-a="mv" data-id="${esc(id)}" data-d="1" ${n === order.length - 1 ? 'disabled' : ''}>▶</button>` : ''}${o && this._admin() ? `<button data-a="odel" data-id="${esc(id)}" class="${this._sure === `odel${id}` ? 'sure' : ''}">${this._sure === `odel${id}` ? T('Löschen?') : '✕'}</button>` : ''}</div></div>`;
       }).join('');
       const vis = order.filter((x) => !hide.has(x)).length;
@@ -1193,6 +1203,36 @@ Age-appropriate, no violence, nothing scary.`,
     }
     _later() { clearTimeout(this._lt); this._lt = setTimeout(() => this._render(), 80); }
 
+    // 🖼️ Bild in der Übersicht antippen → groß ansehen, mit ‹ › durch alle Bilder blättern (Reihenfolge wie in der Übersicht)
+    _pvOrder() {
+      const c = this.H._zc(), ids = [...TPL_IDS, ...(c.own || []).map((o) => o.i)];
+      return c.mode === 'ord' && Array.isArray(c.ord) && c.ord.length ? [...c.ord.filter((x) => ids.includes(x)), ...ids.filter((x) => !c.ord.includes(x))] : ids;
+    }
+
+    _pvOpen(id) {
+      const H = this.H; if (!H) return;
+      const order = this._pvOrder(), i = order.indexOf(id); if (i < 0) return;
+      const o = (H._zc().own || []).find((x) => x.i === id);
+      let im;
+      if (o) {
+        const u = cachedUrl(o.r);
+        if (!u) resolve(this._hass, o.r).then((x) => { if (x && this._pvId === id) this._pvOpen(id); });
+        im = u ? `<img src="${esc(u)}" alt="">` : '📷';
+      } else im = sceneSvg(id);
+      let el = this.shadowRoot.getElementById('pv');
+      if (!el) { el = document.createElement('div'); el.id = 'pv'; el.className = 'pv'; el.setAttribute('role', 'dialog'); this.shadowRoot.appendChild(el); }
+      this._pvId = id;
+      const nav = (j, lbl) => `<button type="button" data-a="pvn" data-id="${esc(order[j] || '')}" ${order[j] ? '' : 'disabled'}>${lbl}</button>`;
+      el.innerHTML = `<div class="pvt">${esc(o ? o.n : tplName(id))}</div><div class="pvim" data-a="pvx">${im}</div><div class="pvb">${nav(i - 1, '‹')}<span>${i + 1}/${order.length}</span>${nav(i + 1, '›')}<button type="button" data-a="pvx" aria-label="${esc(T('Schließen'))}">✕</button></div>`;
+      if (!this._pvKey) { this._pvKey = (e) => { if (e.key === 'Escape') this._pvClose(); }; window.addEventListener('keydown', this._pvKey); }
+    }
+
+    _pvClose() {
+      const el = this.shadowRoot.getElementById('pv'); if (el) el.remove();
+      this._pvId = '';
+      if (this._pvKey) { window.removeEventListener('keydown', this._pvKey); this._pvKey = null; }
+    }
+
     _ask(key) {
       // Löschen/Zurücksetzen nur mit zweitem Tipp
       if (this._sure === key && Date.now() - this._sureT < 8000) { this._sure = ''; return true; }
@@ -1218,6 +1258,8 @@ Age-appropriate, no violence, nothing scary.`,
       else if (a === 'mus') this._set({ mus: ['std', 'own', 'rnd', 'off'].includes(el.dataset.v) ? el.dataset.v : 'std' });
       else if (a === 'musf') this._set({ musF: id });
       else if (a === 'mode') this._set({ mode: el.dataset.v === 'ord' ? 'ord' : 'rnd' });
+      else if (a === 'pv' || a === 'pvn') { this._pvOpen(id); return; }
+      else if (a === 'pvx') { this._pvClose(); return; }
       else if (a === 'hide') { const h = new Set(c.hide || []); if (h.has(id)) h.delete(id); else h.add(id); this._set({ hide: [...h] }); }
       else if (a === 'mv') {
         const ids = [...TPL_IDS, ...(c.own || []).map((o) => o.i)];

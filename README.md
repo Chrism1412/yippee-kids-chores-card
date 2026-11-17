@@ -20,14 +20,17 @@
 
 <p align="center"><a href="https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/README.en.md">🇬🇧 English version</a></p>
 
-> ### 🦷 Neu in Version 1.8: der Zahnputz-Timer
-> Zähneputzen mit Musik: 2 Minuten lang verschwindet Bereich für Bereich der Schaum, und darunter kommt ein Bild zum Vorschein – 14 selbst gezeichnete Vorlagen oder eigene Bilder – auf Wunsch mit dem eingebauten KI-Prompt selbst erstellt. Mit Timer gibt es die Sterne sofort, auf Wunsch morgens mehr als abends. Mit einer Oral-B-Zahnbürste startet der Timer sogar von selbst. Einschalten unter **⚙️ Einstellungen → ⚙️ Allgemein → 🦷 Zahnputz-Timer** – mehr dazu unter [Zahnputz-Timer 🦷](#zahnputz-timer--optional).
+> ### 📱 Neu in Version 1.9: übersichtliche Kinder-Ansicht, Aufgaben-Timer und Rückblick
+> - **📱 Kompakte Kinder-Ansicht:** oben Kopf und Sammel-Knöpfe, darunter nur, was **jetzt dran** ist – unten eine Leiste 🏠 Heute · 🎁 Belohnungen · 🏆 Sammlung. Für neue Installationen Standard, sonst umschaltbar unter **⚙️ Einstellungen → 🎨 Darstellung**.
+> - **⏱️ Aufgaben-Timer:** z. B. „15 Min. lesen“ – Countdown mit Ring und ruhiger Musik; am Ende automatisch abhaken, vom Kind bestätigen lassen oder nur als Countdown.
+> - **🔊 Leseanfänger-Modus:** große Bilder, ein 🔊-Knopf liest jede Aufgabe vor – für Kinder, die noch nicht lesen können. Auch der 🎄 Adventskalender liest dann vor.
+> - **📅 Rückblick:** ab dem 1. jedes Monats „Dein Oktober“, im Januar „Dein Jahr“ – mit Sternen, Serien und Lieblingsaufgabe.
+> - **⚡ Schnellerer Start:** der Eltern-Bereich ist eine eigene Datei und wird nur geladen, wenn er gebraucht wird – Kinder-Tablets starten deutlich schneller.
 >
 > **Außerdem neu:**
+> - **1.8:** 🦷 der [Zahnputz-Timer](#zahnputz-timer--optional) – Bild freiputzen mit Musik, Sterne sofort, Oral-B-Anbindung und KI-Prompt für eigene Bilder
 > - **1.7:** 🎄 der [Adventskalender](#adventskalender--optional) – 24 Türchen für jedes Kind mit Text, Bild, Sternen oder einer Belohnung als Geschenk
-> - **1.7.2:** 📱 Freigabe per Knopf in der Benachrichtigung – die Nachricht verschwindet sofort auf allen Handys, auch ohne geöffnete Karte · ⚠️ Hinweis, wenn die Sensor-Vorlage doppelt eingetragen ist
-> - **1.7.1:** 🧹 Adventskalender pro Kind komplett zurücksetzen, 🔁 Hinweis bei veralteter Sensor-Vorlage und die Installation direkt über den neuen **Marketplace** von Home Assistant (früher HACS) – mit Ein-Klick-Knopf.
-
+> - **1.7.2:** 📱 Freigabe per Knopf in der Benachrichtigung – die Nachricht verschwindet sofort auf allen Handys, auch ohne geöffnete Karte
 ---
 
 ## Inhalt
@@ -84,6 +87,12 @@ Eltern legen Aufgaben und Belohnungen an, geben Erledigtes frei (auch direkt aus
 |:---:|:---:|:---:|:---:|:---:|
 | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/kinder-ansicht.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/eltern-heute.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/belohnungen.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/einstellungen.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/anwesenheit.png" width="200"> |
 
+**📱 Neu in 1.9: kompakte Kinder-Ansicht, Aufgaben-Timer, Rückblick**
+
+| 🏆 Sammlung | ⏱️ Aufgaben-Timer | 📅 Rückblick | 🔊 Leseanfänger | 🎄 Advent liest vor |
+|:---:|:---:|:---:|:---:|:---:|
+| <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/kinder-sammlung.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/aufgaben-timer.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/rueckblick.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/leseanfaenger.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/advent-vorlesen.png" width="200"> |
+
 **🎄 Neu in 1.7: Adventskalender und Darkmode**
 
 | 🎄 Adventskalender | 🎁 Türchen geöffnet | 🚪 Türchen befüllen (Eltern) | 🌙 Darkmode |
@@ -93,6 +102,10 @@ Eltern legen Aufgaben und Belohnungen an, geben Erledigtes frei (auch direkt aus
 ## Funktionen im Überblick
 
 ### Für Kinder
+- **📱 Kompakte Ansicht** (Standard ab 1.9): oben Kopf mit Level-Ring und großer Sterne-Zahl, Ziel-Balken und runde **Sammel-Knöpfe** (🎄 🦷 🏅 👨‍👩‍👧 📅), darunter nur, was **jetzt dran** ist – Erledigtes in einer Zeile, Späteres eingeklappt. Unten eine Leiste **🏠 Heute · 🎁 Belohnungen · 🏆 Sammlung**. Wer die lange Seite lieber mag: ⚙️ Einstellungen → 🎨 Darstellung → 🧒 Kinder-Ansicht → Klassisch
+- **⏱️ Aufgaben-Timer** (optional, pro Aufgabe): z. B. „15 Min. lesen“ – großer Countdown-Ring mit ruhiger Musik, Pause und Abbrechen (bucht nichts). Am Ende **automatisch abhaken**, **vom Kind bestätigen** lassen oder **nur Countdown**. Freigabe und Foto-Nachweis gelten wie immer
+- **🔊 Leseanfänger-Modus** (optional, pro Kind): große Bilder, Sterne als Symbole und ein 🔊-Knopf auf jeder Aufgabe – vorgelesen wird über das Gerät oder auf Wunsch über die Lautsprecher aus 🔊 Sprachausgabe. Im 🎄 Adventskalender werden Türchen und Sperr-Hinweise vorgelesen (einzeln abschaltbar)
+- **📅 Rückblick:** „Dein Oktober“ den ganzen Monat in der 🏆 Sammlung bzw. in der klassischen Ansicht als 📅-Knopf unter den Abzeichen (vom 1. bis 14. als „neu“ markiert) – Sterne mit Vergleich zum Vormonat, längste Serie, Zähneputzen, Lieblingsaufgabe, eingelöste Belohnungen; im Januar zusätzlich „Dein Jahr“. Eltern finden alles unter 📊 Berichte → 📅 Rückblick
 - Große Aufgaben-Kacheln mit Emoji, Punkten und Zeitfenster („bis 09:00“)
 - Sterne-Konto, **10 Level** (vom 🌱 Anfänger bis zum 💎 Haushalts-König) und **9 Abzeichen** – ein Tipp aufs Abzeichen zeigt, wofür es steht; alle Stufen und Abzeichen erklärt das 📖 Handbuch
 - **Sparziel** 🎯: eine Belohnung auswählen und den Fortschritt dorthin sehen
@@ -208,6 +221,7 @@ Unter **⚙️ Einstellungen → ⚙️ Allgemein → 🎄 Adventskalender** ein
 
 - **🚪 Türchen** vom 1. bis 24. (oder 31.) Dezember für jedes Kind, in gemischter Reihenfolge: Text, Emoji, Bild, 💌 Nachricht, ⭐ Sterne und 🎁 eine **geschenkte Belohnung** (kostet keine Sterne, mit 🎟️ Gutscheinen kommt sie als Gutschein beim Kind an)
 - **✨ Automatisch füllen** aus Vorlagen (Backen, Basteln, Gutscheine, Rätsel …) und besonderen Tagen – Nikolaus, die vier Adventssonntage (jedes Jahr neu berechnet), Heiligabend
+- **🔊 Vorlesen für Leseanfänger** (neu in 1.9): Bei Kindern mit 🔊 Leseanfänger-Modus liest der Kalender beim Öffnen Türchen-Text, Nachricht, Sterne und Geschenk vor – auch Sperr-Hinweise wie „Noch 3 Tage …“. Beides einzeln abschaltbar, ein 🔊-Knopf im Türchen liest nochmal vor.
 - **🔗 Bedingung:** ein Türchen geht erst auf, wenn heute eine bestimmte Aufgabe oder X Aufgaben erledigt sind
 - **🎄 Nur im Adventskalender:** Haken bei einer Belohnung – die Kinder sehen sie sonst nirgends, nur ein Türchen verschenkt sie
 - **Aussehen:** Sternennacht mit Girlanden und Schneelandschaft, bunt gemusterte Türchen, ❄️ Schneefall, 🔔 Glocken oder eigener Ton, ⏳ Countdown, Fortschrittsbalken, 🎚️ Türchengröße per Schieberegler – für alle, nur für dieses Gerät (📱) oder nur für eine Karte (`advent_size`), passt sich auf dem Handy automatisch an
@@ -229,9 +243,11 @@ Unter **⚙️ Einstellungen → ⚙️ Allgemein → 🦷 Zahnputz-Timer** eins
 - **🎵 Musik:** eine eigens komponierte, ruhige 2-Minuten-Musik, eigene MP3s oder Zufall; ⏱️ Putzdauer pro Kind 1, 2 oder 3 Minuten. Dazu auf Wunsch ein **🔊 Putzgeräusch** (Schrubben oder elektrische Zahnbürste).
 - **🤖 Eigene Bilder mit KI:** Im Tab 🦷 Zähne steht ein fertiger Prompt – Motiv eintragen (oder 🎲), kopieren, in ChatGPT, Gemini oder Microsoft Designer einfügen. Im selben Chat lässt sich das Bild weiter anpassen, z. B. „mach den Drachen grün“.
 - **✨ Bewegte Effekte** und optional **🌫️ Bild erst am Ende scharf** – für Kinder, die sonst nur aufs Bild schauen statt zu putzen.
+- **↩️ Einzeln zurücknehmen:** Hat das Kind den Timer nur ablaufen lassen, setzen Eltern die Aufgabe unter „Heute“ auf „nicht erledigt“ – Sterne, Bild, Zähler, Serien-Tag und Serien-Bonus dieses Putzens gehen mit zurück.
+- **📋 Als Schritt einer Routine:** Eine verknüpfte Zahnputz-Aufgabe oder ein Schritt mit 🦷 (z. B. aus den Routine-Vorlagen) startet in einer Routine den Timer („🦷 Los geht's!“) – das Putzen zählt für Bilder und Serie, die Sterne gibt es am Ende der Routine.
 - **🦷 Oral-B:** Mit der Home-Assistant-Integration „Oral-B“ (Bluetooth) startet der Timer von selbst, sobald die Zahnbürste läuft, hält an, wenn sie aus ist, und warnt bei zu viel Druck.
 
-<p align="center"><img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-kachel.png" width="200" alt="Kachel mit Knopf"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-timer.png" width="200" alt="Zahnputz-Timer"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-fertig.png" width="200" alt="Bild freigeputzt"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-eltern.png" width="200" alt="Tab Zähne"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-kachel.png" width="200" alt="Kachel mit Knopf"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-timer.png" width="200" alt="Zahnputz-Timer"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-fertig.png" width="200" alt="Bild freigeputzt"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-eltern.png" width="200" alt="Tab Zähne"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-routine.png" width="200" alt="Zahnputz-Timer als Routine-Schritt"></p>
 
 Der Timer steckt in einer eigenen Datei (`yippee-kids-chores-teeth.js`, die Musik in `yippee-kids-chores-teeth-music.js`), die nur geladen wird, wenn er gebraucht wird. Eigene Bilder und MP3s landen unter Medien → yippee-zaehne (hochladen nur als Administrator).
 
@@ -314,7 +330,7 @@ Der Marketplace legt die Ressource automatisch an. Für eigene Repositories muss
 
 ### Von Hand
 
-1. Alle Dateien aus dem Ordner [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist) herunterladen: die Karte `yippee-kids-chores-card.js`, das 📖 Handbuch `yippee-kids-chores-manual.js`, den 🎄 Adventskalender `yippee-kids-chores-advent.js`, den 🦷 Zahnputz-Timer `yippee-kids-chores-teeth.js` mit Musik `yippee-kids-chores-teeth-music.js` und die Sprachdateien `yippee-kids-chores-lang-xx.js` (Deutsch steckt in der Karte selbst).
+1. Alle Dateien aus dem Ordner [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist) herunterladen: die Karte `yippee-kids-chores-card.js`, den 👨‍👩‍👧 Eltern-Bereich `yippee-kids-chores-admin.js`, das 📖 Handbuch `yippee-kids-chores-manual.js`, den 🎄 Adventskalender `yippee-kids-chores-advent.js`, den 🦷 Zahnputz-Timer `yippee-kids-chores-teeth.js` mit Musik `yippee-kids-chores-teeth-music.js` und die Sprachdateien `yippee-kids-chores-lang-xx.js` (Deutsch steckt in der Karte selbst).
 2. In Home Assistant den Ordner **`/config/www/community/yippee-kids-chores-card/`** anlegen und alle Dateien dort hineinkopieren (z. B. mit dem Add-on *File editor* oder *Samba share*).
    Das ist derselbe Ordner, den auch der Marketplace (früher HACS) verwendet – ein späterer Wechsel klappt dadurch ohne Umbau.
 3. **Einstellungen → Dashboards → ⋮ (oben rechts) → Ressourcen → Ressource hinzufügen**
@@ -663,6 +679,8 @@ Yippee! steht auf den Schultern großartiger Open-Source-Projekte und lebt von d
 ## Unterstützen ☕
 
 Yippee! ist und bleibt kostenlos und Open Source. Wenn es euren Familienalltag ein bisschen leichter macht, freue ich mich über einen Kaffee: **[buymeacoffee.com/Chrism1412](https://buymeacoffee.com/Chrism1412)** – ganz freiwillig. Genauso hilft ein ⭐ auf GitHub oder eine Idee bzw. Fehlermeldung als [Issue](https://github.com/Chrism1412/yippee-kids-chores-card/issues).
+
+<p align="center"><a href="https://buymeacoffee.com/Chrism1412"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy me a coffee" height="50"></a></p>
 
 ## Lizenz
 

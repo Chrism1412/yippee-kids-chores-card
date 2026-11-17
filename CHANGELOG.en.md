@@ -7,7 +7,38 @@ Version numbers: `MAJOR.MINOR.PATCH` – bug fixes raise PATCH, new features MIN
 
 Labels in quotes are shown as they appear in the English interface. Sensor attribute names (e.g. `heute_netto`, `fehlen`) are German in every language, so automations keep working when the language changes.
 
-## [1.8.0] – 2026-11-11
+## [1.9.0] – 2026-11-17
+
+### 📱 The highlight: a tidy kids view
+Every new feature added another bar to the kids view – now there is a clean **compact view** (switch under ⚙️ Settings → 🎨 Appearance → 🧒 Kids view). New installations start compact; if you already have kids set up, you keep the familiar classic view for now.
+- **Header in three lines:** avatar with a level ring, “Hi Mia!”, level and a big star count; below it the goal as a slim bar.
+- **Collection buttons:** 🎄 advent calendar (December only, with the door number), 🦷 brushing pictures (with streak), 🏅 badges, 👨‍👩‍👧 family goal (in %) and 📅 recap – whatever isn't active right now disappears.
+- **“Up now”:** only the tasks whose time window is open right now are shown big. Done tasks shrink to one line “✅ Already done: 🛏️ 📚 🗑️”, later time blocks, “No time” and missed tasks are collapsed below.
+- **Bar at the bottom: 🏠 Today · 🎁 Rewards · 🏆 Collection.** Rewards, wishes and jokers on their own page (with a red number when something can be redeemed); the collection holds the advent calendar, brushing pictures, badges, family goal, recap and vouchers.
+
+### New
+- **⏱️ Task timer** (per task, in the task editor): e.g. “Read for 15 min” or “Tidy your room in 10 min” – a big countdown ring with calm music – or your own tooth-brushing MP3s (🦷 Teeth), or no music at all, ⏸️ pause, cancel with a second tap (books nothing). What happens at the end is set per task: **✅ tick off automatically**, **👆 child confirms** or **⏱️ countdown only** (tick off as usual). Parent approval and photo proof work as always; the screen stays on while the timer runs.
+- **🔊 Early reader mode** (per kid, in the kid editor): big pictures, stars as symbols instead of text and a 🔊 button on every task that reads it out (“Brush teeth – you get one star for it!”). Read out by the device or by the speakers from 🔊 Voice output.
+- **🎄 Advent calendar reads aloud** (for kids with 🔊 early reader mode): when a door opens, its text, message, stars and gift are read out, and so are lock messages like “3 more days …” – each can be turned off in the calendar settings. A 🔊 button in the door reads it again.
+- **🦷 Tooth-brushing timer as a routine step** ([#17](https://github.com/Chrism1412/yippee-kids-chores-card/issues/17)): if a task linked to the tooth-brushing timer is used as a step in a routine, the step now shows the “🦷 Let's go!” button. This also works with plain text steps: steps starting with 🦷 (e.g. from the routine templates) get the timer automatically, for others switch it on or off with 🦷 in the step editor. After the timer the step is ticked, and the brushing counts for pictures, counter and streak. The stars are still awarded at the end of the routine.
+- **📅 Recap:** “Your October” all month in the 🏆 Collection, or in the classic view as a 📅 button below the badges, marked as “new” from the 1st to the 14th – stars compared to the month before, tasks, longest streak, teeth brushing, favourite task and redeemed rewards; in January also “Your year” with the strongest month and level. For parents under 📊 Reports → 📅 Recap.
+- **⚡ Faster start:** settings, task, kid and reward management, reports and the setup wizard now live in a separate file (`yippee-kids-chores-admin.js`) that only loads when the parents view is opened. The card itself is about 30 % smaller – kids' tablets start noticeably faster. If the file is missing, the kids view still works and the parents view says exactly what is missing.
+- **Build stamp:** extra files (languages, manual, parents area, advent calendar, toothbrush timer) are reliably reloaded after every update – even if the browser still has the old file cached.
+- Two new manual topics (🧒 Kids view, ⏱️ Timer) in all 27 languages.
+
+### Improved
+- 🦷 The tooth icon in the tab has a subtle shadow and is easier to see on light backgrounds.
+- README: all screenshots retaken and the same height, so the tables line up neatly on GitHub.
+
+### Fixed
+- 🦷 “My tooth-brushing pictures”: your own photos now show up in the gallery as a small picture instead of just 📷 – and every picture can be tapped to view it large (with ‹ › to browse). This also works in the parents’ picture overview in the 🦷 Teeth tab.
+- 🔊 Reading aloud on “📱 this device”: if a voice is set under 🔊 Voice output (e.g. Home Assistant Cloud), Home Assistant creates the audio and the phone plays it itself – so reading aloud now also works in the Companion app, which has no browser voice of its own.
+- ⏱️ Task timer and 🦷 tooth-brushing timer in the Home Assistant app (Companion app) on Android phones: the buttons at the bottom are no longer hidden behind the phone’s navigation buttons; on phones the task timer now fills the whole screen.
+- 🦷 **Take back a single brushing:** when parents set a task brushed with the timer to “not done” (or reject it), the picture from that brushing, the “× brushed” counter, the streak day and a streak bonus booked that day are now taken back along with the stars. If the kid brushes after all, everything is booked again. The ↺ in the 🦷 tab still resets everything.
+- White emojis (e.g. 🦷 on Windows) were barely visible on light tiles – big emojis on tiles, rewards and in the recap now have a fine outline.
+- 📋 Routines: in a freshly opened routine the first step was already ticked (“1/…” instead of “0/…”). Every routine now starts with zero steps done.
+
+## [1.8.0] – 2026-11-13
 
 ### 🦷 The highlight: the toothbrush timer
 Optional under ⚙️ Settings → ⚙️ General → 🦷 Toothbrush timer. When switched on, brushing tasks get a **🦷 Let's go!** button in the kids view, and the parents view gets the new **🦷 Teeth** tab. There you pick which tasks belong to it from a list: linked tasks at the top, all others collapsible, grouped by child or “Together”.

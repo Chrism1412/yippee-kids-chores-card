@@ -20,14 +20,17 @@
 
 <p align="center"><a href="https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/README.md">🇩🇪 Deutsche Version</a></p>
 
-> ### 🦷 New in version 1.8: the toothbrush timer
-> Brushing teeth with music: for 2 minutes the foam disappears area by area and a picture appears underneath – 14 hand-drawn templates or your own pictures – optionally created yourself with the built-in AI prompt. With the timer stars are given right away, optionally more in the morning than in the evening. With an Oral-B toothbrush the timer even starts by itself. Switch it on under **⚙️ Settings → ⚙️ General → 🦷 Toothbrush timer** – more in [Toothbrush timer 🦷](#toothbrush-timer--optional).
+> ### 📱 New in version 1.9: a tidy kids view, task timer and recap
+> - **📱 Compact kids view:** header and collection buttons at the top, below only what is **up now** – at the bottom a bar 🏠 Today · 🎁 Rewards · 🏆 Collection. Default for new installations, otherwise switch under **⚙️ Settings → 🎨 Appearance**.
+> - **⏱️ Task timer:** e.g. “Read for 15 min” – countdown with a ring and calm music; at the end tick off automatically, let the child confirm, or countdown only.
+> - **🔊 Early reader mode:** big pictures, a 🔊 button reads every task out loud – for kids who can't read yet. The 🎄 Advent calendar reads aloud too.
+> - **📅 Recap:** from the 1st of every month “Your October”, in January “Your year” – with stars, streaks and favourite task.
+> - **⚡ Faster start:** the parents area is a separate file and only loads when it's needed – kids' tablets start noticeably faster.
 >
 > **Also new:**
+> - **1.8:** 🦷 the [toothbrush timer](#toothbrush-timer--optional) – brush a picture free with music, stars right away, Oral-B support and an AI prompt for your own pictures
 > - **1.7:** 🎄 the [advent calendar](#advent-calendar--optional) – 24 doors for every kid with text, a picture, stars or a reward as a present
-> - **1.7.2:** 📱 approving via the button in the notification removes the message from all phones right away, even without an open card · ⚠️ a hint when the sensor template is entered twice
-> - **1.7.1:** 🧹 reset the advent calendar per kid, 🔁 a hint when the sensor template is out of date, and installing straight from Home Assistant's new **Marketplace** (formerly HACS) – with a one-tap button.
-
+> - **1.7.2:** 📱 approving via the button in the notification removes the message from all phones right away, even without an open card
 ---
 
 ## What is Yippee!?
@@ -53,6 +56,12 @@ Parents create chores and rewards, approve finished chores (also right from the 
 |:---:|:---:|:---:|:---:|:---:|
 | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/kinder-ansicht.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/eltern-heute.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/belohnungen.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/einstellungen.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/anwesenheit.png" width="200"> |
 
+**📱 New in 1.9: compact kids view, task timer, recap**
+
+| 🏆 Collection | ⏱️ Task timer | 📅 Recap | 🔊 Early reader | 🎄 Advent reads aloud |
+|:---:|:---:|:---:|:---:|:---:|
+| <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/kinder-sammlung.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/aufgaben-timer.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/rueckblick.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/leseanfaenger.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/advent-vorlesen.png" width="200"> |
+
 **🎄 New in 1.7: advent calendar and dark mode**
 
 | 🎄 Advent calendar | 🎁 Door opened | 🚪 Filling doors (parents) | 🌙 Dark mode |
@@ -64,6 +73,10 @@ Parents create chores and rewards, approve finished chores (also right from the 
 ## Features
 
 ### For kids
+- **📱 Compact view** (default from 1.9): header with level ring and a big star count, goal bar and round **collection buttons** (🎄 🦷 🏅 👨‍👩‍👧 📅), below only what is **up now** – done tasks in one line, later ones collapsed. At the bottom a bar **🏠 Today · 🎁 Rewards · 🏆 Collection**. Prefer the long page? ⚙️ Settings → 🎨 Appearance → 🧒 Kids view → Classic
+- **⏱️ Task timer** (optional, per task): e.g. “Read for 15 min” – a big countdown ring with calm music, pause and cancel (books nothing). At the end **tick off automatically**, **let the child confirm** or **countdown only**. Approval and photo proof work as always
+- **🔊 Early reader mode** (optional, per kid): big pictures, stars as symbols and a 🔊 button on every task – read out by the device or, if you like, by the speakers from 🔊 Voice output. In the 🎄 Advent calendar, doors and lock messages are read aloud (each can be turned off)
+- **📅 Recap:** “Your October” all month in the 🏆 Collection, or in the classic view as a 📅 button below the badges (marked as “new” from the 1st to the 14th) – stars compared to the month before, longest streak, teeth brushing, favourite task, redeemed rewards; in January also “Your year”. Parents find it all under 📊 Reports → 📅 Recap
 - Big chore tiles with emoji, points and time window
 - Star balance, **10 levels** (from 🌱 Beginner to 💎 Chore King) and **9 badges** – tap a badge to see what it stands for; the 📖 manual explains all levels and badges
 - **Savings goal** 🎯, **wishes** 💡, a shared **family goal** 👨‍👩‍👧
@@ -112,6 +125,7 @@ Turn on under **⚙️ Settings → ⚙️ General → 🎄 Advent calendar** �
 
 - **🚪 Doors** from December 1 to 24 (or 31) for every kid, in mixed order: text, emoji, picture, 💌 message, ⭐ stars and a 🎁 **reward as a present** (costs no stars; with 🎟️ vouchers it arrives as a voucher)
 - **✨ Fill automatically** from templates (baking, crafts, vouchers, riddles …) and special days – St Nicholas, the four Advent Sundays (recalculated every year), Christmas Eve
+- **🔊 Reading aloud for early readers** (new in 1.9): for kids with 🔊 early reader mode, the calendar reads out the door text, message, stars and gift when it opens – and lock messages like “3 more days …”. Each can be turned off, and a 🔊 button in the door reads it again.
 - **🔗 Condition:** a door only opens once a specific task or X tasks are done today
 - **🎄 Advent calendar only:** tick it on a reward – kids don’t see it anywhere else, only a door can give it
 - **Look:** starry night with garlands and a snowy landscape, colourfully patterned doors, ❄️ snowfall, 🔔 bells or your own sound, ⏳ countdown, progress bar, 🎚️ door size slider – for everyone, for this device only (📱) or for one card only (`advent_size`), adapts automatically on phones
@@ -133,9 +147,11 @@ Switch it on under **⚙️ Settings → ⚙️ General → 🦷 Toothbrush time
 - **🎵 Music:** a specially composed, calm 2-minute tune, your own MP3s or random; ⏱️ brushing time per child 1, 2 or 3 minutes. Optionally with a **🔊 brushing sound** (scrubbing or electric toothbrush).
 - **🤖 Your own pictures with AI:** the 🦷 Teeth tab contains a ready-made prompt – enter a subject (or 🎲), copy it, paste it into ChatGPT, Gemini or Microsoft Designer. In the same chat you can keep adjusting the picture, e.g. “make the dragon green”.
 - **✨ Moving effects** and optional **🌫️ picture sharp only at the end** – for kids who otherwise just look at the picture instead of brushing.
+- **↩️ Take back a single brushing:** if the kid just let the timer run, parents set the task to “not done” under “Today” – the stars, picture, counter, streak day and streak bonus of that brushing are taken back too.
+- **📋 As a routine step:** a linked tooth-brushing task or a step with 🦷 (e.g. from the routine templates) starts the timer inside a routine (“🦷 Let's go!”) – the brushing counts for pictures and streak, the stars come at the end of the routine.
 - **🦷 Oral-B:** with Home Assistant's “Oral-B” integration (Bluetooth) the timer starts by itself as soon as the toothbrush runs, pauses when it's off and warns about too much pressure.
 
-<p align="center"><img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-kachel.png" width="200" alt="Tile with button"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-timer.png" width="200" alt="Toothbrush timer"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-fertig.png" width="200" alt="Picture revealed"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-eltern.png" width="200" alt="Teeth tab"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-kachel.png" width="200" alt="Tile with button"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-timer.png" width="200" alt="Toothbrush timer"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-fertig.png" width="200" alt="Picture revealed"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-eltern.png" width="200" alt="Teeth tab"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-routine.png" width="200" alt="Tooth-brushing timer as a routine step"></p>
 
 The timer lives in its own file (`yippee-kids-chores-teeth.js`, the music in `yippee-kids-chores-teeth-music.js`), loaded only when needed. Own pictures and MP3s are stored under Media → yippee-zaehne (upload by administrators only). The screenshots show the German interface.
 
@@ -211,7 +227,7 @@ The Marketplace adds the resource automatically. Custom repositories need a conn
 
 ### Manual
 
-1. Download all files from the [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist) folder: the card `yippee-kids-chores-card.js`, the 📖 manual `yippee-kids-chores-manual.js`, the 🎄 advent calendar `yippee-kids-chores-advent.js`, the 🦷 toothbrush timer `yippee-kids-chores-teeth.js` with its music `yippee-kids-chores-teeth-music.js` and the language files `yippee-kids-chores-lang-xx.js`.
+1. Download all files from the [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist) folder: the card `yippee-kids-chores-card.js`, the 👨‍👩‍👧 parents area `yippee-kids-chores-admin.js`, the 📖 manual `yippee-kids-chores-manual.js`, the 🎄 advent calendar `yippee-kids-chores-advent.js`, the 🦷 toothbrush timer `yippee-kids-chores-teeth.js` with its music `yippee-kids-chores-teeth-music.js` and the language files `yippee-kids-chores-lang-xx.js`.
 2. Create the folder **`/config/www/community/yippee-kids-chores-card/`** and copy all files into it. This is the same folder the Marketplace (formerly HACS) uses, so you can switch later without changes.
 3. **Settings → Dashboards → ⋮ → Resources → Add resource**
    - URL: `/local/community/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.7.2`
@@ -362,6 +378,8 @@ Yippee! stands on the shoulders of great open-source projects and lives from its
 ## Support ☕
 
 Yippee! is and will stay free and open source. If it makes your family life a bit easier, I’d be happy about a coffee: **[buymeacoffee.com/Chrism1412](https://buymeacoffee.com/Chrism1412)** – completely optional. A ⭐ on GitHub or an idea or bug report as an [issue](https://github.com/Chrism1412/yippee-kids-chores-card/issues) helps just as much.
+
+<p align="center"><a href="https://buymeacoffee.com/Chrism1412"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy me a coffee" height="50"></a></p>
 
 ## License
 
