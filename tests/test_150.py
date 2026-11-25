@@ -23,7 +23,7 @@ with sync_playwright() as p:
     r=search('ÄNDERUNGSPROTOKOLL'); ok('case/umlaut', any('Änderungsprotokoll' in x[0] for x in r), r[:3])
     r=search('telegram befehle'); ok('multi-word', r and 'Telegram' in r[0][0], r[:3])
     r=search('xyzquatsch'); ok('no hit message', r==[] and not ev("A.shadowRoot.querySelector('#modal .hbnone').hidden"))
-    r=search(''); ok('reset shows all, closed', len(r)==n and not any(x[1] for x in r))
+    r=search(''); ok('reset shows chapters, topics folded', r==[] and ev("[...A.shadowRoot.querySelectorAll('#modal .hbch')].filter(x=>!x.hidden).length")==9 and not ev("[...A.shadowRoot.querySelectorAll('#modal .hbi')].some(x=>x.open)"))
     ev("A.shadowRoot.querySelectorAll('#modal .hbchip')[0].click()"); pg.wait_for_timeout(100)
     ok('chip fills search', ev("A.shadowRoot.querySelector('#modal .hbq').value")=='NFC')
     ev("A.shadowRoot.querySelectorAll('#modal .hbchip')[0].click()"); pg.wait_for_timeout(100)

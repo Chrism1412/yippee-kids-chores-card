@@ -25,7 +25,7 @@ with sync_playwright() as p:
     ok('ben blocked', 'Nur für' in html() and 'data-a="tab"' not in html())
     ev("A._click({target:{closest:()=>({dataset:{a:'pts',k:'L',n:'5'}})}})"); t()
     ok('guard pts', ev("A._db.kid.L.points")==10)
-    # Knopf von Ben (Handy-App) ignoriert
+    # Knopf von Ben (Home-Assistant-App) ignoriert
     ev("A._save('task','Z',{...A._db.task.Z}); A._setSt('2026-10-05','Z','L','p')"); t(500)
     ev("A._save('act','a1',{a:'KP|ok|2026-10-05|Z|L',u:'uBen'})"); t(4000)
     ok('ben button ignored', ev("A._st('2026-10-05','Z','L')")=='p')

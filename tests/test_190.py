@@ -49,7 +49,21 @@ with sync_playwright() as p:
     pg.evaluate("A.shadowRoot.querySelector('.tab[data-id=einst]').click()"); pg.wait_for_timeout(500)
     ok('settings render from module', 'Sprache' in pg.evaluate("A.shadowRoot.getElementById('app').textContent"))
     ok('no page errors (lazy)', not errs, errs)
+    # 2.0.0: Zusatzfunktionen (yippee-kids-chores-extras.js) kommen im Hintergrund nach, Eltern-Aussehen mit der Eltern-Datei
+    ok('extras loaded in background', wait(pg, "typeof A._tmrDraw === 'function'", 8))
+    ok('admin css arrived', len(pg.evaluate("A.shadowRoot.getElementById('acss').textContent"))>5000)
+    pg.close()
+    # 3) Zusatz-Datei fehlt: Karte läuft, Timer-Knopf meldet einen klaren Hinweis
+    pg=b.new_page(viewport={'width':900,'height':1400}); errs=[]
+    pg.on('pageerror', lambda e: errs.append(str(e)))
+    pg.route('**/yippee-kids-chores-extras.js*', lambda r: r.fulfill(status=404, body='nope'))
+    pg.goto('http://localhost:8765/kp_lazy.html'); pg.wait_for_timeout(800)
+    pg.evaluate(SEED); pg.wait_for_timeout(1500)
+    ok('kids view works without extras', 'Bett machen' in pg.evaluate("B.shadowRoot.innerHTML"))
+    pg.evaluate("B._exErr=false; B._tmrStart('T1','K')"); pg.wait_for_timeout(800)
+    ok('extras hint shown', 'extras.js' in pg.evaluate("B.shadowRoot.getElementById('fx').textContent"))
+    ok('no page errors (missing extras)', not errs, errs)
     # Größe: Karte deutlich kleiner als vorher
     sz=os.path.getsize(os.path.join(os.path.dirname(HERE),'dist','yippee-kids-chores-card.js'))
-    ok('card file smaller than 600 KB', sz<600000, sz)
+    ok('card file smaller than 400 KB', sz<400000, sz)
     b.close()

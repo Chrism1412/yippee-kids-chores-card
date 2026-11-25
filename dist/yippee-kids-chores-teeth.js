@@ -385,7 +385,7 @@ export default function install(Y) {
     if (u && u.p) return u.p;
     const p = hass.callWS({ type: 'media_source/resolve_media', media_content_id: ref, expires: 7 * 86400 })
       .then((r) => { const url = (r && r.url) || ''; URLS[ref] = { url, t: Date.now() }; return url; })
-      .catch(() => { URLS[ref] = { url: '', t: Date.now() }; return ''; });
+      .catch((e) => { URLS[ref] = { url: '', t: Date.now() }; console.warn('Yippee! Zahnputz-Bild nicht ladbar:', ref, (e && (e.message || e.code)) || e); return ''; });
     URLS[ref] = { ...(u || {}), p };
     return p;
   };
@@ -397,9 +397,11 @@ export default function install(Y) {
   const pool = (H, kidId) => {
     const c = H._zc(), hide = new Set(c.hide || []);
     const own = (c.own || []).filter((o) => !(o.k && o.k.length) || o.k.includes(kidId)).map((o) => o.i);
+    // eingebaute Bilder: je Bild auswählbare Kinder (nichts gewählt = alle)
+    const tk = c.tk || {}, tplOk = (x) => !(tk[x] && tk[x].length) || tk[x].includes(kidId);
     const all = [...TPL_IDS, ...((c.own || []).map((o) => o.i))];
     const base = c.mode === 'ord' && Array.isArray(c.ord) && c.ord.length ? [...c.ord.filter((x) => all.includes(x)), ...all.filter((x) => !c.ord.includes(x))] : all;
-    return base.filter((x) => !hide.has(x) && (TPL_IDS.includes(x) || own.includes(x)));
+    return base.filter((x) => !hide.has(x) && (TPL_IDS.includes(x) ? tplOk(x) : own.includes(x)));
   };
   const shuffle = (a) => { const r = [...a]; for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; } return r; };
 
@@ -481,7 +483,8 @@ button{font:inherit;cursor:pointer;border:0}
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
-      // Android-App: Navigationstasten liegen über der Seite → unten Sicherheitsabstand
+      if (window.__yippeeEmoWatch) window.__yippeeEmoWatch(this.shadowRoot); // fehlende Emojis in der Anzeige ersetzen
+      // Home-Assistant-App auf Android: Navigationstasten liegen über der Seite → unten Sicherheitsabstand
       const app = /Android/i.test(navigator.userAgent || '') && /Home ?Assistant\//i.test(navigator.userAgent || '');
       this.shadowRoot.innerHTML = `<style>${RUN_CSS}</style><div class="wrap${app ? ' app' : ''}" id="w"></div>`;
       this.shadowRoot.addEventListener('click', (e) => this._click(e));
@@ -1014,6 +1017,9 @@ td{padding:6px 2px;border-top:1px solid var(--divider-color,rgba(127,127,127,.15
 .tn{font-size:10.5px;font-weight:700;text-align:center;line-height:1.15;min-height:24px;word-break:break-word}
 .no{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:7px;font-size:10px;font-weight:800;padding:1px 5px}
 .tb{display:flex;gap:3px;justify-content:center;flex-wrap:wrap}
+.tk{display:flex;gap:2px;justify-content:center;flex-wrap:wrap}
+.tk button{border:0;background:rgba(127,127,127,.12);border-radius:7px;font-size:12px;padding:2px 3px;min-width:24px;opacity:.55;cursor:pointer;color:inherit}.tk button small{font-size:9px;font-weight:800;margin-left:1px}
+.tk button.on{opacity:1;background:var(--yippee-accent,#5b6cff);color:#fff}
 .tb button{border:0;background:rgba(127,127,127,.16);border-radius:7px;font-size:12px;padding:3px 6px;min-width:26px}
 .btn{border:0;border-radius:12px;padding:9px 12px;font-weight:800;font-size:13.5px;background:rgba(127,127,127,.14)}
 .btn.pri{background:var(--yippee-accent,#5b6cff);color:#fff}
@@ -1062,6 +1068,7 @@ Age-appropriate, no violence, nothing scary.`,
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
+      if (window.__yippeeEmoWatch) window.__yippeeEmoWatch(this.shadowRoot); // fehlende Emojis in der Anzeige ersetzen
       // In der Home-Assistant-App (Android) öffnet „image/*“ + „multiple“ den neuen Foto-Auswähler; dessen Ergebnis kommt in der App-WebView nicht an
       // (Auswahl öffnet sich, aber es wird keine Datei übergeben). In der App deshalb nur ein Bild pro Auswahl – im Browser weiterhin mehrere.
       const inApp = /Home ?Assistant\//i.test(navigator.userAgent || '');
@@ -1134,7 +1141,9 @@ Age-appropriate, no violence, nothing scary.`,
       const grid = order.map((id, n) => {
         const o = own.find((x) => x.i === id), off = hide.has(id);
         const im = o ? (() => { const u = cachedUrl(o.r); if (!u) resolve(this._hass, o.r).then(() => this._later()); return u ? `<img src="${esc(u)}" alt="">` : '📷'; })() : sceneSvg(id);
-        const forSel = o ? `<select data-c="ownk" data-id="${esc(id)}" aria-label="${esc(T('Für welches Kind?'))}"><option value="">${T('alle')}</option>${kids.map((k) => `<option value="${esc(k.id)}" ${(o.k || []).includes(k.id) ? 'selected' : ''}>${esc(k.name)}</option>`).join('')}</select>` : '';
+        // 👧 für welche Kinder? (nichts gewählt = alle)
+        const sel = o ? (o.k || []) : ((c.tk || {})[id] || []);
+        const forSel = kids.length > 1 ? `<div class="tk">${kids.map((k) => `<button type="button" data-a="tkk" data-id="${esc(id)}" data-v="${esc(k.id)}" class="${sel.includes(k.id) ? 'on' : ''}" aria-pressed="${sel.includes(k.id)}" title="${esc(k.name)}">${esc(k.emoji || '🙂')}<small>${esc(String(k.name || '').slice(0, 1))}</small></button>`).join('')}</div>` : '';
         return `<div class="tp ${off ? 'off' : ''}"><span class="no">${n + 1}</span><button type="button" class="im" data-a="pv" data-id="${esc(id)}" title="${esc(T('Groß ansehen'))}">${im}</button><div class="tn">${esc(o ? o.n : tplName(id))}</div>${forSel}
           <div class="tb"><button data-a="hide" data-id="${esc(id)}" title="${esc(off ? T('Wieder zeigen') : T('Ausblenden'))}">${off ? '🙈' : '👁️'}</button>${c.mode === 'ord' ? `<button data-a="mv" data-id="${esc(id)}" data-d="-1" ${n === 0 ? 'disabled' : ''}>◀</button><button data-a="mv" data-id="${esc(id)}" data-d="1" ${n === order.length - 1 ? 'disabled' : ''}>▶</button>` : ''}${o && this._admin() ? `<button data-a="odel" data-id="${esc(id)}" class="${this._sure === `odel${id}` ? 'sure' : ''}">${this._sure === `odel${id}` ? T('Löschen?') : '✕'}</button>` : ''}</div></div>`;
       }).join('');
@@ -1147,20 +1156,20 @@ Age-appropriate, no violence, nothing scary.`,
       const up = this._up ? `<div class="up">${this._up.map((u) => `<div>${u.st === 'ok' ? '✅' : u.st === 'fail' ? '⚠️' : '⏳'} ${esc(u.name)}${u.err ? ` – ${esc(u.err)}` : ''}</div>`).join('')}</div>` : '';
       const adm = this._admin();
 
-      app.innerHTML = `
-        <div class="sec"><h3>${T('🔗 Zahnputz-Aufgaben')}</h3>
+      app.innerHTML = `<div class="hubw" data-hub="z">
+        <div class="sec hubs" data-hid="tasks"><h3>${T('🔗 Zahnputz-Aufgaben')}</h3>
           <div class="hint">${T('Bei diesen Aufgaben erscheint in der Kinder-Ansicht der Knopf „🦷 Los geht\'s!“.')}</div>${tasksHtml}
           ${c.tasks === undefined && linked.length ? `<div class="hint">${T('✨ Automatisch erkannt – antippen zum Ändern.')}</div>` : ''}</div>
-        <div class="sec"><h3>${T('⭐ Sterne & Regeln')}</h3>
+        <div class="sec hubs" data-hid="stars"><h3>${T('⭐ Sterne & Regeln')}</h3>
           ${seg('pm', c.pm === 'kid' ? 'kid' : 'all', [['all', T('Für alle gleich')], ['kid', T('Je Kind & Tageszeit')]])}
           <div style="margin-top:8px">${starHtml}</div>
           ${sw('pNoT', !!c.pNoT, T('Diese Sterne auch ohne Timer'), T('Aus: Wer ohne Timer abhakt, bekommt die Sterne der Aufgabe.'))}
           ${sw('inst', c.inst !== false, T('✅ Mit Timer sofort gutschreiben'), H._approval ? T('ohne Freigabe der Eltern – der Timer ist der Nachweis') : T('Die Freigabe ist gerade ausgeschaltet – es wird ohnehin sofort gebucht.'))}
           ${sw('only', !!c.only, T('🔒 Nur mit Timer abhaken'), T('Antippen der Aufgabe startet dann den Timer.'))}
           <div class="row"><div class="l">${T('🔥 Bonus für 7 Tage am Stück')}<small>${T('jedes Mal mit Timer geputzt · 0 = aus')}</small></div>${num('bonus', '', Math.max(0, Number(c.bonus) || 0))}</div></div>
-        <div class="sec"><h3>${T('⏱️ Putzdauer')}</h3>
+        <div class="sec hubs" data-hid="dur"><h3>${T('⏱️ Putzdauer')}</h3>
           ${kids.length ? kids.map((k) => { const d = DUR.includes(Number((c.dur || {})[k.id])) ? Number(c.dur[k.id]) : 120; return `<div class="kid"><div class="av">${esc(k.emoji || '🙂')}</div><div class="t"><b>${esc(k.name)}</b>${T('4 Bereiche à {n} Sek.', { n: d / 4 })}</div><div style="width:150px">${seg(`dur|${k.id}`, d, DUR.map((v) => [v, `${v / 60}:00`]))}</div></div>`; }).join('') : `<div class="hint">${T('Noch keine Kinder angelegt.')}</div>`}</div>
-        <div class="sec"><h3>${T('🎵 Musik')}</h3>
+        <div class="sec hubs" data-hid="mus"><h3>${T('🎵 Musik')}</h3>
           ${seg('mus', mus, [['std', T('Standard')], ['own', T('Eigene')], ['rnd', T('🎲 Zufall')], ['off', T('Aus')]])}
           ${mus === 'std' ? `<div class="btns"><button class="btn" data-a="play" data-id="">${this._playing === '' ? T('⏹ Stopp') : T('▶️ Anhören')}</button></div>` : ''}
           ${mus === 'own' || mus === 'rnd' ? `${mp3Html || `<div class="hint">${T('Noch keine eigenen Lieder hochgeladen.')}</div>`}${mus === 'rnd' ? `<div class="hint">${T('Zufall: Standard-Musik und alle eigenen Lieder.')}</div>` : ''}` : ''}
@@ -1169,22 +1178,25 @@ Age-appropriate, no violence, nothing scary.`,
           ${sw('chime', c.chime !== false, T('🔔 Ton beim Wechsel des Bereichs'))}
           ${sw('tada', c.tada !== false, T('🎉 „Ta-da“ am Ende'))}
           <div class="hint">${T('Längere Lieder werden am Ende ausgeblendet, kürzere laufen von vorne weiter.')}</div></div>
-        <div class="sec"><h3>${T('✨ Darstellung')}</h3>
+        <div class="sec hubs" data-hid="look"><h3>${T('✨ Darstellung')}</h3>
           ${sw('anim', c.anim !== false, T('✨ Bewegte Effekte'), T('Sterne funkeln, Bläschen steigen, Lichter schweben'))}
           ${sw('blur', !!c.blur, T('🌫️ Bild erst am Ende scharf'), T('Für Kinder, die sonst nur aufs Bild schauen: Es bleibt verschwommen und wird erst gegen Ende klar.'))}</div>
-        <div class="sec"><h3>${T('🦷 Oral-B-Zahnbürste')}</h3>
+        <div class="sec hubs" data-hid="brush"><h3>${T('🦷 Oral-B-Zahnbürste')}</h3>
           ${brushes.length ? `<div class="hint">${T('Mit einer Bluetooth-Zahnbürste von Oral-B startet der Timer von selbst, sobald die Zahnbürste läuft, und warnt bei zu viel Druck.')}</div>
           ${kids.map((k) => `<div class="kid"><div class="av">${esc(k.emoji || '🙂')}</div><div class="t"><b>${esc(k.name)}</b></div><select data-c="brush" data-id="${esc(k.id)}" aria-label="${esc(T('Zahnbürste'))}"><option value="">${T('– keine –')}</option>${brushes.map((b) => `<option value="${esc(b.id)}" ${(c.brush || {})[k.id] === b.id ? 'selected' : ''}>${esc(b.name)}</option>`).join('')}</select></div>`).join('')}
           ${sw('bFollow', c.bFollow !== false, T('⏸️ Timer hält an, wenn die Zahnbürste aus ist'))}` : `<div class="hint">${T('Keine Oral-B-Zahnbürste gefunden. Mit der Integration „Oral-B“ (Bluetooth) in Home Assistant startet der Timer von selbst, sobald die Zahnbürste läuft.')}</div>`}</div>
-        <div class="sec"><h3>${T('🖼️ Bilder')} <span class="hint" style="margin:0">${vis}/${order.length}</span></h3>
+        <div class="sec hubs" data-hid="img"><h3>${T('🖼️ Bilder')} <span class="hint" style="margin:0">${vis}/${order.length}</span></h3>
           ${seg('mode', c.mode === 'ord' ? 'ord' : 'rnd', [['rnd', T('🎲 Zufall')], ['ord', T('🔢 Feste Reihenfolge')]])}
           <div class="hint">${c.mode === 'ord' ? T('Die Bilder kommen nacheinander wie unten sortiert (◀ ▶).') : T('Ein Bild kommt erst wieder, wenn alle anderen dran waren – am selben Tag nie zweimal.')}</div>
+          ${kids.length > 1 ? `<div class="hint">${T('👧 Unter jedem Bild: Für welche Kinder? Nichts gewählt = alle Kinder.')}</div>` : ''}
           <div class="grid">${grid}</div>
           ${adm ? `<div class="btns"><button class="btn pri" data-a="upimg">${T('📷 Eigenes Bild hochladen')}</button></div><div class="hint">${T('Am besten im Hochformat – das Bild wird automatisch verkleinert.')}</div>` : `<div class="hint">${T('🔒 Eigene Bilder hochladen nur als Administrator.')}</div>`}
           ${this._aiHtml(kids)}
           ${up}${vis ? '' : `<div class="hint warn">${T('⚠️ Alle Bilder sind ausgeblendet – es wird ein Standardbild gezeigt.')}</div>`}</div>
-        <div class="sec"><h3>${T('👧 Kinder')}</h3>
-          ${kids.map((k) => { const z = H._db.zk[k.id] || {}, sn = H._zStreak(k.id), pk = pool(H, k.id), seen = (z.seen || []).filter((x) => pk.includes(x)).length; return `<div class="kid"><div class="av">${esc(k.emoji || '🙂')}</div><div class="t"><b>${esc(k.name)}</b>${T(sn === 1 ? '🔥 1 Tag · {seen}/{all} Bilder · {n}× geputzt' : '🔥 {s} Tage · {seen}/{all} Bilder · {n}× geputzt', { s: sn, seen, all: pk.length, n: Number(z.n) || 0 })}</div><button class="btn ${this._sure === `rst${k.id}` ? 'sure' : ''}" data-a="rst" data-id="${esc(k.id)}" title="${esc(T('Zurücksetzen'))}">${this._sure === `rst${k.id}` ? T('Zurücksetzen?') : '↺'}</button></div>`; }).join('')}</div>`;
+        <div class="sec hubs" data-hid="kids"><h3>${T('👧 Kinder')}</h3>
+          ${kids.map((k) => { const z = H._db.zk[k.id] || {}, sn = H._zStreak(k.id), pk = pool(H, k.id), seen = (z.seen || []).filter((x) => pk.includes(x)).length; return `<div class="kid"><div class="av">${esc(k.emoji || '🙂')}</div><div class="t"><b>${esc(k.name)}</b>${T(sn === 1 ? '🔥 1 Tag · {seen}/{all} Bilder · {n}× geputzt' : '🔥 {s} Tage · {seen}/{all} Bilder · {n}× geputzt', { s: sn, seen, all: pk.length, n: Number(z.n) || 0 })}</div><button class="btn ${this._sure === `rst${k.id}` ? 'sure' : ''}" data-a="rst" data-id="${esc(k.id)}" title="${esc(T('Zurücksetzen'))}">${this._sure === `rst${k.id}` ? T('Zurücksetzen?') : '↺'}</button></div>`; }).join('')}</div></div>`;
+      // 🧩 Kacheln wie bei ⚙️ Einstellungen (Karte, extras.js)
+      if (H._hubApply) H._hubApply(this.shadowRoot, 'z'); else if (H._exCall) H._exCall('_hubApply', [this.shadowRoot, 'z'], false);
     }
     // 🤖 Eigene Bilder mit KI erstellen
     _aiHtml(kids) {
@@ -1260,7 +1272,11 @@ Age-appropriate, no violence, nothing scary.`,
       else if (a === 'mode') this._set({ mode: el.dataset.v === 'ord' ? 'ord' : 'rnd' });
       else if (a === 'pv' || a === 'pvn') { this._pvOpen(id); return; }
       else if (a === 'pvx') { this._pvClose(); return; }
-      else if (a === 'hide') { const h = new Set(c.hide || []); if (h.has(id)) h.delete(id); else h.add(id); this._set({ hide: [...h] }); }
+      else if (a === 'tkk') {
+        const kid = el.dataset.v, tog = (l) => (l.includes(kid) ? l.filter((x) => x !== kid) : [...l, kid]);
+        if ((c.own || []).some((o) => o.i === id)) this._set({ own: (c.own || []).map((o) => (o.i === id ? { ...o, k: tog(o.k || []) } : o)) });
+        else { const tk = { ...(c.tk || {}) }, l = tog(tk[id] || []); if (l.length) tk[id] = l; else delete tk[id]; this._set({ tk }); }
+      } else if (a === 'hide') { const h = new Set(c.hide || []); if (h.has(id)) h.delete(id); else h.add(id); this._set({ hide: [...h] }); }
       else if (a === 'mv') {
         const ids = [...TPL_IDS, ...(c.own || []).map((o) => o.i)];
         const o = Array.isArray(c.ord) && c.ord.length ? [...c.ord.filter((x) => ids.includes(x)), ...ids.filter((x) => !c.ord.includes(x))] : ids;

@@ -19,6 +19,31 @@ def build():
     # Eltern-Bereich (eigene Datei) für die Tests direkt mitliefern – das echte Nachladen prüft test_190 mit kp_lazy.html
     adm = open(os.path.join(ROOT, 'dist', 'yippee-kids-chores-admin.js'), encoding='utf-8').read()
     pre = adm.replace('export default function install(', 'window.YippeeKidsChoresAdmin = function install(', 1)
+    # 💰 Taschengeld (eigene Datei) ebenfalls mitliefern
+    mon = open(os.path.join(ROOT, 'dist', 'yippee-kids-chores-money.js'), encoding='utf-8').read()
+    pre += ';\n' + mon.replace('export default function install(', 'window.YippeeKidsChoresMoney = function install(', 1)
+    # 🐾 Haustier (eigene Datei) ebenfalls mitliefern
+    pet = open(os.path.join(ROOT, 'dist', 'yippee-kids-chores-pet.js'), encoding='utf-8').read()
+    pre += ';\n' + pet.replace('export default function install(', 'window.YippeeKidsChoresPet = function install(', 1)
+    gms = open(os.path.join(ROOT, 'dist', 'yippee-kids-chores-games.js'), encoding='utf-8').read()
+    pre += ';\n' + gms.replace('export default function install(', 'window.YippeeKidsChoresGames = function install(', 1)
+    scr = open(os.path.join(ROOT, 'dist', 'yippee-kids-chores-screen.js'), encoding='utf-8').read()
+    pre += ';\n' + scr.replace('export default function install(', 'window.YippeeKidsChoresScreen = function install(', 1)
+    adv = open(os.path.join(ROOT, 'dist', 'yippee-kids-chores-adventure.js'), encoding='utf-8').read()
+    pre += ';\n' + adv.replace('export default function install(', 'window.YippeeKidsChoresAdventure = function install(', 1)
+    # ✏️ Karten-Editor (eigene Datei) ebenfalls mitliefern – die Karte installiert ihn dann sofort
+    edi = open(os.path.join(ROOT, 'dist', 'yippee-kids-chores-editor.js'), encoding='utf-8').read()
+    pre += ';\n' + edi.replace('export default function install(', 'window.YippeeKidsChoresEditor = function install(', 1)
+    # 🧩 Zusatzfunktionen (eigene Datei) ebenfalls mitliefern
+    ext = open(os.path.join(ROOT, 'dist', 'yippee-kids-chores-extras.js'), encoding='utf-8').read()
+    pre += ';\n' + ext.replace('export default function install(', 'window.YippeeKidsChoresExtras = function install(', 1)
+    # 🎡 Spaß & Sammeln (eigene Datei) ebenfalls mitliefern
+    fun = open(os.path.join(ROOT, 'dist', 'yippee-kids-chores-fun.js'), encoding='utf-8').read()
+    pre += ';\n' + fun.replace('export default function install(', 'window.YippeeKidsChoresFun = function install(', 1)
+    # 🏠 Zuhause und 📚 Lesetagebuch (eigene Dateien) ebenfalls mitliefern
+    for fn, glob_name in (('yippee-kids-chores-home.js', 'YippeeKidsChoresHome'), ('yippee-kids-chores-read.js', 'YippeeKidsChoresRead')):
+        src = open(os.path.join(ROOT, 'dist', fn), encoding='utf-8').read()
+        pre += ';\n' + src.replace('export default function install(', f'window.{glob_name} = function install(', 1)
     # Ältere Tests erwarten die klassische Kinder-Ansicht: Standard „kompakt für neue Installationen“ nur, wenn ein Test window.__kvAuto setzt
     card = card.replace('    _kViewInit() {\n', '    _kViewInit() {\n      if (!window.__kvAuto) return;\n', 1)
     assert 'window.__kvAuto' in card
@@ -61,7 +86,7 @@ def main():
     tests = sorted(glob.glob(os.path.join(HERE, 'test_*.py')), key=lambda p: int(''.join(c for c in os.path.basename(p) if c.isdigit()) or 0))
     failed = []
     for t in tests:
-        r = subprocess.run([sys.executable, t], cwd=HERE, capture_output=True, text=True, timeout=600)
+        r = subprocess.run([sys.executable, t], cwd=HERE, capture_output=True, text=True, timeout=1200)
         out = r.stdout + r.stderr
         bad = r.returncode != 0 or 'FAIL' in out or 'Traceback' in out
         oks = out.count('\nOK ') + (1 if out.startswith('OK ') else 0)

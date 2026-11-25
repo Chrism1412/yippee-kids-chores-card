@@ -22,7 +22,7 @@ with sync_playwright() as p:
     # Migration from old bl
     ev("A._save('kid','L',{name:'Ben',emoji:'🐧',points:0}); A._setCfg({bl:'DE-BW'})"); t()
     ok('migration', ev("[A._cfg.hc, A._cfg.hr, A._holKey()]")==['DE','DE-BW','DE|DE-BW'])
-    A.locator('[data-a="tab"][data-id="einst"]').click(); t(); A.locator('.acch[data-id="vac"]').click(); t()
+    A.locator('[data-a="tab"][data-id="einst"]').click(); t(); A.locator('.settile[data-g="0"]').click(); t(); A.locator('.acch[data-id="vac"]').click(); t()
     ok('country names localized', 'Frankreich' in A.locator('[data-cfgs="hc"]').inner_text() and 'Österreich' in A.locator('[data-cfgs="hc"]').inner_text())
     A.locator('[data-cfgs="hc"]').select_option('FR'); t(1500)
     ok('region cleared', ev("A._cfg.hr")=='' and ev("A._cfg.bl")=='')

@@ -99,8 +99,8 @@ export default function install(Y) {
     wood: { n: '🏡 Rustikal', bg: 'linear-gradient(165deg,#3e2a1c 0%,#6b4a31 100%)', door: '#a8743f', text: '#fff5e6', accent: '#e9c46a', fl: '#fff8ee' },
   };
   const COLORS = ['#e03131', '#1c7ed6', '#2f9e44', '#f08c00', '#ae3ec9', '#0c8599', '#d6336c', '#5c940d'];
-  const AVATARS = ['🦊', '🐻', '🐼', '🦁', '🐯', '🐨', '🐸', '🦄', '🐧', '🦖', '🐶', '🐱', '🐰', '🦉', '👧', '👦', '🧒', '🎅', '⛄', '🦌'];
-  const EMOS = ['🎁', '🍪', '🍫', '🎄', '⭐', '❄️', '⛄', '🎅', '🤶', '🦌', '🔔', '🕯️', '🍬', '🍭', '🧸', '🎨', '📚', '🎬', '🍿', '🎲', '🧩', '🎵', '☕', '🍊', '🥜', '🧦', '💌', '🌟', '✨', '🎉', '🛷', '⛸️', '🏰', '🚂', '🐻', '🦊', '🐧', '🍰', '🧁', '🥨', '😂', '❓'];
+  const AVATARS = ['🦊', '🐻', '🐼', '🦁', '🐯', '🐨', '🐸', '🦄', '🐧', '🦖', '🐶', '🐱', '🐰', '🦉', '👧', '👦', '🧒', '🎅', '⛄', '🦌', '🐙', '🐝', '🐮', '🐷', '🐵', '🐔', '🐳', '🐬', '🦈', '🦋', '🐞', '🐢', '🦕', '🦒', '🦓', '🦔', '🦝', '🦙', '🦘', '🐲', '🐺', '🐿️', '🦜', '🦚', '🐴', '🐭', '🐹', '👸', '🤴', '🧚', '🧜', '🦸', '🦹', '🧙', '🤖', '👽', '👻', '🎃', '🌞', '🌈', '⭐', '🚀', '⚽', '🎸', '👩', '👨', '🧑', '👱', '🐒', '🦍', '🐘', '🦏', '🦛', '🐪', '🐫', '🐇', '🐥', '🐣', '🦆', '🦢', '🐊', '🐍', '🦎', '🦑', '🦀', '🐡', '🐠', '🐟', '🐌', '🐛', '🐜', '🦗', '🐉', '🦡', '🐩', '🐈', '🐕', '🐓', '🦃', '🐑', '🐐', '🐄', '👶', '👩\u200d🦰', '👨\u200d🦰', '👩\u200d🦱', '👨\u200d🦱', '👩\u200d🦳', '👨\u200d🦳', '👩\u200d🦲', '👨\u200d🦲', '🧔', '👲', '🧕', '👳', '👮', '👷', '💂', '🕵️', '👩\u200d🚀', '👨\u200d🚀', '👩\u200d🚒', '👨\u200d🚒', '👩\u200d🍳', '👨\u200d🍳', '👩\u200d🎤', '👨\u200d🎤', '👩\u200d🎨', '👨\u200d🎨', '👩\u200d🔬', '👨\u200d🔬', '👩\u200d⚕️', '👨\u200d⚕️', '👩\u200d🏫', '👨\u200d🏫', '🧛', '🧝', '🧞', '🧟', '🤡', '🤠', '😺', '😸', '😎', '🤓', '🥳', '😇', '🌸', '🌻', '🍀', '🌙', '⚡', '🔥', '💎', '🎈', '🎨', '🎮', '🏀', '🏈', '🎾', '🚗', '🚂', '✈️', '🛸', '🏰', '🍕', '🍦', '🍩', '🍓', '🍉', '🍄', '🌵', '❄️', '🎵', '👑'];
+  const EMOS = ['🎁', '🍪', '🍫', '🎄', '⭐', '❄️', '⛄', '🎅', '🤶', '🦌', '🔔', '🕯️', '🍬', '🍭', '🧸', '🎨', '📚', '🎬', '🍿', '🎲', '🧩', '🎵', '☕', '🍊', '🥜', '🧦', '💌', '🌟', '✨', '🎉', '🛷', '⛸️', '🏰', '🚂', '🐻', '🦊', '🐧', '🍰', '🧁', '🥨', '😂', '❓', '☃️', '🌨️', '🎀', '🥛', '🥧', '🍎', '🌰', '🍵', '🧣', '🧤', '💫', '🌙', '🎶', '🎼', '🎺', '📯', '🎻', '👼', '⛪', '🏠', '🎿', '🏂', '✏️', '🖍️', '✂️', '📷', '🎟️', '✉️', '📜', '💝', '❤️', '😊', '🤗', '🎊', '🎆', '🎇', '🥳', '🐰', '🦉', '🐿️', '🌲', '🎈', '🔥', '🍩', '🍯'];
   const SIZES = { s: '58px', m: '74px', l: '96px' };
   const SHAPES = { tile: '6px', sq: '12px', round: '50%', gift: '10px' };
   const FONTS = { fun: '"Fredoka","Baloo 2","Nunito",system-ui,sans-serif', std: 'inherit', serif: 'Georgia,"Times New Roman",serif', hand: '"Comic Sans MS","Comic Neue",cursive', mono: 'ui-monospace,Menlo,Consolas,monospace' };
@@ -183,11 +183,11 @@ export default function install(Y) {
     }
     // 4. Advent = letzter Sonntag vor dem 25.12.
     const d24 = new Date(year, 11, 24), fourth = 24 - (d24.getDay() % 7);
-    const kerze = ['Heute ist der 1. Advent – wir zünden die erste Kerze am Adventskranz an.', 'Heute ist der 2. Advent – wir zünden die zweite Kerze am Adventskranz an.', 'Heute ist der 3. Advent – wir zünden die dritte Kerze am Adventskranz an.', 'Heute ist der 4. Advent – wir zünden die vierte Kerze am Adventskranz an.'];
+    const kerze = ['Heute ist der erste Advent – wir zünden die erste Kerze am Adventskranz an.', 'Heute ist der zweite Advent – wir zünden die zweite Kerze am Adventskranz an.', 'Heute ist der dritte Advent – wir zünden die dritte Kerze am Adventskranz an.', 'Heute ist der vierte Advent – wir zünden die vierte Kerze am Adventskranz an.'];
     for (let i = 0; i < 4; i++) {
       const day = fourth - (3 - i) * 7;
       if (day < 1 || day > N || day === 24) continue;
-      out[day] = day === 6 ? ['🎅', 'Heute ist Nikolaustag und 2. Advent! Wir zünden die zweite Kerze an – und hast du deine Stiefel rausgestellt?'] : ['🕯️', kerze[i]];
+      out[day] = day === 6 ? ['🎅', 'Heute ist Nikolaustag und zweiter Advent! Wir zünden die zweite Kerze an – und hast du deine Stiefel rausgestellt?'] : ['🕯️', kerze[i]];
     }
     return out;
   }
@@ -453,6 +453,7 @@ details.adv[open]{display:flex;flex-direction:column;gap:6px}
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
+      if (window.__yippeeEmoWatch) window.__yippeeEmoWatch(this.shadowRoot); // fehlende Emojis in der Anzeige ersetzen
       this._tmp = {};
       this._urls = {};
       this._lib = null;
@@ -960,7 +961,7 @@ details.adv[open]{display:flex;flex-direction:column;gap:6px}
         } else {
           const t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
           const dd = Math.max(1, Math.round((new Date(this._season(now), 11, n) - t0) / 864e5));
-          this._lockMsg(k, dd === 1 ? T('🔒 Nur noch einmal schlafen – Türchen {n} öffnet morgen!', { n }) : T('🔒 Noch {d} Tage – Türchen {n} öffnet am {n}. Dezember', { d: dd, n }));
+          this._lockMsg(k, dd === 1 ? T('🔒 Nur noch einmal schlafen – Türchen {n} öffnet morgen!', { n }) : T('🔒 Noch {d} Tage – dann öffnet Türchen {n}', { d: dd, n }));
         }
         return;
       }
@@ -1046,6 +1047,9 @@ details.adv[open]{display:flex;flex-direction:column;gap:6px}
       try {
         if (this._mode === 'admin') {
           app.innerHTML = this._prev ? `<div class="adm"><div class="pv"><span class="g">${T('👀 Vorschau wie bei den Kindern – Öffnen wird nicht gespeichert, es gibt keine Sterne.')}</span><button class="btn sm" data-a="prevoff">${T('✕ Zurück')}</button></div>${this._kidView(true)}</div>` : this._adminHtml();
+          // 🧩 Kacheln wie bei ⚙️ Einstellungen (Karte, extras.js)
+          const H = this.host, hk = this._tab === 'look' ? 'al' : this._tab === 'set' ? 'as' : '';
+          if (hk && !this._prev && H) { if (H._hubApply) H._hubApply(this.shadowRoot, hk); else if (H._exCall) H._exCall('_hubApply', [this.shadowRoot, hk], false); }
         } else {
           app.innerHTML = this._kidView(false);
         }
@@ -1135,7 +1139,7 @@ details.adv[open]{display:flex;flex-direction:column;gap:6px}
       const tabs = kids.length > 1 && !one ? `<div class="ktabs">${kids.map((x) => `<button class="ktab ${x.id === k.id ? 'on' : ''}" data-a="sel" data-k="${esc(x.id)}" style="--kc:${esc(HEX(x.color) || th.door)}"><span>${esc(x.emoji || '🙂')}</span>${esc(x.name)}</button>`).join('')}</div>` : '';
       const test = this._testDate() && !preview ? `<div class="pv"><span class="g">${T('🧪 Testmodus: {date} – Öffnen wird nicht gespeichert.', { date: esc(this._testDate()) })}</span></div>` : '';
       let line2;
-      if (day === 0) line2 = T('Am 1. Dezember geht es los!');
+      if (day === 0) line2 = T('Am ersten Dezember geht es los!');
       else if (fin) line2 = T('Alle Türchen sind offen – frohe Weihnachten! 🎄');
       else if (day >= 1 && !this._isOpen(k, day)) line2 = T('Heute wartet Türchen {n} auf dich ✨', { n: day });
       else if (day >= 1) line2 = T('Dein Türchen für heute hast du schon geöffnet 😊');
@@ -1205,9 +1209,9 @@ details.adv[open]{display:flex;flex-direction:column;gap:6px}
       const bgVal = c.bgImg || '';
       if (c.soundType === 'file') this._url(c.soundFile);
       const tgt = this._target(), tgtVal = `${tgt.getFullYear()}-${pad(tgt.getMonth() + 1)}-${pad(tgt.getDate())}T${pad(tgt.getHours())}:${pad(tgt.getMinutes())}`;
-      return `<div class="box"><h3>${T('✨ Standard-Optik')}</h3><div class="hint">${T('Sternennacht mit Girlanden, Schneelandschaft und bunt gemusterten Türchen.')}</div><div class="btns"><button class="btn p" data-a="stdlook">${T('✨ Standard-Optik übernehmen')}</button></div>
+      return `<div class="hubw" data-hub="al"><div class="box hubs" data-hid="std"><h3>${T('✨ Standard-Optik')}</h3><div class="hint">${T('Sternennacht mit Girlanden, Schneelandschaft und bunt gemusterten Türchen.')}</div><div class="btns"><button class="btn p" data-a="stdlook">${T('✨ Standard-Optik übernehmen')}</button></div>
         ${this._chk('deco', T('🎄 Deko anzeigen (Girlanden oben, Schneelandschaft unten)'))}</div>
-        <div class="box"><h3>${T('🎨 Farben & Hintergrund')}</h3>
+        <div class="box hubs" data-hid="col"><h3>${T('🎨 Farben & Hintergrund')}</h3>
         <div class="thm">${Object.entries(THEMES).map(([id, x]) => `<button class="thb ${c.theme === id ? 'on' : ''}" data-a="theme" data-v="${id}">${sw(x.bg)}${esc(T(x.n))}</button>`).join('')}
         <button class="thb ${c.theme === 'custom' ? 'on' : ''}" data-a="theme" data-v="custom">${sw(c.theme === 'custom' ? t.bg : 'linear-gradient(135deg,#e03131,#1c7ed6,#2f9e44)')}${T('✏️ Eigene Farben')}</button></div>
         ${c.theme === 'custom' ? `<div class="g2">${colIn('bg', T('Hintergrund oben'), '#173a66')}${colIn('bg2', T('Hintergrund unten'), HEX(col.bg) || '#173a66')}${colIn('door', T('Türchen'), '#2f6fb3')}${colIn('text', T('Schrift'), '#ffffff')}${colIn('accent', T('Akzent'), '#ffd43b')}${colIn('fl', T('Schneeflocken'), '#ffffff')}</div>` : ''}
@@ -1218,7 +1222,7 @@ details.adv[open]{display:flex;flex-direction:column;gap:6px}
         ${bgVal && this._missing(bgVal) === true ? `<div class="btns"><button class="btn" data-a="clrbg">${T('🧹 Fehlendes Bild entfernen')}</button></div>` : ''}
         <details class="adv"><summary>${T('Profi: eigenen Pfad eingeben')}</summary><label class="f">${T('Pfad (/local/… oder https://…)')}<input data-c="bgImg" value="${MS_RX.test(bgVal) ? '' : esc(bgVal)}" placeholder="/local/advent/bild.jpg"></label>
         <div class="hint">${T('/local/… zeigt auf den Ordner <code>config/www</code>. Wurde www neu angelegt, muss Home Assistant einmal neu starten. Groß-/Kleinschreibung beachten.')}</div></details></div>
-        <div class="box"><h3>${T('🚪 Türchen')}</h3>
+        <div class="box hubs" data-hid="door"><h3>${T('🚪 Türchen')}</h3>
         <label class="f">${T('Überschrift')}<input data-c="title" maxlength="40" value="${esc(c.title)}"></label>
         <div class="g2">${this._sel('shape', T('Form'), [['tile', T('bunt gemustert')], ['sq', T('eckig')], ['round', T('rund')], ['gift', T('Geschenk')]])}
         ${this._sel('font', T('Schrift der Zahlen'), [['fun', T('Verspielt')], ['std', T('Standard')], ['serif', T('Klassisch')], ['hand', T('Handschrift')], ['mono', T('Schreibmaschine')]])}${this._sel('anim', T('Öffnen-Effekt'), [['flip', T('Aufklappen')], ['slide', T('Hochschieben')], ['confetti', T('Konfetti')], ['none', T('Keiner')]])}</div>
@@ -1231,37 +1235,37 @@ details.adv[open]{display:flex;flex-direction:column;gap:6px}
         ${this._chk('big24', T('🎄 Türchen 24 doppelt so groß'))}
         ${this._chk('countdown', T('⏳ Countdown anzeigen'))}
         ${this._chk('progress', T('📊 Fortschrittsbalken anzeigen'))}</div>
-        <div class="box"><h3>${T('❄️ Schneefall')}</h3>
+        <div class="box hubs" data-hid="snow"><h3>${T('❄️ Schneefall')}</h3>
         ${this._chk('snow', T('Schneefall anzeigen'))}
         ${c.snow ? `<div class="g2">${this._sel('snowAmt', T('Menge'), [['w', T('wenig')], ['m', T('mittel')], ['v', T('viel')]])}${this._sel('snowSpd', T('Tempo'), [['l', T('langsam')], ['n', T('normal')], ['s', T('schnell')]])}</div>
         ${this._sel('snowFl', T('Flocke'), FLAKES.map((f) => [f, f]))}` : ''}</div>
-        <div class="box"><h3>${T('🔔 Ton beim Öffnen')}</h3>
+        <div class="box hubs" data-hid="snd"><h3>${T('🔔 Ton beim Öffnen')}</h3>
         ${this._sel('soundType', T('Ton'), [['bells', T('🎄 Glocken (eingebaut)')], ['chime', T('✨ Funkeln (eingebaut)')], ['file', T('🎵 Eigene Datei (z. B. glocken.mp3)')], ['none', T('🔇 Kein Ton')]])}
         ${c.soundType === 'file' ? `<label class="f">${T('Tondatei')}<select data-c="soundFile">${this._sndOpts(c.soundFile || '')}</select></label>
         ${c.soundFile && this._missing(c.soundFile) === true ? `<div class="hint warn">${T('⚠️ Tondatei nicht gefunden – es kommen die eingebauten Glocken.')}</div>` : ''}
         <div class="hint">${T('Eigene MP3-Töne lädst du unter <b>📁 Dateien</b> hoch. Kann die Datei nicht gespielt werden, ertönen die eingebauten Glocken.')}</div>
         <details class="adv"><summary>${T('Profi: eigenen Pfad eingeben')}</summary><label class="f">${T('Pfad (/local/… oder https://…)')}<input data-c="soundFile" value="${MS_RX.test(c.soundFile || '') ? '' : esc(c.soundFile || '')}" placeholder="/local/advent/glocken.mp3"></label></details>` : ''}
         ${c.soundType !== 'none' ? `<div class="btns"><button class="btn" data-a="sndtest">${T('▶️ Anhören')}</button></div>` : ''}</div>
-        <div class="box"><h3>${T('🔊 Vorlesen für Leseanfänger')}</h3>
+        <div class="box hubs" data-hid="tts"><h3>${T('🔊 Vorlesen für Leseanfänger')}</h3>
         ${this._chk('rdAuto', T('Türchen beim Öffnen automatisch vorlesen'), T('Text, Nachricht, Sterne und Geschenk – nach dem Tür-Ton.'))}
         ${this._chk('rdLock', T('Sperr-Hinweise vorlesen'), T('z. B. „Noch 3 Tage …“ oder „Erst Zähne putzen …“'))}
         <div class="hint">${this._kids().some((k) => this._rdKid(k)) ? T('Gilt für: {names}. Ein 🔊-Knopf zum Nochmal-Anhören ist im Türchen immer da.', { names: esc(this._kids().filter((k) => this._rdKid(k)).map((k) => k.name).join(', ')) }) : T('Noch kein Kind mit 🔊 Leseanfänger-Modus – einschalten im Kind-Editor von Yippee (✏️ beim Kind). Dort stellst du auch ein, ob über das Gerät oder die Lautsprecher vorgelesen wird.')}</div></div>
-        <div class="box"><h3>${T('⏰ Uhrzeit & Countdown')}</h3>
+        <div class="box hubs" data-hid="time"><h3>${T('⏰ Uhrzeit & Countdown')}</h3>
         <label class="f">${T('Ab welcher Uhrzeit darf das Türchen des Tages geöffnet werden?')}<input type="time" data-c="openTime" value="${esc(c.openTime || '00:00')}"></label>
         <label class="f">${T('Countdown-Ziel')}<input type="datetime-local" data-c="targetDate" value="${esc(tgtVal)}"></label>
-        <div class="hint">${T('Leer lassen = automatisch Heiligabend 18:00 Uhr.')}</div></div>`;
+        <div class="hint">${T('Leer lassen = automatisch Heiligabend 18:00 Uhr.')}</div></div></div>`;
     }
 
     _tabSet() {
       const c = this._cfg;
       const autoEnt = this._autoEntity(), kidsDev = this._kids().filter((k) => k.dev);
-      return `<div class="box"><h3>${T('📅 Zeitraum')}</h3>
+      return `<div class="hubw" data-hub="as"><div class="box hubs" data-hid="range"><h3>${T('📅 Zeitraum')}</h3>
         ${this._sel('days', T('Kalender'), [['24', T('1.–24. Dezember')], ['31', T('1.–31. Dezember (bis Silvester)')]])}
         ${this._chk('catchUp', T('⏮️ Vergessene Türchen nachholen erlauben'))}</div>
-        <div class="box"><h3>${T('🔗 Türchen mit Bedingung')}</h3>
+        <div class="box hubs" data-hid="cond"><h3>${T('🔗 Türchen mit Bedingung')}</h3>
         <div class="hint">${T('Beim Bearbeiten eines Türchens kannst du festlegen, dass es erst nach erledigten Aufgaben aufgeht.')}</div>
         ${this._chk('yPend', T('Auch „wartet auf Bestätigung“ zählt als erledigt'))}</div>
-        <div class="box"><h3>${T('📱 Morgen-Benachrichtigung')}</h3>
+        <div class="box hubs" data-hid="push"><h3>${T('📱 Morgen-Benachrichtigung')}</h3>
         ${this._chk('nOn', T('Jeden Morgen im Dezember eine Nachricht aufs Handy'))}
         ${c.nOn ? `<div class="g2"><label class="f">${T('Uhrzeit')}<input type="time" data-c="nTime" value="${esc(c.nTime || '07:00')}"></label><span></span></div>
         <label class="f">${T('Text')}<input data-c="nText" maxlength="200" value="${esc(c.nText)}"></label>
@@ -1273,9 +1277,9 @@ details.adv[open]{display:flex;flex-direction:column;gap:6px}
         ${autoEnt && this._admin() ? `<button class="btn" data-a="ndel">${this._sureKey === 'ndel' ? T('Wirklich? Nochmal tippen') : T('🗑️ Automation löschen')}</button>` : ''}</div>
         ${!this._admin() ? `<div class="hint">${T('Automation anlegen kann nur ein Administrator.')}</div>` : ''}
         <div class="hint">${T('Nach Änderungen an Uhrzeit, Text oder Handys einmal „Automation aktualisieren“ tippen.')}</div>` : (autoEnt && this._admin() ? `<div class="btns"><button class="btn" data-a="ndel">${this._sureKey === 'ndel' ? T('Wirklich? Nochmal tippen') : T('🗑️ Vorhandene Automation löschen')}</button></div>` : '')}</div>
-        <div class="box"><h3>${T('🧪 Testmodus')}</h3>
+        <div class="box hubs" data-hid="test"><h3>${T('🧪 Testmodus')}</h3>
         <div class="hint">${T('Nur auf diesem Gerät: tut so, als wäre heute ein anderes Datum. Geöffnete Türchen werden dabei nicht gespeichert.')}</div>
-        <div class="g2"><label class="f">${T('Testdatum')}<input type="date" name="testdate" value="${esc(this._testDate() || `${this._season(new Date())}-12-01`)}"></label><button class="btn" data-a="testset" style="align-self:end">${T('▶️ Starten')}</button></div></div>`;
+        <div class="g2"><label class="f">${T('Testdatum')}<input type="date" name="testdate" value="${esc(this._testDate() || `${this._season(new Date())}-12-01`)}"></label><button class="btn" data-a="testset" style="align-self:end">${T('▶️ Starten')}</button></div></div></div>`;
     }
 
     _phone(svc) { return String(svc || '').replace(/^mobile_app_/, '').replace(/_/g, ' ').replace(/\b\w/g, (m) => m.toUpperCase()); }

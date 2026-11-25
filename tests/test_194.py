@@ -35,7 +35,7 @@ with sync_playwright() as p:
     ev(f"{run}.shadowRoot.querySelector('[data-a=go]').click()"); t(125000); pg.wait_for_timeout(300); t(3000)
     ok('timer done', ev(f"{run}._st")=='done', ev(f"{run}._st"))
     ok('step ticked by timer', ev(f"B._routDone('{D}','RM','K',3)")==[0,1], ev(f"B._routDone('{D}','RM','K',3)"))
-    ok('brushing counted + picture', z()['n']==4 and len(z()['seen'])==2, z())
+    ok('brushing counted + picture', z()['n']==4 and z()['td']['l'][0] in z()['seen'] and len(z()['seen'])==(1 if z()['td']['l'][0]=='mond' else 2), z())
     ok('streak day counted (7) + bonus', z()['sn']==7 and z()['sd']==D and pts()==5, [z(), pts()])
     ok('no stars for the step itself, teeth task not booked', ev(f"A._st('{D}','TZ','K')")=='' and ev(f"A._st('{D}','RM','K')")=='')
     ok('message names the routine', 'Morgenroutine' in ev(f"{run}.shadowRoot.textContent"), ev(f"{run}.shadowRoot.textContent")[:200])

@@ -30,3 +30,13 @@ jobs:
       - run: cp dist/yippee-kids-chores-advent.js /tmp/advent.mjs && node --check /tmp/advent.mjs
       - run: cp dist/yippee-kids-chores-admin.js /tmp/admin.mjs && node --check /tmp/admin.mjs
       - run: cp dist/yippee-kids-chores-teeth.js /tmp/teeth.mjs && node --check /tmp/teeth.mjs
+      - run: cp dist/yippee-kids-chores-money.js /tmp/money.mjs && node --check /tmp/money.mjs
+      - run: cp dist/yippee-kids-chores-pet.js /tmp/pet.mjs && node --check /tmp/pet.mjs
+      - run: cp dist/yippee-kids-chores-games.js /tmp/games.mjs && node --check /tmp/games.mjs
+      - run: cp dist/yippee-kids-chores-screen.js /tmp/screen.mjs && node --check /tmp/screen.mjs
+      - run: cp dist/yippee-kids-chores-adventure.js /tmp/adventure.mjs && node --check /tmp/adventure.mjs
+      - run: cp dist/yippee-kids-chores-editor.js /tmp/editor.mjs && node --check /tmp/editor.mjs
+      - run: cp dist/yippee-kids-chores-extras.js /tmp/extras.mjs && node --check /tmp/extras.mjs
+      - run: cp dist/yippee-kids-chores-fun.js /tmp/fun.mjs && node --check /tmp/fun.mjs
+      - run: cp dist/yippee-kids-chores-home.js /tmp/home.mjs && node --check /tmp/home.mjs
+      - run: cp dist/yippee-kids-chores-read.js /tmp/read.mjs && node --check /tmp/read.mjs

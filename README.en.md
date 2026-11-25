@@ -18,16 +18,22 @@
   <a href="https://buymeacoffee.com/Chrism1412"><img src="https://img.shields.io/badge/Buy%20me%20a%20coffee-%E2%98%95-ffdd00" alt="Buy me a coffee"></a>
 </p>
 
+<p align="center"><a href="https://buymeacoffee.com/Chrism1412"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy me a coffee" height="44"></a></p>
+
 <p align="center"><a href="https://github.com/Chrism1412/yippee-kids-chores-card/blob/main/README.md">🇩🇪 Deutsche Version</a></p>
 
-> ### 📱 New in version 1.9: a tidy kids view, task timer and recap
-> - **📱 Compact kids view:** header and collection buttons at the top, below only what is **up now** – at the bottom a bar 🏠 Today · 🎁 Rewards · 🏆 Collection. Default for new installations, otherwise switch under **⚙️ Settings → 🎨 Appearance**.
-> - **⏱️ Task timer:** e.g. “Read for 15 min” – countdown with a ring and calm music; at the end tick off automatically, let the child confirm, or countdown only.
-> - **🔊 Early reader mode:** big pictures, a 🔊 button reads every task out loud – for kids who can't read yet. The 🎄 Advent calendar reads aloud too.
-> - **📅 Recap:** from the 1st of every month “Your October”, in January “Your year” – with stars, streaks and favourite task.
-> - **⚡ Faster start:** the parents area is a separate file and only loads when it's needed – kids' tablets start noticeably faster.
+> ### 🎉 New in version 2.0: pets, your own AI pets, learning games, screen time and pocket money
+> **Nothing to change** – everything new is optional and has to be switched on first.
+>
+> - **🐾 [Pet](#pet--optional):** 🐶 dog, 🐱 cat, 🦖 dino, 🦄 unicorn, 🐦 bird, 🦸 superhero or 🧚 fairy – animated, grows from an egg to a big pet with a crown, is happy, sleeps at night and gets sad when chores are left undone. Hero and fairy with their own skin, hair and cape colours.
+> - **🎨 [Your own pet with AI](#your-own-pet-with-ai-):** describe the animal, copy the prompt, paste it into ChatGPT, Gemini, Claude or Copilot, paste the answer back – your own animated pet is ready.
+> - **🗺️ [Flocke's Adventure](#adventure--jump--run):** a jump & run of its own with the pet as the hero – title screen, 10 long levels in 5 worlds, 16-bit style music.
+> - **🎮 [Mini games](#mini-games--optional):** one game per character plus memory, counting, maths and movement – maths and counting **matched to age and school year**, points only for correct answers, also as a **chore** (“solve 3 sums”).
+> - **📺 [Screen time](#screen-time--optional):** start the voucher → TV or console turns on, a countdown runs, at the end it's switched off.
+> - **💰 [Pocket money](#pocket-money--optional):** a piggy bank for every kid – regular allowance, swapping stars for money, savings goal, currency by language, 🔒 PIN and 📊 monthly report to the phone.
 >
 > **Also new:**
+> - **1.9:** 📱 compact kids view, ⏱️ task timer, 🔊 early reader mode, 📅 recap and ⚡ faster start
 > - **1.8:** 🦷 the [toothbrush timer](#toothbrush-timer--optional) – brush a picture free with music, stars right away, Oral-B support and an AI prompt for your own pictures
 > - **1.7:** 🎄 the [advent calendar](#advent-calendar--optional) – 24 doors for every kid with text, a picture, stars or a reward as a present
 > - **1.7.2:** 📱 approving via the button in the notification removes the message from all phones right away, even without an open card
@@ -56,6 +62,30 @@ Parents create chores and rewards, approve finished chores (also right from the 
 |:---:|:---:|:---:|:---:|:---:|
 | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/kinder-ansicht.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/eltern-heute.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/belohnungen.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/einstellungen.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/anwesenheit.png" width="200"> |
 
+**🎨 New in 2.0: your own pet with AI**
+
+| 🤖 Create the prompt | 👀 Preview and fine-tune | 🐷 At the kid |
+|:---:|:---:|:---:|
+| <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/eigenes-haustier-prompt.png" width="200" alt="Create the prompt"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/eigenes-haustier-vorschau.png" width="200" alt="Preview"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/eigenes-haustier-kind.png" width="200" alt="Own pet at the kid"> |
+
+**📱 New in 2.0: one kid per page, rain and bedtime**
+
+| 📱 One kid per page (swipe) | ☂️ In the rain | 💤 Bedtime |
+|:---:|:---:|:---:|
+| <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/kinder-seiten.png" width="200" alt="One kid per page"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/haustier-regen.png" width="200" alt="Pet with umbrella"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/haustier-schlaeft.png" width="200" alt="Pet asleep"> |
+
+**🐾 New in 2.0: pet, mini games and screen time**
+
+| 🐾 Pet (kid) | 🏠 Pet page | 🦸 Pick a character | 🧮 Mini game | 📺 Screen time | 👨‍👩‍👧 Pet tab |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/haustier-kind.png" width="160" alt="Pet"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/haustier-seite.png" width="160" alt="Pet page"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/haustier-auswahl.png" width="160" alt="Pick a character"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/minispiel-rechnen.png" width="160" alt="Maths mini game"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/bildschirmzeit.png" width="160" alt="Screen time"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/haustier-eltern.png" width="160" alt="Pet tab"> |
+
+**💰 New in 2.0: pocket money**
+
+| 💰 Piggy bank (kid) | ⭐ Swap stars | 👨‍👩‍👧 Pocket money tab (parents) |
+|:---:|:---:|:---:|
+| <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/taschengeld-kind.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/taschengeld-tausch.png" width="200"> | <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/taschengeld-eltern.png" width="200"> |
+
 **📱 New in 1.9: compact kids view, task timer, recap**
 
 | 🏆 Collection | ⏱️ Task timer | 📅 Recap | 🔊 Early reader | 🎄 Advent reads aloud |
@@ -73,13 +103,14 @@ Parents create chores and rewards, approve finished chores (also right from the 
 ## Features
 
 ### For kids
+- **📱 One kid per page** (optional, for the card with all kids): the kids at the top to tap, below always just one kid – **swipe to the next kid** – on a PC drag with the mouse button held down or swipe with two fingers on the touchpad. Each device remembers the last kid shown. Switch it on under ⚙️ Settings → 🎨 Look or with the card option `pages: true`.
 - **📱 Compact view** (default from 1.9): header with level ring and a big star count, goal bar and round **collection buttons** (🎄 🦷 🏅 👨‍👩‍👧 📅), below only what is **up now** – done tasks in one line, later ones collapsed. At the bottom a bar **🏠 Today · 🎁 Rewards · 🏆 Collection**. Prefer the long page? ⚙️ Settings → 🎨 Appearance → 🧒 Kids view → Classic
 - **⏱️ Task timer** (optional, per task): e.g. “Read for 15 min” – a big countdown ring with calm music, pause and cancel (books nothing). At the end **tick off automatically**, **let the child confirm** or **countdown only**. Approval and photo proof work as always
 - **🔊 Early reader mode** (optional, per kid): big pictures, stars as symbols and a 🔊 button on every task – read out by the device or, if you like, by the speakers from 🔊 Voice output. In the 🎄 Advent calendar, doors and lock messages are read aloud (each can be turned off)
 - **📅 Recap:** “Your October” all month in the 🏆 Collection, or in the classic view as a 📅 button below the badges (marked as “new” from the 1st to the 14th) – stars compared to the month before, longest streak, teeth brushing, favourite task, redeemed rewards; in January also “Your year”. Parents find it all under 📊 Reports → 📅 Recap
 - Big chore tiles with emoji, points and time window
 - Star balance, **10 levels** (from 🌱 Beginner to 💎 Chore King) and **9 badges** – tap a badge to see what it stands for; the 📖 manual explains all levels and badges
-- **Savings goal** 🎯, **wishes** 💡, a shared **family goal** 👨‍👩‍👧
+- **Savings goal** 🎯, **wishes** 💡, a shared **family goal** 👨‍👩‍👧 (its total can be corrected anytime with 🔧 −10 · −1 · +1 · +10, with history; with a **📋 queue** the next goal starts automatically after redeeming, and stars earned after reaching a goal already count for the next one)
 - **Joker** 🃏 (optional): redeem it as a reward and skip one required chore without minus stars
 - **Rewards for specific children only** 🎁: in the editor under “For which children?” – e.g. the Lego set only for Ben. Other children don't see it
 - **Prices per child** 👧 (optional): each reward can have its own price per child – “⚖️ Share fairly” matches it to the stars each child can collect per day
@@ -144,6 +175,7 @@ Switch it on under **⚙️ Settings → ⚙️ General → 🦷 Toothbrush time
 - **Brush the picture free:** the screen is full of toothpaste foam. The timer runs in 4 areas (top left, top right, bottom left, bottom right) – it is scrubbed tooth by tooth – first the foam gets thinner, then it is brushed away, with foam splashes, leftovers that “pop” at the end and soft transitions between the areas. Plus a tip and a change sound. When the time is up the picture stays: **🖼️ View picture**, only **Next** goes back to the chores.
 - **⭐ Stars right away:** with the timer the task is ticked off without approval (can be switched off). Stars **the same for all** or **per child & time of day** – if a child dislikes brushing in the morning, give more stars there and the tile shows “🔥 Extra!”. Optional **🔒 tick off only with timer** and **🔥 bonus after 7 days in a row**.
 - **🖼️ 14 templates** (moon landing, dragon castle, diving, treehouse, pirate ship, dino valley, fire brigade, farm, penguins, safari, circus, unicorn meadow, magic forest, steam train) plus **📷 your own pictures** – 🎲 random (a picture only comes again when all others had their turn, never twice a day) or in 🔢 fixed order. Every revealed picture is collected under “🦷 My brushing pictures”.
+- **👧 Pictures per kid:** below each picture (template or your own), tap the kids who should get it – e.g. rockets for the big one, unicorns for the little one. Nothing selected = all kids.
 - **🎵 Music:** a specially composed, calm 2-minute tune, your own MP3s or random; ⏱️ brushing time per child 1, 2 or 3 minutes. Optionally with a **🔊 brushing sound** (scrubbing or electric toothbrush).
 - **🤖 Your own pictures with AI:** the 🦷 Teeth tab contains a ready-made prompt – enter a subject (or 🎲), copy it, paste it into ChatGPT, Gemini or Microsoft Designer. In the same chat you can keep adjusting the picture, e.g. “make the dragon green”.
 - **✨ Moving effects** and optional **🌫️ picture sharp only at the end** – for kids who otherwise just look at the picture instead of brushing.
@@ -151,16 +183,147 @@ Switch it on under **⚙️ Settings → ⚙️ General → 🦷 Toothbrush time
 - **📋 As a routine step:** a linked tooth-brushing task or a step with 🦷 (e.g. from the routine templates) starts the timer inside a routine (“🦷 Let's go!”) – the brushing counts for pictures and streak, the stars come at the end of the routine.
 - **🦷 Oral-B:** with Home Assistant's “Oral-B” integration (Bluetooth) the timer starts by itself as soon as the toothbrush runs, pauses when it's off and warns about too much pressure.
 
-<p align="center"><img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-kachel.png" width="200" alt="Tile with button"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-timer.png" width="200" alt="Toothbrush timer"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-fertig.png" width="200" alt="Picture revealed"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-eltern.png" width="200" alt="Teeth tab"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-routine.png" width="200" alt="Tooth-brushing timer as a routine step"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-kachel.png" width="200" alt="Tile with button"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-timer.png" width="200" alt="Toothbrush timer"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-fertig.png" width="200" alt="Picture revealed"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-eltern.png" width="200" alt="Teeth tab"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-routine.png" width="200" alt="Tooth-brushing timer as a routine step"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/zahnputz-je-kind.png" width="200" alt="Pictures per kid"></p>
 
 The timer lives in its own file (`yippee-kids-chores-teeth.js`, the music in `yippee-kids-chores-teeth-music.js`), loaded only when needed. Own pictures and MP3s are stored under Media → yippee-zaehne (upload by administrators only). The screenshots show the German interface.
+
+### Pocket money 💰 (optional)
+
+Switch it on under **⚙️ Settings → ⚙️ General → 💰 Pocket money** – then every kid gets a **piggy bank**: the **“💰 My piggy bank”** button in the kids view (a collection button in the compact view) and the **💰 Pocket money** tab in the parents view. It starts at 0 – enter the current amount once as the **🏁 starting balance**.
+
+- **➕ ➖ Bookings:** income and spending with text, emoji and date, e.g. “from Grandma” or “comic book”. Only parents can delete.
+- **🌍 Currency by language:** euro, Swiss franc, pound, dollar, Danish and Swedish krone, złoty, Czech koruna, forint, leu, rouble and lira – preset by the card's language (for English by Home Assistant's currency), changeable with one tap.
+
+Everything else can be switched on separately:
+- **✍️ Kids book it themselves** – kids add bookings on their own (without going below zero).
+- **📅 Regular pocket money** – an amount per kid each week (Mondays) or month (on the 1st), booked automatically. Optionally **in full only from e.g. 80 % of chores done**, pro rata below that.
+- **⭐ Swap stars for money** – rate per kid (e.g. 10 ⭐ = €1) and a minimum; deleting a swap gives the stars back. The existing “💶 Pay out” then also books into the piggy bank.
+- **🎁 Rewards with a money amount** – money goes into the piggy bank when redeemed (e.g. “€5 for the school report”) or is paid from the pocket money (e.g. a trip to the cinema).
+- **🎯 Savings goal** (on by default) – progress bar and “At your pace around …”.
+- **🌍 Other currencies** – holiday money shown separately, not counted in the total.
+- **📅 In the recap** (on by default) – income, spending and balance of the month.
+- **🔒 PIN for the piggy bank** – every kid gets their own PIN so siblings can't peek (parents don't need one).
+- **📊 Monthly report** – on the 1st of every month at 9 am, income, spending and balance of every kid to the phone (to the weekly report recipients).
+- **📦 Summarise old bookings** (on by default) – bookings older than 12 months are combined per month into one sum for income and spending. The balance stays the same, the list in Home Assistant stays slim.
+
+<p align="center"><img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/taschengeld-kind.png" width="200" alt="Piggy bank"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/taschengeld-tausch.png" width="200" alt="Swap stars"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/taschengeld-eltern.png" width="200" alt="Pocket money tab"></p>
+
+Pocket money lives in its own file (`yippee-kids-chores-money.js`), which is only loaded when it's switched on. Bookings are stored in the Yippee list like everything else and are part of the backup.
+
+### Pet 🐾 (optional)
+
+Switch it on under **⚙️ Settings → ⚙️ General → 🐾 Pet**, then per kid with “🐾 on” in the new **🐾 Pet** tab – kids who don't want one don't get one. The first time, the kid picks a character and gives it a name.
+
+- **7 characters:** 🐶 dog, 🐱 cat, 🦖 dino, 🦄 unicorn, 🐦 bird, 🦸 superhero and 🧚 fairy – any kid can pick any of them. For the **hero**: skin colour, hair colour, hairstyle (short or ponytail) and the colour of suit and cape; for the **fairy**: skin colour, hair colour and the colour of dress and wings.
+- **Grows with the stars:** 🥚 egg (📦 hero box for the hero, 🌷 bud for the fairy) → baby → young → big with a crown 👑. You set the speed (fast, normal, slow). It **lives forever, never shrinks** and never gets sick.
+- **Animated:** blinks, breathes, wags, looks around, yawns, sneezes, spins, wings flutter, the mane waves. Jumps for joy when a chore is done, cheers for rewards, confetti at a new level – and sleeps at night (adjustable), on holidays and when the kid isn't there.
+- **Mood:** content when nothing is due; bored while chores are open; from the afternoon (default 4 pm) **sad with a tear** and a hint at the open chores – they are **only shown, never read aloud**. The tear can be switched off.
+- **Pet, feed, play, dress up:** petting and dressing up always work. Feeding, playing and the mini games unlock **by % of chores** (default 50 %), **after X chores done today**, **after X stars earned today**, **after specific chores** or are **always there** – the same for all or different per kid. With “after certain chores” pick a kid at the top to see only their chores.
+- **🎟️ Free-game voucher:** a reward can contain free games (e.g. 3 free games for 20 ⭐). Redeemable only once games are unlocked today. Free games count once the daily limit is reached, work for all games that are switched on and for adventure levels (1 level = 1 free game) and never expire. A restart after “all hearts gone” is free – or counts like a new level per kid (🐾 Pet → 🎮 Games → 🗺️ Adventure → “🔁 Restart counts as a new level”, tick the kids). The balance is shown under ✎ at the kid and can be corrected there.
+- **Clear buttons:** Care on top (🤚 Pet, feed, play together, 👕 dress up), below two big tiles: 🕹️ **Arcade** (mini games & adventure) and 🏠 **Home** with the coin balance.
+- **🍎 Feeding per day:** 1–10 (default 3, also per kid), at least 5 minutes between two meals – then the pet is full.
+- **Accessories** unlock with the levels (top hat, bow, glasses, scarf, medal …), plus a 🎅 hat in December, a 🥳 party hat on the birthday and 🌦️ **weather** from Home Assistant: a ☂️ umbrella over its head in the rain, scarf in the snow, sunglasses in the sun.
+- **💤 Bedtime:** while the pet sleeps (at night, on holiday or when the kid isn't there) there are no buttons – just a note when it wakes up. Game chores still work.
+- **🥚 New egg** any time – the old pet goes into 📸 Memories.
+
+<p align="center"><img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/haustiere-uebersicht.png" width="640" alt="All characters in all stages"><br><sub>All 7 characters: start, baby, young, big, happy, sad, sleeping</sub></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/haustier-kind.png" width="200" alt="Pet"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/haustier-seite.png" width="200" alt="Pet page"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/haustier-auswahl.png" width="200" alt="Pick a character"></p>
+
+### Your own pet with AI 🎨
+
+In the **🐾 Pet tab → 🎨 Own pets → ➕ Own pet** – a pet of your own idea, drawn by an AI:
+
+1. **Describe** what it should be (e.g. “pink pig with a curly tail and floppy ears”) and **🤖 copy the prompt**.
+2. Paste it into **ChatGPT, Gemini, Claude or Copilot**. The AI answers with a JSON code block containing the animal as vector graphics in parts (head, body, ears, tail …).
+3. **Paste** the answer (or open it as a file) – a **preview** appears right away: normal, happy, sad, baby, with hat. If something isn't right, tell the AI in the same chat what to change – or nudge eyes, mouth, hat and scarf with **Fine-tune**.
+4. Give it a name, pick the kids (nothing selected = all), save.
+
+The card draws eyes, mouth, cheeks and tears itself – so your own pet also blinks, is happy and cries, wags its tail, grows from egg to big, wears accessories and plays the mini games.
+
+**Safe:** the card only keeps pure drawing elements (paths, circles, gradients) – no scripts, no links, no styles, no external references. No code is ever run. The pet is stored in the Yippee list and is part of the backup.
+
+<p align="center"><img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/eigenes-haustier-prompt.png" width="200" alt="Create the prompt"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/eigenes-haustier-vorschau.png" width="200" alt="Preview"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/eigenes-haustier-kind.png" width="200" alt="Own pet"></p>
+
+### Mini games 🎮 (optional)
+
+On the pet page (switch in the 🐾 Pet tab):
+- **One game per character:** 🦴 catch the treats (dog), 🐭 catch the mice (cat), 🌵 jumping (dino), ⭐ collect stars (unicorn and hero), 🎵 copy the song (bird), ✨ catch the fireflies (fairy).
+- **For everyone:** 🧠 memory (6, 8 or 10 pairs depending on difficulty – or a fixed 6–12), 🔢 counting, 🧮 maths (matching the school year from 🎓 school grades) and 🏃 copy me – jumping jacks, frog jumps, standing on one leg.
+- **New learning games:** 🕐 **reading the clock** (full hour down to the minute – read it, find the matching clock, “in … minutes”, “how long?”, 24-hour time), 🔤 **letters & words** (first, last and missing letter, picture for a letter, correct spelling – in all 27 languages), 💰 **counting money** (coins and notes in the card's currency – count, find the matching money, change), 🧩 **sliding puzzle** with your own pet – **3×3 or 4×4** (tap or swipe into the gap; with a template picture, 💡 hint, 🔀 shuffle and 🔢 numbers on/off) and 🌈 **colour memory** – optionally with ★ ● ▲ ■ **shapes** on the colours so it also works without colour vision. Clock, words and money also work as “game as a chore”.
+- **🔊 Read aloud:** in every game the speaker button reads the question – for kids who can't read yet.
+- Free-time games give **no stars**, just a 🏆 record – with a **daily limit** (default 3 games).
+- **🔄 Reset game progress:** ✎ at the kid in the 🐾 tab – records of single games, the adventure or “played today”.
+- **🔢 Questions per round per kid** (3–30, default 5) – for “game as a chore” either a fixed number or **“number as set for the kid”**: with *one* shared chore the first-grader gets e.g. 7 and the big one 15 sums.
+- **Points only for correct answers:** for maths and counting you set **1–3 tries per question**. When they're used up, the game shows the answer and asks the next question.
+- **🔁 Repeat mistakes later:** questions where the answer had to be shown come back in later rounds (marked “🔁 Repeat”) until they stick. Remembered per kid on the device, can be switched off. Under ✎ at the kid the 📊 learning statistics also show **“🔁 Often wrong”** – the questions that went wrong most often.
+- **🎯 Daily challenge:** every day a different game per kid at the top of the arcade – play it twice for 🪙 coins (default 10, per kid). Can be switched off.
+- **🕹️ Games and 🗺️ adventure levels per day per kid** (optional under ✎): e.g. 3 games a day for the little one, 5 for the older one.
+- **📱 Landscape too:** on a phone held sideways, question and answers sit side by side, with the maze and treasure map controls next to them.
+- **🎮 Settings per game:** in the 🐾 tab every game has its own collapsible section – game on/off (switched-off games disappear from the menu and the chore editor), tries and repeating per learning game, memory pairs, puzzle size, numbers and hint button, shapes for “colour memory” and a fixed difficulty for the adventure.
+- **📊 Learning statistics** (can be switched off): under ✎ at the kid, per learning game: what was solved, where the answer was shown and how often the first try was right – this month and the last 6 months.
+- **Right for their age:** the questions follow the school year – from the school start (🎓 school grades) or from the birthday and **your country's school starting age** (e.g. Germany 6, England 5, Sweden 7). From **preschool** (up to 5) via times tables to **year 6** (e.g. 14 × 16). Adjustable per kid.
+- **🎮 Game as a chore:** pick a game and a goal in the chore editor (e.g. maths, 10 correct). The kid taps “🎮 Let's go!” – once the goal is reached, the chore is ticked off.
+- **🔁 How often playable (per day):** a game chore always works – even while games are still locked – and never costs a free game. If you like, it can be played 1–5× a day: the first successful round completes the chore, after that “🔁 Practise again” follows without stars.
+- **🧩 Question games:** 🏰 **Maze** (a knight’s castle with stone walls, flickering 🔥 torches and 🛡️ shields; use the d-pad from the 🚪 castle gate to the 👑 throne room – 📜 scrolls with questions only appear when you get close), 🚂 **Train ride** (the right answer sets the switch), 🏴‍☠️ **Treasure map** (a pirate treasure map on parchment with shipwreck, pirate ship, kraken, shark, compass rose and skull rock, the pet wearing a pirate hat, the goal is the treasure chest at the red ✕, a question on almost every field, 🏖️ rest stops for a breather; roll the dice – right = 2 squares forward, alone or with two players) , 🐸 **Lily pad hop** (a pond with reeds, water lilies and 🐟 fish and a 🦆 duck swimming around – jump onto the lily pad with the right answer, also times tables), 🚀 **Space** (the rocket flies to the planet with the right answer) and 🦕 **Dino dig** (knock the right stone free – after 6 bones the dino skeleton stands). Questions from maths, counting, letters, clock and money – matched to the school year, one try per question.
+
+### Adventure 🗺️ (jump & run)
+
+At the top of the games menu: **“Flocke's Adventure”** – the name comes from the pet. A jump & run of its own with the pet (your own AI pet too) as the hero:
+- **Title screen** with the pet, a 16-bit style logo and title music.
+- **10 long levels in 5 worlds:** 🌳 meadow, 🏖️ beach, 🍭 candy land, ❄️ snow, 🌙 starry night – with stars to collect, food, springs, spikes, moving platforms and little enemies to jump on.
+- **Little frustration:** fall down and you lose a ❤️ and restart at the last 🚩 flag; only when all hearts are gone does the level start again. At the goal there are 1–3 👑 crowns, the next level unlocks and progress is saved.
+- **Controls:** walk with ◀ ▶ and jump with ⤒ (arrow keys and space bar too). The buttons sit **below the play area** (in landscape left and right of it) and never cover the game.
+- **“Easy”** (slower, fixed bridges, 5 ❤️), **“Normal”** (faster, moving platforms, 3 ❤️) or **“🔥 Hard”** (even faster, small moving platforms, 2 ❤️ and special enemies: 🐸 hoppers, 🐀 dashers, 🦔 hedgehogs – don't jump on them! – and 🐝 flyers above the gaps) – plus a **⤒⤒ double jump** (tap again in mid-air) and high ledges with hard-to-reach 🎁 boxes.
+- **🎁 Bonus boxes** in every level: bump them from below for +3 ⭐.
+- **For little ones:** ✎ at the kid → “Runs by itself” – the pet runs on its own, tap = jump.
+- **16-bit style music** – original tunes for each world, generated in the browser (🔊/🔇).
+- **⏱️ Best time per level:** the finish shows your time, the map shows the best time – a reason to play levels again.
+- **Daily limit** in the 🐾 Pet tab (“Adventure levels per day”, default 3). There you can also fix the difficulty to “Easy”, “Normal” or “Hard”. Gives no stars.
+- Separate file `yippee-kids-chores-adventure.js`, only loaded when the adventure is opened.
+- **🚪 Question gates** (🐾 tab → Adventure, off by default): a gate before the flags opens with a question from the learning games – right = +3 ⭐.
+
+<p align="center"><img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/spiele-menue.png" width="200" alt="Games menu"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/abenteuer-titel.png" width="200" alt="Adventure title screen"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/abenteuer-karte.png" width="200" alt="Adventure map"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/abenteuer-level.png" width="200" alt="Adventure level"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/lernspiel-uhr.png" width="200" alt="Reading the clock"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/lernspiel-geld.png" width="200" alt="Counting money"></p>
+
+### Screen time 📺 (optional)
+
+Switch it on under **⚙️ Settings → ⚙️ General → 📺 Screen time**. Then tick **📺 Screen time** in the reward editor and choose minutes and device.
+
+- When redeemed, the reward becomes a **voucher**. When the kid starts it, the device is **switched on** (switch, plug, TV, script …), a **countdown** runs at the top, there's a **warning** 5 minutes before, and at the end it's **switched off** or a script runs.
+- Parents see running times in the 📋 Today tab and can give **+10 min** or **⏹️ stop**. Switching off is done by any open card, e.g. the wall tablet.
+- **Finding the device:** the list is grouped by kind (📺 TV & media, 🔌 switches & plugs, 💡 lights, 📜 scripts …) and sorted by name. Use **🔎 Search device** and just type part of the name.
+- **📱 Phone or tablet:** can't be switched on and off directly. Use the device's **internet switch** instead (e.g. from your router integration such as FRITZ!Box: “… Internet access”) or your own script – internet during the time, none afterwards.
+- **Tip:** don't cut a games console's power at the plug – better switch off the TV or use a script, e.g. to block the console's internet in your router.
+
+<p align="center"><img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/lernspiel-loesung.png" width="200" alt="Answer after a wrong try"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/lernspiel-schwierigkeit.png" width="200" alt="Difficulty per kid"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/minispiel-rechnen.png" width="200" alt="Maths mini game"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/bildschirmzeit.png" width="200" alt="Screen time"> <img src="https://raw.githubusercontent.com/Chrism1412/yippee-kids-chores-card/main/images/haustier-eltern.png" width="200" alt="Pet tab"></p>
+
+Pet, mini games and screen time live in their own files (`yippee-kids-chores-pet.js`, `yippee-kids-chores-games.js`, `yippee-kids-chores-screen.js`), loaded only when switched on. The characters are drawn in code – there are no image files. The screenshots show the German interface.
+
+### Learning, reading & pet home 🏠 (optional)
+- **🏠 Pet home** (🐾 tab → switch on “🏠 Home”): a room of its own for the pet. Through the window you see the weather from Home Assistant – rain and snow stay outside, indoors the pet needs no umbrella. You pay with **🪙 coins** – a currency of their own: coins come from all pet games (learning games 1 coin per right answer, skill games 1 coin per 5 points, at most 20 per round) and at the goal in the 🏃 adventure. Real ⭐ stay untouched; if you like, create a reward with “🪙 Coins for the pet home” – then the kid swaps stars for coins there (coin rewards are always single, never shared). How many ⭐ per day may be swapped is set with the prices (default: at most 10, no limit also possible). With them the kid buys 20 things (bed, sofa, rug, lamp, aquarium, wallpaper …), tap and confirm; the 🛏️ bed is always in the room (move only); bought things can be put away, set up again and moved around the room: tap and move with the arrow pad, or drag with your finger. Nothing overlaps – furniture stays on the floor, pictures on the wall, “↺ Tidy up” puts everything back. While the pet sleeps you can still visit: moonlight falls into the dark room and the pet sleeps in its bed – just watching. You set the prices yourself: cheaper or dearer for everything (½×–3×) or each thing on its own (0 = free). Plus, each can be switched off: 🎄 **seasonal decorations** (December, Easter, October), 🎂 **birthday in the room** with garland, cake, party hat and birthday coins once, a 🌳 **garden** as a second room for 200 🪙 with its own shop (slide, paddling pool, dog house …) and 👋 **visits** from a sibling’s pet (+2 🪙 for both once a day). Own file `yippee-kids-chores-home.js`.
+- **💡 Note for parents** (can be switched off): the 📋 Today tab shows a note when a kid hasn’t done a chore for 3 days or their pet is sad – only in the card, no message.
+- **🇬🇧 English words** (new learning game): about 270 words by school year in four kinds of questions (picture → word, listen → picture, read → picture, missing letter), read aloud in English with 🔊 right next to each answer. Hidden when the card itself is in English.
+- **✖️ Times tables** (new learning game): pick the rows, 10 sums against the clock, with a best time per row or selection. Both new games also work as a 🎮 game task and count in the learning statistics.
+- **📚 Reading diary** (⚙️ Settings → 🎉 Fun & collecting): kids add their books, log reading minutes (+10′ … +30′) and put finished books on the 📚 bookshelf. Each book earns stars (default 5) – with approval switched on only after your ✓ under 🔔 Approvals. Own file `yippee-kids-chores-read.js`.
+
+### Fun & collecting 🎉 (optional)
+All optional under ⚙️ Settings → 🎉 Fun & collecting (own file `yippee-kids-chores-fun.js`, only loaded when something of it is on):
+- **🎡 Wheel of fortune:** whoever has done all of today’s tasks may spin once – by default +1, +2 or +5 ⭐, a 🎟️ free game or “Nothing this time”. You set the prizes and their weight (how often they come up).
+- **📒 Sticker album:** with a bit of luck (default 30 %) every finished task brings a sticker – 4 albums (animals, vehicles, space, sea) with 24 stickers each, doubles are counted. Optional bonus stars for a full album. Unticking and ticking again brings no second sticker.
+- **🥚 Easter egg hunt** (Palm Sunday to Easter Monday) and **🎃 pumpkin hunt** (24–31 October), each switchable: about every third task randomly hides something – the kid finds it when finishing the task and collects it in the 🧺 Easter nest or 🎃 pumpkin basket, optionally with +1 ⭐.
+- **📊 Weekly report** (🔔 Notify on …): Sundays from 6 pm per kid tasks, stars, balance, piggy bank, stickers and Easter eggs – to the devices of the weekly review.
+- **🔔 Reminder at fixed times** (🔊 Voice output): at your times the speaker says what a kid still has open – only if they are home, optionally on separate speakers. Needs an open card (e.g. the wall tablet).
 
 ### More extra features (all optional)
 
 Each can be switched on under **⚙️ Settings** – every feature sits where it belongs by topic: **⚙️ General · ✅ Tasks & daily routine · ⭐ Points & bonuses · 🎁 Rewards & money · 🔔 Notifications · 🔌 Devices & voice · 📈 Analysis · 💾 Data**, each in its own collapsible section showing “on” or “off”.
 
 - **📋 Routines:** several steps in one chore (e.g. a morning routine); the child ticks off each step, the stars come with the last one. Own “📋 ＋ Routine” button; add steps via search (suggestions from the first letter) from your chores and templates or type them, sort with ▲▼. Chores in a routine only appear as a step. 11 templates included: morning, evening, after-school, homework, room, weekend, nap, bath, mealtime, pet and sports routine.
-- **📖 Manual** in the parents area (📖 top right) with **search and keywords** (e.g. NFC, presence, PIN) in all 27 languages – 47 topics from “Getting started” to “👫 Shared rewards” and “💽 Storage & clean-up” – a separate file `yippee-kids-chores-manual.js` next to the card, installed automatically by the Marketplace and loaded only when opened.
+- **📖 Manual** in the parents area (📖 top right) in **chapters like the settings**, with **search and keywords** (e.g. NFC, presence, PIN) in all 27 languages – 57 topics from “Getting started” to “👫 Shared rewards” and “💽 Storage & clean-up” – a separate file `yippee-kids-chores-manual.js` next to the card, installed automatically by the Marketplace and loaded only when opened.
 - **🔮 Savings forecast:** savings goal and family goal show roughly when they will be reached at the current pace (real stars of the last 3 weeks).
 - **🧮 Price assistant:** every reward shows how many days each child saves for it; "Suggest prices" recalculates prices from the children's weekly stars (e.g. "2 rewards per week") and suggests a family goal.
 - **👧 Prices per child:** each reward can have its own price per child; "⚖️ Share fairly" calculates from stars per day.
@@ -175,19 +338,22 @@ Each can be switched on under **⚙️ Settings** – every feature sits where i
 
 ### For parents
 - **🧭 Setup assistant** on first start: add kids with date of birth, avatar and colour → tick suitable routines and chores (grouped by time of day, with search) → choose rewards with your own prices → switch on popular features and the phone for notifications → done, including ready-made text for the kids card. Can be restarted any time under ⚙️ Settings
-- **Settings “Simple” or “All”**: optionally only the essentials (language, vacation, approval, notifications, backup, access protection) – everything else one tap away, sorted by topic, with a **🔎 search field** (title matches first), **toggles right in the row** and a **📖 button** to the matching manual topic
+- **Settings “Simple” or “All”**: optionally only the essentials (language, vacation, approval, notifications, backup, access protection) – everything else one tap away as **🧩 tiles per area** (tapping shows only that area), with a **🔎 search field** across all settings (title matches first), **toggles right in the row** and a **📖 button** to the matching manual topic; the same tiles with search are in the tabs 🐾 Pet, 💰 Pocket money, 🦷 Teeth and 🎄 Advent
 - **Behaviour** 😊 (optional): reward with one tap on the green “😊 +1” button in the Today tab (stars adjustable), optionally deduct stars with the red “😠 −1” button – logged in the points history. Under 👧 Kids a **📊 behaviour chart** shows the last 14 days with average and trend
 - **🏖️ Only on school-free days** for chores that should only appear at weekends, in the holidays and on public holidays – the counterpart to “🎒 school days only”
 - **🕒 More relaxed times on school-free days** (optional): on school-free days a time window runs longer – you choose how much: until the end of its day block (“brush teeth until 9:00” then counts until the end of 🌅 Morning), 30 minutes, 1 or 2 hours longer, or no time limit. Chores that must always be on time (e.g. medicine) get the tick **⏰ Fixed time on days without school too**. Sleeping in isn't “missed”. **You set the day block times yourself** (default: midday from 11:30, afternoon from 16:00, evening from 18:00) – each block ends where the next begins, no overlaps; the Tasks tab lists chores **per child**, optionally divided by time of day, by type (routines / required / bonus / special) or not at all – each group collapsible
 - **Approval** of chores and rewards – in the card, via app button or Telegram button; handled approvals disappear from all phones – via the button in the message even without an open card
 - **Penalties only after your decision**: missed = excused, minus stars or done after all
-- Manual adjustments, **points history**, **5-week chart** under 📊 Reports, **pocket money** conversion, **double-points days**
+- **◀ Catch up on past days**: go back up to 7 days in the Today tab and tick or untick there – e.g. when something is still missing after midnight (parents only)
+- Manual adjustments, **points history**, **5-week chart** under 📊 Reports, **💶 pay out stars** (with 💰 pocket money it goes into the piggy bank), **double-points days**
 - **Holidays** per kid, **school holidays and public holidays** automatically
 - compact **daily summary** and **weekly review** messages (one line per child, optionally one message per child and per-report recipients), **📊 reports** in the Kids tab (60 days, 52 weeks, frozen daily snapshots, CSV download), trend vs. last week in the weekly review, **morning announcement** and **reminders** on speakers
 
 ### Safety and data
 - **Automatic backups** (optionally into a second list), backup file download
 - **Data check** that warns about missing or externally changed entries
+- **📴 Offline buffer**: if Home Assistant is briefly gone (Wi-Fi, restart), the kids’ device remembers the ticks (“📴 offline – will be added later”) and adds them automatically
+- **♿ Accessibility**: high contrast and less motion (for all devices or just one), keyboard operation, labelled buttons for screen readers
 - **▾ Collapsible parent Today tab:** tap a child or a time-of-day block (Morning … No time) to collapse/expand it, remembered on the device; finished or past times of day collapse automatically, “▸ Collapse all” for all children at once
 - **🎁 Parents redeem directly:** 📋 Today → 🎁 next to the kid – right away, no approval; shared rewards by share or 💝 invitation
 - **🎁 Rewards sorted by type** (for one kid · together · Joker), by ⭐ stars or 🔤 A–Z – or **👧 by child** (per child, for all, together); the kid view shows redeemable ones first
@@ -227,14 +393,14 @@ The Marketplace adds the resource automatically. Custom repositories need a conn
 
 ### Manual
 
-1. Download all files from the [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist) folder: the card `yippee-kids-chores-card.js`, the 👨‍👩‍👧 parents area `yippee-kids-chores-admin.js`, the 📖 manual `yippee-kids-chores-manual.js`, the 🎄 advent calendar `yippee-kids-chores-advent.js`, the 🦷 toothbrush timer `yippee-kids-chores-teeth.js` with its music `yippee-kids-chores-teeth-music.js` and the language files `yippee-kids-chores-lang-xx.js`.
+1. Download all files from the [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist) folder: the card `yippee-kids-chores-card.js`, the 👨‍👩‍👧 parents area `yippee-kids-chores-admin.js`, the 📖 manual `yippee-kids-chores-manual.js`, the 🎄 advent calendar `yippee-kids-chores-advent.js`, the 🦷 toothbrush timer `yippee-kids-chores-teeth.js` with its music `yippee-kids-chores-teeth-music.js`, the 💰 pocket money `yippee-kids-chores-money.js`, the 🐾 pet `yippee-kids-chores-pet.js`, the 🎮 mini games `yippee-kids-chores-games.js`, the 📺 screen time `yippee-kids-chores-screen.js`, the 🗺️ adventure `yippee-kids-chores-adventure.js`, the ✏️ card editor `yippee-kids-chores-editor.js`, the 🧩 extra features `yippee-kids-chores-extras.js`, 🎉 fun & collecting `yippee-kids-chores-fun.js`, the 🏠 pet home `yippee-kids-chores-home.js`, the 📚 reading diary `yippee-kids-chores-read.js` and the language files `yippee-kids-chores-lang-xx.js`.
 2. Create the folder **`/config/www/community/yippee-kids-chores-card/`** and copy all files into it. This is the same folder the Marketplace (formerly HACS) uses, so you can switch later without changes.
 3. **Settings → Dashboards → ⋮ → Resources → Add resource**
    - URL: `/local/community/yippee-kids-chores-card/yippee-kids-chores-card.js?v=1.7.2`
    - Type: **JavaScript module**
 4. Reload the page.
 
-> **Manual updates:** copy **all files from [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist)** into the same folder again (not just the card – otherwise it shows up in German and the manual, advent calendar or toothbrush timer is missing) – that's it. The card raises the number after `?v=` in the resource automatically when an administrator opens the parents area – see [Updates](#updates).
+> **Manual updates:** copy **all files from [`dist/`](https://github.com/Chrism1412/yippee-kids-chores-card/tree/main/dist)** into the same folder again (not just the card – otherwise it shows up in German and the manual, advent calendar, toothbrush timer or pocket money is missing) – that's it. The card raises the number after `?v=` in the resource automatically when an administrator opens the parents area – see [Updates](#updates).
 
 ## Setup
 
@@ -293,6 +459,7 @@ A complete example dashboard is in [`examples/dashboard.yaml`](https://github.co
 | `storage` | `todo.…` | – | **Required.** The Local To-do list used as storage |
 | `mode` | `admin`, `kids`, `kid`, `advent` | `admin` | Parents view, all kids, one kid or just the 🎄 advent calendar |
 | `child` | name | – | With `mode: kid`: which kid. Optional with `mode: advent` (without: all kids to switch between) |
+| `pages` | `true` / `false` | as ⚙️ | With `mode: kids`: one kid per page – the kids at the top to tap, swiping switches the kid |
 | `collapsed` | `true` / `false` | `false` | Show kids collapsed |
 | `summary` | `true` / `false` | `false` | Only a small summary per kid (points, today, goal, level, balance) – e.g. for a family dashboard |
 | `show` | list | all | With `summary`: which parts – `points`, `today`, `goal`, `level`, `net` |
@@ -301,7 +468,7 @@ A complete example dashboard is in [`examples/dashboard.yaml`](https://github.co
 | `tap_action` / `double_tap_action` / `hold_action` | Home Assistant action | – | Only with `summary`: what happens when the summary is tapped, double-tapped or held, e.g. `action: navigate` with `navigation_path: /dashboard-haus/{kind}` or `action: more-info` (the child’s sensor). `{kind}` is replaced by the child’s name |
 | `compact` | `true` / `false` | as ⚙️ | Less spacing |
 | `transparent` | `true` / `false` | as ⚙️ | No own background – blends into the dashboard |
-| `scale` | `70`–`130` | as ⚙️ | Card size in percent |
+| `scale` | `70`–`130` | as ⚙️ | Card size in percent. Under ⚙️ → 🎨 Appearance there is also **🔠 Size on this device only** (90–150 %, e.g. a bigger font on the kids’ tablet) – it takes priority |
 | `advent_size` | `50`–`220` | as ⚙️ | With `mode: kid`, `kids` and `advent`: size of the 🎄 advent calendar doors in px for this card only (e.g. wall tablet). “📱 This device only” from the parents view takes priority |
 | `family` | `true` / `false` | automatic | Show the family goal on this card (automatically only once per page) |
 | `language` | e.g. `en`, `fr` | setting / HA language | Language for this card only (e.g. on the kids’ tablet) |
@@ -331,6 +498,7 @@ All integrations are **optional** and can be switched on and off individually.
 
 - **Backup file** (`YippeeKidsChoresDDMMYYYY.json`) to download, share, copy and restore
 - **Automatic backups** daily or weekly (last 4 kept), optionally also in a **second Local To-do list** that survives if the main list is deleted
+- **🛡️ Back up before updates:** when there is a new Yippee! version (Marketplace/HACS) – or it starts for the first time – the card makes an extra backup right away (can be switched off)
 - **Data check** with checksums: warns about missing or externally changed entries and restores them from the backup
 - **Trash** for 7, 14 or 30 days (default 7, then deleted for good) and a **change log** (who approved, changed, redeemed, deleted or restored what and when)
 - The Local To-do list is part of every regular Home Assistant backup

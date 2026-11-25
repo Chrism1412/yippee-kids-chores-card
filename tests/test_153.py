@@ -40,7 +40,10 @@ try:
         ev("A._setCfg({lang:'it'})"); pg.wait_for_timeout(1500)
         ok('missing language file -> German, no crash', 'Heute' in ev("A.shadowRoot.textContent"), ev("A.shadowRoot.querySelector('.tabs').textContent")[:80])
         ev("A._setCfg({lang:'de'})"); pg.wait_for_timeout(800)
-        ev("A._hbOpen('')"); pg.wait_for_timeout(1500)
+        ev("A._hbOpen('')")
+        for _ in range(30):  # Handbuch kommt über das Netz – unter Last etwas länger warten
+            pg.wait_for_timeout(200)
+            if ev("A.shadowRoot.querySelectorAll('#modal .hbi').length")>=40: break
         ok('manual from hacsfiles', ev("A.shadowRoot.querySelectorAll('#modal .hbi').length")>=40)
         ok('no page errors', not [x for x in errs if not x.startswith('C:Failed to load resource')], errs)
         b.close()

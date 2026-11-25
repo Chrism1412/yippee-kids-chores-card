@@ -14,7 +14,7 @@ with sync_playwright() as p:
     ev("A.shadowRoot.querySelector('#modal input[name=emoji]').click()"); t(300)
     g=ev("[...A.shadowRoot.querySelectorAll('#modal .emog')].map(x=>x.textContent)")
     n=ev("A.shadowRoot.querySelectorAll('#modal .ep').length")
-    ok('task emoji groups', len(g)==9 and n>=240, (len(g), n))
+    ok('task emoji groups', len(g)==11 and n>=500 and g[-1].endswith('Sonstiges'), (len(g), n))
     if SHOT: pg.screenshot(path=f'{SHOT}/emo.png')
     ev("A.shadowRoot.querySelector('#modal .ep[data-e=\"🧺\"]').click()"); t(200)
     ok('emoji picked', ev("A.shadowRoot.querySelector('#modal input[name=emoji]').value")=='🧺')
@@ -37,7 +37,7 @@ with sync_playwright() as p:
     ok('new reward templates', 'Kletterhalle' in rw and 'Zirkus' in rw, rw[:120])
     ev("A.shadowRoot.querySelector('#modal input[name=emoji]').click()"); t(300)
     g2=ev("[...A.shadowRoot.querySelectorAll('#modal .emog')].map(x=>x.textContent)")
-    ok('reward emoji groups', len(g2)==6, g2)
+    ok('reward emoji groups', len(g2)==10 and ev("!!A.shadowRoot.querySelector('#modal .ep[data-e=\"🪙\"]')") and g2[-1].endswith('Sonstiges') and ev("A.shadowRoot.querySelectorAll('#modal .ep').length")>=250, g2)
     ev("A._closeModal()"); t(200)
     # Avatare
     ev("A._editKid('K')"); t(400)

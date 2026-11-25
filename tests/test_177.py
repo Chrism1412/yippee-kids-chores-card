@@ -16,7 +16,7 @@ with sync_playwright() as p:
       A._save('reward','r1',{title:'Eis',emoji:'🍦',cost:5});
       A._setCfg({approval:true, nTask:true, nReward:true, targets:['mobile_app_phone_a','mobile_app_phone_c','notify.familienchat']});})()"""); t(1000)
     clears=lambda: [c for c in ev("window.calls") if c[1]=='clear_notification']
-    # 1) Nachricht bekommt Kennung (nur Handy-App-Ziele)
+    # 1) Nachricht bekommt Kennung (nur Ziele der Home-Assistant-App)
     ev("window.calls=[]; A._notify('✅ Mia hat „Zähne putzen“ erledigt – bitte freigeben.','task',[['✓ Freigeben','KP|ok|2026-10-30|T|K'],['✕ Ablehnen','KP|no|2026-10-30|T|K']])"); t(300)
     c=ev("window.calls")
     ok('push to phones carries tag + buttons', [x[2] for x in c if x[0].startswith('mobile_app_')]==['yippee_t_2026-10-30_T_K']*2 and all(x[3] for x in c if x[0].startswith('mobile_app_')), c)

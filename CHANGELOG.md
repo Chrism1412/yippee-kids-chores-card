@@ -5,6 +5,138 @@
 Alle wichtigen Änderungen an **Yippee! - Kids Chores**.
 Versionsnummern: `MAJOR.MINOR.PATCH` – Fehlerbehebungen erhöhen PATCH, neue Funktionen MINOR, grundlegende Änderungen (z. B. am Speicherformat) MAJOR.
 
+## [2.0.0] – 2026-11-17
+
+Die bisher größte Version – mit Neuem in allen Bereichen: 🐾 Haustier mit eigenem Zuhause, 🎮 Mini-, Lern- und Fragenspiele, 🗺️ Abenteuer, 📺 Bildschirmzeit, 💰 Taschengeld, 📱 Kinder-Ansicht, 🧩 übersichtliche Einstellungen, 📖 Handbuch in Kapiteln und vieles mehr.
+**Keine Umstellung nötig** – alles Neue ist optional und muss erst eingeschaltet werden. Bestehende Daten und Einstellungen bleiben, wie sie sind.
+
+### 🐾 Ein Haustier für jedes Kind
+Ein animiertes Haustier, das mit den Aufgaben wächst (einschalten unter ⚙️ Einstellungen → ⚙️ Allgemein → 🐾 Haustier, dann im neuen Tab 🐾 Haustier je Kind mit „🐾 an“).
+- **7 Figuren:** 🐶 Hund, 🐱 Katze, 🦖 Dino, 🦄 Einhorn, 🐦 Vogel, 🦸 Superheld und 🧚 Fee – alles im Code gezeichnet, keine Bilddateien. Bei Held und Fee wählt das Kind Hautfarbe, Haarfarbe, Frisur (der Held auch mit Zopf) und die Farben von Anzug und Umhang bzw. Kleid und Flügeln.
+- **Wächst mit den Sternen:** 🥚 Ei (📦 Heldenkiste, 🌷 Knospe) → Baby → Jung → Groß mit Krone 👑. Tempo einstellbar, es schrumpft nie und wird nie krank.
+- **Lebendig:** blinzelt, wedelt, atmet, schaut sich um, gähnt, niest, dreht sich, Flügel flattern, Mähne weht. Freudensprung beim Abhaken, Jubel bei Belohnungen, Konfetti beim neuen Level, schläft nachts und im Urlaub.
+- **Gelangweilt und traurig:** Sind Aufgaben offen, ist es gelangweilt; am Nachmittag (einstellbar) traurig mit Träne und zeigt die offenen Aufgaben – nur angezeigt, nie vorgelesen. Die Träne lässt sich abschalten.
+- **Streicheln, Füttern, Spielen, Anziehen:** Streicheln und Anziehen gehen immer, Füttern, Spielen und Spiele werden freigeschaltet nach % der Aufgaben (Standard 50 %), nach X erledigten Aufgaben oder X Sternen heute, nach bestimmten Aufgaben (entschuldigte oder von Geschwistern erledigte zählen als geschafft) oder immer – je Kind abweichend einstellbar. Bei „nach bestimmten Aufgaben“ wählst du oben ein Kind und siehst nur seine Aufgaben.
+- **🎟️ Freispiel-Gutschein als Belohnung:** einlösbar, sobald die Spiele freigeschaltet sind; Freispiele zählen nach dem Tageslimit, auch für Abenteuer-Level, und verfallen nie. Je Kind wählbar: Ein Neustart nach „alle Herzen weg“ zählt wie ein neues Level.
+- **Übersichtliche Knöpfe:** Oben die Pflege (🤚 Streicheln, Füttern, Zusammen spielen, 👕 Anziehen), darunter zwei große Kacheln: 🕹️ **Spielhalle** (Mini-Spiele & Abenteuer) und 🏠 **Zuhause** mit dem Taler-Stand.
+- **🍎 Füttern pro Tag** einstellbar (1–10, Standard 3, auch je Kind) – zwischen zwei Mahlzeiten mindestens 5 Minuten.
+- **Zubehör** mit den Leveln, 🎅 Mütze im Dezember, 🥳 Partyhut am Geburtstag und 🌦️ Wetter aus Home Assistant (Schirm, Schal, Sonnenbrille).
+- **🥚 Neues Ei:** das alte Tier kommt in die 📸 Erinnerungen.
+- **💤 Schlafenszeit:** Schläft das Tier, gibt es keine Knöpfe – nur den Hinweis, wann es aufwacht. Spiel-Aufgaben gehen trotzdem. Bei Regen hält es einen ☂️ Schirm über den Kopf.
+
+### 🎨 Eigenes Haustier mit KI
+- Im Tab 🐾 Haustier → **🎨 Eigene Haustiere**: beschreiben, was es sein soll (z. B. „rosa Schwein mit Ringelschwanz“), **🤖 Prompt kopieren** und in ChatGPT, Gemini, Claude oder Copilot einfügen.
+- Die Antwort der KI (ein JSON mit den Bauteilen als SVG) einfügen oder als Datei öffnen – sofort erscheint eine Vorschau in allen Stimmungen. Augen, Mund, Hut und Schal lassen sich mit **Feinjustieren** zurechtschieben.
+- Augen, Mund, Wangen und Träne zeichnet die Karte selbst: Auch das eigene Tier blinzelt, freut sich, weint, wächst vom Ei bis groß, wedelt, trägt Zubehör und spielt die Mini-Spiele mit.
+- Für alle Kinder oder nur für bestimmte. Liegt in der Yippee-Liste und ist in der Sicherung.
+- **Sicher:** Die Karte übernimmt nur reine Zeichen-Elemente – keine Skripte, keine Links, keine Stile, keine fremden Verweise. Es wird kein Code ausgeführt.
+
+### 🎮 Mini-Spiele
+- Ein eigenes Spiel je Figur (🦴 Leckerli fangen, 🐭 Mäuse fangen, 🌵 Hüpfen, ⭐ Sterne sammeln, 🎵 Lied nachspielen, ✨ Glühwürmchen fangen) plus 🧠 Memory, 🔢 Zählen, 🧮 Rechnen (nach Klasse) und 🏃 Mach's nach (Bewegung).
+- Freizeit-Spiele bringen keine Sterne, nur einen 🏆 Rekord – mit Tageslimit (Standard 3).
+- **Neue Lernspiele:** 🕐 Uhr lesen, 🔤 Buchstaben & Wörter (27 Sprachen), 💰 Geld zählen (Währung der Karte), 🧩 Schiebe-Puzzle mit dem eigenen Haustier in 3×3 oder 4×4 (antippen oder in die Lücke wischen, mit Vorlage, 💡 Tipp, 🔀 Neu mischen und 🔢 Zahlen an/aus), 🌈 Farben merken mit ★ ● ▲ ■ Formen (auch ohne Farbsehen spielbar).
+- **🎲 Abwechslung:** Jedes Lernspiel mischt mehrere Fragearten (gleiche Art nie zweimal hintereinander) – 🕐 Uhr: ablesen, passende Uhr finden, „Wie spät ist es in … Minuten?“, „Wie lange dauert es?“ und 24-Stunden-Zeit · 🔢 Zählen: zählen, Gruppe finden, „Wo sind mehr?“, „Wie viele fehlen bis 10?“ · 🧮 Rechnen: Ergebnis, fehlende Zahl, „Welche Aufgabe ergibt …?“ · 🔤 Buchstaben: Anfangs-, End- und fehlender Buchstabe, Bild zum Buchstaben, Rechtschreibung · 💰 Geld: zählen, passendes Geld finden, Wechselgeld.
+- **🧠 Memory** mit 6, 8 oder 10 Paaren – je nach Schwierigkeit des Kindes – oder fest 6–12 Paare; neben gleichen Bildern auch Zahl ↔ Punkte, Groß ↔ klein und Englisch ↔ Bild.
+- **🏃 Mach's nach** mit 20 Bewegungen.
+- **📊 Lernstatistik je Kind** (abschaltbar): unter ✎ beim Kind je Lernspiel richtig gelöst, Lösung gezeigt und Treffer beim 1. Versuch – dieser Monat und 6 Monate.
+- **🧩 Fragen-Spiele:** 🏰 **Labyrinth** (eine Ritterburg mit Steinmauern, flackernden 🔥 Fackeln und 🛡️ Schilden; mit dem Steuerkreuz vom 🚪 Burgtor zum 👑 Thronsaal – 📜 Schriftrollen mit Fragen tauchen erst auf, wenn man ganz nah ist), 🚂 **Zugfahrt** (die richtige Antwort stellt die Weiche), 🏴‍☠️ **Schatzkarte** (eine Piraten-Schatzkarte auf Pergament mit Schiffswrack, Piratenschiff, Kraken, Hai, Kompassrose und Totenkopf-Felsen, das Haustier mit Piratenhut, Ziel ist die Schatztruhe am roten ✕, auf fast jedem Feld eine Frage, 🏖️ Rastplätze zum Verschnaufen; würfeln – richtig = 2 Felder vor, allein oder zu zweit) , 🐸 **Seerosen-Hüpfen** (ein Teich mit Schilf, Seerosen-Blüten und herumschwimmenden 🐟 Fischen und 🦆 Ente – auf das Seerosenblatt mit der richtigen Antwort springen, auch mit Einmaleins), 🚀 **Weltraum** (drei Planeten mit Antworten im Sternenhimmel – die Rakete fliegt zum gewählten Planeten) und 🦕 **Dino-Ausgrabung** (den Stein mit der richtigen Antwort freiklopfen – jeder Knochen kommt ans Skelett, nach 6 Knochen steht der Dino). Die Fragen kommen aus Rechnen, Zählen, Buchstaben, Uhr und Geld – passend zur Klasse. Jede Frage hat genau einen Versuch: falsch ist falsch, die Lösung wird kurz gezeigt. Unten stehen „✅ richtig/gestellt“ und die ⭐ aus richtigen Antworten.
+- **🔊 Vorlesen:** In jedem Spiel liest ein Lautsprecher-Knopf die Frage vor.
+- **🔄 Spielstände zurücksetzen** (✎ beim Kind im Tab 🐾): Rekorde einzelner Spiele, das Abenteuer oder „heute gespielt“ – praktisch zum Testen.
+- **🎮 Spiel als Aufgabe:** Im Aufgaben-Editor wählbar (Rechnen, Zählen, Uhr, Wörter, Geld, Memory, Mach's nach) – ist das Ziel erreicht, wird die Aufgabe abgehakt.
+- **🔁 Spiel-Aufgabe „Wie oft spielbar“** (1–5× pro Tag): geht immer, auch wenn die Spiele gesperrt sind; nach der ersten geschafften Runde nur noch üben, ohne Sterne.
+- **🔢 Fragen pro Runde je Kind** (3–30, Standard 5) und bei „Spiel als Aufgabe“ wahlweise **„Anzahl wie beim Kind“** – eine gemeinsame Aufgabe, aber 7 Rechenaufgaben für die Kleine und 15 für den Großen.
+- **Punkte nur für richtige Antworten:** 1–3 Versuche pro Frage (Standard 1). Sind sie aufgebraucht, zeigt das Spiel die Lösung und stellt die nächste Frage – Raten bringt nichts.
+- **🔁 Fehler später wiederholen:** Aufgaben mit gezeigter Lösung kommen später noch einmal – jede 2. Frage –, bis sie sitzen (je Kind auf dem Gerät, abschaltbar). In der 📊 Lernstatistik unter ✎ steht dazu **„🔁 Oft falsch“**: welche Fragen ein Kind am häufigsten falsch hatte (z. B. „7 × 8 = ? → 56“) – richtig gelöst zählt eins runter.
+- **🎯 Tages-Challenge** (abschaltbar): Oben in der Spielhalle steht jeden Tag ein anderes Spiel je Kind (im Menü mit 🎯 markiert) mit Fortschritt. Wer es zweimal spielt, bekommt 🪙 Taler – Standard 10, je Kind unter ✎ änderbar.
+- **🕹️ Spiele und 🗺️ Abenteuer-Level pro Tag je Kind** (✎ beim Kind, optional): z. B. die Kleine 3 Spiele am Tag, der Große 5 – leer = wie in den Einstellungen.
+- **📱 Querformat:** Auf dem Handy quer stehen Frage und Antworten nebeneinander, Labyrinth und Schatzkarte haben die Steuerung daneben – alles passt auf den Bildschirm.
+- **🎮 Einstellungen je Spiel** (Tab 🐾, ausklappbar): Spiel an/aus, Versuche und Wiederholen je Lernspiel, Memory-Paare, Puzzle-Größe/Zahlen/Tipp, Formen, Abenteuer-Stufe. Ausgeschaltete Spiele verschwinden aus Menü und Aufgaben-Editor.
+- **Passend zum Alter:** Rechnen und Zählen nach Klasse – aus der Einschulung (🎓 Schulnoten) oder aus Geburtstag und Einschulungsalter des Landes aus Home Assistant. 7 Stufen von Vorschule bis Klasse 6, je Kind änderbar (✎ beim Kind im Tab 🐾).
+
+### 🗺️ Abenteuer: ein eigenes Jump & Run
+- Im Spiele-Menü: **„Flockes Abenteuer“** (der Name kommt vom Haustier) mit dem Haustier – auch dem eigenen KI-Haustier – als Spielfigur.
+- **Titelbild** mit dem Haustier, Schriftzug im 16-Bit-Stil und eigener Titelmusik – passt sich jedem Bildschirm an (Handy, Tablet, Laptop). Im Spiele-Menü ein großes Banner mit dem Haustier.
+- **10 lange Level in 5 Welten** (Wiese, Strand, Süßigkeitenland, Schnee, Sternennacht) mit Sternen, Futter, Federn, Stacheln, bewegten Plattformen, Gegnern zum Draufspringen und 🎁 Bonus-Kisten – von unten anstoßen gibt +3 ⭐.
+- Fähnchen als Zwischenstand, 1–3 Kronen pro Level, Fortschritt je Kind gespeichert.
+- Steuerung mit **◀ ▶ ⤒** (auch Tastatur) – die Knöpfe liegen unter dem Spielfeld, im Querformat links und rechts daneben, und verdecken nie das Spiel.
+- **„Einfach“** (langsamer, feste Brücken, 5 ❤️), **„Normal“** (schneller, fahrende Plattformen, 3 ❤️) oder **„🔥 Schwer“** (noch schneller, kleine fahrende Plattformen, 2 ❤️ und Spezial-Gegner: 🐸 Hüpfer, 🐀 Flitzer, 🦔 Igel – nicht draufspringen! – und 🐝 Flieger über den Lücken) – dazu **⤒⤒ Doppelsprung** (in der Luft nochmal tippen) und hohe Ebenen mit schwer erreichbaren 🎁 Kisten. Sind alle Herzen weg, beginnt das Level neu.
+- Für Kleine je Kind einschaltbar: **„Läuft von allein“** – nur tippen zum Springen.
+- **Musik im 16-Bit-Stil** mit eigenen Melodien je Welt, im Browser erzeugt (🔊/🔇). Kein Vorlesen im Abenteuer.
+- **⏱️ Bestzeit je Level** – am Ziel und auf der Karte.
+- Tageslimit einstellbar (Standard 3 Level), Stufe auf Wunsch fest vorgeben. Eigene Datei `yippee-kids-chores-adventure.js`.
+- **🚪 Fragetore** (Tab 🐾 → Abenteuer, Standard aus): Vor den Fähnchen steht ein hohes Tor – es geht mit einer Frage aus den Lernspielen auf. Richtig = +3 ⭐, falsch = das Tor geht trotzdem auf.
+
+### 📺 Bildschirmzeit mit Gerätesteuerung
+- Belohnungen mit 📺 werden zum Gutschein. Startet das Kind ihn, geht das Gerät an (Schalter, Fernseher, Skript …), oben läuft der Countdown, 5 Minuten vorher kommt eine Warnung, am Ende wird ausgeschaltet oder ein Skript gestartet.
+- Eltern sehen laufende Zeiten im 📋 Heute-Tab: +10 Min. oder ⏹️ beenden.
+- **🔎 Geräteauswahl mit Suche:** Die Geräte sind nach Art gruppiert (📺 Fernseher & Medien, 🔌 Schalter & Steckdosen, 💡 Lichter, 📜 Skripte …), nach Namen sortiert und lassen sich über ein Suchfeld filtern.
+- **📱 Handy und Tablet:** lassen sich nicht direkt schalten – ein Hinweis erklärt, wie es mit dem Internet-Schalter des Geräts (z. B. aus der FritzBox-Integration) oder einem eigenen Skript klappt.
+
+### 💰 Taschengeld – eine Spardose für jedes Kind
+Das Taschengeld ist jetzt fest in Yippee! eingebaut (einschalten unter ⚙️ Einstellungen → ⚙️ Allgemein → 💰 Taschengeld). Es startet bei 0 – den aktuellen Stand trägst du einmal als 🏁 Startbetrag ein.
+- **💰 Spardose:** Kontostand, Verlauf und Buchungen für jedes Kind. Kinder öffnen sie über den Knopf „💰 Meine Spardose“ (in der kompakten Ansicht als Sammel-Knopf), die Eltern haben den neuen Tab **💰 Taschengeld** mit allen Spardosen und Einstellungen.
+- **➕ ➖ Ein- und Ausgaben** mit Text, Emoji und Datum. Löschen können nur Eltern.
+- **🌍 Währung nach Sprache:** Euro, Schweizer Franken, Pfund, Dollar, Dänische und Schwedische Krone, Złoty, Tschechische Krone, Forint, Leu, Rubel und Lira – voreingestellt nach der Sprache der Karte (bei Englisch nach der Währung von Home Assistant), jederzeit umstellbar.
+- Einzeln zuschaltbar:
+  - **✍️ Kinder tragen selbst ein** – ohne ins Minus zu gehen.
+  - **📅 Regelmäßiges Taschengeld** – je Kind wöchentlich (montags) oder monatlich (am 1.), automatisch gebucht; optional voll erst ab einem Anteil erledigter Aufgaben, darunter anteilig. Verpasste Termine (Karte war zu) werden nachgeholt, aber nie doppelt gebucht.
+  - **⭐ Sterne in Geld tauschen** – Kurs und Mindestmenge je Kind; wird ein Tausch gelöscht, gibt es die Sterne zurück.
+  - **🎁 Belohnungen mit Geldbetrag** – Geld kommt beim Einlösen in die Spardose oder wird vom Taschengeld bezahlt (mit Prüfung, ob genug drin ist).
+  - **🎯 Sparziel** (Standard an) – mit Fortschritt und „Bei deinem Tempo ca. am …“.
+  - **🌍 Andere Währungen** – z. B. Urlaubsgeld, getrennt geführt.
+  - **📅 Im Rückblick** (Standard an) – Einnahmen, Ausgaben und Stand des Monats.
+  - **🔒 PIN für die Spardose:** Die Spardose eines Kindes öffnet sich nur mit seiner PIN (Eltern brauchen keine).
+  - **📊 Monatsbericht:** am 1. jedes Monats um 9 Uhr Einnahmen, Ausgaben und Stand jedes Kindes aufs Handy.
+- Das bisherige **💶 Auszahlen** (🎁 Belohnungen & Geld → 💶 Taschengeld) bucht bei eingeschaltetem 💰 Taschengeld direkt in die Spardose.
+- Das Taschengeld steckt in einer eigenen Datei (`yippee-kids-chores-money.js`) und wird nur geladen, wenn es eingeschaltet ist. Buchungen liegen in der Yippee-Liste und sind in der Sicherung enthalten.
+- Handbuch-Thema „💰 Taschengeld“ neu geschrieben, in allen 27 Sprachen.
+
+### ⚡ Schneller, barrierefrei und ausfallsicher
+- **⚡ Kleinere Karte, schnellerer Start:** Die Karte selbst ist von rund 600 KB auf unter 400 KB geschrumpft. Eltern-Bereich, Karten-Editor (`yippee-kids-chores-editor.js`, neu) und seltener gebrauchte Funktionen wie Aufgaben-Timer, Rückblick, gemeinsames Sparen, Foto-Nachweis und Sensoren (`yippee-kids-chores-extras.js`, neu) werden nachgeladen – die Zusatzfunktionen kurz nach dem Start im Hintergrund. Für dich ändert sich nichts, solange alle Dateien aus `dist/` nebeneinander liegen (HACS erledigt das automatisch).
+- **◀ Vortage nachtragen:** Im Tab 📋 Heute blätterst du mit ◀ ▶ bis zu 7 Tage zurück und hakst dort ab oder nimmst zurück – die Sterne kommen sofort aufs Konto, eine verpasste Aufgabe mit Minuspunkten zählt dann wie „Doch erledigt“. Nur für Eltern – z. B. wenn nach Mitternacht noch etwas abgehakt werden muss.
+- **📴 Offline-Puffer** (Standard an, ⚙️ → 💾 Daten → 💾 Datensicherung): Ist Home Assistant kurz nicht erreichbar (WLAN weg, Neustart), merkt sich das Kinder-Gerät die Haken – die Kachel zeigt „📴 offline – wird nachgetragen“ – und trägt sie automatisch nach, sobald die Verbindung wieder steht.
+- **♿ Barrierefreiheit** (🎨 Darstellung): 🔳 Hoher Kontrast und 🐢 Weniger Bewegung, für alle Geräte oder nur für dieses Gerät; „Bewegung reduzieren“ des Geräts gilt automatisch. Dazu: deutliche Fokus-Rahmen, Bedienung mit der Tastatur (Tab, Enter/Leertaste, Esc schließt Fenster) und beschriftete Symbol-Knöpfe für Screenreader.
+
+### 🏠 Lernen, Lesen und ein Zuhause fürs Haustier
+- **🏠 Haustier-Zuhause** (Tab 🐾 → „🏠 Zuhause“ einschalten): ein eigenes Zimmer fürs Tier. Durchs Fenster sieht man das Wetter aus Home Assistant – Regen und Schnee bleiben draußen, drinnen braucht das Tier keinen Schirm. Bezahlt wird mit **🪙 Talern** – einer eigenen Spiel-Währung: Die Taler gibt es in allen Haustier-Spielen (Lernspiele 1 Taler je richtige Antwort, Geschicklichkeitsspiele je 5 Punkte 1 Taler, höchstens 20 pro Runde) und am Ziel im 🏃 Abenteuer. Echte ⭐ bleiben unangetastet; wer möchte, legt eine Belohnung mit „🪙 Taler fürs Haustier-Zuhause“ an – dann tauscht das Kind dort Sterne gegen Taler (Taler-Belohnungen gibt es nur einzeln, nicht gemeinsam). Wie viele ⭐ pro Tag getauscht werden dürfen, stellst du bei den Preisen ein (Standard: höchstens 10, auch ohne Grenze möglich). Damit kauft das Kind 20 Sachen (Bett, Sofa, Teppich, Lampe, Aquarium, Tapete …), antippen und bestätigen; Das 🛏️ Bett steht immer im Zimmer (nur verschieben). Gekauftes lässt sich wegräumen und wieder aufstellen und im Zimmer verschieben: antippen und mit dem Steuerkreuz bewegen oder direkt mit dem Finger ziehen. Nichts überlappt – Möbel bleiben am Boden, Bilder an der Wand, „↺ Aufräumen“ stellt alles zurück. Schläft das Tier, darf man es trotzdem besuchen: Im dunklen Zimmer scheint das Mondlicht herein, das Tier schläft im Bett – nur zuschauen. Die Preise stellst du selbst ein: für alles günstiger oder teurer (½×–3×) oder jede Sache einzeln (0 = geschenkt). Dazu, alles einzeln abschaltbar: **🎄 Deko zur Jahreszeit** (im Dezember Lichterkette, Tannenbaum und Geschenke, an Ostern Hase und Eier, im Oktober Kürbis und Herbstlaub), **🎂 Geburtstag im Zimmer** (Girlande, Luftballons, Torte, Partyhut und einmal 🪙 Geburtstags-Taler, Standard 50, je Kind änderbar), **🌳 Garten** als zweiter Raum für 200 🪙 mit eigenem Laden (Blumenbeet, Rutsche, Planschbecken, Baum, Hundehütte, Ball, Vogelhaus, Erdbeeren – alles verschiebbar, Regen und Schnee fallen hier wirklich) und **👋 Besuch**: Das Kind lädt das Haustier eines Geschwisterkinds ein, einmal am Tag gibt es dafür für beide +2 🪙. Eigene Datei `yippee-kids-chores-home.js`.
+- **🇬🇧 Englisch-Wörter** (neues Lernspiel): 273 Wörter nach Schuljahr (Tiere, Essen, Farben, Zahlen, Familie, Gefühle, Kleidung, Fahrzeuge …) in vier Fragearten – Bild → Wort, Wort anhören → Bild, Wort lesen → Bild und fehlender Buchstabe. Der 🔊-Knopf rechts neben jeder Antwort liest auf Englisch vor – erst anhören, dann antippen. Erscheint nicht, wenn die Karte selbst auf Englisch ist.
+- **✖️ Einmaleins** (neues Lernspiel): Reihen auswählen, 10 Aufgaben gegen die Uhr (Mal-Aufgaben, fehlender Faktor und Geteilt), mit Bestzeit je Reihe bzw. Auswahl. Beide neuen Spiele gehen auch als 🎮 Spiel-Aufgabe und zählen in der Lernstatistik.
+- **📚 Lesetagebuch** (⚙️ Einstellungen → 🎉 Spaß & Sammeln): Kinder legen ihre Bücher an, tragen Leseminuten ein (+10′ … +30′) und stellen fertige Bücher ins 📚 Bücherregal. Pro Buch gibt es Sterne (Standard 5) – mit eingeschalteter Freigabe erst nach deinem ✓ unter 🔔 Freigaben. Eigene Datei `yippee-kids-chores-read.js`.
+
+### 🎉 Spaß & Sammeln
+Alles optional unter ⚙️ Einstellungen → 🎉 Spaß & Sammeln (eigene Datei `yippee-kids-chores-fun.js`, wird nur geladen, wenn etwas davon an ist):
+- **🎡 Glücksrad:** Wer alle Aufgaben des Tages erledigt hat, darf einmal drehen – Standard: +1, +2 oder +5 ⭐, ein 🎟️ Freispiel oder „Leider nichts“. Gewinne und ihr Gewicht (wie oft sie kommen) stellst du selbst ein.
+- **📒 Sticker-Album:** Bei jeder erledigten Aufgabe gibt es mit etwas Glück (Standard 30 %) einen Sticker – 4 Alben (Tiere, Fahrzeuge, Weltraum, Meer) mit je 24 Stickern, Doppelte werden gezählt. Auf Wunsch Bonus-Sterne für ein volles Album. Ab- und wieder Anhaken bringt keinen zweiten Sticker.
+- **🥚 Ostereiersuche** (Palmsonntag bis Ostermontag) und **🎃 Kürbissuche** (24.–31. Oktober), jeweils einzeln einschaltbar: In etwa jeder dritten Aufgabe ist zufällig etwas versteckt – das Kind findet es beim Erledigen und sammelt es im 🧺 Osternest bzw. 🎃 Kürbiskorb, auf Wunsch mit +1 ⭐.
+- **📊 Wochenbericht** (🔔 Benachrichtigen bei …): sonntags ab 18 Uhr pro Kind Aufgaben, Sterne, Stand, Spardose, Sticker und Ostereier – an die Geräte des Wochenrückblicks.
+- **🔔 Erinnerung zu festen Uhrzeiten** (🔊 Sprachausgabe): Zu deinen Uhrzeiten sagt der Lautsprecher, was ein Kind noch offen hat – nur wenn es da ist, auf Wunsch über eigene Lautsprecher. Braucht eine geöffnete Karte (z. B. das Wand-Tablet).
+
+### Neu und verbessert
+- **🧩 Einstellungen aufgeräumt:** „Alle Einstellungen“ starten jetzt mit einer Kachel je Bereich (⚙️ Allgemein, ✅ Aufgaben & Tagesablauf, ⭐ Punkte & Boni …) – mit kurzer Vorschau und wie viele Funktionen davon an sind. Antippen zeigt nur diesen Bereich, „← Alle Einstellungen“ führt zurück. Die Suche oben sucht weiterhin in allen Einstellungen. Genauso aufgebaut sind die Einstellungen in den Reitern 🐾 Haustier (Eigene Haustiere, Wachstum & Freischalten, Füttern & Stimmung, Spiele, Zuhause, Einstellungen je Spiel, Wetter), 💰 Taschengeld (Währung & Buchungen, Taschengeld & Tauschen, Sparen & Berichte, PIN), 🦷 Zähne und 🎄 Advent (Aussehen und Einstellungen) – jeweils mit 🔎 Suche; die Liste der Kinder bzw. Spardosen bleibt oben.
+- **📖 Handbuch in Kapiteln:** Die Themen sind in dieselben Bereiche sortiert wie die Einstellungen und lassen sich kapitelweise aufklappen. Die Suche findet weiterhin alles.
+- **👨‍👩‍👧 Familienziel korrigieren:** −10 · −1 · +1 · +10 direkt unter dem Balken (Tab 🎁); die letzten Korrekturen stehen mit vorher → nachher darunter.
+- **📋 Familienziel-Warteschlange:** weitere Ziele vormerken – nach „✓ Eingelöst“ geht es automatisch mit dem nächsten weiter, Sterne nach dem Erreichen zählen schon dafür. „🏆 Geschafft“ listet die erreichten Ziele.
+- **📦 Alte Taschengeld-Buchungen zusammenfassen** (Standard an): älter als 12 Monate → je Monat eine Summe für Einnahmen und Ausgaben, der Kontostand bleibt gleich.
+- **🛡️ Vor Updates sichern** (Standard an): Bei einer neuen Yippee!-Version – oder beim ersten Start – gibt es sofort eine zusätzliche Sicherung.
+- **🔠 Größe nur auf diesem Gerät** (🎨 Darstellung, 90–150 %): z. B. größere Schrift am Kinder-Tablet zum Lesenlernen.
+- **🎉 Einmaliger Hinweis „Neu in 2.0“** in der Eltern-Ansicht – verschwindet mit „✓ Verstanden“.
+- **💡 Hinweis für Eltern** (abschaltbar): Im Tab 📋 Heute steht ein Hinweis, wenn ein Kind 3 Tage keine Aufgabe erledigt hat oder sein Haustier traurig ist – nur in der Karte, keine Nachricht.
+- **📱 Ein Kind pro Seite** (optional, Karte mit allen Kindern): oben die Kinder zum Antippen, darunter ein Kind, **wischen** wechselt zum nächsten – am PC mit der Maus oder dem Touchpad. Jedes Gerät merkt sich das letzte Kind. Einschalten unter ⚙️ Einstellungen → 🎨 Darstellung oder mit `pages: true`.
+- Haustier, Mini-Spiele, Abenteuer und Bildschirmzeit stecken in eigenen Dateien (`yippee-kids-chores-pet.js`, `yippee-kids-chores-games.js`, `yippee-kids-chores-adventure.js`, `yippee-kids-chores-screen.js`) und werden nur geladen, wenn sie gebraucht werden.
+- Sechs neue Handbuch-Themen (🐾 Haustier, 🎨 Eigenes Haustier, 🎮 Mini-Spiele, 📺 Bildschirmzeit, 🎉 Spaß & Sammeln, 📚 Lesetagebuch), alles in 27 Sprachen – jetzt 57 Themen.
+- In der Browser-Konsole steht neben der Version jetzt auch der Bau-Stempel – so sieht man sofort, ob wirklich die neue Datei geladen ist.
+- **🙂 Viel mehr Emojis zur Auswahl:** Aufgaben, Belohnungen, Wünsche und Sparziele bieten jetzt rund 800 Emojis in Gruppen (neu u. a. 🎉 Feste & Jahreszeiten, 😊 Gesichter & Gefühle, ⚽ Sport & Bewegung, 🐾 Tiere & Fantasie) – alle Emojis, die die Karte selbst verwendet, sind dabei (auch 🪙 Taler, 🎟️ Freispiele, Haustiere und Spiele). Emojis, die ein älteres Gerät nicht anzeigen kann, erscheinen dort als Ersatz (z. B. 🪙 → 💰) – gespeichert wird das Original. Auch die Avatare für Kinder und die Emojis im Adventskalender sind deutlich mehr geworden.
+- **🔊 Vorlesen ohne „1.“:** Texte, die vorgelesen werden, schreiben Ordnungszahlen aus („Heute ist der erste Advent“, „Am ersten Dezember geht es los!“, „Mal 2“) – die Sprachausgabe las sonst „eins Punkt“.
+- **🙂 Emojis auf älteren Geräten:** Neuere Emojis, die ein Tablet oder Handy nur als leeres Kästchen zeigen würde, ersetzt die Karte automatisch durch ein älteres (z. B. 🪙 → 💰, 🪥 → 🦷) – auch die eigenen Emojis von Aufgaben, Belohnungen und Kindern, überall in der Karte. Gespeichert bleibt das Original. Die Spiele nutzen nur Emojis, die überall angezeigt werden.
+
+### 🦷 Zahnputz-Timer
+- **👧 Bilder je Kind** ([#18](https://github.com/Chrism1412/yippee-kids-chores-card/issues/18)): Unter jedem Bild – auch den Vorlagen – die Kinder antippen, die es bekommen sollen. Nichts gewählt = alle Kinder.
+
+### Behoben
+- **🏠 Anwesenheit:** Aufgaben mit nur einer „ab“-Uhrzeit (z. B. ⏰ Aufstehen ab 06:30) galten bis Mitternacht – kam ein Kind erst mittags, waren die Morgen-Aufgaben trotzdem fällig. Jetzt gelten sie bis zum Ende ihres Tagesabschnitts (🌅 Morgens bis 11:30 …).
+- 🔊 Vorlesen im Leseanfänger-Modus blieb auf manchen Tablets und Handys stumm – vor allem, wenn Sätze schnell aufeinander folgten.
+- 🦷 Eigene Zahnputz-Bilder: Klappt das Laden eines Bildes einmal nicht (z. B. kurz nach dem Start von Home Assistant), versucht die Karte es jetzt bis zu dreimal statt das Bild leer zu lassen.
+
 ## [1.9.0] – 2026-11-17
 
 ### 📱 Das Highlight: eine übersichtliche Kinder-Ansicht
