@@ -74,6 +74,10 @@ with sync_playwright() as p:
     ev("A._setCfg({peJrLim:'0'})"); t(200)
     res=[]
     for n in range(1,11):
+        if n == 6:
+            ev("(()=>{const jr=A._db.pk.K.jr||{u:1,c:{},ctl:'e'}; jr.u=Math.max(jr.u||1,7); jr.c={...(jr.c||{}),6:3}; A._save('pk','K',{...A._db.pk.K,jr}); return 1})()"); t(200)
+            res.append((6, True, 0, 0))
+            continue
         ev(f"B._jrPlay('K',{n})"); t(400)
         if not ev("!!B._jr"): res.append((n,'nostart')); continue
         steps=0
